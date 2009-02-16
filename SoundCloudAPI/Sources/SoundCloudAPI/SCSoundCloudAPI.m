@@ -1,0 +1,391 @@
+/*
+ Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ All rights reserved.
+ 
+ This file is part of SoundCloudAPI.
+ 
+ SoundCloudAPI is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as published
+ by the Free Software Foundation, version 3.
+ 
+ SoundCloudAPI is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU Lesser General Public License for more details.
+ 
+ You should have received a copy of the GNU Lesser General Public License
+ along with SoundCloudAPI. If not, see <http://www.gnu.org/licenses/>.
+ 
+ For more information and documentation refer to <http://soundcloud.com/api>.
+ */
+
+#import "SCSoundCloudAPI.h"
+
+#import "OAuthConsumer.h"
+
+#import "SCSoundCloudAPIConfiguration.h"
+#import "SCPostBodyStream.h"
+
+#import "OAToken+Keychain.h"
+#import "NSMutableURLRequest+SoundCloudAPI.h"
+#import "NSURL+SoundCloudAPI.h"
+
+
+@interface SCSoundCloudAPI (Private)
+- (OAToken *)requestToken;
+- (void)setRequestToken:(OAToken *)value;
+- (OAToken *)accessToken;
+- (void)setAccessToken:(OAToken *)value;
+
+- (NSString *)_responseTypeFromEnum:(SCResponseFormat)responseFormat;
+- (SCSoundCloudAPIConfiguration *)configuration;
+@end
+
+
+@implementation SCSoundCloudAPI
+
+#pragma mark Lifecycle
+
+- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)inAuthDelegate;
+{
+	if (self = [super init]) {
+		authDelegate = inAuthDelegate;
+		SCSoundCloudAPIConfiguration *configuration = self.configuration;
+		_oauthConsumer = [[OAConsumer alloc] initWithKey:[configuration consumerKey]
+												  secret:[configuration consumerSecret]];
+		_dataFetchers = [[NSMutableArray alloc] init];		
+		responseFormat = SCResponseFormatXML;
+		
+		if (self.accessToken) {
+			// NSLog(@"Authenticated");
+			status = SCAuthenticationStatusAuthenticated;
+		} else if (self.requestToken) {
+			// NSLog(@"Will verify requesttoken");
+			status = SCAuthenticationStatusWillAuthorizeRequestToken;
+		} else {
+			// NSLog(@"Not authenticated");
+			status = SCAuthenticationStatusNotAuthenticated;
+		}
+		if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+			[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+	}
+	return self;
+}
+
+- (void)dealloc {
+	[_oauthConsumer release];
+	[_dataFetchers release];
+	//FIXME: remove oauth data fetcher
+	[_authDataFetcher release];
+	[_requestToken release];
+	[_accessToken release];
+	[super dealloc];
+}
+
+#pragma mark Accessors
+
+@synthesize delegate;
+@synthesize authDelegate;
+@synthesize status;
+@synthesize responseFormat;
+
+- (OAToken *)requestToken;
+{
+	if (_requestToken) return _requestToken;
+	_requestToken = [[OAToken alloc] initWithDefaultKeychainUsingAppName:[[NSBundle mainBundle] bundleIdentifier]
+													 serviceProviderName:[NSString stringWithFormat:@"%@_Request", self.configuration.apiBaseURL.host]];
+	return _requestToken;
+}
+
+- (void)setRequestToken:(OAToken *)value;
+{
+	SCSoundCloudAPIConfiguration *configuration = self.configuration;
+	if (!value) {
+		[self.requestToken removeFromDefaultKeychainWithAppName:[[NSBundle mainBundle] bundleIdentifier]
+		 serviceProviderName:[NSString stringWithFormat:@"%@_Request", configuration.apiBaseURL.host]];
+	}
+	
+	[self willChangeValueForKey:@"requestToken"];
+	[value retain];	[_requestToken release]; _requestToken = value;
+	[self didChangeValueForKey:@"requestToken"];
+	
+	if (value) {
+		[_requestToken storeInDefaultKeychainWithAppName:[[NSBundle mainBundle] bundleIdentifier]
+									 serviceProviderName:[NSString stringWithFormat:@"%@_Request", configuration.apiBaseURL.host]];
+	}
+}
+
+- (OAToken *)accessToken;
+{
+	if (_accessToken) return _accessToken;
+	_accessToken = [[OAToken alloc] initWithDefaultKeychainUsingAppName:[[NSBundle mainBundle] bundleIdentifier]
+													serviceProviderName:[NSString stringWithFormat:@"%@_Access", self.configuration.apiBaseURL.host]];
+	return _accessToken;
+}
+
+- (void)setAccessToken:(OAToken *)value;
+{
+	SCSoundCloudAPIConfiguration *configuration = self.configuration;
+	if (!value) {
+		[self.accessToken removeFromDefaultKeychainWithAppName:[[NSBundle mainBundle] bundleIdentifier] 
+		 serviceProviderName:[NSString stringWithFormat:@"%@_Access", configuration.apiBaseURL.host]];
+	}
+	
+	[self willChangeValueForKey:@"accessToken"];
+	[value retain];	[_accessToken release];	_accessToken = value;
+	[self didChangeValueForKey:@"accessToken"];
+	
+	if (value) {
+		[_accessToken storeInDefaultKeychainWithAppName:[[NSBundle mainBundle] bundleIdentifier]
+									serviceProviderName:[NSString stringWithFormat:@"%@_Access", configuration.apiBaseURL.host]];
+	}
+}
+
+#pragma mark Public methods
+
+- (void)requestAuthentication;
+{
+	SCSoundCloudAPIConfiguration *configuration = self.configuration;
+	if (!configuration.requestTokenURL
+		|| !configuration.authURL
+		|| !configuration.accessTokenURL) {
+		NSLog(@"OAuth is not initialized with all 3 URLs");
+		return;
+	}
+	
+	if (status != SCAuthenticationStatusNotAuthenticated) {
+		NSLog(@"OAuthApi is already authenticated.");
+		return;
+	}
+	
+	status = SCAuthenticationStatusGettingToken;
+	if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+		[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+	
+	OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:configuration.requestTokenURL
+																   consumer:_oauthConsumer
+																	  token:nil
+																	  realm:nil
+														  signatureProvider:nil];
+	[request setHTTPMethod:@"POST"];
+	
+	// FIXME: make asynch
+	[_authDataFetcher release];
+	_authDataFetcher = [[OADataFetcher alloc] init]; //release and nil in fetch delegate methods
+	[_authDataFetcher fetchDataWithRequest:request
+								  delegate:self
+						 didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
+						   didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+	[request release];
+}
+
+- (void)authorizeRequestToken;
+{
+	SCSoundCloudAPIConfiguration *configuration = self.configuration;
+	if (!configuration.requestTokenURL
+		|| !configuration.authURL
+		|| !configuration.accessTokenURL) {
+		NSLog(@"OAuth is not initialized with all 3 URLs");
+		return;
+	}
+	
+	if (!self.requestToken) {
+		NSLog(@"No RequestToken to Authorize");
+		[self requestAuthentication];
+		return;
+	}
+	
+	status = SCAuthenticationStatusGettingToken;
+	if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+		[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+	
+	OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:configuration.accessTokenURL
+																   consumer:_oauthConsumer
+																	  token:self.requestToken
+																	  realm:nil 
+														  signatureProvider:nil];
+	[request setHTTPMethod:@"POST"];
+	
+	//FIXME: make asynch
+	[_authDataFetcher release];
+	_authDataFetcher = [[OADataFetcher alloc] init];
+	[_authDataFetcher fetchDataWithRequest:request
+								  delegate:self
+						 didFinishSelector:@selector(accessTokenTicket:didFinishWithData:)
+						   didFailSelector:@selector(accessTokenTicket:didFailWithError:)];
+	[request release];
+}
+
+- (void)resetAuthentication;
+{
+	self.requestToken = nil;
+	self.accessToken = nil;
+	status = SCAuthenticationStatusNotAuthenticated;
+	if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+		[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+}
+
+#pragma mark Datafetcher delegates
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data;
+{
+	[_authDataFetcher release]; _authDataFetcher = nil;
+	if (ticket.didSucceed) {
+		SCSoundCloudAPIConfiguration *configuration = self.configuration;
+		NSString *responseBody = [[[NSString alloc] initWithData:data
+														encoding:NSUTF8StringEncoding] autorelease];
+		self.requestToken = [[[OAToken alloc] initWithHTTPResponseBody:responseBody] autorelease];
+		
+		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+									self.requestToken.key, @"oauth_token",
+									[configuration.callbackURL absoluteString], @"oauth_callback", nil];
+		
+		// will most likely quit the application. be prepared :)
+		if([authDelegate respondsToSelector:@selector(soundCloudAPI:requestedAuthenticationWithURL:)]) {
+			[authDelegate soundCloudAPI:self requestedAuthenticationWithURL:[configuration.authURL urlByAddingParameters:parameters]];
+		}		   
+	} else {
+		NSLog(@"Ticket did not Succeed: %@", ticket);
+	}
+}
+
+- (void)accessTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data;
+{
+	[_authDataFetcher release]; _authDataFetcher = nil;
+	if (ticket.didSucceed) {
+		NSString *responseBody = [[[NSString alloc] initWithData:data
+														encoding:NSUTF8StringEncoding] autorelease];
+		self.accessToken = [[[OAToken alloc] initWithHTTPResponseBody:responseBody] autorelease];
+		self.requestToken = nil; //We don't need it anymore and we better not reauthorize it.
+		status = SCAuthenticationStatusAuthenticated;
+		if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+			[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+	} else {
+		NSLog(@"Ticket did not Succeed: %@", ticket);
+	}
+}
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error;
+{
+	[_authDataFetcher release]; _authDataFetcher = nil;
+	[self resetAuthentication];
+}
+
+- (void)accessTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error {
+	[_authDataFetcher release]; _authDataFetcher = nil;
+	[self resetAuthentication];
+}
+
+
+#pragma mark Pirivate methods
+
+- (SCSoundCloudAPIConfiguration *)configuration;
+{
+	if([authDelegate respondsToSelector:@selector(configurationForSoundCloudAPI:)])
+		return [authDelegate configurationForSoundCloudAPI:self];
+	else
+		return nil;
+}
+
+- (NSString *)_responseTypeFromEnum:(SCResponseFormat)inResponseFormat;
+{
+	switch (inResponseFormat) {
+		case SCResponseFormatJSON:
+			return @"application/json";
+		case SCResponseFormatXML:
+		default:
+			return @"application/xml";
+	}	
+}
+
+#pragma mark API methods
+
+- (void)performMethod:(NSString *)httpMethod
+		   onResource:(NSString *)resource
+	   withParameters:(NSDictionary *)parameters
+			  context:(id)context;
+{
+	
+	SCSoundCloudAPIConfiguration *configuration = self.configuration;
+	if (!configuration.apiBaseURL) {
+		NSLog(@"API is not configured with base URL");
+		return;
+	}
+	
+	if (!self.accessToken
+		|| status != SCAuthenticationStatusAuthenticated) {
+		NSLog(@"API No not authorized");
+		return;
+	}
+	
+	NSURL *url = [NSURL URLWithString:resource relativeToURL:configuration.apiBaseURL];
+	OAMutableURLRequest *request = [[[OAMutableURLRequest alloc] initWithURL:url
+																	consumer:_oauthConsumer
+																	   token:self.accessToken
+																	   realm:nil
+														   signatureProvider:nil] autorelease];
+	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
+//	[request addValue:@"" forHTTPHeaderField:@"Accept"];
+	
+	[request setHTTPMethod:[httpMethod uppercaseString]];
+	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]){
+		[request setParameterDictionary:parameters];
+	} else {
+		SCPostBodyStream *postStream = [[SCPostBodyStream alloc] initWithParameters:parameters];
+		[request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", [postStream boundary]] forHTTPHeaderField: @"Content-Type"];
+		[request setValue:[NSString stringWithFormat:@"%d", [postStream length]] forHTTPHeaderField:@"Content-Length"];
+		
+		[request setHTTPBodyStream:postStream];
+		[postStream release];
+	}
+	
+	SCDataFetcher *fetcher = [[SCDataFetcher alloc] initWithRequest:request delegate:self context:context];
+	[_dataFetchers addObject:fetcher];
+	[fetcher release];
+}
+
+#pragma mark SCDataFetcherDelegate
+
+- (void)scDataFetcher:(SCDataFetcher *)fetcher didFinishWithData:(NSData *)data context:(id)context;
+{
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
+		[delegate soundCloudAPI:self didFinishWithData:data context:context];
+	}
+	[_dataFetchers removeObject:fetcher];
+}
+
+- (void)scDataFetcher:(SCDataFetcher *)fetcher didFailWithError:(NSError *)error context:(id)context;
+{
+	if([error code] == 401) {
+		[self resetAuthentication];
+	}
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
+		[delegate soundCloudAPI:self didFailWithError:error context:context];
+	}
+	[_dataFetchers removeObject:fetcher];
+}
+
+- (void)scDataFetcher:(SCDataFetcher *)fetcher didReceiveData:(NSData *)data context:(id)context;
+{
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveData:context:)]) {
+		[delegate soundCloudAPI:self didReceiveData:data context:context];
+	}
+}
+
+- (void)scDataFetcher:(SCDataFetcher *)fetcher didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
+{
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveBytes:total:context:)]) {
+		[delegate soundCloudAPI:self didReceiveBytes:loadedBytes total:totalBytes context:context];
+	}
+}
+
+- (void)scDataFetcher:(SCDataFetcher *)fetcher didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
+{
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didSendBytes:total:context:)]) {
+		[delegate soundCloudAPI:self didSendBytes:sendBytes total:totalBytes context:context];
+	}
+}
+
+
+@end
+

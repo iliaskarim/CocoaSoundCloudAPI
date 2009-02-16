@@ -1,0 +1,257 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXFileReference section */
+		D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPI.h; sourceTree = "<group>"; };
+		D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPI.m; sourceTree = "<group>"; };
+		D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIConfiguration.h; sourceTree = "<group>"; };
+		D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIConfiguration.m; sourceTree = "<group>"; };
+		D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
+		D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
+		D3196C7E0F226CDB0075D708 /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
+		D3196C7F0F226CDB0075D708 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		D3196C800F226CDB0075D708 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
+		D3196C810F226CDB0075D708 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
+		D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAAsynchronousDataFetcher.h; sourceTree = "<group>"; };
+		D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAAsynchronousDataFetcher.m; sourceTree = "<group>"; };
+		D3196C8F0F226CF40075D708 /* OAConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAConsumer.h; sourceTree = "<group>"; };
+		D3196C900F226CF40075D708 /* OAConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAConsumer.m; sourceTree = "<group>"; };
+		D3196C910F226CF40075D708 /* OADataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OADataFetcher.h; sourceTree = "<group>"; };
+		D3196C920F226CF40075D708 /* OADataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OADataFetcher.m; sourceTree = "<group>"; };
+		D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAHMAC_SHA1SignatureProvider.h; sourceTree = "<group>"; };
+		D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAHMAC_SHA1SignatureProvider.m; sourceTree = "<group>"; };
+		D3196C950F226CF40075D708 /* OAMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAMutableURLRequest.h; sourceTree = "<group>"; };
+		D3196C960F226CF40075D708 /* OAMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAMutableURLRequest.m; sourceTree = "<group>"; };
+		D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAPlaintextSignatureProvider.h; sourceTree = "<group>"; };
+		D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAPlaintextSignatureProvider.m; sourceTree = "<group>"; };
+		D3196C990F226CF40075D708 /* OARequestParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OARequestParameter.h; sourceTree = "<group>"; };
+		D3196C9A0F226CF40075D708 /* OARequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OARequestParameter.m; sourceTree = "<group>"; };
+		D3196C9B0F226CF40075D708 /* OAServiceTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAServiceTicket.h; sourceTree = "<group>"; };
+		D3196C9C0F226CF40075D708 /* OAServiceTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAServiceTicket.m; sourceTree = "<group>"; };
+		D3196C9D0F226CF40075D708 /* OAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAToken.h; sourceTree = "<group>"; };
+		D3196C9E0F226CF40075D708 /* OAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAToken.m; sourceTree = "<group>"; };
+		D3196CA10F226CF40075D708 /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
+		D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
+		D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
+		D3196D110F22720F0075D708 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		D3196D120F22720F0075D708 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		D3196D130F22720F0075D708 /* NSURL+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Base.h"; sourceTree = "<group>"; };
+		D3196D140F22720F0075D708 /* NSURL+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Base.m"; sourceTree = "<group>"; };
+		D3196D1E0F2272420075D708 /* OASignatureProviding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OASignatureProviding.h; sourceTree = "<group>"; };
+		D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SoundCloudAPI.h"; sourceTree = "<group>"; };
+		D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SoundCloudAPI.m"; sourceTree = "<group>"; };
+		D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OAToken+Keychain.m"; sourceTree = "<group>"; };
+		D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OAToken+Keychain.h"; sourceTree = "<group>"; };
+		D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+SoundCloudAPI.h"; sourceTree = "<group>"; };
+		D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+SoundCloudAPI.m"; sourceTree = "<group>"; };
+		D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyStream.h; sourceTree = "<group>"; };
+		D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyStream.m; sourceTree = "<group>"; };
+		D36D9B730F49888C002DF2A7 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		D3A529130F334CB50068D32D /* SCDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDataFetcher.h; sourceTree = "<group>"; };
+		D3A529140F334CB50068D32D /* SCDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDataFetcher.m; sourceTree = "<group>"; };
+		D3A529430F334D140068D32D /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPI.h; sourceTree = "<group>"; };
+		D3EB19770F3A22740090F073 /* SCPostBodyPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyPart.h; sourceTree = "<group>"; };
+		D3EB19780F3A22740090F073 /* SCPostBodyPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyPart.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0867D691FE84028FC02AAC07 /* SoundCloudAPI */ = {
+			isa = PBXGroup;
+			children = (
+				D319617C0F1E08500075D708 /* Outsourced */,
+				D319616A0F1E06E50075D708 /* Sources */,
+				D36D9B730F49888C002DF2A7 /* License.txt */,
+			);
+			name = SoundCloudAPI;
+			sourceTree = "<group>";
+		};
+		D319616A0F1E06E50075D708 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D3E5727E0F2F26F100DE180F /* SoundCloudAPI */,
+				D3196F460F24DD4F0075D708 /* OAuthExtensions */,
+				D3196EFE0F24CDBC0075D708 /* CocoaExtensions */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D319617C0F1E08500075D708 /* Outsourced */ = {
+			isa = PBXGroup;
+			children = (
+				D3196C740F226CAF0075D708 /* OAuthConsumer */,
+			);
+			path = Outsourced;
+			sourceTree = "<group>";
+		};
+		D3196C740F226CAF0075D708 /* OAuthConsumer */ = {
+			isa = PBXGroup;
+			children = (
+				D3196E090F228D850075D708 /* SignatureProvider */,
+				D3196CCE0F226D470075D708 /* Protocols */,
+				D3196CC00F226D120075D708 /* Cocoa Additions */,
+				D3196C7B0F226CDB0075D708 /* Crypto */,
+				D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */,
+				D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */,
+				D3196C8F0F226CF40075D708 /* OAConsumer.h */,
+				D3196C900F226CF40075D708 /* OAConsumer.m */,
+				D3196C910F226CF40075D708 /* OADataFetcher.h */,
+				D3196C920F226CF40075D708 /* OADataFetcher.m */,
+				D3196C950F226CF40075D708 /* OAMutableURLRequest.h */,
+				D3196C960F226CF40075D708 /* OAMutableURLRequest.m */,
+				D3196C990F226CF40075D708 /* OARequestParameter.h */,
+				D3196C9A0F226CF40075D708 /* OARequestParameter.m */,
+				D3196C9B0F226CF40075D708 /* OAServiceTicket.h */,
+				D3196C9C0F226CF40075D708 /* OAServiceTicket.m */,
+				D3196C9D0F226CF40075D708 /* OAToken.h */,
+				D3196C9E0F226CF40075D708 /* OAToken.m */,
+				D3196CA10F226CF40075D708 /* OAuthConsumer.h */,
+			);
+			path = OAuthConsumer;
+			sourceTree = "<group>";
+		};
+		D3196C7B0F226CDB0075D708 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */,
+				D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */,
+				D3196C7E0F226CDB0075D708 /* hmac.c */,
+				D3196C7F0F226CDB0075D708 /* hmac.h */,
+				D3196C800F226CDB0075D708 /* sha1.c */,
+				D3196C810F226CDB0075D708 /* sha1.h */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
+		D3196CC00F226D120075D708 /* Cocoa Additions */ = {
+			isa = PBXGroup;
+			children = (
+				D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */,
+				D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */,
+				D3196D110F22720F0075D708 /* NSString+URLEncoding.h */,
+				D3196D120F22720F0075D708 /* NSString+URLEncoding.m */,
+				D3196D130F22720F0075D708 /* NSURL+Base.h */,
+				D3196D140F22720F0075D708 /* NSURL+Base.m */,
+			);
+			name = "Cocoa Additions";
+			sourceTree = "<group>";
+		};
+		D3196CCE0F226D470075D708 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D3196D1E0F2272420075D708 /* OASignatureProviding.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		D3196E090F228D850075D708 /* SignatureProvider */ = {
+			isa = PBXGroup;
+			children = (
+				D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */,
+				D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */,
+				D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */,
+				D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */,
+			);
+			name = SignatureProvider;
+			sourceTree = "<group>";
+		};
+		D3196EFE0F24CDBC0075D708 /* CocoaExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */,
+				D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */,
+			);
+			path = CocoaExtensions;
+			sourceTree = "<group>";
+		};
+		D3196F460F24DD4F0075D708 /* OAuthExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */,
+				D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */,
+				D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */,
+				D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */,
+			);
+			path = OAuthExtensions;
+			sourceTree = "<group>";
+		};
+		D3E5727E0F2F26F100DE180F /* SoundCloudAPI */ = {
+			isa = PBXGroup;
+			children = (
+				D3A529430F334D140068D32D /* SCAPI.h */,
+				D3A529130F334CB50068D32D /* SCDataFetcher.h */,
+				D3A529140F334CB50068D32D /* SCDataFetcher.m */,
+				D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */,
+				D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */,
+				D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */,
+				D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */,
+				D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */,
+				D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */,
+				D3EB19770F3A22740090F073 /* SCPostBodyPart.h */,
+				D3EB19780F3A22740090F073 /* SCPostBodyPart.m */,
+			);
+			path = SoundCloudAPI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* SoundCloudAPI */;
+			productRefGroup = 0867D691FE84028FC02AAC07 /* SoundCloudAPI */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91B208733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Debug */,
+				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
