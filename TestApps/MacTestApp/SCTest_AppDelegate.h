@@ -21,7 +21,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SCAPI.h"
+#import <SoundCloudAPI/SCAPI.h>
 
 // for production
 #define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"

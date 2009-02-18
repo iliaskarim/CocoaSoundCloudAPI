@@ -25,6 +25,7 @@
 
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCPostBodyStream.h"
+#import "SCDataFetcher.h"
 
 #import "OAToken+Keychain.h"
 #import "NSMutableURLRequest+SoundCloudAPI.h"
@@ -41,6 +42,8 @@
 - (SCSoundCloudAPIConfiguration *)configuration;
 @end
 
+@interface SCSoundCloudAPI (SCDataFetcherDelegate) <SCDataFetcherDelegate>
+@end
 
 @implementation SCSoundCloudAPI
 
