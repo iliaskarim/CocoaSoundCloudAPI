@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D355263F0F4D7C850074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35525CE0F4D74520074030D /* LICENSE */; };
+		D35526400F4D7C850074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D35525CF0F4D74520074030D /* NOTICE */; };
 		D396C7180F4C425200DF5CA4 /* Framework_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */; };
 		D396C71E0F4C428300DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */; };
 		D396C71F0F4C428300DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */; };
@@ -168,14 +170,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D396C7860F4C439600DF5CA4 /* SoundCloudAPI for iPhone Device */;
+			remoteGlobalIDString = D396C7860F4C439600DF5CA4;
 			remoteInfo = "SoundCloudAPI for iPhone Device";
 		};
 		D3FC21090F4C7C2100DFB493 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D396C78D0F4C43A700DF5CA4 /* SoundCloudAPI for iPhone Simulator */;
+			remoteGlobalIDString = D396C78D0F4C43A700DF5CA4;
 			remoteInfo = "SoundCloudAPI for iPhone Simulator";
 		};
 /* End PBXContainerItemProxy section */
@@ -252,7 +254,8 @@
 		D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+SoundCloudAPI.m"; sourceTree = "<group>"; };
 		D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyStream.h; sourceTree = "<group>"; };
 		D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyStream.m; sourceTree = "<group>"; };
-		D36D9B730F49888C002DF2A7 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		D35525CE0F4D74520074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D35525CF0F4D74520074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		D396C70E0F4C422400DF5CA4 /* SoundCloudAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SoundCloudAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D396C70F0F4C422400DF5CA4 /* SoundCloudAPI for Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundCloudAPI for Mac-Info.plist"; sourceTree = "<group>"; };
 		D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Framework_Prefix.pch; sourceTree = "<group>"; };
@@ -299,7 +302,6 @@
 				D319616A0F1E06E50075D708 /* Sources */,
 				D396C7560F4C42DD00DF5CA4 /* Resources */,
 				D396C7550F4C42D700DF5CA4 /* Products */,
-				D36D9B730F49888C002DF2A7 /* License.txt */,
 			);
 			name = SoundCloudAPI;
 			sourceTree = "<group>";
@@ -437,6 +439,8 @@
 		D396C7560F4C42DD00DF5CA4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D35525CE0F4D74520074030D /* LICENSE */,
+				D35525CF0F4D74520074030D /* NOTICE */,
 				D396C70F0F4C422400DF5CA4 /* SoundCloudAPI for Mac-Info.plist */,
 			);
 			name = Resources;
@@ -665,6 +669,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D355263F0F4D7C850074030D /* LICENSE in Resources */,
+				D35526400F4D7C850074030D /* NOTICE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

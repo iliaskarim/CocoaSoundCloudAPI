@@ -16,7 +16,8 @@
 		D32353DF0F2A355E00BE4212 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D32353DA0F2A355E00BE4212 /* NSObject+SBJSON.m */; };
 		D32353E00F2A355E00BE4212 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D32353DD0F2A355E00BE4212 /* NSString+SBJSON.m */; };
 		D32353E10F2A355E00BE4212 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D32353DE0F2A355E00BE4212 /* SBJSON.m */; };
-		D36D9C850F49B482002DF2A7 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = D36D9C840F49B482002DF2A7 /* License.txt */; };
+		D35526220F4D7C450074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35526200F4D7C450074030D /* LICENSE */; };
+		D35526230F4D7C460074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D35526210F4D7C450074030D /* NOTICE */; };
 		D375FD920F3B0A7200954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */ = {isa = PBXBuildFile; fileRef = D375FD910F3B0A7200954DE4 /* 1375_sleep_90_bpm_nylon2.wav */; };
 		D3E572B60F2F28B800DE180F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E572B50F2F28B800DE180F /* Security.framework */; };
 		D3FC20330F4C534500DFB493 /* SoundCloudAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FC20320F4C534500DFB493 /* SoundCloudAPI.framework */; };
@@ -24,32 +25,39 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D35525FE0F4D7C130074030D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D3FC21010F4C7BF600DFB493;
+			remoteInfo = "SoundCloudAPI for iPhone Device and Simulator";
+		};
 		D3FC1FF70F4C515700DFB493 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D396C70E0F4C422400DF5CA4 /* SoundCloudAPI for Mac.framework */;
+			remoteGlobalIDString = D396C70E0F4C422400DF5CA4;
 			remoteInfo = "SoundCloudAPI for Mac";
 		};
 		D3FC1FF90F4C515700DFB493 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D396C7870F4C439600DF5CA4 /* libSoundCloudAPI dev.a */;
+			remoteGlobalIDString = D396C7870F4C439600DF5CA4;
 			remoteInfo = "SoundCloudAPI for iPhone Device";
 		};
 		D3FC1FFB0F4C515700DFB493 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D396C78E0F4C43A700DF5CA4 /* libSoundCloudAPI sim.a */;
+			remoteGlobalIDString = D396C78E0F4C43A700DF5CA4;
 			remoteInfo = "SoundCloudAPI for iPhone Simulator";
 		};
 		D3FC1FFD0F4C516D00DFB493 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D396C70D0F4C422400DF5CA4 /* SoundCloudAPI for Mac */;
+			remoteGlobalIDString = D396C70D0F4C422400DF5CA4;
 			remoteInfo = "SoundCloudAPI for Mac";
 		};
 /* End PBXContainerItemProxy section */
@@ -90,7 +98,8 @@
 		D32353DC0F2A355E00BE4212 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		D32353DD0F2A355E00BE4212 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
 		D32353DE0F2A355E00BE4212 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		D36D9C840F49B482002DF2A7 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		D35526200F4D7C450074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D35526210F4D7C450074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		D375FD910F3B0A7200954DE4 /* 1375_sleep_90_bpm_nylon2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1375_sleep_90_bpm_nylon2.wav; sourceTree = "<group>"; };
 		D3E572B50F2F28B800DE180F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundCloudAPI.xcodeproj; path = ../../SoundCloudAPI/SoundCloudAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -174,8 +183,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D35526200F4D7C450074030D /* LICENSE */,
+				D35526210F4D7C450074030D /* NOTICE */,
 				D375FD910F3B0A7200954DE4 /* 1375_sleep_90_bpm_nylon2.wav */,
-				D36D9C840F49B482002DF2A7 /* License.txt */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -219,9 +229,10 @@
 		D3FC1FEE0F4C515700DFB493 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D3FC1FF80F4C515700DFB493 /* SoundCloudAPI for Mac.framework */,
+				D3FC1FF80F4C515700DFB493 /* SoundCloudAPI.framework */,
 				D3FC1FFA0F4C515700DFB493 /* libSoundCloudAPI dev.a */,
 				D3FC1FFC0F4C515700DFB493 /* libSoundCloudAPI sim.a */,
+				D35525FF0F4D7C130074030D /* libSoundCloudAPI.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,10 +284,17 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		D3FC1FF80F4C515700DFB493 /* SoundCloudAPI for Mac.framework */ = {
+		D35525FF0F4D7C130074030D /* libSoundCloudAPI.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSoundCloudAPI.a;
+			remoteRef = D35525FE0F4D7C130074030D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D3FC1FF80F4C515700DFB493 /* SoundCloudAPI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = "SoundCloudAPI for Mac.framework";
+			path = SoundCloudAPI.framework;
 			remoteRef = D3FC1FF70F4C515700DFB493 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -304,7 +322,8 @@
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				D375FD920F3B0A7200954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */,
-				D36D9C850F49B482002DF2A7 /* License.txt in Resources */,
+				D35526220F4D7C450074030D /* LICENSE in Resources */,
+				D35526230F4D7C460074030D /* NOTICE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
