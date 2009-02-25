@@ -128,7 +128,7 @@
 - (IBAction)postTest:(id)sender;
 {
 	// sample from http://www.freesound.org/samplesViewSingle.php?id=1375
-	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"mp3"];
+	NSString *filePath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"wav"];
 	NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 	
 	NSMutableDictionary *parameters = [[parametersDataSource parameterDictionary] mutableCopy];
@@ -202,12 +202,12 @@
 	NSLog(@"Did Recieve Data");
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(UInt32)loadedBytes total:(UInt32)totalBytes context:(id)context;
+-(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
 {
 	NSLog(@"Did receive Bytes %qu of %qu", loadedBytes, totalBytes);
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(UInt32)sendBytes total:(UInt32)totalBytes context:(id)context;
+-(void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
 {
 	NSLog(@"Did send Bytes %qu of %qu", sendBytes, totalBytes);
 	[postProgress setDoubleValue:100 * sendBytes / totalBytes];

@@ -580,6 +580,7 @@
 				D396C70A0F4C422400DF5CA4 /* Resources */,
 				D396C70B0F4C422400DF5CA4 /* Sources */,
 				D396C70C0F4C422400DF5CA4 /* Frameworks */,
+				D3138B460F5553FE002215C1 /* Create Framework link */,
 			);
 			buildRules = (
 			);
@@ -677,6 +678,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		D3138B460F5553FE002215C1 /* Create Framework link */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Create Framework link";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# remove existing product lib file, just in case\nrm -rf \"${BUILD_DIR}/SoundCloudAPI.framework\"\n\ncp -r \"${BUILD_DIR}/${CONFIGURATION}/SoundCloudAPI.framework\" \"${BUILD_DIR}/SoundCloudAPI.framework\"\n";
+		};
 		D3FC210C0F4C7C2D00DFB493 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

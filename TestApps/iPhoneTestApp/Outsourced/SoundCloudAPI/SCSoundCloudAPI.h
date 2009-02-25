@@ -102,6 +102,6 @@ typedef enum {
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didFinishWithData:(NSData *)data context:(id)context;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didFailWithError:(NSError *)error context:(id)context;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveData:(NSData *)data context:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(UInt32)loadedBytes total:(UInt32)totalBytes context:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(UInt32)sendBytes total:(UInt32)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
 @end

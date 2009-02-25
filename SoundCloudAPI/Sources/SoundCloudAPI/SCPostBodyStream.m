@@ -150,16 +150,15 @@
         return 0;
 	
     int result = [_currentStream read:buffer maxLength:len];
-    if ((result == 0)
-		&& (_streamIndex < _contentStreams.count - 1))
-    {
-        _streamIndex++;
-        _currentStream = [_contentStreams objectAtIndex:_streamIndex];
-        result = [self read:buffer maxLength:len];
-    }
-    
+	
     if (result == 0) {
-        _currentStream == nil;
+		if (_streamIndex < _contentStreams.count - 1) {
+			_streamIndex++;
+			_currentStream = [_contentStreams objectAtIndex:_streamIndex];
+			result = [self read:buffer maxLength:len];
+		} else {
+			_currentStream == nil;
+		}
 	} else {
 		_numBytesRead += result;
 		if([_monitorDelegate respondsToSelector:@selector(stream:hasBytesDelivered:total:)]) {
