@@ -28,7 +28,6 @@
 		D396C72D0F4C428F00DF5CA4 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D396C72E0F4C428F00DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D396C72F0F4C42B100DF5CA4 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */; };
-		D396C7300F4C42B100DF5CA4 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7E0F226CDB0075D708 /* hmac.c */; };
 		D396C7310F4C42B100DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */; };
 		D396C7320F4C42B100DF5CA4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D120F22720F0075D708 /* NSString+URLEncoding.m */; };
 		D396C7330F4C42B100DF5CA4 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D140F22720F0075D708 /* NSURL+Base.m */; };
@@ -41,9 +40,7 @@
 		D396C73A0F4C42B100DF5CA4 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9A0F226CF40075D708 /* OARequestParameter.m */; };
 		D396C73B0F4C42B100DF5CA4 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9C0F226CF40075D708 /* OAServiceTicket.m */; };
 		D396C73C0F4C42B100DF5CA4 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9E0F226CF40075D708 /* OAToken.m */; };
-		D396C73D0F4C42B100DF5CA4 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C800F226CDB0075D708 /* sha1.c */; };
 		D396C73E0F4C42C500DF5CA4 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */; };
-		D396C73F0F4C42C500DF5CA4 /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7F0F226CDB0075D708 /* hmac.h */; };
 		D396C7400F4C42C500DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */; };
 		D396C7410F4C42C500DF5CA4 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D110F22720F0075D708 /* NSString+URLEncoding.h */; };
 		D396C7420F4C42C500DF5CA4 /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D130F22720F0075D708 /* NSURL+Base.h */; };
@@ -58,7 +55,6 @@
 		D396C74B0F4C42C500DF5CA4 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D1E0F2272420075D708 /* OASignatureProviding.h */; };
 		D396C74C0F4C42C500DF5CA4 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9D0F226CF40075D708 /* OAToken.h */; };
 		D396C74D0F4C42C500DF5CA4 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196CA10F226CF40075D708 /* OAuthConsumer.h */; };
-		D396C74E0F4C42C500DF5CA4 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C810F226CDB0075D708 /* sha1.h */; };
 		D396C7B20F4C461C00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */; };
 		D396C7B30F4C461C00DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */; };
 		D396C7B40F4C461C00DF5CA4 /* OAToken+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */; };
@@ -94,7 +90,6 @@
 		D396C7D20F4C465900DF5CA4 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */; };
 		D396C7D30F4C465900DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */; };
 		D396C7D40F4C466900DF5CA4 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */; };
-		D396C7D50F4C466900DF5CA4 /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7F0F226CDB0075D708 /* hmac.h */; };
 		D396C7D60F4C466900DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */; };
 		D396C7D70F4C466900DF5CA4 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D110F22720F0075D708 /* NSString+URLEncoding.h */; };
 		D396C7D80F4C466900DF5CA4 /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D130F22720F0075D708 /* NSURL+Base.h */; };
@@ -109,9 +104,7 @@
 		D396C7E10F4C466900DF5CA4 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D1E0F2272420075D708 /* OASignatureProviding.h */; };
 		D396C7E20F4C466900DF5CA4 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9D0F226CF40075D708 /* OAToken.h */; };
 		D396C7E30F4C466900DF5CA4 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196CA10F226CF40075D708 /* OAuthConsumer.h */; };
-		D396C7E40F4C466900DF5CA4 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C810F226CDB0075D708 /* sha1.h */; };
 		D396C7E50F4C468000DF5CA4 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */; };
-		D396C7E60F4C468000DF5CA4 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7E0F226CDB0075D708 /* hmac.c */; };
 		D396C7E70F4C468000DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */; };
 		D396C7E80F4C468000DF5CA4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D120F22720F0075D708 /* NSString+URLEncoding.m */; };
 		D396C7E90F4C468000DF5CA4 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D140F22720F0075D708 /* NSURL+Base.m */; };
@@ -124,9 +117,7 @@
 		D396C7F00F4C468000DF5CA4 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9A0F226CF40075D708 /* OARequestParameter.m */; };
 		D396C7F10F4C468000DF5CA4 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9C0F226CF40075D708 /* OAServiceTicket.m */; };
 		D396C7F20F4C468000DF5CA4 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9E0F226CF40075D708 /* OAToken.m */; };
-		D396C7F30F4C468000DF5CA4 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C800F226CDB0075D708 /* sha1.c */; };
 		D396C7F40F4C46A600DF5CA4 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */; };
-		D396C7F50F4C46A600DF5CA4 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7E0F226CDB0075D708 /* hmac.c */; };
 		D396C7F60F4C46A600DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */; };
 		D396C7F70F4C46A600DF5CA4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D120F22720F0075D708 /* NSString+URLEncoding.m */; };
 		D396C7F80F4C46A600DF5CA4 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D140F22720F0075D708 /* NSURL+Base.m */; };
@@ -139,9 +130,7 @@
 		D396C7FF0F4C46A600DF5CA4 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9A0F226CF40075D708 /* OARequestParameter.m */; };
 		D396C8000F4C46A600DF5CA4 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9C0F226CF40075D708 /* OAServiceTicket.m */; };
 		D396C8010F4C46A600DF5CA4 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9E0F226CF40075D708 /* OAToken.m */; };
-		D396C8020F4C46A600DF5CA4 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C800F226CDB0075D708 /* sha1.c */; };
 		D396C8030F4C46BD00DF5CA4 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */; };
-		D396C8040F4C46BD00DF5CA4 /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7F0F226CDB0075D708 /* hmac.h */; };
 		D396C8050F4C46BD00DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */; };
 		D396C8060F4C46BD00DF5CA4 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D110F22720F0075D708 /* NSString+URLEncoding.h */; };
 		D396C8070F4C46BD00DF5CA4 /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D130F22720F0075D708 /* NSURL+Base.h */; };
@@ -156,7 +145,6 @@
 		D396C8100F4C46BD00DF5CA4 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D1E0F2272420075D708 /* OASignatureProviding.h */; };
 		D396C8110F4C46BD00DF5CA4 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9D0F226CF40075D708 /* OAToken.h */; };
 		D396C8120F4C46BD00DF5CA4 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196CA10F226CF40075D708 /* OAuthConsumer.h */; };
-		D396C8130F4C46BD00DF5CA4 /* sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C810F226CDB0075D708 /* sha1.h */; };
 		D396C85E0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C85D0F4C497E00DF5CA4 /* Library_Prefix.pch */; };
 		D396C85F0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C85D0F4C497E00DF5CA4 /* Library_Prefix.pch */; };
 		D3FC213F0F4C82D600DFB493 /* libSoundCloudAPI.a in Copy Lib to Dist */ = {isa = PBXBuildFile; fileRef = D3FC21010F4C7BF600DFB493 /* libSoundCloudAPI.a */; };
@@ -216,10 +204,6 @@
 		D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIConfiguration.m; sourceTree = "<group>"; };
 		D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
 		D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
-		D3196C7E0F226CDB0075D708 /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
-		D3196C7F0F226CDB0075D708 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
-		D3196C800F226CDB0075D708 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
-		D3196C810F226CDB0075D708 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
 		D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAAsynchronousDataFetcher.h; sourceTree = "<group>"; };
 		D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAAsynchronousDataFetcher.m; sourceTree = "<group>"; };
 		D3196C8F0F226CF40075D708 /* OAConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAConsumer.h; sourceTree = "<group>"; };
@@ -356,10 +340,6 @@
 			children = (
 				D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */,
 				D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */,
-				D3196C7E0F226CDB0075D708 /* hmac.c */,
-				D3196C7F0F226CDB0075D708 /* hmac.h */,
-				D3196C800F226CDB0075D708 /* sha1.c */,
-				D3196C810F226CDB0075D708 /* sha1.h */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -472,7 +452,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D396C73E0F4C42C500DF5CA4 /* Base64Transcoder.h in Headers */,
-				D396C73F0F4C42C500DF5CA4 /* hmac.h in Headers */,
 				D396C7400F4C42C500DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */,
 				D396C7410F4C42C500DF5CA4 /* NSString+URLEncoding.h in Headers */,
 				D396C7420F4C42C500DF5CA4 /* NSURL+Base.h in Headers */,
@@ -487,7 +466,6 @@
 				D396C74B0F4C42C500DF5CA4 /* OASignatureProviding.h in Headers */,
 				D396C74C0F4C42C500DF5CA4 /* OAToken.h in Headers */,
 				D396C74D0F4C42C500DF5CA4 /* OAuthConsumer.h in Headers */,
-				D396C74E0F4C42C500DF5CA4 /* sha1.h in Headers */,
 				D396C7260F4C428F00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */,
 				D396C7270F4C428F00DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */,
 				D396C7280F4C428F00DF5CA4 /* OAToken+Keychain.h in Headers */,
@@ -506,7 +484,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D396C7D40F4C466900DF5CA4 /* Base64Transcoder.h in Headers */,
-				D396C7D50F4C466900DF5CA4 /* hmac.h in Headers */,
 				D396C7D60F4C466900DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */,
 				D396C7CB0F4C465900DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */,
 				D396C7D70F4C466900DF5CA4 /* NSString+URLEncoding.h in Headers */,
@@ -530,7 +507,6 @@
 				D396C7D10F4C465900DF5CA4 /* SCPostBodyStream.h in Headers */,
 				D396C7D20F4C465900DF5CA4 /* SCSoundCloudAPI.h in Headers */,
 				D396C7D30F4C465900DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
-				D396C7E40F4C466900DF5CA4 /* sha1.h in Headers */,
 				D396C85E0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -540,7 +516,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D396C8030F4C46BD00DF5CA4 /* Base64Transcoder.h in Headers */,
-				D396C8040F4C46BD00DF5CA4 /* hmac.h in Headers */,
 				D396C8050F4C46BD00DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */,
 				D396C7C20F4C464500DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */,
 				D396C8060F4C46BD00DF5CA4 /* NSString+URLEncoding.h in Headers */,
@@ -564,7 +539,6 @@
 				D396C7C80F4C464500DF5CA4 /* SCPostBodyStream.h in Headers */,
 				D396C7C90F4C464500DF5CA4 /* SCSoundCloudAPI.h in Headers */,
 				D396C7CA0F4C464500DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
-				D396C8130F4C46BD00DF5CA4 /* sha1.h in Headers */,
 				D396C85F0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -703,7 +677,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# remove existing product lib file, just in case\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/libSoundCloudAPI.a\"\nrm -rf \"${PROJECT_DIR}/Dist/*\"\n\nmkdir -p \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/\"\n\n# combine lib files for various platforms into one\nlipo -create \"build/${BUILD_STYLE}-iphoneos/libSoundCloudAPI dev.a\" \"build/${BUILD_STYLE}-iphonesimulator/libSoundCloudAPI sim.a\" -output \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/libSoundCloudAPI.a\"";
+			shellScript = "# remove existing product lib file, just in case\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/libSoundCloudAPI.a\"\nrm -rf \"${PROJECT_DIR}/Dist/*\"\n\nmkdir -p \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/\"\n\n# combine lib files for various platforms into one\nlipo -create \"${BUILD_DIR}/${BUILD_STYLE}-iphoneos/libSoundCloudAPI dev.a\" \"${BUILD_DIR}/${BUILD_STYLE}-iphonesimulator/libSoundCloudAPI sim.a\" -output \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/libSoundCloudAPI.a\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -721,7 +695,6 @@
 				D396C7240F4C428300DF5CA4 /* SCSoundCloudAPI.m in Sources */,
 				D396C7250F4C428300DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
 				D396C72F0F4C42B100DF5CA4 /* Base64Transcoder.c in Sources */,
-				D396C7300F4C42B100DF5CA4 /* hmac.c in Sources */,
 				D396C7310F4C42B100DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */,
 				D396C7320F4C42B100DF5CA4 /* NSString+URLEncoding.m in Sources */,
 				D396C7330F4C42B100DF5CA4 /* NSURL+Base.m in Sources */,
@@ -734,7 +707,6 @@
 				D396C73A0F4C42B100DF5CA4 /* OARequestParameter.m in Sources */,
 				D396C73B0F4C42B100DF5CA4 /* OAServiceTicket.m in Sources */,
 				D396C73C0F4C42B100DF5CA4 /* OAToken.m in Sources */,
-				D396C73D0F4C42B100DF5CA4 /* sha1.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,7 +715,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D396C7F40F4C46A600DF5CA4 /* Base64Transcoder.c in Sources */,
-				D396C7F50F4C46A600DF5CA4 /* hmac.c in Sources */,
 				D396C7F60F4C46A600DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */,
 				D396C7B20F4C461C00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */,
 				D396C7F70F4C46A600DF5CA4 /* NSString+URLEncoding.m in Sources */,
@@ -764,7 +735,6 @@
 				D396C7B70F4C461C00DF5CA4 /* SCPostBodyStream.m in Sources */,
 				D396C7B80F4C461C00DF5CA4 /* SCSoundCloudAPI.m in Sources */,
 				D396C7B90F4C461C00DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
-				D396C8020F4C46A600DF5CA4 /* sha1.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,7 +743,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D396C7E50F4C468000DF5CA4 /* Base64Transcoder.c in Sources */,
-				D396C7E60F4C468000DF5CA4 /* hmac.c in Sources */,
 				D396C7E70F4C468000DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */,
 				D396C7BA0F4C463100DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */,
 				D396C7E80F4C468000DF5CA4 /* NSString+URLEncoding.m in Sources */,
@@ -794,7 +763,6 @@
 				D396C7BF0F4C463100DF5CA4 /* SCPostBodyStream.m in Sources */,
 				D396C7C00F4C463100DF5CA4 /* SCSoundCloudAPI.m in Sources */,
 				D396C7C10F4C463100DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
-				D396C7F30F4C468000DF5CA4 /* sha1.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
