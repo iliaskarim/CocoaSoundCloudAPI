@@ -20,22 +20,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SCPostBodyPart : NSObject {
-	NSString *contentHeaders;
-	NSInputStream *contentStream;
+
+@interface SCInputStreamWrapper : NSObject {
+	NSInputStream *stream;
 	unsigned long long contentLength;
 }
+@property (retain,nonatomic) NSInputStream *stream;
+@property (nonatomic) unsigned long long contentLength;
 
-+ partWithName:(NSString *)name content:(id)content;
-
-- (id)initWithName:(NSString *)name content:(id)content;
-- (id)initWithHeaders:(NSString *)headers dataContent:(NSData *)data;
-- (id)initWithName:(NSString *)name streamContent:(NSInputStream *)stream streamLength:(unsigned long long)streamLength;
-
-- (id)initWithHeaders:(NSString *)headers streamContent:(NSInputStream *)stream length:(unsigned long long)length; //designated initializer
-
-@property (readonly) NSString *contentHeaders;
-@property (readonly) NSInputStream *contentStream;
-@property (readonly) unsigned long long contentLength;
++ (id)wrapperWithStream:(NSInputStream *)stream contentLength:(unsigned long long)contentLength;
+- (id)initWithStream:(NSInputStream *)stream contentLength:(unsigned long long)contentLength;
 
 @end

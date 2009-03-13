@@ -327,7 +327,6 @@
 																	   realm:nil
 														   signatureProvider:nil] autorelease];
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
-//	[request addValue:@"" forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
 	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]){
