@@ -20,3 +20,4 @@
 
 #import "SCSoundCloudAPI.h"
 #import "SCSoundCloudAPIConfiguration.h"
+#import "SCInputStreamWrapper.h"
