@@ -131,17 +131,14 @@
 
 - (void)close;
 {
-    [_contentStreams makeObjectsPerformSelector:@selector(close)];
+	[_contentStreams makeObjectsPerformSelector:@selector(close)];
 	_currentStream = nil;
 }
 
 - (BOOL)hasBytesAvailable;
 {
-	if (!_currentStream) return NO;
-	for (int i = _streamIndex; i < _contentStreams.count; i++) {
-		if ([[_contentStreams objectAtIndex:i] hasBytesAvailable]) return YES;
-	}
-	return NO;
+	// returns YES if the stream has bytes available or if it impossible to tell without actually doing the read.
+	return YES;
 }
 
 - (NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len;
