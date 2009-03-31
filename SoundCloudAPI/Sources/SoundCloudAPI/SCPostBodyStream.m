@@ -172,9 +172,16 @@
 
 - (NSStreamStatus)streamStatus;
 {
-	if(_currentStream)
-		return [_currentStream streamStatus];
-	return NSStreamStatusNotOpen;
+	NSStreamStatus status = NSStreamStatusNotOpen;
+	
+	if (_currentStream != nil) {
+		status = [_currentStream streamStatus];
+		if ((status == NSStreamStatusAtEnd || status == NSStreamStatusClosed)
+			&& _streamIndex < [_contentStreams count] - 1)
+			status = NSStreamStatusReading;
+	}
+	
+	return status;
 }
 
 - (NSError *)streamError;
