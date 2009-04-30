@@ -141,7 +141,7 @@
 													message:[error localizedDescription]
 												   delegate:nil
 										  cancelButtonTitle:@"Ignore"
-										  otherButtonTitles:@"Retry (dummy)"];
+										  otherButtonTitles:@"Retry (dummy)", nil];
 	[alert show];
 	[alert release];
 }

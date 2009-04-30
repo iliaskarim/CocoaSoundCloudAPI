@@ -21,7 +21,7 @@
 #import "OAToken+Keychain.h"
 #import <Security/Security.h>
 
-#if TARGET_OS_IPHONE && (! TARGET_IPHONE_SIMULATOR)
+#if __IPHONE_3_0 || (TARGET_OS_IPHONE && (!TARGET_IPHONE_SIMULATOR))
 
 #pragma mark iPhone device implementation
 
