@@ -135,7 +135,16 @@
 }
 
 -(void)soundCloudAPI:(SCSoundCloudAPI *)api didFailWithError:(NSError *)error context:(id)context;
-{}
+{
+	// check error code. if it's a http error get it from the userdict (see SCAPIErrors.h)
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+													message:[error localizedDescription]
+												   delegate:nil
+										  cancelButtonTitle:@"Ignore"
+										  otherButtonTitles:@"Retry (dummy)"];
+	[alert show];
+	[alert release];
+}
 
 -(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveData:(NSData *)data context:(id)context;
 {}

@@ -16,6 +16,10 @@
 		D309413A0F6ABDA000F8E534 /* SCInputStreamWrapper.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; };
 		D355263F0F4D7C850074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35525CE0F4D74520074030D /* LICENSE */; };
 		D35526400F4D7C850074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D35525CF0F4D74520074030D /* NOTICE */; };
+		D387155E0FA9F53A002DFF52 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D38715600FA9F53A002DFF52 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; };
+		D38715620FA9F53A002DFF52 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; };
+		D38715900FA9F7C2002DFF52 /* SCAPIErrors.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; };
 		D396C7180F4C425200DF5CA4 /* Framework_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */; };
 		D396C71E0F4C428300DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */; };
 		D396C71F0F4C428300DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */; };
@@ -196,6 +200,7 @@
 			dstSubfolderSpec = 0;
 			files = (
 				D3FC21400F4C82E200DFB493 /* SCAPI.h in Copy Headers to Dist */,
+				D38715900FA9F7C2002DFF52 /* SCAPIErrors.h in Copy Headers to Dist */,
 				D3FC21410F4C82E200DFB493 /* SCSoundCloudAPI.h in Copy Headers to Dist */,
 				D3FC21420F4C82E200DFB493 /* SCSoundCloudAPIConfiguration.h in Copy Headers to Dist */,
 				D309413A0F6ABDA000F8E534 /* SCInputStreamWrapper.h in Copy Headers to Dist */,
@@ -250,6 +255,7 @@
 		D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyStream.m; sourceTree = "<group>"; };
 		D35525CE0F4D74520074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D35525CF0F4D74520074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
+		D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIErrors.h; sourceTree = "<group>"; };
 		D396C70E0F4C422400DF5CA4 /* SoundCloudAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SoundCloudAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D396C70F0F4C422400DF5CA4 /* SoundCloudAPI for Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundCloudAPI for Mac-Info.plist"; sourceTree = "<group>"; };
 		D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Framework_Prefix.pch; sourceTree = "<group>"; };
@@ -440,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				D3A529430F334D140068D32D /* SCAPI.h */,
+				D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */,
 				D3A529130F334CB50068D32D /* SCDataFetcher.h */,
 				D3A529140F334CB50068D32D /* SCDataFetcher.m */,
 				D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */,
@@ -482,6 +489,7 @@
 				D396C7270F4C428F00DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */,
 				D396C7280F4C428F00DF5CA4 /* OAToken+Keychain.h in Headers */,
 				D396C7290F4C428F00DF5CA4 /* SCAPI.h in Headers */,
+				D387155E0FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
 				D396C72A0F4C428F00DF5CA4 /* SCDataFetcher.h in Headers */,
 				D396C72B0F4C428F00DF5CA4 /* SCPostBodyPart.h in Headers */,
 				D396C72C0F4C428F00DF5CA4 /* SCPostBodyStream.h in Headers */,
@@ -522,6 +530,7 @@
 				D396C7D30F4C465900DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
 				D396C85E0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
 				D309412B0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
+				D38715620FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +564,7 @@
 				D396C7CA0F4C464500DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
 				D396C85F0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
 				D309412D0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
+				D38715600FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

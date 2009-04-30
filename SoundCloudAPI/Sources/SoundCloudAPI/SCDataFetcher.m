@@ -23,6 +23,8 @@
 #import "OAuthConsumer.h"
 #import "OAMutableURLRequest.h"
 
+#import "SCAPIErrors.h"
+
 @implementation SCDataFetcher
 
 -(id)initWithRequest:(OAMutableURLRequest *)inRequest delegate:(id<SCDataFetcherDelegate>)inDelegate context:(id)inContext;
@@ -69,6 +71,7 @@
 {
 	_expectedContentLength = response.expectedContentLength;
 	_statusCode = [(NSHTTPURLResponse *)response statusCode];
+	
 	if (!_data) {
 		_data = [[NSMutableData alloc] init];
 	} else {
@@ -97,17 +100,30 @@
 			[_delegate scDataFetcher:self didFinishWithData:_data context:_context];
 		}
 	} else {
-		NSError *error = [NSError errorWithDomain:@"SoundCloudAPI Response Error"
-											 code:_statusCode
-										 userInfo:nil];
+		NSError *httpError = [NSError errorWithDomain:NSURLErrorDomain
+												 code:_statusCode
+											 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+													   [NSHTTPURLResponse localizedStringForStatusCode:_statusCode], NSLocalizedDescriptionKey,
+													   nil]];
+		NSError *error = [NSError errorWithDomain:SCAPIErrorDomain
+											 code:SCAPIErrorHttpResponseError
+										 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+												   httpError, SCAPIHttpResponseErrorStatusKey,
+												   nil]];
 		if ([_delegate respondsToSelector:@selector(scDataFetcher:didFailWithError:context:)]) {
 			[_delegate scDataFetcher:self didFailWithError:error context:_context];
 		}
 	}
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)httpError;
 {
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  httpError, SCAPIHttpResponseErrorStatusKey,
+							  nil];
+	NSError *error = [NSError errorWithDomain:SCAPIErrorDomain
+										 code:SCAPIErrorHttpResponseError
+									 userInfo:userInfo];
 	if ([_delegate respondsToSelector:@selector(scDataFetcher:didFailWithError:context:)]) {
 		[_delegate scDataFetcher:self didFailWithError:error context:_context];
 	}

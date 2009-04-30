@@ -22,6 +22,7 @@
 
 #import "OAuthConsumer.h"
 
+#import "SCAPIErrors.h"
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCPostBodyStream.h"
 #import "SCDataFetcher.h"
@@ -68,8 +69,16 @@
 			// NSLog(@"Not authenticated");
 			status = SCAuthenticationStatusNotAuthenticated;
 		}
-		if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+		if ([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
 			[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+		
+		if (status == SCAuthenticationStatusAuthenticated) {
+			// FIXME: test tokens if they are still valid
+		} else if (status == SCAuthenticationStatusNotAuthenticated) {
+			[self requestAuthentication];
+		} else if (status == SCAuthenticationStatusWillAuthorizeRequestToken) {
+			[self authorizeRequestToken];
+		}
 	}
 	return self;
 }
@@ -147,7 +156,7 @@
 
 - (void)requestAuthentication;
 {
-	SCSoundCloudAPIConfiguration *configuration = self.configuration;
+ 	SCSoundCloudAPIConfiguration *configuration = self.configuration;
 	if (!configuration.requestTokenURL
 		|| !configuration.authURL
 		|| !configuration.accessTokenURL) {
@@ -246,8 +255,6 @@
 		if([authDelegate respondsToSelector:@selector(soundCloudAPI:requestedAuthenticationWithURL:)]) {
 			[authDelegate soundCloudAPI:self requestedAuthenticationWithURL:[configuration.authURL urlByAddingParameters:parameters]];
 		}		   
-	} else {
-		NSLog(@"Ticket did not Succeed: %@", ticket);
 	}
 }
 
@@ -262,8 +269,6 @@
 		status = SCAuthenticationStatusAuthenticated;
 		if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
 			[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
-	} else {
-		NSLog(@"Ticket did not Succeed: %@", ticket);
 	}
 }
 
@@ -271,11 +276,29 @@
 {
 	[_authDataFetcher release]; _authDataFetcher = nil;
 	[self resetAuthentication];
+
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  error, SCAPIHttpResponseErrorStatusKey,
+							  [error localizedDescription], NSLocalizedDescriptionKey,
+							  nil];
+	NSError *scError = [NSError errorWithDomain:SCAPIErrorDomain
+										   code:SCAPIErrorHttpResponseError
+									   userInfo:userInfo];
+	[authDelegate soundCloudAPI:self didEncounterError:scError];
 }
 
 - (void)accessTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error {
 	[_authDataFetcher release]; _authDataFetcher = nil;
 	[self resetAuthentication];
+	
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  error, SCAPIErrorHttpResponseError,
+							  [error localizedDescription], NSLocalizedDescriptionKey,
+							  nil];
+	NSError *scError = [NSError errorWithDomain:SCAPIErrorDomain
+									  code:SCAPIErrorHttpResponseError
+								  userInfo:userInfo];
+	[authDelegate soundCloudAPI:self didEncounterError:scError];	
 }
 
 
@@ -316,7 +339,12 @@
 	
 	if (!self.accessToken
 		|| status != SCAuthenticationStatusAuthenticated) {
-		NSLog(@"API No not authorized");
+		NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"SoundCloud API not authenticated"
+															 forKey:NSLocalizedDescriptionKey];
+		NSError *error = [NSError errorWithDomain:SCAPIErrorDomain
+											 code:SCAPIErrorNotAuthenticted
+										 userInfo:userInfo];
+		[delegate soundCloudAPI:self didFailWithError:error context:context];
 		return;
 	}
 	

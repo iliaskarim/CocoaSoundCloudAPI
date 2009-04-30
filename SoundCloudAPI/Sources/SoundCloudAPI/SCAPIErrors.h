@@ -18,7 +18,15 @@
  * 
  */
 
-#import "SCAPIErrors.h"
-#import "SCSoundCloudAPI.h"
-#import "SCSoundCloudAPIConfiguration.h"
-#import "SCInputStreamWrapper.h"
+#import <Foundation/Foundation.h>
+
+// Domain of errors coming from a call to the SoundCloutAPI
+#define SCAPIErrorDomain				@"SoundCloudAPIError"
+
+// If the code of the error is SCAPIErrorHttpResponseError you can find the original HTTPError under this Key in the userInfo
+#define SCAPIHttpResponseErrorStatusKey	@"httpErrorStatus"
+
+enum {
+	SCAPIErrorNotAuthenticted =			-1001,
+	SCAPIErrorHttpResponseError =		-2001
+};

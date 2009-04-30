@@ -20,13 +20,13 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class SCSoundCloudAPIConfiguration;
 @class OAConsumer;
 @class OADataFetcher;
 @class OAToken;
 @protocol SCSoundCloudAPIDelegate;
 @protocol SCSoundCloudAPIAuthenticationDelegate;
-
 
 typedef enum {
 	SCAuthenticationStatusNotAuthenticated,			// api is not authenticated. -> requestAuthentication
@@ -95,6 +95,7 @@ typedef enum {
 - (SCSoundCloudAPIConfiguration *)configurationForSoundCloudAPI:(SCSoundCloudAPI *)scAPI;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI requestedAuthenticationWithURL:(NSURL *)authURL;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didChangeAuthenticationStatus:(SCAuthenticationStatus)status;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didEncounterError:(NSError *)error;
 @end
 
 

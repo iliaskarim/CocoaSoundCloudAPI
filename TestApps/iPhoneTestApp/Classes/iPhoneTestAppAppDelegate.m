@@ -16,6 +16,12 @@
  * For more information and documentation refer to
  * http://soundcloud.com/api
  * 
+ *
+ *  DISCLAIMER:
+ *    This is just sample code. Please make sure to understand the concepts described
+ *    in the documentation of the api wrapper.
+ *    The implementation of this class is just for illustration.
+ * 
  */
 
 #import "iPhoneTestAppAppDelegate.h"
@@ -30,9 +36,15 @@
 	// global accessible api configuration through application delegate
 	// set appDelegate as auth delegate on every api instantiation
 	// make shure to register the myapp url scheme to your app :)
+#ifdef kUseProduction
+	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
+																		  consumerSecret:kTestAppConsumerSecret
+																			 callbackURL:[NSURL URLWithString:kCallbackURL]];
+#else
 	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
 																	   consumerSecret:kTestAppConsumerSecret
 																		  callbackURL:[NSURL URLWithString:kCallbackURL]];
+#endif
 	[window addSubview:viewController.view];
     [window makeKeyAndVisible];
 
@@ -89,31 +101,33 @@
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didChangeAuthenticationStatus:(SCAuthenticationStatus)status;
 {
-	switch (status) {
-		case SCAuthenticationStatusAuthenticated:
-			// authenticated
-			viewController.postButton.enabled = YES;
-			// not the most elegant way to enable/disable the ui
-			// but this is up to you (the developer of apps) to prove your cocoa skills :)
-			viewController.trackNameField.enabled = YES;
-			break;
-		case SCAuthenticationStatusNotAuthenticated:
-			viewController.postButton.enabled = NO;
-			viewController.trackNameField.enabled = NO;
+	if (status == SCAuthenticationStatusAuthenticated) {
+		// authenticated
+		viewController.postButton.enabled = YES;
+		viewController.trackNameField.enabled = YES;
+		// not the most elegant way to enable/disable the ui
+		// but this is up to you (the developer of apps) to prove your cocoa skills :)
+	} else {
+		viewController.postButton.enabled = NO;
+		viewController.trackNameField.enabled = NO;
+	}
+}
+
+- (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didEncounterError:(NSError *)error;
+{
+	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
+		if ([error code] == SCAPIErrorHttpResponseError) {
+			// inform the user and offer him to retry.
+			NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
+			if ([httpError code] == NSURLErrorNotConnectedToInternet) {
+				[viewController.postButton setTitle:@"No internet connection" forState:UIControlStateDisabled];
+				[viewController.postButton setEnabled:NO];
+			} else {
+				NSLog(@"error: %@", [httpError localizedDescription]);
+			}
+		} else if ([error code] == SCAPIErrorNotAuthenticted) {
 			[_scAPI requestAuthentication];
-			break;
-		case SCAuthenticationStatusGettingToken:
-			viewController.postButton.enabled = NO;
-			viewController.trackNameField.enabled = NO;
-			// should not send requests to the api while it is in this state.
-			break;
-		case SCAuthenticationStatusWillAuthorizeRequestToken:
-			viewController.postButton.enabled = NO;
-			viewController.trackNameField.enabled = NO;
-			[_scAPI authorizeRequestToken];
-			break;
-		default:
-			break;
+		}
 	}
 }
 

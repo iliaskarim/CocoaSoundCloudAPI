@@ -20,13 +20,18 @@
 
 #import "SCAPI.h"
 
-//Production
-//#define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"
-//#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
+// define to use production. else use sandbox
+#define kUseProduction
 
-//Sandbox
-#define kTestAppConsumerKey		@"gAnpKglV95xfMtb64zYAsg"
-#define kTestAppConsumerSecret	@"cshaWBLTZR2a1PQK3qVwuq4IpjNZcrJN1NhSY8b4vIk"
+#ifdef kUseProduction
+	//Production key & secret
+	#define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"
+	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
+#else
+	//Sandbox key & secret
+	#define kTestAppConsumerKey		@"gAnpKglV95xfMtb64zYAsg"
+	#define kTestAppConsumerSecret	@"cshaWBLTZR2a1PQK3qVwuq4IpjNZcrJN1NhSY8b4vIk"
+#endif
 
 #define kCallbackURL	@"myapp://oauth"	//remember that the myapp protocol also is set in the info.plist
 

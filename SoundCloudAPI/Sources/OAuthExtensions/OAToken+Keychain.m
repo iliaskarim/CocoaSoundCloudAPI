@@ -39,7 +39,9 @@
 	OSStatus status = SecItemCopyMatching((CFDictionaryRef)query, (CFTypeRef *)&result);
 	
 	if (status != noErr) {
-		NSLog(@"Error while initializing OAtoken: %d", status);
+		if (status != errSecItemNotFound) {
+			NSLog(@"Error while initializing OAtoken: %d", status);
+		}
 		[result release];
 		return nil;
 	}
@@ -47,7 +49,6 @@
 	if (self = [super init]) {
 		self.key = [result objectForKey:(NSString *)kSecAttrAccount];
 		self.secret = [result objectForKey:(NSString *)kSecAttrGeneric];
-		// put init stuff here
 	}
 	[result release];
 	return self;

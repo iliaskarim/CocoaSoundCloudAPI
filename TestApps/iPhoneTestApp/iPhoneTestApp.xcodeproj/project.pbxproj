@@ -81,6 +81,8 @@
 		D35526390F4D7C650074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D355263A0F4D7C650074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1375_sleep_90_bpm_nylon2.wav; sourceTree = "<group>"; };
+		D387159B0FA9F7FA002DFF52 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIErrors.h; sourceTree = "<group>"; };
+		D387159C0FA9F7FA002DFF52 /* SCInputStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCInputStreamWrapper.h; sourceTree = "<group>"; };
 		D3C38C260F34831F005B9CE1 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		D3C38C270F34831F005B9CE1 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		D3C38C280F34831F005B9CE1 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -214,6 +216,8 @@
 			isa = PBXGroup;
 			children = (
 				D3FC21660F4C861200DFB493 /* SCAPI.h */,
+				D387159B0FA9F7FA002DFF52 /* SCAPIErrors.h */,
+				D387159C0FA9F7FA002DFF52 /* SCInputStreamWrapper.h */,
 				D3FC21670F4C861200DFB493 /* SCSoundCloudAPIConfiguration.h */,
 				D3FC21680F4C861200DFB493 /* SCSoundCloudAPI.h */,
 			);

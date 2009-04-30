@@ -50,9 +50,16 @@
 
 - (void)commonAwake;
 {
+	
+#ifdef kUseProduction
 	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
 																		  consumerSecret:kTestAppConsumerSecret
 																			 callbackURL:[NSURL URLWithString:kCallbackURL]];
+#else
+	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
+																	   consumerSecret:kTestAppConsumerSecret
+																		  callbackURL:[NSURL URLWithString:kCallbackURL]];
+#endif
 	
 	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
 	[scAPI setDelegate:self];
@@ -94,7 +101,7 @@
 	// Get the URL
 	NSString *urlStr = [[event paramDescriptorForKeyword:keyDirectObject] 
 						stringValue];
-
+	
 	if([urlStr hasPrefix:kCallbackURL]) {
 		NSLog(@"handling oauth callback");
 		[scAPI authorizeRequestToken]; 
@@ -191,8 +198,13 @@
 {
 	[fetchProgressIndicator stopAnimation:nil];
 	[postProgress setDoubleValue:0];
-	
-	NSString *message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
+	NSString *message = nil;
+	if ([error.domain isEqualToString:SCAPIErrorDomain] && error.code == SCAPIErrorHttpResponseError) {
+		NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
+		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [httpError localizedDescription]];
+	} else {
+		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
+	}
 	NSLog(message);
 	[responseField setString:message];
 }
@@ -228,31 +240,31 @@
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didChangeAuthenticationStatus:(SCAuthenticationStatus)status;
 {
-	switch (status) {
-		case SCAuthenticationStatusAuthenticated:
-			// authenticated
-			[sendRequestButton setEnabled:YES];
-			// not the most elegant way to enable/disable the ui
-			// but this is up to you (the developer of apps) to prove your cocoa skills :)
-			[postTestButton setEnabled:YES];
-			break;
-		case SCAuthenticationStatusNotAuthenticated:
-			[sendRequestButton setEnabled:NO];
-			[postTestButton setEnabled:NO];
+	if (status == SCAuthenticationStatusAuthenticated) {
+		// authenticated
+		[sendRequestButton setEnabled:YES];
+		// not the most elegant way to enable/disable the ui
+		// but this is up to you (the developer of apps) to prove your cocoa skills :)
+		[postTestButton setEnabled:YES];
+	} else {
+		[sendRequestButton setEnabled:NO];
+		[postTestButton setEnabled:NO];
+	}
+}
+
+- (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didEncounterError:(NSError *)error;
+{
+	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
+		if ([error code] == SCAPIErrorHttpResponseError) {
+			NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
+			if (httpError.code == NSURLErrorNotConnectedToInternet) {
+				// inform the user and offer him to retry
+				[sendRequestButton setTitle:@"No internet"];
+				[postTestButton setTitle:@"No internet"];
+			}
+		} else if ([error code] == SCAPIErrorNotAuthenticted) {
 			[_scAPI requestAuthentication];
-			break;
-		case SCAuthenticationStatusGettingToken:
-			[sendRequestButton setEnabled:NO];
-			[postTestButton setEnabled:NO];
-			// should not send requests to the api while it is in this state.
-			break;
-		case SCAuthenticationStatusWillAuthorizeRequestToken:
-			[sendRequestButton setEnabled:NO];
-			[postTestButton setEnabled:NO];
-			[_scAPI authorizeRequestToken];
-			break;
-		default:
-			break;
+		}
 	}
 }
 

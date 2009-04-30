@@ -18,7 +18,17 @@
  * 
  */
 
-#import "SCAPIErrors.h"
-#import "SCSoundCloudAPI.h"
-#import "SCSoundCloudAPIConfiguration.h"
-#import "SCInputStreamWrapper.h"
+#import <Foundation/Foundation.h>
+
+
+@interface SCInputStreamWrapper : NSObject {
+	NSInputStream *stream;
+	unsigned long long contentLength;
+}
+@property (retain,nonatomic) NSInputStream *stream;
+@property (nonatomic) unsigned long long contentLength;
+
++ (id)wrapperWithStream:(NSInputStream *)stream contentLength:(unsigned long long)contentLength;
+- (id)initWithStream:(NSInputStream *)stream contentLength:(unsigned long long)contentLength;
+
+@end
