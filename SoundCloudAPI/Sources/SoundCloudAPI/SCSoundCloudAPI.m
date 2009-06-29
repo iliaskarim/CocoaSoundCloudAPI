@@ -292,7 +292,7 @@
 	[self resetAuthentication];
 	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  error, SCAPIErrorHttpResponseError,
+							  error, SCAPIHttpResponseErrorStatusKey,
 							  [error localizedDescription], NSLocalizedDescriptionKey,
 							  nil];
 	NSError *scError = [NSError errorWithDomain:SCAPIErrorDomain
