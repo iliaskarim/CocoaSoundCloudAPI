@@ -69,9 +69,18 @@
 	NSMutableArray *parts = [NSMutableArray array];
 	for (NSString *key in parameters) {
 		id value = [parameters valueForKey:key];
-		SCPostBodyPart *part = [[SCPostBodyPart alloc] initWithName:key content:value];
-		[parts addObject:part];
-		[part release];
+		if ([value isKindOfClass:[NSArray class]]) {
+			NSArray *contentArray = (NSArray *)value;
+			for (id content in contentArray) {
+				SCPostBodyPart *part = [[SCPostBodyPart alloc] initWithName:key content:content];
+				[parts addObject:part];
+				[part release];
+			}
+		} else {
+			SCPostBodyPart *part = [[SCPostBodyPart alloc] initWithName:key content:value];
+			[parts addObject:part];
+			[part release];
+		}
 	}
 	return parts;
 }

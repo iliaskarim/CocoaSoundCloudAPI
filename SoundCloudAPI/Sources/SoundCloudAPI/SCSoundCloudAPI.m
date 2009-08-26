@@ -276,7 +276,7 @@
 {
 	[_authDataFetcher release]; _authDataFetcher = nil;
 	[self resetAuthentication];
-
+	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  error, SCAPIHttpResponseErrorStatusKey,
 							  [error localizedDescription], NSLocalizedDescriptionKey,
@@ -296,9 +296,10 @@
 							  [error localizedDescription], NSLocalizedDescriptionKey,
 							  nil];
 	NSError *scError = [NSError errorWithDomain:SCAPIErrorDomain
-									  code:SCAPIErrorHttpResponseError
-								  userInfo:userInfo];
-	[authDelegate soundCloudAPI:self didEncounterError:scError];	
+										   code:SCAPIErrorHttpResponseError
+									   userInfo:userInfo];
+	[authDelegate soundCloudAPI:self didEncounterError:scError];
+	[self requestAuthentication];
 }
 
 
@@ -357,7 +358,8 @@
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
-	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]){
+	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]
+		&& ![[httpMethod uppercaseString] isEqualToString:@"PUT"]){
 		[request setParameterDictionary:parameters];
 	} else {
 		SCPostBodyStream *postStream = [[SCPostBodyStream alloc] initWithParameters:parameters];
