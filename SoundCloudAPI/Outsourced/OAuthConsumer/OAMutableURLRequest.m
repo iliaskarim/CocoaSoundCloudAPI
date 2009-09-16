@@ -140,17 +140,29 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
     NSString *oauthToken;
     if ([token.key isEqualToString:@""])
         oauthToken = @""; // not used on Request Token transactions
-    else
+    else if (!token.verifier || [token.verifier isEqualToString:@""])
         oauthToken = [NSString stringWithFormat:@"oauth_token=\"%@\", ", [token.key URLEncodedString]];
-    
-    NSString *oauthHeader = [NSString stringWithFormat:@"OAuth realm=\"%@\", oauth_consumer_key=\"%@\", %@oauth_signature_method=\"%@\", oauth_signature=\"%@\", oauth_timestamp=\"%@\", oauth_nonce=\"%@\", oauth_version=\"1.0\"",
+	else
+		oauthToken = [NSString stringWithFormat:@"oauth_token=\"%@\", oauth_verifier=\"%@\", ", 
+					  [token.key URLEncodedString],
+					  [token.verifier URLEncodedString]];
+	
+	NSString *callbackURL = @"";
+	if ([token.key isEqualToString:@""]
+		&& consumer.callbackURL
+		&& ![consumer.callbackURL isEqualToString:@""]) {
+		callbackURL = [NSString stringWithFormat:@", oauth_callback=\"%@\"", consumer.callbackURL];
+	}
+	
+    NSString *oauthHeader = [NSString stringWithFormat:@"OAuth realm=\"%@\", oauth_consumer_key=\"%@\", %@oauth_signature_method=\"%@\", oauth_signature=\"%@\", oauth_timestamp=\"%@\", oauth_nonce=\"%@\", oauth_version=\"1.0\"%@",
                              [realm URLEncodedString],
                              [consumer.key URLEncodedString],
                              oauthToken,
                              [[signatureProvider name] URLEncodedString],
                              [signature URLEncodedString],
                              timestamp,
-                             nonce];
+                             nonce,
+							 callbackURL];
 	
     [self setValue:oauthHeader forHTTPHeaderField:@"Authorization"];
 }
@@ -164,10 +176,12 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 }
 
 - (void)_generateNonce 
-{
+{		
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
     CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    NSMakeCollectable(theUUID);
+	CFRelease(theUUID);
+	if (nonce)
+		[nonce release];
     nonce = (NSString *)string;
 }
 
@@ -185,7 +199,16 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
     
     if (![token.key isEqualToString:@""]) {
         [parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_token" value:token.key] URLEncodedNameValuePair]];
+		if (![token.verifier isEqualToString:@""]) {
+			[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_verifier" value:token.verifier] URLEncodedNameValuePair]];
+		}
     }
+		
+	if ([token.key isEqualToString:@""]
+		&& consumer.callbackURL
+		&& ![consumer.callbackURL isEqualToString:@""]) {
+		[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_callback" value:consumer.callbackURL] URLEncodedNameValuePair]];
+	}
     
     for (OARequestParameter *param in [self parameters]) {
         [parameterPairs addObject:[param URLEncodedNameValuePair]];

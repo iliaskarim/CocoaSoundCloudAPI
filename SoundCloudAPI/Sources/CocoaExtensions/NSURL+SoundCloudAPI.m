@@ -48,4 +48,22 @@
 
 	return [NSURL URLWithString:absoluteString];
 }
+
+- (NSString *)valueForQueryParameterKey:(NSString *)aKey;
+{
+	NSString *queryString = [self query];
+	NSArray *keyValuePairs = [queryString componentsSeparatedByString:@"&"];
+	for (NSString *keyValueString in keyValuePairs) {
+		NSArray *keyValuePair = [keyValueString componentsSeparatedByString:@"="];
+		if (keyValuePair.count != 2)
+			continue;
+		NSString *key = [keyValuePair objectAtIndex:0];
+		NSString *value = [keyValuePair objectAtIndex:1];
+		if ([aKey isEqualToString:key])
+			return value;
+	}
+	return nil;
+}
+
+
 @end

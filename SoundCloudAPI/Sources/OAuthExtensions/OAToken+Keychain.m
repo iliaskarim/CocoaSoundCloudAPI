@@ -46,7 +46,7 @@
 		return nil;
 	}
 	
-	if (self = [super init]) {
+	if (self = [self init]) {
 		self.key = [result objectForKey:(NSString *)kSecAttrAccount];
 		self.secret = [result objectForKey:(NSString *)kSecAttrGeneric];
 	}
@@ -64,6 +64,7 @@
 						   self.key, kSecAttrAccount,
 						   self.secret, kSecAttrGeneric,
 						   nil];
+	[self removeFromDefaultKeychainWithAppName:name serviceProviderName:provider];
 	return SecItemAdd((CFDictionaryRef)query, NULL);
 }
 
@@ -79,7 +80,7 @@
 @end
 
 #elif !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-
+#warning
 #pragma mark -
 #pragma mark Mac & Simulator implementation
 
@@ -87,7 +88,7 @@
 
 - (id)initWithDefaultKeychainUsingAppName:(NSString *)name serviceProviderName:(NSString *)provider;
 {
-	if (!(self = [super init]))
+	if (!(self = [self init]))
 		return nil;
     SecKeychainItemRef item = nil;
 	NSString *serviceName = [NSString stringWithFormat:@"%@::OAuth::%@", name, provider];
@@ -130,7 +131,12 @@
             strncpy(passwordBuffer, password, length);
             
             passwordBuffer[length] = '\0';
-			self.secret = [NSString stringWithCString:passwordBuffer];
+			NSString *passwordString = [NSString stringWithCString:passwordBuffer];
+			NSArray *passwordComponents = [passwordString componentsSeparatedByString:@"&"];
+			self.secret = [passwordComponents objectAtIndex:0];
+			if (passwordComponents.count >= 2) { 
+				self.verifier = [passwordComponents objectAtIndex:1];
+			}
         }
         SecKeychainItemFreeContent(&list, password);
     } else {
@@ -144,13 +150,15 @@
 
 - (int)storeInDefaultKeychainWithAppName:(NSString *)name serviceProviderName:(NSString *)provider;
 {
+	[self removeFromDefaultKeychainWithAppName:name serviceProviderName:provider];
+	NSString *passwordString = [NSString stringWithFormat:@"%@&%@", self.secret, self.verifier];
 	OSStatus status = SecKeychainAddGenericPassword(NULL,
                                                     [name length] + [provider length] + 9, 
                                                     [[NSString stringWithFormat:@"%@::OAuth::%@", name, provider] UTF8String],
                                                     [self.key length],                        
                                                     [self.key UTF8String],
-                                                    [self.secret length],
-                                                    [self.secret UTF8String],
+                                                    [passwordString length],
+                                                    [passwordString UTF8String],
                                                     NULL
                                                     );
 	return status;

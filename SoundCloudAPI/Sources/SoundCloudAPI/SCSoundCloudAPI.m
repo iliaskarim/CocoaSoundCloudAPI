@@ -51,19 +51,27 @@
 
 - (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)inAuthDelegate;
 {
+	return [self initWithAuthenticationDelegate:inAuthDelegate tokenVerifier:nil];
+}
+
+- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)inAuthDelegate
+					   tokenVerifier:(NSString *)verifier;
+{
 	if (self = [super init]) {
 		authDelegate = inAuthDelegate;
 		SCSoundCloudAPIConfiguration *configuration = self.configuration;
 		_oauthConsumer = [[OAConsumer alloc] initWithKey:[configuration consumerKey]
-												  secret:[configuration consumerSecret]];
+												  secret:[configuration consumerSecret]
+											 callbackURL:[[configuration callbackURL] absoluteString]];
 		_dataFetchers = [[NSMutableArray alloc] init];		
 		responseFormat = SCResponseFormatXML;
 		
 		if (self.accessToken) {
 			// NSLog(@"Authenticated");
 			status = SCAuthenticationStatusAuthenticated;
-		} else if (self.requestToken) {
+		} else if (self.requestToken && verifier) {
 			// NSLog(@"Will verify requesttoken");
+			self.requestToken.verifier = verifier;
 			status = SCAuthenticationStatusWillAuthorizeRequestToken;
 		} else {
 			// NSLog(@"Not authenticated");
@@ -236,6 +244,12 @@
 		[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
 }
 
+- (void)setRequestTokenVerifier:(NSString *)verifier;
+{
+	self.requestToken.verifier = verifier;
+}
+
+
 #pragma mark Datafetcher delegates
 
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data;
@@ -247,9 +261,13 @@
 														encoding:NSUTF8StringEncoding] autorelease];
 		self.requestToken = [[[OAToken alloc] initWithHTTPResponseBody:responseBody] autorelease];
 		
-		NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-									self.requestToken.key, @"oauth_token",
-									[configuration.callbackURL absoluteString], @"oauth_callback", nil];
+		NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+										   self.requestToken.key, @"oauth_token",
+										   nil];
+		
+		if ([responseBody rangeOfString:@"oauth_callback_confirmed=true"].location != NSNotFound) {
+			[parameters setValue:[configuration.callbackURL absoluteString] forKey:@"oauth_callback"];
+		}
 		
 		// will most likely quit the application. be prepared :)
 		if([authDelegate respondsToSelector:@selector(soundCloudAPI:requestedAuthenticationWithURL:)]) {
@@ -276,7 +294,7 @@
 {
 	[_authDataFetcher release]; _authDataFetcher = nil;
 	[self resetAuthentication];
-	
+
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  error, SCAPIHttpResponseErrorStatusKey,
 							  [error localizedDescription], NSLocalizedDescriptionKey,
@@ -290,16 +308,15 @@
 - (void)accessTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error {
 	[_authDataFetcher release]; _authDataFetcher = nil;
 	[self resetAuthentication];
-	
+
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  error, SCAPIHttpResponseErrorStatusKey,
 							  [error localizedDescription], NSLocalizedDescriptionKey,
 							  nil];
 	NSError *scError = [NSError errorWithDomain:SCAPIErrorDomain
-										   code:SCAPIErrorHttpResponseError
-									   userInfo:userInfo];
+									  code:SCAPIErrorHttpResponseError
+								  userInfo:userInfo];
 	[authDelegate soundCloudAPI:self didEncounterError:scError];
-	[self requestAuthentication];
 }
 
 
@@ -330,8 +347,7 @@
 		   onResource:(NSString *)resource
 	   withParameters:(NSDictionary *)parameters
 			  context:(id)context;
-{
-	
+{	
 	SCSoundCloudAPIConfiguration *configuration = self.configuration;
 	if (!configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
@@ -358,8 +374,7 @@
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
-	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]
-		&& ![[httpMethod uppercaseString] isEqualToString:@"PUT"]){
+	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]){
 		[request setParameterDictionary:parameters];
 	} else {
 		SCPostBodyStream *postStream = [[SCPostBodyStream alloc] initWithParameters:parameters];

@@ -29,7 +29,7 @@
 
 @implementation OAToken
 
-@synthesize key, secret;
+@synthesize key, secret, verifier;
 
 #pragma mark init
 
@@ -39,23 +39,25 @@
 	{
 		self.key = @"";
 		self.secret = @"";
+		self.verifier = @"";
 	}
     return self;
 }
 
-- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret 
+- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret verifier:(NSString *)aVerifier;
 {
-	if (self = [super init])
+	if (self = [self init])
 	{
 		self.key = aKey;
 		self.secret = aSecret;
+		self.verifier = aVerifier;
 	}
 	return self;
 }
 
 - (id)initWithHTTPResponseBody:(NSString *)body 
 {
-	if (self = [super init])
+	if (self = [self init])
 	{
 		NSArray *pairs = [body componentsSeparatedByString:@"&"];
 		
@@ -73,7 +75,7 @@
 
 - (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix
 {
-	if (self = [super init])
+	if (self = [self init])
 	{
 		NSString *theKey = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
 		NSString *theSecret = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
@@ -89,6 +91,7 @@
 {
 	[key release];
 	[secret release];
+	[verifier release];
 	[super dealloc];
 }
 

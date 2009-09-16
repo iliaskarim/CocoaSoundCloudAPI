@@ -24,4 +24,10 @@
 
 - (NSURL *)urlByAddingParameters:(NSDictionary *)parameters;
 
+/*!
+ * returns the value of the first parameter on the query string that matches the key
+ * returns nil if key was not found
+ */
+- (NSString *)valueForQueryParameterKey:(NSString *)key;
+
 @end
