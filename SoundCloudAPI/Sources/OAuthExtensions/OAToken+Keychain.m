@@ -21,7 +21,7 @@
 #import "OAToken+Keychain.h"
 #import <Security/Security.h>
 
-#if __IPHONE_3_0 || (TARGET_OS_IPHONE && (!TARGET_IPHONE_SIMULATOR))
+#if TARGET_OS_IPHONE
 
 #pragma mark iPhone device implementation
 
@@ -79,8 +79,8 @@
 }
 @end
 
-#elif !TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-#warning
+#else
+
 #pragma mark -
 #pragma mark Mac & Simulator implementation
 
@@ -121,7 +121,7 @@
     status = SecKeychainItemCopyContent(item, NULL, &list, &length, (void **)&password);
     if (status == noErr) {
         self.key = [NSString stringWithCString:list.attr[0].data
-                                        length:list.attr[0].length];
+									  encoding:NSUTF8StringEncoding];
         if (password != NULL) {
             char passwordBuffer[1024];
             
@@ -131,7 +131,8 @@
             strncpy(passwordBuffer, password, length);
             
             passwordBuffer[length] = '\0';
-			NSString *passwordString = [NSString stringWithCString:passwordBuffer];
+			NSString *passwordString = [NSString stringWithCString:passwordBuffer
+														  encoding:NSUTF8StringEncoding];
 			NSArray *passwordComponents = [passwordString componentsSeparatedByString:@"&"];
 			self.secret = [passwordComponents objectAtIndex:0];
 			if (passwordComponents.count >= 2) { 

@@ -18,8 +18,16 @@
  * 
  */
 
-#import "SCAPIErrors.h"
-#import "SCSoundCloudAPI.h"
-#import "SCSoundCloudAPIConfiguration.h"
-#import "SCInputStreamWrapper.h"
-#import "NSURL+SoundCloudAPI.h"
+#import <Foundation/Foundation.h>
+
+@interface NSURL (SoundCloudAPI)
+
+- (NSURL *)urlByAddingParameters:(NSDictionary *)parameters;
+
+/*!
+ * returns the value of the first parameter on the query string that matches the key
+ * returns nil if key was not found
+ */
+- (NSString *)valueForQueryParameterKey:(NSString *)key;
+
+@end

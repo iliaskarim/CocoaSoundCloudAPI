@@ -104,6 +104,9 @@
 	
 	if([urlStr hasPrefix:kCallbackURL]) {
 		NSLog(@"handling oauth callback");
+		NSURL *url = [NSURL URLWithString:urlStr];
+		NSString *verifier = [url valueForQueryParameterKey:@"oauth_verifier"];
+		[scAPI setRequestTokenVerifier:verifier];
 		[scAPI authorizeRequestToken]; 
 	}
 }
@@ -205,7 +208,7 @@
 	} else {
 		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
 	}
-	NSLog(message);
+	NSLog(@"%@", message);
 	[responseField setString:message];
 }
 

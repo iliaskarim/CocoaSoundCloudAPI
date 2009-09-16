@@ -41,6 +41,7 @@
     UIWindow *window;
     iPhoneTestAppViewController *viewController;
 	SCSoundCloudAPIConfiguration *scAPIConfig;
+	NSString *oauthVerifier;
 	
 	UIAlertView *safariAlertView;
 	NSURL *authURL;
@@ -50,6 +51,7 @@
 @property (nonatomic, retain) IBOutlet iPhoneTestAppViewController *viewController;
 
 @property (nonatomic, readonly) SCSoundCloudAPIConfiguration *scAPIConfig;
+@property (nonatomic, retain) NSString *oauthVerifier;
 
 @end
 

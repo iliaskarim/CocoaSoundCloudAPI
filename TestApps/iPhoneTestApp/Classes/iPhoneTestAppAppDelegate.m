@@ -27,12 +27,21 @@
 #import "iPhoneTestAppAppDelegate.h"
 #import "iPhoneTestAppViewController.h"
 
+#import "NSURL+SoundCloudAPI.h"
+
+
 @implementation iPhoneTestAppAppDelegate
 
 #pragma mark Lifecycle
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application;
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
+	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
+	if(launchURL
+	   && [[launchURL absoluteString] hasPrefix:kCallbackURL]) {
+		self.oauthVerifier = [launchURL valueForQueryParameterKey:@"oauth_verifier"];
+	}
+	
 	// global accessible api configuration through application delegate
 	// set appDelegate as auth delegate on every api instantiation
 	// make shure to register the myapp url scheme to your app :)
@@ -48,6 +57,7 @@
 	[window addSubview:viewController.view];
     [window makeKeyAndVisible];
 
+	return YES;
 }
 
 - (void)dealloc;
@@ -65,18 +75,24 @@
 @synthesize window;
 @synthesize viewController;
 @synthesize scAPIConfig;
+@synthesize oauthVerifier;
 
 #pragma mark -
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-    if (!url) { return NO; }
-	SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
-	
-	if([[url absoluteString] hasPrefix:kCallbackURL]) {
-		NSLog(@"handling oauth callback");
-		[scAPI authorizeRequestToken]; 
+    if (!url
+		|| [[url absoluteString] hasPrefix:kCallbackURL]) {
+		return NO;
 	}
+	
+	NSString *verifier = nil;
+	if(url
+	   && [[url absoluteString] hasPrefix:kCallbackURL]) {
+		verifier = [url valueForQueryParameterKey:@"oauth_verifier"];
+	}
+	SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self tokenVerifier:verifier];
+	[scAPI authorizeRequestToken]; 
 	[scAPI release];
 	return YES;
 }

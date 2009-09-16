@@ -60,7 +60,15 @@ typedef enum {
 @property (readonly) SCAuthenticationStatus status;
 @property SCResponseFormat responseFormat;
 
-- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate;
+/*!
+ * initialize the api object without passing a verifier.
+ */
+- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate; // tokenVerifier = nil
+
+/*!
+ * use this to pass in a verifier code if yhe app has been launched via the callback url. parse the verifier from the launch url and initialize the api object with it.
+ */
+- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate tokenVerifier:(NSString *)verifier; // designated
 
 // API Authentication
 
@@ -81,6 +89,11 @@ typedef enum {
  */
 - (void)resetAuthentication;
 
+/*!
+ * sets the verifier string to the request token. this string is a parameter to the callback url
+ * set this in advance to calling -authorizeRequestToken
+ */
+- (void)setRequestTokenVerifier:(NSString *)verifier;
 
 // API method
 - (void)performMethod:(NSString *)httpMethod

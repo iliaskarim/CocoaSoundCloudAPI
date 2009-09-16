@@ -57,7 +57,7 @@
 -(void)commonAwake;
 {
 	iPhoneTestAppAppDelegate *appDelegate = (iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate];
-	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate];
+	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate tokenVerifier:appDelegate.oauthVerifier];
 	[scAPI setResponseFormat:SCResponseFormatJSON];
 	[scAPI setDelegate:self];
 	[self requestUserInfo];
