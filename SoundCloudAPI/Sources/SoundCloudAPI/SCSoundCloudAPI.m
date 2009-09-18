@@ -374,7 +374,8 @@
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
-	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]){
+	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]
+		&& ![[httpMethod uppercaseString] isEqualToString:@"PUT"]) {
 		[request setParameterDictionary:parameters];
 	} else {
 		SCPostBodyStream *postStream = [[SCPostBodyStream alloc] initWithParameters:parameters];
