@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		949C16CE1061003000C4044D /* NSURL+SoundCloudAPI.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */; };
+		94E64636109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */; };
+		94E64637109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */; };
+		94E64638109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */; };
+		94E64639109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */; };
+		94E6463A109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */; };
+		94E6463B109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */; };
 		D30941290F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D309412A0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */; };
 		D309412B0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; };
@@ -213,6 +219,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SoundCloudAPI.h"; sourceTree = "<group>"; };
+		94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SoundCloudAPI.m"; sourceTree = "<group>"; };
 		D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCInputStreamWrapper.h; sourceTree = "<group>"; };
 		D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCInputStreamWrapper.m; sourceTree = "<group>"; };
 		D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPI.h; sourceTree = "<group>"; };
@@ -397,6 +405,8 @@
 		D3196EFE0F24CDBC0075D708 /* CocoaExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */,
+				94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */,
 				D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */,
 				D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */,
 			);
@@ -499,6 +509,7 @@
 				D396C72E0F4C428F00DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
 				D396C7180F4C425200DF5CA4 /* Framework_Prefix.pch in Headers */,
 				D30941290F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
+				94E64636109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +544,7 @@
 				D396C85E0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
 				D309412B0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
 				D38715620FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
+				94E64638109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,6 +579,7 @@
 				D396C85F0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
 				D309412D0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
 				D38715600FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
+				94E6463A109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +748,7 @@
 				D396C73B0F4C42B100DF5CA4 /* OAServiceTicket.m in Sources */,
 				D396C73C0F4C42B100DF5CA4 /* OAToken.m in Sources */,
 				D309412A0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */,
+				94E64637109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,6 +778,7 @@
 				D396C7B80F4C461C00DF5CA4 /* SCSoundCloudAPI.m in Sources */,
 				D396C7B90F4C461C00DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
 				D309412C0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */,
+				94E64639109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +808,7 @@
 				D396C7C00F4C463100DF5CA4 /* SCSoundCloudAPI.m in Sources */,
 				D396C7C10F4C463100DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
 				D309412E0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */,
+				94E6463B109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

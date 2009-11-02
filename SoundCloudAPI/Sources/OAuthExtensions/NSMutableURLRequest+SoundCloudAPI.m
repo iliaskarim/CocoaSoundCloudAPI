@@ -26,10 +26,18 @@
 	if (!parameters) return;
 	NSMutableArray *parameterArray = [NSMutableArray array];
 	for (NSString *key in parameters) {
-		NSString *val = [parameters objectForKey:key];
-		OARequestParameter *param = [[OARequestParameter alloc]initWithName:key value:val];
-		[parameterArray addObject:param];
-		[param release];
+		id val = [parameters objectForKey:key];
+		if ([val isKindOfClass:[NSArray class]]) {
+			for (NSString *string in val) {
+				OARequestParameter *param = [[OARequestParameter alloc]initWithName:key value:string];
+				[parameterArray addObject:param];
+				[param release];
+			}
+		} else {
+			OARequestParameter *param = [[OARequestParameter alloc]initWithName:key value:val];
+			[parameterArray addObject:param];
+			[param release];
+		}
 	}
 	
 	[self setParameters:parameterArray];

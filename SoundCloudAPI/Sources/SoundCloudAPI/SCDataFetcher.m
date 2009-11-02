@@ -52,6 +52,19 @@
 	[super dealloc];
 }
 
+
+#pragma mark Accessors
+
+@synthesize context = _context;
+
+
+#pragma mark Public
+
+- (void)cancel;
+{
+	[_connection cancel];
+}
+
 #pragma mark -
 #pragma mark SCPostBodyStream Delegate
 

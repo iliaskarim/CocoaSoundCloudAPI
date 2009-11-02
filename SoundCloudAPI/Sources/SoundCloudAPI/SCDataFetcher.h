@@ -34,7 +34,11 @@
 	id _context;
 }
 
+@property (readonly) id context;
+
 -(id)initWithRequest:(OAMutableURLRequest *)request delegate:(id<SCDataFetcherDelegate>)inDelegate context:(id)context;
+
+-(void)cancel;
 
 @end
 

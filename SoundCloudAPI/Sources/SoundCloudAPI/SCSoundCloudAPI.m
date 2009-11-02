@@ -30,6 +30,7 @@
 #import "OAToken+Keychain.h"
 #import "NSMutableURLRequest+SoundCloudAPI.h"
 #import "NSURL+SoundCloudAPI.h"
+#import "NSString+SoundCloudAPI.h"
 
 
 @interface SCSoundCloudAPI (Private)
@@ -63,7 +64,7 @@
 		_oauthConsumer = [[OAConsumer alloc] initWithKey:[configuration consumerKey]
 												  secret:[configuration consumerSecret]
 											 callbackURL:[[configuration callbackURL] absoluteString]];
-		_dataFetchers = [[NSMutableArray alloc] init];		
+		_dataFetchers = [[NSMutableDictionary alloc] init];
 		responseFormat = SCResponseFormatXML;
 		
 		if (self.accessToken) {
@@ -121,7 +122,7 @@
 	SCSoundCloudAPIConfiguration *configuration = self.configuration;
 	if (!value) {
 		[self.requestToken removeFromDefaultKeychainWithAppName:[[NSBundle mainBundle] bundleIdentifier]
-		 serviceProviderName:[NSString stringWithFormat:@"%@_Request", configuration.apiBaseURL.host]];
+											serviceProviderName:[NSString stringWithFormat:@"%@_Request", configuration.apiBaseURL.host]];
 	}
 	
 	[self willChangeValueForKey:@"requestToken"];
@@ -147,7 +148,7 @@
 	SCSoundCloudAPIConfiguration *configuration = self.configuration;
 	if (!value) {
 		[self.accessToken removeFromDefaultKeychainWithAppName:[[NSBundle mainBundle] bundleIdentifier] 
-		 serviceProviderName:[NSString stringWithFormat:@"%@_Access", configuration.apiBaseURL.host]];
+										   serviceProviderName:[NSString stringWithFormat:@"%@_Access", configuration.apiBaseURL.host]];
 	}
 	
 	[self willChangeValueForKey:@"accessToken"];
@@ -293,8 +294,13 @@
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error;
 {
 	[_authDataFetcher release]; _authDataFetcher = nil;
-	[self resetAuthentication];
-
+	
+	self.requestToken = nil;
+	self.accessToken = nil;
+	status = SCAuthenticationStatusCannotAuthenticate;
+	if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+		[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  error, SCAPIHttpResponseErrorStatusKey,
 							  [error localizedDescription], NSLocalizedDescriptionKey,
@@ -307,15 +313,20 @@
 
 - (void)accessTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error {
 	[_authDataFetcher release]; _authDataFetcher = nil;
-	[self resetAuthentication];
-
+	
+	self.requestToken = nil;
+	self.accessToken = nil;
+	status = SCAuthenticationStatusCannotAuthenticate;
+	if([authDelegate respondsToSelector:@selector(soundCloudAPI:didChangeAuthenticationStatus:)])
+		[authDelegate soundCloudAPI:self didChangeAuthenticationStatus:status];
+	
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 							  error, SCAPIHttpResponseErrorStatusKey,
 							  [error localizedDescription], NSLocalizedDescriptionKey,
 							  nil];
 	NSError *scError = [NSError errorWithDomain:SCAPIErrorDomain
-									  code:SCAPIErrorHttpResponseError
-								  userInfo:userInfo];
+										   code:SCAPIErrorHttpResponseError
+									   userInfo:userInfo];
 	[authDelegate soundCloudAPI:self didEncounterError:scError];
 }
 
@@ -343,15 +354,15 @@
 
 #pragma mark API methods
 
-- (void)performMethod:(NSString *)httpMethod
-		   onResource:(NSString *)resource
-	   withParameters:(NSDictionary *)parameters
-			  context:(id)context;
+- (id)performMethod:(NSString *)httpMethod
+		 onResource:(NSString *)resource
+	 withParameters:(NSDictionary *)parameters
+			context:(id)context;
 {	
 	SCSoundCloudAPIConfiguration *configuration = self.configuration;
 	if (!configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
-		return;
+		return nil;
 	}
 	
 	if (!self.accessToken
@@ -361,8 +372,9 @@
 		NSError *error = [NSError errorWithDomain:SCAPIErrorDomain
 											 code:SCAPIErrorNotAuthenticted
 										 userInfo:userInfo];
-		[delegate soundCloudAPI:self didFailWithError:error context:context];
-		return;
+		if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)])
+			[delegate soundCloudAPI:self didFailWithError:error context:context];
+		return nil;
 	}
 	
 	NSURL *url = [NSURL URLWithString:resource relativeToURL:configuration.apiBaseURL];
@@ -374,8 +386,9 @@
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
-	if (![[httpMethod uppercaseString] isEqualToString:@"POST"]
-		&& ![[httpMethod uppercaseString] isEqualToString:@"PUT"]) {
+	if ((![[httpMethod uppercaseString] isEqualToString:@"POST"]
+		 && ![[httpMethod uppercaseString] isEqualToString:@"PUT"])
+		|| parameters.count == 0) {
 		[request setParameterDictionary:parameters];
 	} else {
 		SCPostBodyStream *postStream = [[SCPostBodyStream alloc] initWithParameters:parameters];
@@ -387,9 +400,27 @@
 	}
 	
 	SCDataFetcher *fetcher = [[SCDataFetcher alloc] initWithRequest:request delegate:self context:context];
-	[_dataFetchers addObject:fetcher];
+	NSString *requestId = [NSString stringWithUUID];
+	[_dataFetchers setObject:fetcher forKey:requestId];
 	[fetcher release];
+	return [[_dataFetchers allKeysForObject:fetcher] lastObject];
 }
+
+- (void)cancelRequest:(id)requestIdentifier;
+{
+	if (!requestIdentifier)
+		return;
+	SCDataFetcher *fetcher = [_dataFetchers objectForKey:requestIdentifier];
+	
+	id context = [fetcher.context retain];
+	[fetcher cancel];
+	[_dataFetchers removeObjectForKey:requestIdentifier];
+	
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didCancelRequestWithContext:)])
+		[delegate soundCloudAPI:self didCancelRequestWithContext:context];
+	[context release];
+}
+
 
 #pragma mark SCDataFetcherDelegate
 
@@ -398,7 +429,7 @@
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
 		[delegate soundCloudAPI:self didFinishWithData:data context:context];
 	}
-	[_dataFetchers removeObject:fetcher];
+	[_dataFetchers removeObjectsForKeys:[_dataFetchers allKeysForObject:fetcher]];
 }
 
 - (void)scDataFetcher:(SCDataFetcher *)fetcher didFailWithError:(NSError *)error context:(id)context;
@@ -409,7 +440,7 @@
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
 		[delegate soundCloudAPI:self didFailWithError:error context:context];
 	}
-	[_dataFetchers removeObject:fetcher];
+	[_dataFetchers removeObjectsForKeys:[_dataFetchers allKeysForObject:fetcher]];
 }
 
 - (void)scDataFetcher:(SCDataFetcher *)fetcher didReceiveData:(NSData *)data context:(id)context;
