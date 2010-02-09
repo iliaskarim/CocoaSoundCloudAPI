@@ -120,19 +120,11 @@
     
     status = SecKeychainItemCopyContent(item, NULL, &list, &length, (void **)&password);
     if (status == noErr) {
-        self.key = [NSString stringWithCString:list.attr[0].data
-									  encoding:NSUTF8StringEncoding];
+        self.key = [[[NSString alloc] initWithCString:list.attr[0].data
+											   length:list.attr[0].length] autorelease];
         if (password != NULL) {
-            char passwordBuffer[1024];
-            
-            if (length > 1023) {
-                length = 1023;
-            }
-            strncpy(passwordBuffer, password, length);
-            
-            passwordBuffer[length] = '\0';
-			NSString *passwordString = [NSString stringWithCString:passwordBuffer
-														  encoding:NSUTF8StringEncoding];
+			NSString *passwordString = [[[NSString alloc] initWithCString:password
+																   length:length] autorelease];
 			NSArray *passwordComponents = [passwordString componentsSeparatedByString:@"&"];
 			self.secret = [passwordComponents objectAtIndex:0];
 			if (passwordComponents.count >= 2) { 
@@ -154,14 +146,14 @@
 	[self removeFromDefaultKeychainWithAppName:name serviceProviderName:provider];
 	NSString *passwordString = [NSString stringWithFormat:@"%@&%@", self.secret, self.verifier];
 	OSStatus status = SecKeychainAddGenericPassword(NULL,
-                                                    [name length] + [provider length] + 9, 
-                                                    [[NSString stringWithFormat:@"%@::OAuth::%@", name, provider] UTF8String],
-                                                    [self.key length],                        
-                                                    [self.key UTF8String],
-                                                    [passwordString length],
-                                                    [passwordString UTF8String],
-                                                    NULL
-                                                    );
+													[name length] + [provider length] + 9, 
+													[[NSString stringWithFormat:@"%@::OAuth::%@", name, provider] UTF8String],
+													[self.key length],                        
+													[self.key UTF8String],
+													[passwordString length],
+													[passwordString UTF8String],
+													NULL
+													);
 	return status;
 }
 
