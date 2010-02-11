@@ -60,6 +60,7 @@
 	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate tokenVerifier:appDelegate.oauthVerifier];
 	[scAPI setResponseFormat:SCResponseFormatJSON];
 	[scAPI setDelegate:self];
+//	[scAPI resetAuthentication];  // uncomment to remove tokens from keychain
 	[self requestUserInfo];
 }
 
@@ -91,7 +92,7 @@
 		if([object isKindOfClass:[NSDictionary class]]) {
 			NSDictionary *userInfoDictionary = (NSDictionary *)object;
 			[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
-			[trackNumberLabel setText:[userInfoDictionary objectForKey:@"track_count"]];
+			[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"track_count"] integerValue]]];
 		}
 	} else {
 		NSLog(@"Error: %@", [error localizedDescription]);
