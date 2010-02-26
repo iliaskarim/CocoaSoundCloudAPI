@@ -98,8 +98,6 @@
 {
 	NSMutableString *headers = [NSMutableString string];
 	[headers appendFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n", name];
-	[headers appendString:@"Content-Transfer-Encoding: binary\r\n"];
-	[headers appendString:@"Content-Type: plain/text; charset=utf-8\r\n"];
 	[headers appendString:@"\r\n"];
 	return [self initWithHeaders:headers dataContent:[string dataUsingEncoding:NSUTF8StringEncoding]];
 }
