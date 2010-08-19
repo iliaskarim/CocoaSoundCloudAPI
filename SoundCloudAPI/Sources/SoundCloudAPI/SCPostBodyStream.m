@@ -207,11 +207,6 @@
 	[super scheduleInRunLoop:runLoop forMode:mode];
 }
 
-- (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent;
-{
-	[super stream:theStream handleEvent:streamEvent];
-}
-
 #pragma mark NSURLConnection Hacks
 
 - (void)_scheduleInCFRunLoop:(NSRunLoop *)inRunLoop forMode:(id)inMode;
@@ -229,3 +224,4 @@
 }
 
 @end
+
