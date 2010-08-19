@@ -361,6 +361,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = iPhoneTestApp;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Debug;
 		};
@@ -381,6 +382,7 @@
 					"\"$(SRCROOT)/../../build/Debug-iphonesimulator\"",
 				);
 				PRODUCT_NAME = iPhoneTestApp;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Release;
 		};
