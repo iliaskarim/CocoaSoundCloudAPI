@@ -82,11 +82,7 @@
     [headers appendString:@"Content-Type: application/octet-stream\r\n"];
 	[headers appendString:@"\r\n"];
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
-	NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
-#else
-    NSDictionary *fileAttributes = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES];
-#endif
+    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
     NSNumber *fileSize = [fileAttributes valueForKey:NSFileSize];
     
     return [self initWithHeaders:headers
