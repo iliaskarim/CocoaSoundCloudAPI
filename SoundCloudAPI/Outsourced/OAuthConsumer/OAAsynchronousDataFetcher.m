@@ -52,8 +52,10 @@
 	if (connection)
 		[connection release];
 	
-	connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
+	connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+	[connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+	[connection start];
+	
 	if (connection)
 	{
 		if (responseData)
