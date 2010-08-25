@@ -935,7 +935,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "SoundCloudAPI dev";
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Debug;
 		};
@@ -958,7 +958,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "SoundCloudAPI dev";
-				SDKROOT = iphoneos2.2.1;
+				SDKROOT = iphoneos3.2;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -982,7 +982,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "SoundCloudAPI sim";
-				SDKROOT = iphonesimulator3.0;
+				SDKROOT = iphonesimulator3.2;
 			};
 			name = Debug;
 		};
@@ -1005,7 +1005,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "SoundCloudAPI sim";
-				SDKROOT = iphonesimulator2.2.1;
+				SDKROOT = iphonesimulator3.2;
 				ZERO_LINK = NO;
 			};
 			name = Release;
