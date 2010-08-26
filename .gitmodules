@@ -1,0 +1,3 @@
+[submodule "SoundCloudAPI/Outsourced/OAuth2Client"]
+	path = SoundCloudAPI/Outsourced/OAuth2Client
+	url = git@github.com:nxtbgthng/OAuth2Client.git
