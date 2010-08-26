@@ -7,655 +7,211 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		949C16CE1061003000C4044D /* NSURL+SoundCloudAPI.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */; };
-		94E64636109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */; };
-		94E64637109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */; };
-		94E64638109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */; };
-		94E64639109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */; };
-		94E6463A109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */; };
-		94E6463B109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */; };
-		D30941290F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D309412A0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */; };
-		D309412B0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; };
-		D309412C0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */; };
-		D309412D0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; };
-		D309412E0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */; };
-		D309413A0F6ABDA000F8E534 /* SCInputStreamWrapper.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */; };
-		D355263F0F4D7C850074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35525CE0F4D74520074030D /* LICENSE */; };
-		D35526400F4D7C850074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D35525CF0F4D74520074030D /* NOTICE */; };
-		D387155E0FA9F53A002DFF52 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D38715600FA9F53A002DFF52 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; };
-		D38715620FA9F53A002DFF52 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; };
-		D38715900FA9F7C2002DFF52 /* SCAPIErrors.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */; };
-		D396C7180F4C425200DF5CA4 /* Framework_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */; };
-		D396C71E0F4C428300DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */; };
-		D396C71F0F4C428300DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */; };
-		D396C7200F4C428300DF5CA4 /* OAToken+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */; };
-		D396C7210F4C428300DF5CA4 /* SCDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A529140F334CB50068D32D /* SCDataFetcher.m */; };
-		D396C7220F4C428300DF5CA4 /* SCPostBodyPart.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EB19780F3A22740090F073 /* SCPostBodyPart.m */; };
-		D396C7230F4C428300DF5CA4 /* SCPostBodyStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */; };
-		D396C7240F4C428300DF5CA4 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */; };
-		D396C7250F4C428300DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */; };
-		D396C7260F4C428F00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */; };
-		D396C7270F4C428F00DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D396C7280F4C428F00DF5CA4 /* OAToken+Keychain.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */; };
-		D396C7290F4C428F00DF5CA4 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A529430F334D140068D32D /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D396C72A0F4C428F00DF5CA4 /* SCDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A529130F334CB50068D32D /* SCDataFetcher.h */; };
-		D396C72B0F4C428F00DF5CA4 /* SCPostBodyPart.h in Headers */ = {isa = PBXBuildFile; fileRef = D3EB19770F3A22740090F073 /* SCPostBodyPart.h */; };
-		D396C72C0F4C428F00DF5CA4 /* SCPostBodyStream.h in Headers */ = {isa = PBXBuildFile; fileRef = D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */; };
-		D396C72D0F4C428F00DF5CA4 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D396C72E0F4C428F00DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D396C72F0F4C42B100DF5CA4 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */; };
-		D396C7310F4C42B100DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */; };
-		D396C7320F4C42B100DF5CA4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D120F22720F0075D708 /* NSString+URLEncoding.m */; };
-		D396C7330F4C42B100DF5CA4 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D140F22720F0075D708 /* NSURL+Base.m */; };
-		D396C7340F4C42B100DF5CA4 /* OAAsynchronousDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */; };
-		D396C7350F4C42B100DF5CA4 /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C900F226CF40075D708 /* OAConsumer.m */; };
-		D396C7360F4C42B100DF5CA4 /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C920F226CF40075D708 /* OADataFetcher.m */; };
-		D396C7370F4C42B100DF5CA4 /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */; };
-		D396C7380F4C42B100DF5CA4 /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C960F226CF40075D708 /* OAMutableURLRequest.m */; };
-		D396C7390F4C42B100DF5CA4 /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */; };
-		D396C73A0F4C42B100DF5CA4 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9A0F226CF40075D708 /* OARequestParameter.m */; };
-		D396C73B0F4C42B100DF5CA4 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9C0F226CF40075D708 /* OAServiceTicket.m */; };
-		D396C73C0F4C42B100DF5CA4 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9E0F226CF40075D708 /* OAToken.m */; };
-		D396C73E0F4C42C500DF5CA4 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */; };
-		D396C7400F4C42C500DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */; };
-		D396C7410F4C42C500DF5CA4 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D110F22720F0075D708 /* NSString+URLEncoding.h */; };
-		D396C7420F4C42C500DF5CA4 /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D130F22720F0075D708 /* NSURL+Base.h */; };
-		D396C7430F4C42C500DF5CA4 /* OAAsynchronousDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */; };
-		D396C7440F4C42C500DF5CA4 /* OAConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C8F0F226CF40075D708 /* OAConsumer.h */; };
-		D396C7450F4C42C500DF5CA4 /* OADataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C910F226CF40075D708 /* OADataFetcher.h */; };
-		D396C7460F4C42C500DF5CA4 /* OAHMAC_SHA1SignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */; };
-		D396C7470F4C42C500DF5CA4 /* OAMutableURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C950F226CF40075D708 /* OAMutableURLRequest.h */; };
-		D396C7480F4C42C500DF5CA4 /* OAPlaintextSignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */; };
-		D396C7490F4C42C500DF5CA4 /* OARequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C990F226CF40075D708 /* OARequestParameter.h */; };
-		D396C74A0F4C42C500DF5CA4 /* OAServiceTicket.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9B0F226CF40075D708 /* OAServiceTicket.h */; };
-		D396C74B0F4C42C500DF5CA4 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D1E0F2272420075D708 /* OASignatureProviding.h */; };
-		D396C74C0F4C42C500DF5CA4 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9D0F226CF40075D708 /* OAToken.h */; };
-		D396C74D0F4C42C500DF5CA4 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196CA10F226CF40075D708 /* OAuthConsumer.h */; };
-		D396C7B20F4C461C00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */; };
-		D396C7B30F4C461C00DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */; };
-		D396C7B40F4C461C00DF5CA4 /* OAToken+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */; };
-		D396C7B50F4C461C00DF5CA4 /* SCDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A529140F334CB50068D32D /* SCDataFetcher.m */; };
-		D396C7B60F4C461C00DF5CA4 /* SCPostBodyPart.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EB19780F3A22740090F073 /* SCPostBodyPart.m */; };
-		D396C7B70F4C461C00DF5CA4 /* SCPostBodyStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */; };
-		D396C7B80F4C461C00DF5CA4 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */; };
-		D396C7B90F4C461C00DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */; };
-		D396C7BA0F4C463100DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */; };
-		D396C7BB0F4C463100DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */; };
-		D396C7BC0F4C463100DF5CA4 /* OAToken+Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */; };
-		D396C7BD0F4C463100DF5CA4 /* SCDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A529140F334CB50068D32D /* SCDataFetcher.m */; };
-		D396C7BE0F4C463100DF5CA4 /* SCPostBodyPart.m in Sources */ = {isa = PBXBuildFile; fileRef = D3EB19780F3A22740090F073 /* SCPostBodyPart.m */; };
-		D396C7BF0F4C463100DF5CA4 /* SCPostBodyStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */; };
-		D396C7C00F4C463100DF5CA4 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */; };
-		D396C7C10F4C463100DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */; };
-		D396C7C20F4C464500DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */; };
-		D396C7C30F4C464500DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D396C7C40F4C464500DF5CA4 /* OAToken+Keychain.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */; };
-		D396C7C50F4C464500DF5CA4 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A529430F334D140068D32D /* SCAPI.h */; };
-		D396C7C60F4C464500DF5CA4 /* SCDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A529130F334CB50068D32D /* SCDataFetcher.h */; };
-		D396C7C70F4C464500DF5CA4 /* SCPostBodyPart.h in Headers */ = {isa = PBXBuildFile; fileRef = D3EB19770F3A22740090F073 /* SCPostBodyPart.h */; };
-		D396C7C80F4C464500DF5CA4 /* SCPostBodyStream.h in Headers */ = {isa = PBXBuildFile; fileRef = D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */; };
-		D396C7C90F4C464500DF5CA4 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */; };
-		D396C7CA0F4C464500DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */; };
-		D396C7CB0F4C465900DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */; };
-		D396C7CC0F4C465900DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D396C7CD0F4C465900DF5CA4 /* OAToken+Keychain.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */; };
-		D396C7CE0F4C465900DF5CA4 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A529430F334D140068D32D /* SCAPI.h */; };
-		D396C7CF0F4C465900DF5CA4 /* SCDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A529130F334CB50068D32D /* SCDataFetcher.h */; };
-		D396C7D00F4C465900DF5CA4 /* SCPostBodyPart.h in Headers */ = {isa = PBXBuildFile; fileRef = D3EB19770F3A22740090F073 /* SCPostBodyPart.h */; };
-		D396C7D10F4C465900DF5CA4 /* SCPostBodyStream.h in Headers */ = {isa = PBXBuildFile; fileRef = D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */; };
-		D396C7D20F4C465900DF5CA4 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */; };
-		D396C7D30F4C465900DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */; };
-		D396C7D40F4C466900DF5CA4 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */; };
-		D396C7D60F4C466900DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */; };
-		D396C7D70F4C466900DF5CA4 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D110F22720F0075D708 /* NSString+URLEncoding.h */; };
-		D396C7D80F4C466900DF5CA4 /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D130F22720F0075D708 /* NSURL+Base.h */; };
-		D396C7D90F4C466900DF5CA4 /* OAAsynchronousDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */; };
-		D396C7DA0F4C466900DF5CA4 /* OAConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C8F0F226CF40075D708 /* OAConsumer.h */; };
-		D396C7DB0F4C466900DF5CA4 /* OADataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C910F226CF40075D708 /* OADataFetcher.h */; };
-		D396C7DC0F4C466900DF5CA4 /* OAHMAC_SHA1SignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */; };
-		D396C7DD0F4C466900DF5CA4 /* OAMutableURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C950F226CF40075D708 /* OAMutableURLRequest.h */; };
-		D396C7DE0F4C466900DF5CA4 /* OAPlaintextSignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */; };
-		D396C7DF0F4C466900DF5CA4 /* OARequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C990F226CF40075D708 /* OARequestParameter.h */; };
-		D396C7E00F4C466900DF5CA4 /* OAServiceTicket.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9B0F226CF40075D708 /* OAServiceTicket.h */; };
-		D396C7E10F4C466900DF5CA4 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D1E0F2272420075D708 /* OASignatureProviding.h */; };
-		D396C7E20F4C466900DF5CA4 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9D0F226CF40075D708 /* OAToken.h */; };
-		D396C7E30F4C466900DF5CA4 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196CA10F226CF40075D708 /* OAuthConsumer.h */; };
-		D396C7E50F4C468000DF5CA4 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */; };
-		D396C7E70F4C468000DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */; };
-		D396C7E80F4C468000DF5CA4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D120F22720F0075D708 /* NSString+URLEncoding.m */; };
-		D396C7E90F4C468000DF5CA4 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D140F22720F0075D708 /* NSURL+Base.m */; };
-		D396C7EA0F4C468000DF5CA4 /* OAAsynchronousDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */; };
-		D396C7EB0F4C468000DF5CA4 /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C900F226CF40075D708 /* OAConsumer.m */; };
-		D396C7EC0F4C468000DF5CA4 /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C920F226CF40075D708 /* OADataFetcher.m */; };
-		D396C7ED0F4C468000DF5CA4 /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */; };
-		D396C7EE0F4C468000DF5CA4 /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C960F226CF40075D708 /* OAMutableURLRequest.m */; };
-		D396C7EF0F4C468000DF5CA4 /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */; };
-		D396C7F00F4C468000DF5CA4 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9A0F226CF40075D708 /* OARequestParameter.m */; };
-		D396C7F10F4C468000DF5CA4 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9C0F226CF40075D708 /* OAServiceTicket.m */; };
-		D396C7F20F4C468000DF5CA4 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9E0F226CF40075D708 /* OAToken.m */; };
-		D396C7F40F4C46A600DF5CA4 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */; };
-		D396C7F60F4C46A600DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */; };
-		D396C7F70F4C46A600DF5CA4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D120F22720F0075D708 /* NSString+URLEncoding.m */; };
-		D396C7F80F4C46A600DF5CA4 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196D140F22720F0075D708 /* NSURL+Base.m */; };
-		D396C7F90F4C46A600DF5CA4 /* OAAsynchronousDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */; };
-		D396C7FA0F4C46A600DF5CA4 /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C900F226CF40075D708 /* OAConsumer.m */; };
-		D396C7FB0F4C46A600DF5CA4 /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C920F226CF40075D708 /* OADataFetcher.m */; };
-		D396C7FC0F4C46A600DF5CA4 /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */; };
-		D396C7FD0F4C46A600DF5CA4 /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C960F226CF40075D708 /* OAMutableURLRequest.m */; };
-		D396C7FE0F4C46A600DF5CA4 /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */; };
-		D396C7FF0F4C46A600DF5CA4 /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9A0F226CF40075D708 /* OARequestParameter.m */; };
-		D396C8000F4C46A600DF5CA4 /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9C0F226CF40075D708 /* OAServiceTicket.m */; };
-		D396C8010F4C46A600DF5CA4 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D3196C9E0F226CF40075D708 /* OAToken.m */; };
-		D396C8030F4C46BD00DF5CA4 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */; };
-		D396C8050F4C46BD00DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */; };
-		D396C8060F4C46BD00DF5CA4 /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D110F22720F0075D708 /* NSString+URLEncoding.h */; };
-		D396C8070F4C46BD00DF5CA4 /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D130F22720F0075D708 /* NSURL+Base.h */; };
-		D396C8080F4C46BD00DF5CA4 /* OAAsynchronousDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */; };
-		D396C8090F4C46BD00DF5CA4 /* OAConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C8F0F226CF40075D708 /* OAConsumer.h */; };
-		D396C80A0F4C46BD00DF5CA4 /* OADataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C910F226CF40075D708 /* OADataFetcher.h */; };
-		D396C80B0F4C46BD00DF5CA4 /* OAHMAC_SHA1SignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */; };
-		D396C80C0F4C46BD00DF5CA4 /* OAMutableURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C950F226CF40075D708 /* OAMutableURLRequest.h */; };
-		D396C80D0F4C46BD00DF5CA4 /* OAPlaintextSignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */; };
-		D396C80E0F4C46BD00DF5CA4 /* OARequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C990F226CF40075D708 /* OARequestParameter.h */; };
-		D396C80F0F4C46BD00DF5CA4 /* OAServiceTicket.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9B0F226CF40075D708 /* OAServiceTicket.h */; };
-		D396C8100F4C46BD00DF5CA4 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196D1E0F2272420075D708 /* OASignatureProviding.h */; };
-		D396C8110F4C46BD00DF5CA4 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196C9D0F226CF40075D708 /* OAToken.h */; };
-		D396C8120F4C46BD00DF5CA4 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3196CA10F226CF40075D708 /* OAuthConsumer.h */; };
-		D396C85E0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C85D0F4C497E00DF5CA4 /* Library_Prefix.pch */; };
-		D396C85F0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D396C85D0F4C497E00DF5CA4 /* Library_Prefix.pch */; };
-		D3FC213F0F4C82D600DFB493 /* libSoundCloudAPI.a in Copy Lib to Dist */ = {isa = PBXBuildFile; fileRef = D3FC21010F4C7BF600DFB493 /* libSoundCloudAPI.a */; };
-		D3FC21400F4C82E200DFB493 /* SCAPI.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D3A529430F334D140068D32D /* SCAPI.h */; };
-		D3FC21410F4C82E200DFB493 /* SCSoundCloudAPI.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */; };
-		D3FC21420F4C82E200DFB493 /* SCSoundCloudAPIConfiguration.h in Copy Headers to Dist */ = {isa = PBXBuildFile; fileRef = D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */; };
+		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; };
+		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; };
+		9429A5E2122659D500D31807 /* SCDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D4122659D500D31807 /* SCDataFetcher.h */; };
+		9429A5E3122659D500D31807 /* SCDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D5122659D500D31807 /* SCDataFetcher.m */; };
+		9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; };
+		9429A5E5122659D500D31807 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */; };
+		9429A5E6122659D500D31807 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */; };
+		9429A5E7122659D500D31807 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */; };
+		9429A5E8122659D500D31807 /* SCPostBodyStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5DA122659D500D31807 /* SCPostBodyStream.h */; };
+		9429A5E9122659D500D31807 /* SCPostBodyStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5DB122659D500D31807 /* SCPostBodyStream.m */; };
+		9429A5EA122659D500D31807 /* SCPostBodyPart.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5DC122659D500D31807 /* SCPostBodyPart.h */; };
+		9429A5EB122659D500D31807 /* SCPostBodyPart.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5DD122659D500D31807 /* SCPostBodyPart.m */; };
+		9429A5EC122659D500D31807 /* SCInputStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5DE122659D500D31807 /* SCInputStreamWrapper.h */; };
+		9429A5ED122659D500D31807 /* SCInputStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5DF122659D500D31807 /* SCInputStreamWrapper.m */; };
+		9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; };
+		9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */; };
+		9429A5FB12265A4A00D31807 /* NSURL+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F712265A4A00D31807 /* NSURL+SoundCloudAPI.h */; };
+		9429A5FC12265A4A00D31807 /* NSURL+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5F812265A4A00D31807 /* NSURL+SoundCloudAPI.m */; };
+		AA747D9F0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D3FC21070F4C7C2100DFB493 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D396C7860F4C439600DF5CA4;
-			remoteInfo = "SoundCloudAPI for iPhone Device";
-		};
-		D3FC21090F4C7C2100DFB493 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D396C78D0F4C43A700DF5CA4;
-			remoteInfo = "SoundCloudAPI for iPhone Simulator";
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		D3FC213D0F4C82D600DFB493 /* Copy Lib to Dist */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(PROJECT_DIR)/Dist";
-			dstSubfolderSpec = 0;
-			files = (
-				D3FC213F0F4C82D600DFB493 /* libSoundCloudAPI.a in Copy Lib to Dist */,
-			);
-			name = "Copy Lib to Dist";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D3FC213E0F4C82D600DFB493 /* Copy Headers to Dist */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(PROJECT_DIR)/Dist/Headers";
-			dstSubfolderSpec = 0;
-			files = (
-				949C16CE1061003000C4044D /* NSURL+SoundCloudAPI.h in Copy Headers to Dist */,
-				D3FC21400F4C82E200DFB493 /* SCAPI.h in Copy Headers to Dist */,
-				D38715900FA9F7C2002DFF52 /* SCAPIErrors.h in Copy Headers to Dist */,
-				D3FC21410F4C82E200DFB493 /* SCSoundCloudAPI.h in Copy Headers to Dist */,
-				D3FC21420F4C82E200DFB493 /* SCSoundCloudAPIConfiguration.h in Copy Headers to Dist */,
-				D309413A0F6ABDA000F8E534 /* SCInputStreamWrapper.h in Copy Headers to Dist */,
-			);
-			name = "Copy Headers to Dist";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SoundCloudAPI.h"; sourceTree = "<group>"; };
-		94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SoundCloudAPI.m"; sourceTree = "<group>"; };
-		D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCInputStreamWrapper.h; sourceTree = "<group>"; };
-		D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCInputStreamWrapper.m; sourceTree = "<group>"; };
-		D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPI.h; sourceTree = "<group>"; };
-		D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPI.m; sourceTree = "<group>"; };
-		D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIConfiguration.h; sourceTree = "<group>"; };
-		D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIConfiguration.m; sourceTree = "<group>"; };
-		D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
-		D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
-		D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAAsynchronousDataFetcher.h; sourceTree = "<group>"; };
-		D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAAsynchronousDataFetcher.m; sourceTree = "<group>"; };
-		D3196C8F0F226CF40075D708 /* OAConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAConsumer.h; sourceTree = "<group>"; };
-		D3196C900F226CF40075D708 /* OAConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAConsumer.m; sourceTree = "<group>"; };
-		D3196C910F226CF40075D708 /* OADataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OADataFetcher.h; sourceTree = "<group>"; };
-		D3196C920F226CF40075D708 /* OADataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OADataFetcher.m; sourceTree = "<group>"; };
-		D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAHMAC_SHA1SignatureProvider.h; sourceTree = "<group>"; };
-		D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAHMAC_SHA1SignatureProvider.m; sourceTree = "<group>"; };
-		D3196C950F226CF40075D708 /* OAMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAMutableURLRequest.h; sourceTree = "<group>"; };
-		D3196C960F226CF40075D708 /* OAMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAMutableURLRequest.m; sourceTree = "<group>"; };
-		D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAPlaintextSignatureProvider.h; sourceTree = "<group>"; };
-		D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAPlaintextSignatureProvider.m; sourceTree = "<group>"; };
-		D3196C990F226CF40075D708 /* OARequestParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OARequestParameter.h; sourceTree = "<group>"; };
-		D3196C9A0F226CF40075D708 /* OARequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OARequestParameter.m; sourceTree = "<group>"; };
-		D3196C9B0F226CF40075D708 /* OAServiceTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAServiceTicket.h; sourceTree = "<group>"; };
-		D3196C9C0F226CF40075D708 /* OAServiceTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAServiceTicket.m; sourceTree = "<group>"; };
-		D3196C9D0F226CF40075D708 /* OAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAToken.h; sourceTree = "<group>"; };
-		D3196C9E0F226CF40075D708 /* OAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAToken.m; sourceTree = "<group>"; };
-		D3196CA10F226CF40075D708 /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
-		D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
-		D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
-		D3196D110F22720F0075D708 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
-		D3196D120F22720F0075D708 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
-		D3196D130F22720F0075D708 /* NSURL+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Base.h"; sourceTree = "<group>"; };
-		D3196D140F22720F0075D708 /* NSURL+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Base.m"; sourceTree = "<group>"; };
-		D3196D1E0F2272420075D708 /* OASignatureProviding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OASignatureProviding.h; sourceTree = "<group>"; };
-		D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SoundCloudAPI.h"; sourceTree = "<group>"; };
-		D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SoundCloudAPI.m"; sourceTree = "<group>"; };
-		D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OAToken+Keychain.m"; sourceTree = "<group>"; };
-		D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OAToken+Keychain.h"; sourceTree = "<group>"; };
-		D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+SoundCloudAPI.h"; sourceTree = "<group>"; };
-		D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+SoundCloudAPI.m"; sourceTree = "<group>"; };
-		D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyStream.h; sourceTree = "<group>"; };
-		D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyStream.m; sourceTree = "<group>"; };
-		D35525CE0F4D74520074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		D35525CF0F4D74520074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
-		D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIErrors.h; sourceTree = "<group>"; };
-		D396C70E0F4C422400DF5CA4 /* SoundCloudAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SoundCloudAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D396C70F0F4C422400DF5CA4 /* SoundCloudAPI for Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundCloudAPI for Mac-Info.plist"; sourceTree = "<group>"; };
-		D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Framework_Prefix.pch; sourceTree = "<group>"; };
-		D396C7870F4C439600DF5CA4 /* libSoundCloudAPI dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSoundCloudAPI dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D396C78E0F4C43A700DF5CA4 /* libSoundCloudAPI sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSoundCloudAPI sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D396C85D0F4C497E00DF5CA4 /* Library_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Library_Prefix.pch; sourceTree = "<group>"; };
-		D3A529130F334CB50068D32D /* SCDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDataFetcher.h; sourceTree = "<group>"; };
-		D3A529140F334CB50068D32D /* SCDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDataFetcher.m; sourceTree = "<group>"; };
-		D3A529430F334D140068D32D /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPI.h; sourceTree = "<group>"; };
-		D3EB19770F3A22740090F073 /* SCPostBodyPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyPart.h; sourceTree = "<group>"; };
-		D3EB19780F3A22740090F073 /* SCPostBodyPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyPart.m; sourceTree = "<group>"; };
-		D3FC21010F4C7BF600DFB493 /* libSoundCloudAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundCloudAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9429A5D2122659D500D31807 /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPI.h; sourceTree = "<group>"; };
+		9429A5D3122659D500D31807 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIErrors.h; sourceTree = "<group>"; };
+		9429A5D4122659D500D31807 /* SCDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCDataFetcher.h; sourceTree = "<group>"; };
+		9429A5D5122659D500D31807 /* SCDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCDataFetcher.m; sourceTree = "<group>"; };
+		9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPI.h; sourceTree = "<group>"; };
+		9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPI.m; sourceTree = "<group>"; };
+		9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIConfiguration.h; sourceTree = "<group>"; };
+		9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIConfiguration.m; sourceTree = "<group>"; };
+		9429A5DA122659D500D31807 /* SCPostBodyStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyStream.h; sourceTree = "<group>"; };
+		9429A5DB122659D500D31807 /* SCPostBodyStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyStream.m; sourceTree = "<group>"; };
+		9429A5DC122659D500D31807 /* SCPostBodyPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPostBodyPart.h; sourceTree = "<group>"; };
+		9429A5DD122659D500D31807 /* SCPostBodyPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPostBodyPart.m; sourceTree = "<group>"; };
+		9429A5DE122659D500D31807 /* SCInputStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCInputStreamWrapper.h; sourceTree = "<group>"; };
+		9429A5DF122659D500D31807 /* SCInputStreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCInputStreamWrapper.m; sourceTree = "<group>"; };
+		9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SoundCloudAPI.h"; sourceTree = "<group>"; };
+		9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SoundCloudAPI.m"; sourceTree = "<group>"; };
+		9429A5F712265A4A00D31807 /* NSURL+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SoundCloudAPI.h"; sourceTree = "<group>"; };
+		9429A5F812265A4A00D31807 /* NSURL+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SoundCloudAPI.m"; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCloudAPI_Prefix.pch; sourceTree = "<group>"; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundCloudAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D396C70C0F4C422400DF5CA4 /* Frameworks */ = {
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D396C7850F4C439600DF5CA4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D396C78C0F4C43A700DF5CA4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0867D691FE84028FC02AAC07 /* SoundCloudAPI */ = {
+		034768DFFF38A50411DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D319617C0F1E08500075D708 /* Outsourced */,
-				D319616A0F1E06E50075D708 /* Sources */,
-				D396C7560F4C42DD00DF5CA4 /* Resources */,
-				D396C7550F4C42D700DF5CA4 /* Products */,
-			);
-			name = SoundCloudAPI;
-			sourceTree = "<group>";
-		};
-		D319616A0F1E06E50075D708 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				D3E5727E0F2F26F100DE180F /* SoundCloudAPI */,
-				D3196F460F24DD4F0075D708 /* OAuthExtensions */,
-				D3196EFE0F24CDBC0075D708 /* CocoaExtensions */,
-				D396C7190F4C425600DF5CA4 /* Other */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		D319617C0F1E08500075D708 /* Outsourced */ = {
-			isa = PBXGroup;
-			children = (
-				D3196C740F226CAF0075D708 /* OAuthConsumer */,
-			);
-			path = Outsourced;
-			sourceTree = "<group>";
-		};
-		D3196C740F226CAF0075D708 /* OAuthConsumer */ = {
-			isa = PBXGroup;
-			children = (
-				D3196E090F228D850075D708 /* SignatureProvider */,
-				D3196CCE0F226D470075D708 /* Protocols */,
-				D3196CC00F226D120075D708 /* Cocoa Additions */,
-				D3196C7B0F226CDB0075D708 /* Crypto */,
-				D3196C8D0F226CF40075D708 /* OAAsynchronousDataFetcher.h */,
-				D3196C8E0F226CF40075D708 /* OAAsynchronousDataFetcher.m */,
-				D3196C8F0F226CF40075D708 /* OAConsumer.h */,
-				D3196C900F226CF40075D708 /* OAConsumer.m */,
-				D3196C910F226CF40075D708 /* OADataFetcher.h */,
-				D3196C920F226CF40075D708 /* OADataFetcher.m */,
-				D3196C950F226CF40075D708 /* OAMutableURLRequest.h */,
-				D3196C960F226CF40075D708 /* OAMutableURLRequest.m */,
-				D3196C990F226CF40075D708 /* OARequestParameter.h */,
-				D3196C9A0F226CF40075D708 /* OARequestParameter.m */,
-				D3196C9B0F226CF40075D708 /* OAServiceTicket.h */,
-				D3196C9C0F226CF40075D708 /* OAServiceTicket.m */,
-				D3196C9D0F226CF40075D708 /* OAToken.h */,
-				D3196C9E0F226CF40075D708 /* OAToken.m */,
-				D3196CA10F226CF40075D708 /* OAuthConsumer.h */,
-			);
-			path = OAuthConsumer;
-			sourceTree = "<group>";
-		};
-		D3196C7B0F226CDB0075D708 /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				D3196C7C0F226CDB0075D708 /* Base64Transcoder.c */,
-				D3196C7D0F226CDB0075D708 /* Base64Transcoder.h */,
-			);
-			path = Crypto;
-			sourceTree = "<group>";
-		};
-		D3196CC00F226D120075D708 /* Cocoa Additions */ = {
-			isa = PBXGroup;
-			children = (
-				D3196D0F0F22720F0075D708 /* NSMutableURLRequest+Parameters.h */,
-				D3196D100F22720F0075D708 /* NSMutableURLRequest+Parameters.m */,
-				D3196D110F22720F0075D708 /* NSString+URLEncoding.h */,
-				D3196D120F22720F0075D708 /* NSString+URLEncoding.m */,
-				D3196D130F22720F0075D708 /* NSURL+Base.h */,
-				D3196D140F22720F0075D708 /* NSURL+Base.m */,
-			);
-			name = "Cocoa Additions";
-			sourceTree = "<group>";
-		};
-		D3196CCE0F226D470075D708 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				D3196D1E0F2272420075D708 /* OASignatureProviding.h */,
-			);
-			name = Protocols;
-			sourceTree = "<group>";
-		};
-		D3196E090F228D850075D708 /* SignatureProvider */ = {
-			isa = PBXGroup;
-			children = (
-				D3196C930F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.h */,
-				D3196C940F226CF40075D708 /* OAHMAC_SHA1SignatureProvider.m */,
-				D3196C970F226CF40075D708 /* OAPlaintextSignatureProvider.h */,
-				D3196C980F226CF40075D708 /* OAPlaintextSignatureProvider.m */,
-			);
-			name = SignatureProvider;
-			sourceTree = "<group>";
-		};
-		D3196EFE0F24CDBC0075D708 /* CocoaExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				94E64634109F11B100044728 /* NSString+SoundCloudAPI.h */,
-				94E64635109F11B100044728 /* NSString+SoundCloudAPI.m */,
-				D3196F0D0F24CE0F0075D708 /* NSURL+SoundCloudAPI.h */,
-				D3196F0E0F24CE0F0075D708 /* NSURL+SoundCloudAPI.m */,
-			);
-			path = CocoaExtensions;
-			sourceTree = "<group>";
-		};
-		D3196F460F24DD4F0075D708 /* OAuthExtensions */ = {
-			isa = PBXGroup;
-			children = (
-				D3196F4E0F24DD770075D708 /* OAToken+Keychain.h */,
-				D3196F4D0F24DD770075D708 /* OAToken+Keychain.m */,
-				D3196F900F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.h */,
-				D3196F910F24F1380075D708 /* NSMutableURLRequest+SoundCloudAPI.m */,
-			);
-			path = OAuthExtensions;
-			sourceTree = "<group>";
-		};
-		D396C7190F4C425600DF5CA4 /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				D396C7170F4C425200DF5CA4 /* Framework_Prefix.pch */,
-				D396C85D0F4C497E00DF5CA4 /* Library_Prefix.pch */,
-			);
-			name = Other;
-			sourceTree = "<group>";
-		};
-		D396C7550F4C42D700DF5CA4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D3FC21010F4C7BF600DFB493 /* libSoundCloudAPI.a */,
-				D396C78E0F4C43A700DF5CA4 /* libSoundCloudAPI sim.a */,
-				D396C7870F4C439600DF5CA4 /* libSoundCloudAPI dev.a */,
-				D396C70E0F4C422400DF5CA4 /* SoundCloudAPI.framework */,
+				D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D396C7560F4C42DD00DF5CA4 /* Resources */ = {
+		0867D691FE84028FC02AAC07 /* SoundCloudAPI */ = {
 			isa = PBXGroup;
 			children = (
-				D35525CE0F4D74520074030D /* LICENSE */,
-				D35525CF0F4D74520074030D /* NOTICE */,
-				D396C70F0F4C422400DF5CA4 /* SoundCloudAPI for Mac-Info.plist */,
+				9429A5CF1226591400D31807 /* Outsourced */,
+				08FB77AEFE84172EC02AAC07 /* Sources */,
+				9429A5D01226593D00D31807 /* Resources */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
 			);
-			name = Resources;
+			name = SoundCloudAPI;
 			sourceTree = "<group>";
 		};
-		D3E5727E0F2F26F100DE180F /* SoundCloudAPI */ = {
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D3A529430F334D140068D32D /* SCAPI.h */,
-				D387155C0FA9F53A002DFF52 /* SCAPIErrors.h */,
-				D3A529130F334CB50068D32D /* SCDataFetcher.h */,
-				D3A529140F334CB50068D32D /* SCDataFetcher.m */,
-				D31966A90F1E3E1A0075D708 /* SCSoundCloudAPI.h */,
-				D31966AA0F1E3E1A0075D708 /* SCSoundCloudAPI.m */,
-				D31967090F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.h */,
-				D319670A0F1FDCB70075D708 /* SCSoundCloudAPIConfiguration.m */,
-				D352D6760F278A9700E2BC4B /* SCPostBodyStream.h */,
-				D352D6770F278A9700E2BC4B /* SCPostBodyStream.m */,
-				D3EB19770F3A22740090F073 /* SCPostBodyPart.h */,
-				D3EB19780F3A22740090F073 /* SCPostBodyPart.m */,
-				D30941270F6A750100F8E534 /* SCInputStreamWrapper.h */,
-				D30941280F6A750100F8E534 /* SCInputStreamWrapper.m */,
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				9429A5F412265A4A00D31807 /* CocoaExtensions */,
+				9429A5EE122659EE00D31807 /* Others */,
+				9429A5D1122659D500D31807 /* SoundCloudAPI */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		9429A5CF1226591400D31807 /* Outsourced */ = {
+			isa = PBXGroup;
+			children = (
+				9429B3711226714900D31807 /* OAuth2Client */,
+			);
+			path = Outsourced;
+			sourceTree = "<group>";
+		};
+		9429A5D01226593D00D31807 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9429A5D1122659D500D31807 /* SoundCloudAPI */ = {
+			isa = PBXGroup;
+			children = (
+				9429A5D2122659D500D31807 /* SCAPI.h */,
+				9429A5D3122659D500D31807 /* SCAPIErrors.h */,
+				9429A5D4122659D500D31807 /* SCDataFetcher.h */,
+				9429A5D5122659D500D31807 /* SCDataFetcher.m */,
+				9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */,
+				9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */,
+				9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */,
+				9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */,
+				9429A5DA122659D500D31807 /* SCPostBodyStream.h */,
+				9429A5DB122659D500D31807 /* SCPostBodyStream.m */,
+				9429A5DC122659D500D31807 /* SCPostBodyPart.h */,
+				9429A5DD122659D500D31807 /* SCPostBodyPart.m */,
+				9429A5DE122659D500D31807 /* SCInputStreamWrapper.h */,
+				9429A5DF122659D500D31807 /* SCInputStreamWrapper.m */,
 			);
 			path = SoundCloudAPI;
+			sourceTree = "<group>";
+		};
+		9429A5EE122659EE00D31807 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */,
+			);
+			name = Others;
+			sourceTree = "<group>";
+		};
+		9429A5F412265A4A00D31807 /* CocoaExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */,
+				9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */,
+				9429A5F712265A4A00D31807 /* NSURL+SoundCloudAPI.h */,
+				9429A5F812265A4A00D31807 /* NSURL+SoundCloudAPI.m */,
+			);
+			path = CocoaExtensions;
+			sourceTree = "<group>";
+		};
+		9429B3711226714900D31807 /* OAuth2Client */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OAuth2Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		D396C7090F4C422400DF5CA4 /* Headers */ = {
+		D2AAC07A0554694100DB518D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D396C73E0F4C42C500DF5CA4 /* Base64Transcoder.h in Headers */,
-				D396C7400F4C42C500DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */,
-				D396C7410F4C42C500DF5CA4 /* NSString+URLEncoding.h in Headers */,
-				D396C7420F4C42C500DF5CA4 /* NSURL+Base.h in Headers */,
-				D396C7430F4C42C500DF5CA4 /* OAAsynchronousDataFetcher.h in Headers */,
-				D396C7440F4C42C500DF5CA4 /* OAConsumer.h in Headers */,
-				D396C7450F4C42C500DF5CA4 /* OADataFetcher.h in Headers */,
-				D396C7460F4C42C500DF5CA4 /* OAHMAC_SHA1SignatureProvider.h in Headers */,
-				D396C7470F4C42C500DF5CA4 /* OAMutableURLRequest.h in Headers */,
-				D396C7480F4C42C500DF5CA4 /* OAPlaintextSignatureProvider.h in Headers */,
-				D396C7490F4C42C500DF5CA4 /* OARequestParameter.h in Headers */,
-				D396C74A0F4C42C500DF5CA4 /* OAServiceTicket.h in Headers */,
-				D396C74B0F4C42C500DF5CA4 /* OASignatureProviding.h in Headers */,
-				D396C74C0F4C42C500DF5CA4 /* OAToken.h in Headers */,
-				D396C74D0F4C42C500DF5CA4 /* OAuthConsumer.h in Headers */,
-				D396C7260F4C428F00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */,
-				D396C7270F4C428F00DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */,
-				D396C7280F4C428F00DF5CA4 /* OAToken+Keychain.h in Headers */,
-				D396C7290F4C428F00DF5CA4 /* SCAPI.h in Headers */,
-				D387155E0FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
-				D396C72A0F4C428F00DF5CA4 /* SCDataFetcher.h in Headers */,
-				D396C72B0F4C428F00DF5CA4 /* SCPostBodyPart.h in Headers */,
-				D396C72C0F4C428F00DF5CA4 /* SCPostBodyStream.h in Headers */,
-				D396C72D0F4C428F00DF5CA4 /* SCSoundCloudAPI.h in Headers */,
-				D396C72E0F4C428F00DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
-				D396C7180F4C425200DF5CA4 /* Framework_Prefix.pch in Headers */,
-				D30941290F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
-				94E64636109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D396C7830F4C439600DF5CA4 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D396C7D40F4C466900DF5CA4 /* Base64Transcoder.h in Headers */,
-				D396C7D60F4C466900DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */,
-				D396C7CB0F4C465900DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */,
-				D396C7D70F4C466900DF5CA4 /* NSString+URLEncoding.h in Headers */,
-				D396C7D80F4C466900DF5CA4 /* NSURL+Base.h in Headers */,
-				D396C7CC0F4C465900DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */,
-				D396C7D90F4C466900DF5CA4 /* OAAsynchronousDataFetcher.h in Headers */,
-				D396C7DA0F4C466900DF5CA4 /* OAConsumer.h in Headers */,
-				D396C7DB0F4C466900DF5CA4 /* OADataFetcher.h in Headers */,
-				D396C7DC0F4C466900DF5CA4 /* OAHMAC_SHA1SignatureProvider.h in Headers */,
-				D396C7DD0F4C466900DF5CA4 /* OAMutableURLRequest.h in Headers */,
-				D396C7DE0F4C466900DF5CA4 /* OAPlaintextSignatureProvider.h in Headers */,
-				D396C7DF0F4C466900DF5CA4 /* OARequestParameter.h in Headers */,
-				D396C7E00F4C466900DF5CA4 /* OAServiceTicket.h in Headers */,
-				D396C7E10F4C466900DF5CA4 /* OASignatureProviding.h in Headers */,
-				D396C7CD0F4C465900DF5CA4 /* OAToken+Keychain.h in Headers */,
-				D396C7E20F4C466900DF5CA4 /* OAToken.h in Headers */,
-				D396C7E30F4C466900DF5CA4 /* OAuthConsumer.h in Headers */,
-				D396C7CE0F4C465900DF5CA4 /* SCAPI.h in Headers */,
-				D396C7CF0F4C465900DF5CA4 /* SCDataFetcher.h in Headers */,
-				D396C7D00F4C465900DF5CA4 /* SCPostBodyPart.h in Headers */,
-				D396C7D10F4C465900DF5CA4 /* SCPostBodyStream.h in Headers */,
-				D396C7D20F4C465900DF5CA4 /* SCSoundCloudAPI.h in Headers */,
-				D396C7D30F4C465900DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
-				D396C85E0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
-				D309412B0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
-				D38715620FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
-				94E64638109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D396C78A0F4C43A700DF5CA4 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D396C8030F4C46BD00DF5CA4 /* Base64Transcoder.h in Headers */,
-				D396C8050F4C46BD00DF5CA4 /* NSMutableURLRequest+Parameters.h in Headers */,
-				D396C7C20F4C464500DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.h in Headers */,
-				D396C8060F4C46BD00DF5CA4 /* NSString+URLEncoding.h in Headers */,
-				D396C8070F4C46BD00DF5CA4 /* NSURL+Base.h in Headers */,
-				D396C7C30F4C464500DF5CA4 /* NSURL+SoundCloudAPI.h in Headers */,
-				D396C8080F4C46BD00DF5CA4 /* OAAsynchronousDataFetcher.h in Headers */,
-				D396C8090F4C46BD00DF5CA4 /* OAConsumer.h in Headers */,
-				D396C80A0F4C46BD00DF5CA4 /* OADataFetcher.h in Headers */,
-				D396C80B0F4C46BD00DF5CA4 /* OAHMAC_SHA1SignatureProvider.h in Headers */,
-				D396C80C0F4C46BD00DF5CA4 /* OAMutableURLRequest.h in Headers */,
-				D396C80D0F4C46BD00DF5CA4 /* OAPlaintextSignatureProvider.h in Headers */,
-				D396C80E0F4C46BD00DF5CA4 /* OARequestParameter.h in Headers */,
-				D396C80F0F4C46BD00DF5CA4 /* OAServiceTicket.h in Headers */,
-				D396C8100F4C46BD00DF5CA4 /* OASignatureProviding.h in Headers */,
-				D396C7C40F4C464500DF5CA4 /* OAToken+Keychain.h in Headers */,
-				D396C8110F4C46BD00DF5CA4 /* OAToken.h in Headers */,
-				D396C8120F4C46BD00DF5CA4 /* OAuthConsumer.h in Headers */,
-				D396C7C50F4C464500DF5CA4 /* SCAPI.h in Headers */,
-				D396C7C60F4C464500DF5CA4 /* SCDataFetcher.h in Headers */,
-				D396C7C70F4C464500DF5CA4 /* SCPostBodyPart.h in Headers */,
-				D396C7C80F4C464500DF5CA4 /* SCPostBodyStream.h in Headers */,
-				D396C7C90F4C464500DF5CA4 /* SCSoundCloudAPI.h in Headers */,
-				D396C7CA0F4C464500DF5CA4 /* SCSoundCloudAPIConfiguration.h in Headers */,
-				D396C85F0F4C497E00DF5CA4 /* Library_Prefix.pch in Headers */,
-				D309412D0F6A750100F8E534 /* SCInputStreamWrapper.h in Headers */,
-				D38715600FA9F53A002DFF52 /* SCAPIErrors.h in Headers */,
-				94E6463A109F11B100044728 /* NSString+SoundCloudAPI.h in Headers */,
+				AA747D9F0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch in Headers */,
+				9429A5E0122659D500D31807 /* SCAPI.h in Headers */,
+				9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */,
+				9429A5E2122659D500D31807 /* SCDataFetcher.h in Headers */,
+				9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */,
+				9429A5E6122659D500D31807 /* SCSoundCloudAPIConfiguration.h in Headers */,
+				9429A5E8122659D500D31807 /* SCPostBodyStream.h in Headers */,
+				9429A5EA122659D500D31807 /* SCPostBodyPart.h in Headers */,
+				9429A5EC122659D500D31807 /* SCInputStreamWrapper.h in Headers */,
+				9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */,
+				9429A5FB12265A4A00D31807 /* NSURL+SoundCloudAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D396C70D0F4C422400DF5CA4 /* SoundCloudAPI for Mac */ = {
+		D2AAC07D0554694100DB518D /* SoundCloudAPI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D396C7120F4C422600DF5CA4 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for Mac" */;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "SoundCloudAPI" */;
 			buildPhases = (
-				D396C7090F4C422400DF5CA4 /* Headers */,
-				D396C70A0F4C422400DF5CA4 /* Resources */,
-				D396C70B0F4C422400DF5CA4 /* Sources */,
-				D396C70C0F4C422400DF5CA4 /* Frameworks */,
-				D3138B460F5553FE002215C1 /* Create Framework link */,
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "SoundCloudAPI for Mac";
-			productName = "SoundCloudAPI for Mac";
-			productReference = D396C70E0F4C422400DF5CA4 /* SoundCloudAPI.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		D396C7860F4C439600DF5CA4 /* SoundCloudAPI for iPhone Device */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D396C79D0F4C43ED00DF5CA4 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for iPhone Device" */;
-			buildPhases = (
-				D396C7830F4C439600DF5CA4 /* Headers */,
-				D396C7840F4C439600DF5CA4 /* Sources */,
-				D396C7850F4C439600DF5CA4 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SoundCloudAPI for iPhone Device";
-			productName = "SoundCloudAPI for iPhone Device";
-			productReference = D396C7870F4C439600DF5CA4 /* libSoundCloudAPI dev.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		D396C78D0F4C43A700DF5CA4 /* SoundCloudAPI for iPhone Simulator */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D396C79E0F4C43ED00DF5CA4 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for iPhone Simulator" */;
-			buildPhases = (
-				D396C78A0F4C43A700DF5CA4 /* Headers */,
-				D396C78B0F4C43A700DF5CA4 /* Sources */,
-				D396C78C0F4C43A700DF5CA4 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SoundCloudAPI for iPhone Simulator";
-			productName = "SoundCloudAPI for iPhone Simulator";
-			productReference = D396C78E0F4C43A700DF5CA4 /* libSoundCloudAPI sim.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		D3FC21000F4C7BF600DFB493 /* SoundCloudAPI for iPhone Device and Simulator */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D3FC21150F4C7C8800DFB493 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for iPhone Device and Simulator" */;
-			buildPhases = (
-				D3FC210C0F4C7C2D00DFB493 /* ShellScript */,
-				D3FC213D0F4C82D600DFB493 /* Copy Lib to Dist */,
-				D3FC213E0F4C82D600DFB493 /* Copy Headers to Dist */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D3FC21080F4C7C2100DFB493 /* PBXTargetDependency */,
-				D3FC210A0F4C7C2100DFB493 /* PBXTargetDependency */,
-			);
-			name = "SoundCloudAPI for iPhone Device and Simulator";
-			productName = "SoundCloudAPI for iPhone Device and Simulator";
-			productReference = D3FC21010F4C7BF600DFB493 /* libSoundCloudAPI.a */;
+			name = SoundCloudAPI;
+			productName = SoundCloudAPI;
+			productReference = D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -663,422 +219,114 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
 			mainGroup = 0867D691FE84028FC02AAC07 /* SoundCloudAPI */;
-			productRefGroup = 0867D691FE84028FC02AAC07 /* SoundCloudAPI */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D396C70D0F4C422400DF5CA4 /* SoundCloudAPI for Mac */,
-				D396C7860F4C439600DF5CA4 /* SoundCloudAPI for iPhone Device */,
-				D396C78D0F4C43A700DF5CA4 /* SoundCloudAPI for iPhone Simulator */,
-				D3FC21000F4C7BF600DFB493 /* SoundCloudAPI for iPhone Device and Simulator */,
+				D2AAC07D0554694100DB518D /* SoundCloudAPI */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		D396C70A0F4C422400DF5CA4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D355263F0F4D7C850074030D /* LICENSE in Resources */,
-				D35526400F4D7C850074030D /* NOTICE in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		D3138B460F5553FE002215C1 /* Create Framework link */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Create Framework link";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# remove existing product lib file, just in case\nrm -rf \"${BUILD_DIR}/SoundCloudAPI.framework\"\n\ncp -r \"${BUILD_DIR}/${CONFIGURATION}/SoundCloudAPI.framework\" \"${BUILD_DIR}/SoundCloudAPI.framework\"\n";
-		};
-		D3FC210C0F4C7C2D00DFB493 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# remove existing product lib file, just in case\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/libSoundCloudAPI.a\"\nrm -rf \"${PROJECT_DIR}/Dist/*\"\n\nmkdir -p \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/\"\n\n# combine lib files for various platforms into one\nlipo -create \"${BUILD_DIR}/${BUILD_STYLE}-iphoneos/libSoundCloudAPI dev.a\" \"${BUILD_DIR}/${BUILD_STYLE}-iphonesimulator/libSoundCloudAPI sim.a\" -output \"${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/libSoundCloudAPI.a\"";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		D396C70B0F4C422400DF5CA4 /* Sources */ = {
+		D2AAC07B0554694100DB518D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D396C71E0F4C428300DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */,
-				D396C71F0F4C428300DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */,
-				D396C7200F4C428300DF5CA4 /* OAToken+Keychain.m in Sources */,
-				D396C7210F4C428300DF5CA4 /* SCDataFetcher.m in Sources */,
-				D396C7220F4C428300DF5CA4 /* SCPostBodyPart.m in Sources */,
-				D396C7230F4C428300DF5CA4 /* SCPostBodyStream.m in Sources */,
-				D396C7240F4C428300DF5CA4 /* SCSoundCloudAPI.m in Sources */,
-				D396C7250F4C428300DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
-				D396C72F0F4C42B100DF5CA4 /* Base64Transcoder.c in Sources */,
-				D396C7310F4C42B100DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */,
-				D396C7320F4C42B100DF5CA4 /* NSString+URLEncoding.m in Sources */,
-				D396C7330F4C42B100DF5CA4 /* NSURL+Base.m in Sources */,
-				D396C7340F4C42B100DF5CA4 /* OAAsynchronousDataFetcher.m in Sources */,
-				D396C7350F4C42B100DF5CA4 /* OAConsumer.m in Sources */,
-				D396C7360F4C42B100DF5CA4 /* OADataFetcher.m in Sources */,
-				D396C7370F4C42B100DF5CA4 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
-				D396C7380F4C42B100DF5CA4 /* OAMutableURLRequest.m in Sources */,
-				D396C7390F4C42B100DF5CA4 /* OAPlaintextSignatureProvider.m in Sources */,
-				D396C73A0F4C42B100DF5CA4 /* OARequestParameter.m in Sources */,
-				D396C73B0F4C42B100DF5CA4 /* OAServiceTicket.m in Sources */,
-				D396C73C0F4C42B100DF5CA4 /* OAToken.m in Sources */,
-				D309412A0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */,
-				94E64637109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D396C7840F4C439600DF5CA4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D396C7F40F4C46A600DF5CA4 /* Base64Transcoder.c in Sources */,
-				D396C7F60F4C46A600DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */,
-				D396C7B20F4C461C00DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */,
-				D396C7F70F4C46A600DF5CA4 /* NSString+URLEncoding.m in Sources */,
-				D396C7F80F4C46A600DF5CA4 /* NSURL+Base.m in Sources */,
-				D396C7B30F4C461C00DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */,
-				D396C7F90F4C46A600DF5CA4 /* OAAsynchronousDataFetcher.m in Sources */,
-				D396C7FA0F4C46A600DF5CA4 /* OAConsumer.m in Sources */,
-				D396C7FB0F4C46A600DF5CA4 /* OADataFetcher.m in Sources */,
-				D396C7FC0F4C46A600DF5CA4 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
-				D396C7FD0F4C46A600DF5CA4 /* OAMutableURLRequest.m in Sources */,
-				D396C7FE0F4C46A600DF5CA4 /* OAPlaintextSignatureProvider.m in Sources */,
-				D396C7FF0F4C46A600DF5CA4 /* OARequestParameter.m in Sources */,
-				D396C8000F4C46A600DF5CA4 /* OAServiceTicket.m in Sources */,
-				D396C7B40F4C461C00DF5CA4 /* OAToken+Keychain.m in Sources */,
-				D396C8010F4C46A600DF5CA4 /* OAToken.m in Sources */,
-				D396C7B50F4C461C00DF5CA4 /* SCDataFetcher.m in Sources */,
-				D396C7B60F4C461C00DF5CA4 /* SCPostBodyPart.m in Sources */,
-				D396C7B70F4C461C00DF5CA4 /* SCPostBodyStream.m in Sources */,
-				D396C7B80F4C461C00DF5CA4 /* SCSoundCloudAPI.m in Sources */,
-				D396C7B90F4C461C00DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
-				D309412C0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */,
-				94E64639109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D396C78B0F4C43A700DF5CA4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D396C7E50F4C468000DF5CA4 /* Base64Transcoder.c in Sources */,
-				D396C7E70F4C468000DF5CA4 /* NSMutableURLRequest+Parameters.m in Sources */,
-				D396C7BA0F4C463100DF5CA4 /* NSMutableURLRequest+SoundCloudAPI.m in Sources */,
-				D396C7E80F4C468000DF5CA4 /* NSString+URLEncoding.m in Sources */,
-				D396C7E90F4C468000DF5CA4 /* NSURL+Base.m in Sources */,
-				D396C7BB0F4C463100DF5CA4 /* NSURL+SoundCloudAPI.m in Sources */,
-				D396C7EA0F4C468000DF5CA4 /* OAAsynchronousDataFetcher.m in Sources */,
-				D396C7EB0F4C468000DF5CA4 /* OAConsumer.m in Sources */,
-				D396C7EC0F4C468000DF5CA4 /* OADataFetcher.m in Sources */,
-				D396C7ED0F4C468000DF5CA4 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
-				D396C7EE0F4C468000DF5CA4 /* OAMutableURLRequest.m in Sources */,
-				D396C7EF0F4C468000DF5CA4 /* OAPlaintextSignatureProvider.m in Sources */,
-				D396C7F00F4C468000DF5CA4 /* OARequestParameter.m in Sources */,
-				D396C7F10F4C468000DF5CA4 /* OAServiceTicket.m in Sources */,
-				D396C7BC0F4C463100DF5CA4 /* OAToken+Keychain.m in Sources */,
-				D396C7F20F4C468000DF5CA4 /* OAToken.m in Sources */,
-				D396C7BD0F4C463100DF5CA4 /* SCDataFetcher.m in Sources */,
-				D396C7BE0F4C463100DF5CA4 /* SCPostBodyPart.m in Sources */,
-				D396C7BF0F4C463100DF5CA4 /* SCPostBodyStream.m in Sources */,
-				D396C7C00F4C463100DF5CA4 /* SCSoundCloudAPI.m in Sources */,
-				D396C7C10F4C463100DF5CA4 /* SCSoundCloudAPIConfiguration.m in Sources */,
-				D309412E0F6A750100F8E534 /* SCInputStreamWrapper.m in Sources */,
-				94E6463B109F11B100044728 /* NSString+SoundCloudAPI.m in Sources */,
+				9429A5E3122659D500D31807 /* SCDataFetcher.m in Sources */,
+				9429A5E5122659D500D31807 /* SCSoundCloudAPI.m in Sources */,
+				9429A5E7122659D500D31807 /* SCSoundCloudAPIConfiguration.m in Sources */,
+				9429A5E9122659D500D31807 /* SCPostBodyStream.m in Sources */,
+				9429A5EB122659D500D31807 /* SCPostBodyPart.m in Sources */,
+				9429A5ED122659D500D31807 /* SCInputStreamWrapper.m in Sources */,
+				9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */,
+				9429A5FC12265A4A00D31807 /* NSURL+SoundCloudAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		D3FC21080F4C7C2100DFB493 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D396C7860F4C439600DF5CA4 /* SoundCloudAPI for iPhone Device */;
-			targetProxy = D3FC21070F4C7C2100DFB493 /* PBXContainerItemProxy */;
-		};
-		D3FC210A0F4C7C2100DFB493 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D396C78D0F4C43A700DF5CA4 /* SoundCloudAPI for iPhone Simulator */;
-			targetProxy = D3FC21090F4C7C2100DFB493 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		1DEB91B208733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
-				SDKROOT = "";
-			};
-			name = Debug;
-		};
-		1DEB91B308733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PREBINDING = NO;
-				SDKROOT = "";
-			};
-			name = Release;
-		};
-		D396C7100F4C422500DF5CA4 /* Debug */ = {
+		1DEB921F08733DC00010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DSTROOT = /tmp/SoundCloudAPI.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Sources/Framework_Prefix.pch;
-				HEADER_SEARCH_PATHS = "./**";
-				INFOPLIST_FILE = "SoundCloudAPI for Mac-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					Security,
-				);
-				PREBINDING = NO;
+				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = SoundCloudAPI;
-				SDKROOT = macosx10.5;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Debug;
 		};
-		D396C7110F4C422500DF5CA4 /* Release */ = {
+		1DEB922008733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/SoundCloudAPI.dst;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Sources/Framework_Prefix.pch;
-				HEADER_SEARCH_PATHS = "./**";
-				INFOPLIST_FILE = "SoundCloudAPI for Mac-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					Security,
-				);
-				PREBINDING = NO;
+				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = SoundCloudAPI;
-				SDKROOT = macosx10.5;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		D396C7880F4C439700DF5CA4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = Sources/Library_Prefix.pch;
-				HEADER_SEARCH_PATHS = "./**";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					Security,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "SoundCloudAPI dev";
 				SDKROOT = iphoneos3.2;
 			};
-			name = Debug;
-		};
-		D396C7890F4C439700DF5CA4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PREFIX_HEADER = Sources/Library_Prefix.pch;
-				HEADER_SEARCH_PATHS = "./**";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					Security,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = "SoundCloudAPI dev";
-				SDKROOT = iphoneos3.2;
-				ZERO_LINK = NO;
-			};
 			name = Release;
 		};
-		D396C78F0F4C43A800DF5CA4 /* Debug */ = {
+		1DEB922308733DC00010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = Sources/Library_Prefix.pch;
-				HEADER_SEARCH_PATHS = "./**";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					Security,
-				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PRODUCT_NAME = "SoundCloudAPI sim";
-				SDKROOT = iphonesimulator3.2;
 			};
 			name = Debug;
 		};
-		D396C7900F4C43A800DF5CA4 /* Release */ = {
+		1DEB922408733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PREFIX_HEADER = Sources/Library_Prefix.pch;
-				HEADER_SEARCH_PATHS = "./**";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					Foundation,
-					"-framework",
-					Security,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				PRODUCT_NAME = "SoundCloudAPI sim";
-				SDKROOT = iphonesimulator3.2;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		D3FC21020F4C7BF700DFB493 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PREBINDING = NO;
-				PRODUCT_NAME = SoundCloudAPI;
-			};
-			name = Debug;
-		};
-		D3FC21030F4C7BF700DFB493 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PREBINDING = NO;
-				PRODUCT_NAME = SoundCloudAPI;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */ = {
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "SoundCloudAPI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91B208733DA50010E9CD /* Debug */,
-				1DEB91B308733DA50010E9CD /* Release */,
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D396C7120F4C422600DF5CA4 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for Mac" */ = {
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D396C7100F4C422500DF5CA4 /* Debug */,
-				D396C7110F4C422500DF5CA4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D396C79D0F4C43ED00DF5CA4 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for iPhone Device" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D396C7880F4C439700DF5CA4 /* Debug */,
-				D396C7890F4C439700DF5CA4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D396C79E0F4C43ED00DF5CA4 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for iPhone Simulator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D396C78F0F4C43A800DF5CA4 /* Debug */,
-				D396C7900F4C43A800DF5CA4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D3FC21150F4C7C8800DFB493 /* Build configuration list for PBXNativeTarget "SoundCloudAPI for iPhone Device and Simulator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D3FC21020F4C7BF700DFB493 /* Debug */,
-				D3FC21030F4C7BF700DFB493 /* Release */,
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

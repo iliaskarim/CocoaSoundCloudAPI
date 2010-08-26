@@ -20,7 +20,6 @@
 
 #import "SCDataFetcher.h"
 
-#import "OAuthConsumer.h"
 #import "OAMutableURLRequest.h"
 
 #import "SCAPIErrors.h"
