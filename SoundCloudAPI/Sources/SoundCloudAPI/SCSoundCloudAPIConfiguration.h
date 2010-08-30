@@ -23,15 +23,13 @@
 #define kSoundCloudAPIAccesTokenURL		@"http://api.soundcloud.com/oauth/access_token"
 #define kSoundCloudAuthURL				@"http://soundcloud.com/oauth/authorize"
 
-#define kSoundCloudSandboxAPIURL				@"http://api.sandbox-soundcloud.com"
-#define kSoundCloudSandboxAPIRequestTokenURL	@"http://api.sandbox-soundcloud.com/oauth/request_token"
-#define kSoundCloudSandboxAPIAccesTokenURL		@"http://api.sandbox-soundcloud.com/oauth/access_token"
-#define kSoundCloudSandboxAuthURL				@"http://sandbox-soundcloud.com/oauth/authorize"
+#define kSoundCloudSandboxAPIURL				@"https://api.sandbox-soundcloud.com"
+#define kSoundCloudSandboxAPIAccesTokenURL		@"https://api.sandbox-soundcloud.com/oauth2/access_token"
+#define kSoundCloudSandboxAuthURL				@"https://sandbox-soundcloud.com/oauth2/authorize"
 
 
 @interface SCSoundCloudAPIConfiguration : NSObject {
 	NSURL *apiBaseURL;
-	NSURL *requestTokenURL;
 	NSURL *accessTokenURL;
 	NSURL *authURL;
 	
@@ -60,13 +58,11 @@
 		   consumerSecret:(NSString *)consumerSecret
 			  callbackURL:(NSURL *)callbackURL
 			   apiBaseURL:(NSURL *)apiBaseURL
-		  requestTokenURL:(NSURL *)requestTokenURL
 		   accessTokenURL:(NSURL *)accessTokenURL
 				  authURL:(NSURL *)authURL;
 
 
 @property (nonatomic, retain) NSURL *apiBaseURL;
-@property (nonatomic, retain) NSURL *requestTokenURL;
 @property (nonatomic, retain) NSURL *accessTokenURL;
 @property (nonatomic, retain) NSURL *authURL;
 @property (nonatomic, retain) NSString *consumerKey;

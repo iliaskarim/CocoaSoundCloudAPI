@@ -21,5 +21,3 @@
 #import "SCAPIErrors.h"
 #import "SCSoundCloudAPI.h"
 #import "SCSoundCloudAPIConfiguration.h"
-#import "SCInputStreamWrapper.h"
-#import "NSURL+SoundCloudAPI.h"

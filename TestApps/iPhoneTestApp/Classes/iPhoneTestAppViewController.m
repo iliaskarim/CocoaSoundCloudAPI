@@ -21,7 +21,7 @@
 #import "iPhoneTestAppViewController.h"
 #import "iPhoneTestAppAppDelegate.h"
 
-#import "JSON.h"
+#import "JSON/JSON.h"
 
 @interface iPhoneTestAppViewController(private)
 -(void)commonAwake;
@@ -57,7 +57,7 @@
 -(void)commonAwake;
 {
 	iPhoneTestAppAppDelegate *appDelegate = (iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate];
-	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate tokenVerifier:appDelegate.oauthVerifier];
+	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate];
 	[scAPI setResponseFormat:SCResponseFormatJSON];
 	[scAPI setDelegate:self];
 //	[scAPI resetAuthentication];  // uncomment to remove tokens from keychain
@@ -83,19 +83,12 @@
 {
 	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	
-	SBJSON *json = [[SBJSON alloc] init];
-	NSError *error;
-	id object = [json objectWithString:dataString error:&error];
+	id object = [dataString JSONValue];
 	[dataString release];
-	[json release];
-	if(object) {
-		if([object isKindOfClass:[NSDictionary class]]) {
-			NSDictionary *userInfoDictionary = (NSDictionary *)object;
-			[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
-			[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"track_count"] integerValue]]];
-		}
-	} else {
-		NSLog(@"Error: %@", [error localizedDescription]);
+	if([object isKindOfClass:[NSDictionary class]]) {
+		NSDictionary *userInfoDictionary = (NSDictionary *)object;
+		[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
+		[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"track_count"] integerValue]]];
 	}
 }
 

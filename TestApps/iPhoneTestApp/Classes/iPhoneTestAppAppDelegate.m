@@ -27,8 +27,6 @@
 #import "iPhoneTestAppAppDelegate.h"
 #import "iPhoneTestAppViewController.h"
 
-#import "NSURL+SoundCloudAPI.h"
-
 
 @implementation iPhoneTestAppAppDelegate
 
@@ -39,7 +37,9 @@
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	if(launchURL
 	   && [[launchURL absoluteString] hasPrefix:kCallbackURL]) {
-		self.oauthVerifier = [launchURL valueForQueryParameterKey:@"oauth_verifier"];
+		SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
+		[scAPI openRedirectURL:launchURL]; 
+		[scAPI release];
 	}
 	
 	// global accessible api configuration through application delegate
@@ -81,18 +81,8 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-    if (!url
-		|| [[url absoluteString] hasPrefix:kCallbackURL]) {
-		return NO;
-	}
-	
-	NSString *verifier = nil;
-	if(url
-	   && [[url absoluteString] hasPrefix:kCallbackURL]) {
-		verifier = [url valueForQueryParameterKey:@"oauth_verifier"];
-	}
-	SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self tokenVerifier:verifier];
-	[scAPI authorizeRequestToken]; 
+	SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
+	[scAPI openRedirectURL:url]; 
 	[scAPI release];
 	return YES;
 }
@@ -142,7 +132,7 @@
 				NSLog(@"error: %@", [httpError localizedDescription]);
 			}
 		} else if ([error code] == SCAPIErrorNotAuthenticted) {
-			[_scAPI requestAuthentication];
+//			[_scAPI requestAuthentication];
 		}
 	}
 }

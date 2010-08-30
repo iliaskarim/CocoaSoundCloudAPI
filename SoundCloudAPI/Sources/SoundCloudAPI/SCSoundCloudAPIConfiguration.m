@@ -20,9 +20,6 @@
 
 #import "SCSoundCloudAPIConfiguration.h"
 
-#import "NSURL+SoundCloudAPI.h"
-#import "NSMutableURLRequest+SoundCloudAPI.h"
-
 
 @implementation SCSoundCloudAPIConfiguration
 
@@ -54,7 +51,6 @@
 					  consumerSecret:inConsumerSecret
 						 callbackURL:inCallbackURL
 						  apiBaseURL:[NSURL URLWithString:kSoundCloudAPIURL]
-					 requestTokenURL:[NSURL URLWithString:kSoundCloudAPIRequestTokenURL]
 					  accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccesTokenURL]
 							 authURL:[NSURL URLWithString:kSoundCloudAuthURL]];
 }
@@ -68,7 +64,6 @@
 					  consumerSecret:inConsumerSecret
 						 callbackURL:inCallbackURL
 						  apiBaseURL:[NSURL URLWithString:kSoundCloudSandboxAPIURL]
-					 requestTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIRequestTokenURL]
 					  accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccesTokenURL]
 							 authURL:[NSURL URLWithString:kSoundCloudSandboxAuthURL]];
 }
@@ -77,7 +72,6 @@
 		   consumerSecret:(NSString *)inConsumerSecret
 			  callbackURL:(NSURL *)inCallbackURL
 			   apiBaseURL:(NSURL *)inApiBaseURL
-		  requestTokenURL:(NSURL *)inRequestTokenURL
 		   accessTokenURL:(NSURL *)inAccessTokenURL
 				  authURL:(NSURL *)inAuthURL;
 {
@@ -97,10 +91,6 @@
 		NSLog(@"No ApiBaseURL supplied");
 		return nil;
 	}
-	if (!inRequestTokenURL){
-		NSLog(@"No RequestTokenURL supplied");
-		return nil;
-	}
 	if (!inAccessTokenURL){
 		NSLog(@"No AccessTokenURL supplied");
 		return nil;
@@ -112,7 +102,6 @@
 	
 	if (self = [super init]) {
 		apiBaseURL = [inApiBaseURL retain];
-		requestTokenURL = [inRequestTokenURL retain];
 		accessTokenURL = [inAccessTokenURL retain];
 		authURL = [inAuthURL retain];
 		
@@ -126,7 +115,6 @@
 -(void)dealloc;
 {
 	[apiBaseURL release]; apiBaseURL = nil;
-	[requestTokenURL release]; requestTokenURL = nil;
 	[accessTokenURL release]; accessTokenURL = nil;
 	[authURL release]; authURL = nil;
 	
@@ -138,7 +126,7 @@
 
 #pragma mark Accessors
 
-@synthesize apiBaseURL, requestTokenURL, accessTokenURL, authURL;
+@synthesize apiBaseURL, accessTokenURL, authURL;
 @synthesize consumerKey, consumerSecret;
 @synthesize callbackURL;
 

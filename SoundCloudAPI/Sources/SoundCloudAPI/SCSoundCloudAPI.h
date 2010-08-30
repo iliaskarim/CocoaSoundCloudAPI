@@ -20,11 +20,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "NXOAuth2Connection.h"
+#import "NXOAuth2ConnectionDelegate.h"
+#import "NXOAuth2Client.h"
+#import "NXOAuth2PostBodyStream.h"
+#import "NSMutableURLRequest+NXOAuth2.h"
+
 
 @class SCSoundCloudAPIConfiguration;
-@class OAConsumer;
-@class OADataFetcher;
-@class OAToken;
+@class NXOAuth2Client;
+@class NXOAuth2Connection;
 @protocol SCSoundCloudAPIDelegate;
 @protocol SCSoundCloudAPIAuthenticationDelegate;
 
@@ -42,61 +47,31 @@ typedef enum {
 } SCResponseFormat;
 
 
-@interface SCSoundCloudAPI : NSObject {
-	OAConsumer *_oauthConsumer;
+@interface SCSoundCloudAPI : NSObject <NXOAuth2ConnectionDelegate, NXOAuth2ClientAuthDelegate> {
+	NXOAuth2Client *oauthClient;
 	
 	id<SCSoundCloudAPIDelegate> delegate;
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 	NSMutableDictionary *_dataFetchers;
-	OADataFetcher *_authDataFetcher;
 	
-	OAToken *_requestToken;
-	OAToken *_accessToken;
 	SCAuthenticationStatus status;
 	SCResponseFormat responseFormat;
 }
 
 @property (nonatomic, assign) id<SCSoundCloudAPIDelegate> delegate;
 @property (nonatomic, assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
-@property (readonly) SCAuthenticationStatus status;
 @property SCResponseFormat responseFormat;
 
 /*!
- * initialize the api object without passing a verifier.
+ * initialize the api object
  */
 - (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate; // tokenVerifier = nil
 
 /*!
- * use this to pass in a verifier code if yhe app has been launched via the callback url. parse the verifier from the launch url and initialize the api object with it.
- */
-- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate tokenVerifier:(NSString *)verifier; // designated
-
-// API Authentication
-
-/*!
- * sends request for unauthenticated request token and tries to authenticate it
- * if no error occures, results in the authentication delegate beeing requested to open token authentication url
- */
-- (void)requestAuthentication;
-
-/*!
- * sends request token to server for authentication.
- * if no error, sets the access token.
- */
-- (void)authorizeRequestToken;
-
-/*!
- * resets all tokens to nil, and removes them from the keychain
+ * resets token to nil, and removes it from the keychain
  */
 - (void)resetAuthentication;
 
-/*!
- * sets the verifier string to the request token. this string is a parameter to the callback url
- * set this in advance to calling -authorizeRequestToken
- */
-- (void)setRequestTokenVerifier:(NSString *)verifier;
-
-// API method 
 /*!
  * invokes a request using the specified HTTP method on the specified resource
  * returns a request identifier which can be used to cancel the request.
@@ -112,7 +87,7 @@ typedef enum {
  */
 - (void)cancelRequest:(id)requestIdentifier;
 
-
+- (BOOL)openRedirectURL:(NSURL *)URL;
 @end
 
 
