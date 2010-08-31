@@ -20,13 +20,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "NXOAuth2Connection.h"
-#import "NXOAuth2ConnectionDelegate.h"
-#import "NXOAuth2Client.h"
-#import "NXOAuth2PostBodyStream.h"
-#import "NSMutableURLRequest+NXOAuth2.h"
-
-
 @class SCSoundCloudAPIConfiguration;
 @class NXOAuth2Client;
 @class NXOAuth2Connection;
@@ -34,27 +27,18 @@
 @protocol SCSoundCloudAPIAuthenticationDelegate;
 
 typedef enum {
-	SCAuthenticationStatusNotAuthenticated,				// api is not authenticated. -> requestAuthentication
-	SCAuthenticationStatusAuthenticated,				// api is authenticated and ready to use
-	SCAuthenticationStatusGettingToken,					// wait till
-	SCAuthenticationStatusWillAuthorizeRequestToken,	// got request token. need to authenticate it. -> authorizeRequestToken
-	SCAuthenticationStatusCannotAuthenticate			// error occured during token exchange
-} SCAuthenticationStatus;
-
-typedef enum {
 	SCResponseFormatXML,
 	SCResponseFormatJSON
 } SCResponseFormat;
 
 
-@interface SCSoundCloudAPI : NSObject <NXOAuth2ConnectionDelegate, NXOAuth2ClientAuthDelegate> {
+@interface SCSoundCloudAPI : NSObject {
+	SCSoundCloudAPIConfiguration *configuration;
 	NXOAuth2Client *oauthClient;
 	
 	id<SCSoundCloudAPIDelegate> delegate;
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 	NSMutableDictionary *_dataFetchers;
-	
-	SCAuthenticationStatus status;
 	SCResponseFormat responseFormat;
 }
 
@@ -65,7 +49,13 @@ typedef enum {
 /*!
  * initialize the api object
  */
-- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate; // tokenVerifier = nil
+- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
+					apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
+
+/*!
+ * checks if authorized, and if not lets you know in the authDelegate
+ */
+- (void)requestAuthentication;
 
 /*!
  * resets token to nil, and removes it from the keychain
@@ -87,15 +77,15 @@ typedef enum {
  */
 - (void)cancelRequest:(id)requestIdentifier;
 
-- (BOOL)openRedirectURL:(NSURL *)URL;
+- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
+- (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
 @end
 
 
 @protocol SCSoundCloudAPIAuthenticationDelegate <NSObject>
-- (SCSoundCloudAPIConfiguration *)configurationForSoundCloudAPI:(SCSoundCloudAPI *)scAPI;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI requestedAuthenticationWithURL:(NSURL *)authURL;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didChangeAuthenticationStatus:(SCAuthenticationStatus)status;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didEncounterError:(NSError *)error;
+- (void)soundCloudAPIDidGetAccessToken:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
 @end
 
 

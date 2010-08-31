@@ -25,7 +25,6 @@
 
 @interface iPhoneTestAppViewController(private)
 -(void)commonAwake;
--(void)requestUserInfo;
 -(void)updateUserInfoFromData:(NSData *)data;
 @end
 
@@ -57,11 +56,11 @@
 -(void)commonAwake;
 {
 	iPhoneTestAppAppDelegate *appDelegate = (iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate];
-	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate];
+	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate
+												   apiConfiguration:appDelegate.scAPIConfig];
 	[scAPI setResponseFormat:SCResponseFormatJSON];
 	[scAPI setDelegate:self];
-//	[scAPI resetAuthentication];  // uncomment to remove tokens from keychain
-	[self requestUserInfo];
+	[scAPI requestAuthentication];
 }
 
 -(void)dealloc;
@@ -71,7 +70,7 @@
 }
 
 #pragma mark Accessors
-@synthesize postButton, trackNameField;
+@synthesize postButton, trackNameField, scAPI;
 	
 #pragma mark Private
 - (void)requestUserInfo;
@@ -88,7 +87,7 @@
 	if([object isKindOfClass:[NSDictionary class]]) {
 		NSDictionary *userInfoDictionary = (NSDictionary *)object;
 		[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
-		[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"track_count"] integerValue]]];
+		[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"private_tracks_count"] integerValue]]];
 	}
 }
 

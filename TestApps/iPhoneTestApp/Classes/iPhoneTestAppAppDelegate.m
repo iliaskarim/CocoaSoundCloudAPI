@@ -34,14 +34,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
-	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
-	if(launchURL
-	   && [[launchURL absoluteString] hasPrefix:kCallbackURL]) {
-		SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
-		[scAPI openRedirectURL:launchURL]; 
-		[scAPI release];
-	}
-	
 	// global accessible api configuration through application delegate
 	// set appDelegate as auth delegate on every api instantiation
 	// make shure to register the myapp url scheme to your app :)
@@ -56,7 +48,10 @@
 #endif
 	[window addSubview:viewController.view];
     [window makeKeyAndVisible];
-
+	
+	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
+	[viewController.scAPI handleOpenRedirectURL:launchURL]; 
+	
 	return YES;
 }
 
@@ -81,22 +76,14 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-	SCSoundCloudAPI *scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
-	[scAPI openRedirectURL:url]; 
-	[scAPI release];
-	return YES;
+	return [viewController.scAPI handleOpenRedirectURL:url];
 }
 
-#pragma mark SoundCloudAPI Authorization Delegate
+#pragma mark SCSoundCloudAPIAuthenticationDelegate
 
-- (SCSoundCloudAPIConfiguration *)configurationForSoundCloudAPI:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
 {
-	return scAPIConfig;
-}
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI requestedAuthenticationWithURL:(NSURL *)inAuthURL;
-{
-	authURL = [inAuthURL retain];
+	authURL = [authorizationURL retain];
 	safariAlertView = [[UIAlertView alloc] initWithTitle:@"OAuth Authentication"
 												 message:@"The application will launch the SoundCloud website in Safari to allow you to authorize it."
 												delegate:self
@@ -105,22 +92,20 @@
 	[safariAlertView show];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didChangeAuthenticationStatus:(SCAuthenticationStatus)status;
+- (void)soundCloudAPIDidGetAccessToken:(SCSoundCloudAPI *)scAPI;
 {
-	if (status == SCAuthenticationStatusAuthenticated) {
-		// authenticated
-		viewController.postButton.enabled = YES;
-		viewController.trackNameField.enabled = YES;
-		// not the most elegant way to enable/disable the ui
-		// but this is up to you (the developer of apps) to prove your cocoa skills :)
-	} else {
-		viewController.postButton.enabled = NO;
-		viewController.trackNameField.enabled = NO;
-	}
+	viewController.postButton.enabled = YES;
+	viewController.trackNameField.enabled = YES;
+	// not the most elegant way to enable/disable the ui
+	// but this is up to you (the developer of apps) to prove your cocoa skills :)
+	
+	[viewController requestUserInfo];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didEncounterError:(NSError *)error;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
 {
+	viewController.postButton.enabled = NO;
+	viewController.trackNameField.enabled = NO;
 	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
 		if ([error code] == SCAPIErrorHttpResponseError) {
 			// inform the user and offer him to retry.

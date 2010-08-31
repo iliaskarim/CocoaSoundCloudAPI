@@ -26,14 +26,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = SoundCloudAPI;
 		};
 		94E5AE43122C1E9D00C7021A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* SoundCloudAPI */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = SoundCloudAPI;
 		};
 /* End PBXContainerItemProxy section */
@@ -261,7 +261,7 @@
 				);
 				PRODUCT_NAME = iPhoneTestApp;
 				SDKROOT = iphoneos4.0;
-				USER_HEADER_SEARCH_PATHS = "/tmp/SoundCloudAPI.dst/usr/local/include /tmp/JSON.dst/usr/local/include /tmp/OAuth2Client.dst/usr/local/include";
+				USER_HEADER_SEARCH_PATHS = "/tmp/SoundCloudAPI.dst/usr/local/include /tmp/JSON.dst/usr/local/include";
 			};
 			name = Debug;
 		};
@@ -280,7 +280,7 @@
 				);
 				PRODUCT_NAME = iPhoneTestApp;
 				SDKROOT = iphoneos4.0;
-				USER_HEADER_SEARCH_PATHS = "/tmp/SoundCloudAPI.dst/usr/local/include /tmp/JSON.dst/usr/local/include /tmp/OAuth2Client.dst/usr/local/include";
+				USER_HEADER_SEARCH_PATHS = "/tmp/SoundCloudAPI.dst/usr/local/include /tmp/JSON.dst/usr/local/include";
 			};
 			name = Release;
 		};
