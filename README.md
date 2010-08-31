@@ -9,9 +9,9 @@ Make sure to have a look at the [wiki](http://wiki.github.com/soundcloud/cocoa-a
 
 ## Quickstart
 
-- git clone git://github.com/nxtbgthng/OAuth2Client.git
-- cd SoundCloudAPI
-- git checkout 
+- git clone git://github.com/soundcloud/cocoa-api-wrapper.git
+- cd cocoa-api-wrapper
+- git checkout oauth2
 - git submodule update --recursive --init
 
 In your Xcode project:
@@ -23,7 +23,3 @@ In your Xcode project:
 ## Addapting from version 1
 
 *It's quite easy. Instructions will follow within the next days*
-
-## Known Issues
-
-- only the iPhone library target is working atm
