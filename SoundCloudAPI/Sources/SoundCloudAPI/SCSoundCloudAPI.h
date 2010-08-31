@@ -40,11 +40,13 @@ typedef enum {
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 	NSMutableDictionary *_dataFetchers;
 	SCResponseFormat responseFormat;
+	BOOL isAuthenticated;
 }
 
-@property (nonatomic, assign) id<SCSoundCloudAPIDelegate> delegate;
-@property (nonatomic, assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
+@property (assign) id<SCSoundCloudAPIDelegate> delegate;
+@property (assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 @property SCResponseFormat responseFormat;
+@property (assign) BOOL isAuthenticated;	// this might change dynamicaly
 
 /*!
  * initialize the api object

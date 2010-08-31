@@ -77,6 +77,7 @@
 @synthesize delegate;
 @synthesize authDelegate;
 @synthesize responseFormat;
+@synthesize isAuthenticated;
 
 
 #pragma mark Public methods
@@ -214,11 +215,12 @@
 - (void)oauthClientDidGetAccessToken:(NXOAuth2Client *)client;
 {
 	[authDelegate soundCloudAPIDidGetAccessToken:self];
+	self.isAuthenticated = YES;
 }
 
 - (void)oauthClient:(NXOAuth2Client *)client didFailToGetAccessTokenWithError:(NSError *)error;
 {
-	
+	self.isAuthenticated = NO;
 }
 
 
