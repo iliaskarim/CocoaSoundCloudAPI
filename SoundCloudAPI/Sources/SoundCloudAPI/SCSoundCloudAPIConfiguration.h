@@ -19,9 +19,8 @@
  */
 
 #define kSoundCloudAPIURL				@"http://api.soundcloud.com"
-#define kSoundCloudAPIRequestTokenURL	@"http://api.soundcloud.com/oauth/request_token"
-#define kSoundCloudAPIAccesTokenURL		@"http://api.soundcloud.com/oauth/access_token"
-#define kSoundCloudAuthURL				@"http://soundcloud.com/oauth/authorize"
+#define kSoundCloudAPIAccesTokenURL		@"http://api.soundcloud.com/oauth2/access_token"
+#define kSoundCloudAuthURL				@"http://soundcloud.com/oauth2/authorize"
 
 #define kSoundCloudSandboxAPIURL				@"https://api.sandbox-soundcloud.com"
 #define kSoundCloudSandboxAPIAccesTokenURL		@"https://api.sandbox-soundcloud.com/oauth2/access_token"
