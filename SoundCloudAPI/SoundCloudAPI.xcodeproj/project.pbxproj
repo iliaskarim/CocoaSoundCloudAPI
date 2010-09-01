@@ -25,14 +25,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libOAuth2Client.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = OAuth2Client;
 		};
 		94E5ADA7122C193000C7021A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* OAuth2Client */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = OAuth2Client;
 		};
 /* End PBXContainerItemProxy section */
