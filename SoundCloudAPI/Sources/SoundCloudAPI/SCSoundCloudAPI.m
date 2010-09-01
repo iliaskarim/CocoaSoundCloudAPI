@@ -208,19 +208,25 @@
 
 - (void)oauthClientRequestedAuthorization:(NXOAuth2Client *)client;
 {
-	NSURL *authorizationURL = [client authorizeWithRedirectURL:[configuration callbackURL]];
+	NSURL *authorizationURL = [client authorizationURLWithRedirectURL:[configuration callbackURL]];
 	[authDelegate soundCloudAPI:self preparedAuthorizationURL:authorizationURL];
+}
+
+- (void)oauthClientDidLoseAccessToken:(NXOAuth2Client *)client;
+{
+	self.isAuthenticated = NO;
+	[authDelegate soundCloudAPIDidResetAuthentication:self];
 }
 
 - (void)oauthClientDidGetAccessToken:(NXOAuth2Client *)client;
 {
-	[authDelegate soundCloudAPIDidGetAccessToken:self];
 	self.isAuthenticated = YES;
+	[authDelegate soundCloudAPIDidAuthenticate:self];
 }
 
 - (void)oauthClient:(NXOAuth2Client *)client didFailToGetAccessTokenWithError:(NSError *)error;
 {
-	self.isAuthenticated = NO;
+	[authDelegate soundCloudAPI:self didFailToGetAccessTokenWithError:error];
 }
 
 

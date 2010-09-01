@@ -85,7 +85,8 @@ typedef enum {
 
 
 @protocol SCSoundCloudAPIAuthenticationDelegate <NSObject>
-- (void)soundCloudAPIDidGetAccessToken:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPIDidAuthenticate:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
 @end
