@@ -78,7 +78,6 @@
 			children = (
 				9429A5CF1226591400D31807 /* Outsourced */,
 				08FB77AEFE84172EC02AAC07 /* Sources */,
-				9429A5D01226593D00D31807 /* Resources */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
@@ -117,13 +116,6 @@
 				94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */,
 			);
 			path = Outsourced;
-			sourceTree = "<group>";
-		};
-		9429A5D01226593D00D31807 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		9429A5D1122659D500D31807 /* SoundCloudAPI */ = {
