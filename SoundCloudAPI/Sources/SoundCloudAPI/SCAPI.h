@@ -20,4 +20,5 @@
 
 #import "SCAPIErrors.h"
 #import "SCSoundCloudAPI.h"
+#import "SCSoundCloudConnection.h"
 #import "SCSoundCloudAPIConfiguration.h"
