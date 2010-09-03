@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ * Copyright 2010 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -99,6 +99,8 @@
 	// not the most elegant way to enable/disable the ui
 	// but this is up to you (the developer of apps) to prove your cocoa skills :)
 	
+	// assignement of the soundCloudController is done after initializing it. therefore we have to wait 1 cycle to have it assigned to the ivar in the appDelegate
+	// this is a common bug. here you see how to fix it. :)
 	[viewController performSelector:@selector(requestUserInfo) withObject:nil afterDelay:0.0];
 }
 
