@@ -364,7 +364,10 @@
 				GCC_PREFIX_HEADER = iPhoneTestApp_Prefix.pch;
 				HEADER_SEARCH_PATHS = "Outsourced/**";
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = iPhoneTestApp;
 				SDKROOT = iphoneos4.0;
 				USER_HEADER_SEARCH_PATHS = "/tmp/SoundCloudAPI.dst/usr/local/include /tmp/JSON.dst/usr/local/include";
@@ -380,7 +383,10 @@
 				GCC_PREFIX_HEADER = iPhoneTestApp_Prefix.pch;
 				HEADER_SEARCH_PATHS = "Outsourced/**";
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = iPhoneTestApp;
 				SDKROOT = iphoneos4.0;
 				USER_HEADER_SEARCH_PATHS = "/tmp/SoundCloudAPI.dst/usr/local/include /tmp/JSON.dst/usr/local/include";
