@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		94135D73123103DF00D42EF1 /* SCSoundCloudConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */; };
+		94135D73123103DF00D42EF1 /* SCSoundCloudConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94135D74123103DF00D42EF1 /* SCSoundCloudConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 94135D72123103DF00D42EF1 /* SCSoundCloudConnection.m */; };
 		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
