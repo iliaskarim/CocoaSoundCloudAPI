@@ -167,12 +167,11 @@ In `-soundCloudAPI:preparedAuthorizationURL:` you just have to decide which auth
 
 The wrapper is still subject to change. Although we thing that v2.0beta3 should be quite stable in it's interface now. But we're willing to optimize things even further and are hoping for your input.
 
-### 2.0 Beta 2
+### 2.0 Beta 2 to 2.0 Beta 3
 
-### 2.0 Beta 3
-
-* Renamed some `SCSoundCloudAPIDelegate` methods.
-* Introduced `SCSoundCloudAPIConnection` and added `connectionDelegate:` to the perform call.
+* Renamed `-soundCloudAPIDidGetAccessToken:` to `-soundCloudAPIDidAuthenticate:` & added `-soundCloudAPIDidResetAuthentication:`
+* Introduced `SCSoundCloudAPIConnection` and added `connectionDelegate:` per request
+* Moved `SCSoundCloudAPIDelegate` into `SCSoundCloudAPIConnectionDelegate`
 
 
 ## Feedback
