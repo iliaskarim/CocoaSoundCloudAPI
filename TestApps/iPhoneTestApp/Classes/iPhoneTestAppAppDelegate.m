@@ -47,11 +47,20 @@
 																									 consumerSecret:kTestAppConsumerSecret
 																										callbackURL:[NSURL URLWithString:kCallbackURL]];
 #endif
-	soundCloudController = [[iPhoneTestAppSoundCloudController alloc] initWithAuthenticationDelegate:self configuration:scAPIConfig];	
-
+	soundCloudController = [[iPhoneTestAppSoundCloudController alloc] initWithAuthenticationDelegate:self configuration:scAPIConfig];
 	// make shure to register the myapp url scheme to your app :)
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
-	return [soundCloudController.scAPI handleOpenRedirectURL:launchURL]; 
+	BOOL didHandleURL = NO;
+	if (launchURL) {
+		didHandleURL = [soundCloudController.scAPI handleOpenRedirectURL:launchURL];	
+	}
+	
+	// do this at the end and seperatly. this way you ensure that your soundCloudController 
+	// already is accessible via the appDelegate & that the launchURL (if there's one) has been handled
+	[soundCloudController requestAuthentication];
+	
+	return didHandleURL; 
+
 }
 
 - (void)dealloc;
@@ -99,9 +108,7 @@
 	// not the most elegant way to enable/disable the ui
 	// but this is up to you (the developer of apps) to prove your cocoa skills :)
 	
-	// assignement of the soundCloudController is done after initializing it. therefore we have to wait 1 cycle to have it assigned to the ivar in the appDelegate
-	// this is a common bug. here you see how to fix it. :)
-	[viewController performSelector:@selector(requestUserInfo) withObject:nil afterDelay:0.0];
+	[viewController requestUserInfo];
 }
 
 - (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;

@@ -36,6 +36,7 @@
 - (id)initWithAuthenticationDelegate:(NSObject<SCSoundCloudAPIAuthenticationDelegate> *)authDelegate
 					   configuration:(SCSoundCloudAPIConfiguration *)configuration;
 
+- (void)requestAuthentication;
 
 #pragma mark API methods
 

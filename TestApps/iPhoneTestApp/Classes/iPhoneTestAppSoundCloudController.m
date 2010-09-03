@@ -31,8 +31,6 @@
 		scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:authDelegate
 													   apiConfiguration:configuration];
 		[scAPI setResponseFormat:SCResponseFormatJSON];
-		
-		[scAPI requestAuthentication];
 	}
 	return self;
 }
@@ -48,6 +46,13 @@
 
 @synthesize scAPI;
 
+
+#pragma mark Public
+
+- (void)requestAuthentication;
+{
+	[scAPI requestAuthentication];
+}
 
 #pragma mark API Helper
 
