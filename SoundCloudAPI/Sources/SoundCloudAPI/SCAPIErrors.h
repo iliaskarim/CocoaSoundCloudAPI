@@ -27,6 +27,5 @@
 #define SCAPIHttpResponseErrorStatusKey	@"httpErrorStatus"
 
 enum {
-	SCAPIErrorNotAuthenticted =			-1001,
 	SCAPIErrorHttpResponseError =		-2001
 };
