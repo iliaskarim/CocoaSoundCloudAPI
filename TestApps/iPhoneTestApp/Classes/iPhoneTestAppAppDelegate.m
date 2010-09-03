@@ -26,6 +26,7 @@
 
 #import "iPhoneTestAppAppDelegate.h"
 #import "iPhoneTestAppViewController.h"
+#import "iPhoneTestAppSoundCloudController.h"
 
 
 @implementation iPhoneTestAppAppDelegate
@@ -34,49 +35,48 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
-	// global accessible api configuration through application delegate
-	// set appDelegate as auth delegate on every api instantiation
-	// make shure to register the myapp url scheme to your app :)
-#ifdef kUseProduction
-	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
-																		  consumerSecret:kTestAppConsumerSecret
-																			 callbackURL:[NSURL URLWithString:kCallbackURL]];
-#else
-	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
-																	   consumerSecret:kTestAppConsumerSecret
-																		  callbackURL:[NSURL URLWithString:kCallbackURL]];
-#endif
 	[window addSubview:viewController.view];
     [window makeKeyAndVisible];
 	
+#ifdef kUseProduction
+	SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
+																										consumerSecret:kTestAppConsumerSecret
+																										   callbackURL:[NSURL URLWithString:kCallbackURL]];
+#else
+	SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
+																									 consumerSecret:kTestAppConsumerSecret
+																										callbackURL:[NSURL URLWithString:kCallbackURL]];
+#endif
+	soundCloudController = [[iPhoneTestAppSoundCloudController alloc] initWithAuthenticationDelegate:self configuration:scAPIConfig];	
+
+	// make shure to register the myapp url scheme to your app :)
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
-	[viewController.scAPI handleOpenRedirectURL:launchURL]; 
-	
-	return YES;
+	return [soundCloudController.scAPI handleOpenRedirectURL:launchURL]; 
 }
 
 - (void)dealloc;
 {
     [viewController release];
+	[soundCloudController release];
     [window release];
-	[scAPIConfig release];
 	[authURL release];
 	[safariAlertView release];
     [super dealloc];
 }
 
+
 #pragma mark Accessors
 
 @synthesize window;
 @synthesize viewController;
-@synthesize scAPIConfig;
-@synthesize oauthVerifier;
+@synthesize soundCloudController;
+
 
 #pragma mark -
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-	return [viewController.scAPI handleOpenRedirectURL:url];
+	return [soundCloudController.scAPI handleOpenRedirectURL:url];
 }
 
 #pragma mark SCSoundCloudAPIAuthenticationDelegate
@@ -92,20 +92,24 @@
 	[safariAlertView show];
 }
 
-- (void)soundCloudAPIDidGetAccessToken:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPIDidAuthenticate:(SCSoundCloudAPI *)scAPI;
 {
 	viewController.postButton.enabled = YES;
 	viewController.trackNameField.enabled = YES;
 	// not the most elegant way to enable/disable the ui
 	// but this is up to you (the developer of apps) to prove your cocoa skills :)
 	
-	[viewController requestUserInfo];
+	[viewController performSelector:@selector(requestUserInfo) withObject:nil afterDelay:0.0];
+}
+
+- (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;
+{
+	viewController.postButton.enabled = NO;
+	viewController.trackNameField.enabled = NO;
 }
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
 {
-	viewController.postButton.enabled = NO;
-	viewController.trackNameField.enabled = NO;
 	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
 		if ([error code] == SCAPIErrorHttpResponseError) {
 			// inform the user and offer him to retry.
@@ -116,8 +120,6 @@
 			} else {
 				NSLog(@"error: %@", [httpError localizedDescription]);
 			}
-		} else if ([error code] == SCAPIErrorNotAuthenticted) {
-//			[_scAPI requestAuthentication];
 		}
 	}
 }

@@ -35,13 +35,16 @@
 
 #define kCallbackURL	@"myapp://oauth"	//remember that the myapp protocol also is set in the info.plist
 
-@class iPhoneTestAppViewController;
+
+#define appDelegate ((iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate])
+
+@class iPhoneTestAppViewController, iPhoneTestAppSoundCloudController;
 
 @interface iPhoneTestAppAppDelegate : NSObject <UIApplicationDelegate, SCSoundCloudAPIAuthenticationDelegate> {
     UIWindow *window;
     iPhoneTestAppViewController *viewController;
-	SCSoundCloudAPIConfiguration *scAPIConfig;
-	NSString *oauthVerifier;
+
+	iPhoneTestAppSoundCloudController *soundCloudController;
 	
 	UIAlertView *safariAlertView;
 	NSURL *authURL;
@@ -50,8 +53,8 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet iPhoneTestAppViewController *viewController;
 
-@property (nonatomic, readonly) SCSoundCloudAPIConfiguration *scAPIConfig;
-@property (nonatomic, retain) NSString *oauthVerifier;
+@property (nonatomic, readonly) iPhoneTestAppSoundCloudController *soundCloudController;
+
 
 @end
 

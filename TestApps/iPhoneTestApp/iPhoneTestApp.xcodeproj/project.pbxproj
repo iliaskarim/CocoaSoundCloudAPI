@@ -12,6 +12,8 @@
 		2899E5220DE3E06400AC0155 /* iPhoneTestAppViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* iPhoneTestAppViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* iPhoneTestAppViewController.m */; };
+		94135E6D1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94135E6C1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.m */; };
+		94135EEC12313C5500D42EF1 /* libjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94135EE712313C4C00D42EF1 /* libjson.a */; };
 		949C17511061052B00C4044D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949C17501061052B00C4044D /* Foundation.framework */; };
 		949C17D61061055800C4044D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949C17D51061055800C4044D /* UIKit.framework */; };
 		94BF8FDD11245C01002EF7F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BF8FDC11245C01002EF7F8 /* Security.framework */; };
@@ -22,6 +24,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		94135EE212313C4C00D42EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53D229810C96121600276605;
+			remoteInfo = JSON;
+		};
+		94135EE412313C4C00D42EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53D2298D0C96122A00276605;
+			remoteInfo = Tests;
+		};
+		94135EE612313C4C00D42EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FE2BBD800D8B0D3900184787;
+			remoteInfo = libjson;
+		};
+		94135EE812313C4C00D42EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FE2BBDAB0D8B0EE000184787;
+			remoteInfo = libjsontests;
+		};
+		94135EEA12313C4C00D42EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53EF4D400DC247B3005F5E6D;
+			remoteInfo = bench;
+		};
+		94135EED12313C5D00D42EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FE2BBD7F0D8B0D3900184787;
+			remoteInfo = libjson;
+		};
 		94E5AE41122C1E8200C7021A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */;
@@ -49,6 +93,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPhoneTestApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTestApp_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94135E6B1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTestAppSoundCloudController.h; sourceTree = "<group>"; };
+		94135E6C1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneTestAppSoundCloudController.m; sourceTree = "<group>"; };
+		94135ED412313C4B00D42EF1 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = ../Support/JSON/JSON.xcodeproj; sourceTree = SOURCE_ROOT; };
 		949C17501061052B00C4044D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		949C17D51061055800C4044D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94BF8FDC11245C01002EF7F8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -63,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94135EEC12313C5500D42EF1 /* libjson.a in Frameworks */,
 				94E5AE8C122C212500C7021A /* libSoundCloudAPI.a in Frameworks */,
 				949C17511061052B00C4044D /* Foundation.framework in Frameworks */,
 				949C17D61061055800C4044D /* UIKit.framework in Frameworks */,
@@ -78,6 +126,8 @@
 			children = (
 				1D3623240D0F684500981E51 /* iPhoneTestAppAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iPhoneTestAppAppDelegate.m */,
+				94135E6B1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.h */,
+				94135E6C1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.m */,
 				28D7ACF60DDB3853001CB0EB /* iPhoneTestAppViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* iPhoneTestAppViewController.m */,
 			);
@@ -137,6 +187,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		94135ED512313C4B00D42EF1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94135EE312313C4C00D42EF1 /* JSON.framework */,
+				94135EE512313C4C00D42EF1 /* Tests.octest */,
+				94135EE712313C4C00D42EF1 /* libjson.a */,
+				94135EE912313C4C00D42EF1 /* libjsontests.octest */,
+				94135EEB12313C4C00D42EF1 /* bench */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		94E5AE3E122C1E8200C7021A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +210,7 @@
 		D3A305890F336D9800408EA8 /* Outsourced */ = {
 			isa = PBXGroup;
 			children = (
+				94135ED412313C4B00D42EF1 /* JSON.xcodeproj */,
 				94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */,
 			);
 			path = Outsourced;
@@ -168,6 +231,7 @@
 			);
 			dependencies = (
 				94E5AE44122C1E9D00C7021A /* PBXTargetDependency */,
+				94135EEE12313C5D00D42EF1 /* PBXTargetDependency */,
 			);
 			name = iPhoneTestApp;
 			productName = iPhoneTestApp;
@@ -186,6 +250,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 94135ED512313C4B00D42EF1 /* Products */;
+					ProjectRef = 94135ED412313C4B00D42EF1 /* JSON.xcodeproj */;
+				},
+				{
 					ProductGroup = 94E5AE3E122C1E8200C7021A /* Products */;
 					ProjectRef = 94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */;
 				},
@@ -198,6 +266,41 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		94135EE312313C4C00D42EF1 /* JSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JSON.framework;
+			remoteRef = 94135EE212313C4C00D42EF1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		94135EE512313C4C00D42EF1 /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = 94135EE412313C4C00D42EF1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		94135EE712313C4C00D42EF1 /* libjson.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjson.a;
+			remoteRef = 94135EE612313C4C00D42EF1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		94135EE912313C4C00D42EF1 /* libjsontests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = libjsontests.octest;
+			remoteRef = 94135EE812313C4C00D42EF1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		94135EEB12313C4C00D42EF1 /* bench */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = bench;
+			remoteRef = 94135EEA12313C4C00D42EF1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		94E5AE42122C1E8200C7021A /* libSoundCloudAPI.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -230,12 +333,18 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* iPhoneTestAppAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */,
+				94135E6D1231349E00D42EF1 /* iPhoneTestAppSoundCloudController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		94135EEE12313C5D00D42EF1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libjson;
+			targetProxy = 94135EED12313C5D00D42EF1 /* PBXContainerItemProxy */;
+		};
 		94E5AE44122C1E9D00C7021A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SoundCloudAPI;
