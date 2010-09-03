@@ -8,33 +8,49 @@
 
 #import "SCSoundCloudConnection.h"
 
+#import "SCSoundCloudAPI.h"
+
 #import "NXOAuth2Connection.h"
 #import "NXOAuth2ConnectionDelegate.h"
 
 
-@interface SCSoundCloudConnection () <NXOAuth2ConnectionDelegate>
+@interface SCSoundCloudAPI (SCSoundCloudConnectionRetainer)
+
+- (void)keepTrackOfConnection:(SCSoundCloudConnection *)connection;
+- (void)forgetConnection:(SCSoundCloudConnection *)connection;
+
 @end
+
+
+@interface SCSoundCloudConnection () <NXOAuth2ConnectionDelegate>@end
 
 @implementation SCSoundCloudConnection
 
 #pragma mark Lifecycle
 
-+ (SCSoundCloudConnection *)connectionWithRequest:(NSURLRequest *)request
-									  oauthClient:(NXOAuth2Client *)oauthClient
-										  context:(id)context
-							   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
++ (SCSoundCloudConnection *)connectionFromSoundCloudAPI:(SCSoundCloudAPI *)theSoundCloudAPI
+												request:(NSURLRequest *)request
+											oauthClient:(NXOAuth2Client *)oauthClient
+												context:(id)context
+									 connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
 {
-	return [[[[self class] alloc] initWithRequest:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate] autorelease];
+	return [[[[self class] alloc] initWithSoundCloudAPI:theSoundCloudAPI request:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate] autorelease];
 }
 
-- (id)initWithRequest:(NSURLRequest *)request
-		  oauthClient:(NXOAuth2Client *)oauthClient
-			  context:(id)context
-   connectionDelegate:(id<SCSoundCloudConnectionDelegate>)connectionDelegate;
+- (id)initWithSoundCloudAPI:(SCSoundCloudAPI *)theSoundCloudAPI
+					request:(NSURLRequest *)request
+				oauthClient:(NXOAuth2Client *)oauthClient
+					context:(id)context
+		 connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+
 {
 	if (self = [super init]) {
 		connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:oauthClient delegate:self];
+		connection.context = context;
 		delegate = connectionDelegate;
+		soundCloudAPI = theSoundCloudAPI;
+		
+		[soundCloudAPI keepTrackOfConnection:self];
 	}
 	return self;
 }
@@ -51,6 +67,7 @@
 
 - (void)cancel;
 {
+	[soundCloudAPI forgetConnection:self];
 	[connection cancel];
 }
 
@@ -62,6 +79,7 @@
 	if ([delegate respondsToSelector:@selector(soundCloudConnection:didFinishWithData:context:)]) {
 		[delegate soundCloudConnection:self didFinishWithData:data context:connection.context];
 	}
+	[soundCloudAPI forgetConnection:self];
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)aConnection didFailWithError:(NSError *)error;
@@ -70,6 +88,7 @@
 	if ([delegate respondsToSelector:@selector(soundCloudConnection:didFailWithError:context:)]) {
 		[delegate soundCloudConnection:self didFailWithError:error context:connection.context];
 	}
+	[soundCloudAPI forgetConnection:self];
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)aConnection didReceiveData:(NSData *)data;
@@ -91,5 +110,22 @@
 	}
 }
 
+
+@end
+
+
+#pragma mark SCSoundCloudConnectionRetainer
+
+@implementation SCSoundCloudAPI (SCSoundCloudConnectionRetainer)
+
+- (void)keepTrackOfConnection:(SCSoundCloudConnection *)connection;
+{
+	[apiConnections addObject:connection];
+}
+
+- (void)forgetConnection:(SCSoundCloudConnection *)connection;
+{
+	[apiConnections removeObject:connection];
+}
 
 @end

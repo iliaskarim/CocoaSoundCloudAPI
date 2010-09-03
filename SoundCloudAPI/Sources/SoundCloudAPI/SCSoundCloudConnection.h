@@ -21,18 +21,21 @@
 @interface SCSoundCloudConnection : NSObject {
 @private
 	NXOAuth2Connection	*connection;
-	NSObject<SCSoundCloudConnectionDelegate>*	delegate;
+	NSObject<SCSoundCloudConnectionDelegate>*	delegate;	// assigned
+	SCSoundCloudAPI		*soundCloudAPI;	// assigned
 }
 
-+ (SCSoundCloudConnection *)connectionWithRequest:(NSURLRequest *)request
-									  oauthClient:(NXOAuth2Client *)oauthClient
-										  context:(id)context
-							   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
++ (SCSoundCloudConnection *)connectionFromSoundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI
+												request:(NSURLRequest *)request
+											oauthClient:(NXOAuth2Client *)oauthClient
+												context:(id)context
+									 connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
 
-- (id)initWithRequest:(NSURLRequest *)request
-		  oauthClient:(NXOAuth2Client *)oauthClient
-			  context:(id)context
-   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+- (id)initWithSoundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI
+					request:(NSURLRequest *)request
+				oauthClient:(NXOAuth2Client *)oauthClient
+					context:(id)context
+		 connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
 
 - (void)cancel;
 

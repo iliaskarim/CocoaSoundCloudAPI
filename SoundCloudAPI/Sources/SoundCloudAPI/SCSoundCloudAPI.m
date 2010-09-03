@@ -55,13 +55,17 @@
 												  authorizeURL:[configuration authURL]
 													  tokenURL:[configuration accessTokenURL]
 												  authDelegate:self];
-		
+		apiConnections = [[NSMutableSet alloc] init];
 	}
 	return self;
 }
 
 - (void)dealloc;
 {
+	for(SCSoundCloudConnection *connection in apiConnections) {
+		[connection cancel];
+	}
+	[apiConnections release];
 	[configuration release];
 	oauthClient.authDelegate = nil;
 	[oauthClient release];
@@ -142,7 +146,7 @@
 		[postStream release];
 	}
 	
-	return [SCSoundCloudConnection connectionWithRequest:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate];
+	return [SCSoundCloudConnection connectionFromSoundCloudAPI:self request:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate];
 }
 
 

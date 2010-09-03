@@ -38,6 +38,8 @@ typedef enum {
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 	SCResponseFormat responseFormat;
 	BOOL isAuthenticated;
+	
+	NSMutableSet *apiConnections;
 }
 
 @property (assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
