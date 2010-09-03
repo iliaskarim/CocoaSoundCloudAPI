@@ -19,18 +19,17 @@
  */
 
 
-#import "NXOAuth2Connection.h"
-#import "NXOAuth2ConnectionDelegate.h"
 #import "NXOAuth2Client.h"
 #import "NXOAuth2PostBodyStream.h"
 #import "NSMutableURLRequest+NXOAuth2.h"
 
-#import "SCSoundCloudAPI.h"
-
 #import "SCAPIErrors.h"
+#import "SCSoundCloudConnection.h"
 #import "SCSoundCloudAPIConfiguration.h"
 
 #import "NSString+SoundCloudAPI.h"
+
+#import "SCSoundCloudAPI.h"
 
 
 @interface SCSoundCloudAPI () <NXOAuth2ConnectionDelegate, NXOAuth2ClientAuthDelegate>
@@ -46,7 +45,6 @@
 					apiConfiguration:(SCSoundCloudAPIConfiguration *)aConfiguration;
 {
 	if (self = [super init]) {
-		_dataFetchers = [[NSMutableDictionary alloc] init];
 		responseFormat = SCResponseFormatXML;
 		
 		configuration = [aConfiguration retain];
@@ -67,14 +65,12 @@
 	[configuration release];
 	oauthClient.authDelegate = nil;
 	[oauthClient release];
-	[_dataFetchers release];
 	[super dealloc];
 }
 
 
 #pragma mark Accessors
 
-@synthesize delegate;
 @synthesize authDelegate;
 @synthesize responseFormat;
 @synthesize isAuthenticated;
@@ -115,12 +111,13 @@
 	}	
 }
 
-#pragma mark API methods
+#pragma mark API method
 
-- (id)performMethod:(NSString *)httpMethod
-		 onResource:(NSString *)resource
-	 withParameters:(NSDictionary *)parameters
-			context:(id)context;
+- (SCSoundCloudConnection *)performMethod:(NSString *)httpMethod
+							   onResource:(NSString *)resource
+						   withParameters:(NSDictionary *)parameters
+								  context:(id)context
+					   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
 {
 	if (!configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
@@ -145,70 +142,18 @@
 		[postStream release];
 	}
 	
-	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:oauthClient delegate:self];
-	connection.context = context;
-	NSString *requestId = [NSString stringWithUUID];
-	[_dataFetchers setObject:connection forKey:requestId];
-	[connection release];
-	return [[_dataFetchers allKeysForObject:connection] lastObject];
+	return [SCSoundCloudConnection connectionWithRequest:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate];
 }
 
-- (void)cancelRequest:(id)requestIdentifier;
-{
-	if (!requestIdentifier)
-		return;
-	NXOAuth2Connection *connection = [_dataFetchers objectForKey:requestIdentifier];
-	
-	id context = [connection.context retain];
-	[connection cancel];
-	[_dataFetchers removeObjectForKey:requestIdentifier];
-	
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didCancelRequestWithContext:)])
-		[delegate soundCloudAPI:self didCancelRequestWithContext:context];
-	[context release];
-}
-
-
-#pragma mark NXOAuth2ConnectionDelegate
-
-- (void)oauthConnection:(NXOAuth2Connection *)connection didFinishWithData:(NSData *)data;
-{
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
-		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context];
-	}
-	[_dataFetchers removeObjectsForKeys:[_dataFetchers allKeysForObject:connection]];
-}
-
-- (void)oauthConnection:(NXOAuth2Connection *)connection didFailWithError:(NSError *)error;
-{
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
-		[delegate soundCloudAPI:self didFailWithError:error context:connection.context];
-	}
-	[_dataFetchers removeObjectsForKeys:[_dataFetchers allKeysForObject:connection]];
-}
-
-- (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveData:(NSData *)data;
-{
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveData:context:)]) {
-		[delegate soundCloudAPI:self didReceiveData:data context:connection.context];
-	}
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveBytes:total:context:)]) {
-		[delegate soundCloudAPI:self didReceiveBytes:connection.data.length total:connection.expectedContentLength context:connection.context];
-	}
-}
-
-- (void)oauthConnection:(NXOAuth2Connection *)connection didSendBytes:(unsigned long long)bytesSend ofTotal:(unsigned long long)bytesTotal;
-{
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didSendBytes:total:context:)]) {
-		[delegate soundCloudAPI:self didSendBytes:bytesSend total:bytesTotal context:connection.context];
-	}
-}
 
 #pragma mark NXOAuth2ClientAuthDelegate
 
 - (void)oauthClientRequestedAuthorization:(NXOAuth2Client *)client;
 {
-	NSURL *authorizationURL = [client authorizationURLWithRedirectURL:[configuration callbackURL]];
+	NSURL *authorizationURL = nil;
+	if ([configuration callbackURL]) {
+		authorizationURL = [client authorizationURLWithRedirectURL:[configuration callbackURL]];
+	}
 	[authDelegate soundCloudAPI:self preparedAuthorizationURL:authorizationURL];
 }
 

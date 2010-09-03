@@ -20,11 +20,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class SCSoundCloudAPIConfiguration;
 @class NXOAuth2Client;
-@class NXOAuth2Connection;
-@protocol SCSoundCloudAPIDelegate;
-@protocol SCSoundCloudAPIAuthenticationDelegate;
+@class SCSoundCloudAPIConfiguration, SCSoundCloudConnection;
+@protocol SCSoundCloudAPIAuthenticationDelegate, SCSoundCloudConnectionDelegate;
+
 
 typedef enum {
 	SCResponseFormatXML,
@@ -36,14 +35,11 @@ typedef enum {
 	SCSoundCloudAPIConfiguration *configuration;
 	NXOAuth2Client *oauthClient;
 	
-	id<SCSoundCloudAPIDelegate> delegate;
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
-	NSMutableDictionary *_dataFetchers;
 	SCResponseFormat responseFormat;
 	BOOL isAuthenticated;
 }
 
-@property (assign) id<SCSoundCloudAPIDelegate> delegate;
 @property (assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 @property SCResponseFormat responseFormat;
 @property (assign) BOOL isAuthenticated;	// this might change dynamicaly
@@ -53,6 +49,20 @@ typedef enum {
  */
 - (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 					apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
+
+/*!
+ * invokes a request using the specified HTTP method on the specified resource
+ * pass your connection delegate here
+ * returns a connection object that can be used to cancel the request
+ */
+- (SCSoundCloudConnection *)performMethod:(NSString *)httpMethod
+							   onResource:(NSString *)resource
+						   withParameters:(NSDictionary *)parameters
+								  context:(id)context
+					   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+
+
+#pragma mark Authentication
 
 /*!
  * checks if authorized, and if not lets you know in the authDelegate
@@ -65,22 +75,17 @@ typedef enum {
 - (void)resetAuthentication;
 
 /*!
- * invokes a request using the specified HTTP method on the specified resource
- * returns a request identifier which can be used to cancel the request.
- * returns nil if an error occured
+ * When you app recieves the callback via it's callback URL pass it on to this method
+ * returns YES if the redirectURL was handled
  */
-- (id)performMethod:(NSString *)httpMethod
-		 onResource:(NSString *)resource
-	 withParameters:(NSDictionary *)parameters
-			context:(id)targetContext;
+- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
 
 /*!
- * cancels the request with the particular request identifier
+ * Use this method to pass Username & Password on Credentials flow
  */
-- (void)cancelRequest:(id)requestIdentifier;
-
-- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
 - (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
+
+
 @end
 
 
@@ -88,16 +93,6 @@ typedef enum {
 - (void)soundCloudAPIDidAuthenticate:(SCSoundCloudAPI *)scAPI;
 - (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
+
 - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
-@end
-
-
-@protocol SCSoundCloudAPIDelegate <NSObject>
-@optional
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didFinishWithData:(NSData *)data context:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didFailWithError:(NSError *)error context:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didCancelRequestWithContext:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveData:(NSData *)data context:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
 @end

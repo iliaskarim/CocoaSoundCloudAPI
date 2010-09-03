@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94135D73123103DF00D42EF1 /* SCSoundCloudConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */; };
+		94135D74123103DF00D42EF1 /* SCSoundCloudConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 94135D72123103DF00D42EF1 /* SCSoundCloudConnection.m */; };
 		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudConnection.h; sourceTree = "<group>"; };
+		94135D72123103DF00D42EF1 /* SCSoundCloudConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudConnection.m; sourceTree = "<group>"; };
 		9429A5D2122659D500D31807 /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPI.h; sourceTree = "<group>"; };
 		9429A5D3122659D500D31807 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIErrors.h; sourceTree = "<group>"; };
 		9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPI.h; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */,
 				9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */,
 				9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */,
+				94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */,
+				94135D72123103DF00D42EF1 /* SCSoundCloudConnection.m */,
 			);
 			path = SoundCloudAPI;
 			sourceTree = "<group>";
@@ -169,6 +175,7 @@
 				9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */,
 				9429A5E6122659D500D31807 /* SCSoundCloudAPIConfiguration.h in Headers */,
 				9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */,
+				94135D73123103DF00D42EF1 /* SCSoundCloudConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +242,7 @@
 				9429A5E5122659D500D31807 /* SCSoundCloudAPI.m in Sources */,
 				9429A5E7122659D500D31807 /* SCSoundCloudAPIConfiguration.m in Sources */,
 				9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */,
+				94135D74123103DF00D42EF1 /* SCSoundCloudConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
