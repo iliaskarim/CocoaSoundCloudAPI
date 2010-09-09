@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ * Copyright 2010 nxtbgthng for SoundCloud Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,7 +22,8 @@
 
 @class NXOAuth2Client;
 @class SCSoundCloudAPIConfiguration, SCSoundCloudConnection;
-@protocol SCSoundCloudAPIAuthenticationDelegate, SCSoundCloudConnectionDelegate;
+@class SCSoundCloudAPIAuthentication;
+@protocol SCSoundCloudAPIAuthenticationDelegate, SCSoundCloudAPIDelegate;
 
 
 typedef enum {
@@ -31,39 +32,39 @@ typedef enum {
 } SCResponseFormat;
 
 
-@interface SCSoundCloudAPI : NSObject {
-	SCSoundCloudAPIConfiguration *configuration;
-	NXOAuth2Client *oauthClient;
-	
-	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
-	SCResponseFormat responseFormat;
-	BOOL isAuthenticated;
+@interface SCSoundCloudAPI : NSObject <NSCopying> {
+	SCSoundCloudAPIAuthentication *authentication;
+	SCResponseFormat responseFormat;				// default is SCResponseFormatJSON
 	
 	NSMutableDictionary *apiConnections;
+	
+	id<SCSoundCloudAPIDelegate> delegate;
 }
 
-@property (assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
 @property SCResponseFormat responseFormat;
-@property (assign) BOOL isAuthenticated;	// this might change dynamicaly
+@property (readonly) BOOL isAuthenticated;	// this might change dynamicaly. not observable, atm
+
 
 /*!
  * initialize the api object
  */
-- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
+- (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)delegate
+authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 					apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
 
 /*!
+ * pass along an existing api object
+ */
+- (SCSoundCloudAPI *)copyWithAPIDelegate:(id)apiDelegate;
+
+/*!
  * invokes a request using the specified HTTP method on the specified resource
- * pass your connection delegate here
  * returns a connection identifier that can be used to cancel the connection
- *
- * NOTE: your connection delegate is going to be retained for as long as the connection is running.
  */
 - (id)performMethod:(NSString *)httpMethod
 		 onResource:(NSString *)resource
 	 withParameters:(NSDictionary *)parameters
-			context:(id)context
- connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+			context:(id)context;
 
 /*!
  * cancels the connection with the particular connection identifier
@@ -95,13 +96,4 @@ typedef enum {
 - (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
 
 
-@end
-
-
-@protocol SCSoundCloudAPIAuthenticationDelegate <NSObject>
-- (void)soundCloudAPIDidAuthenticate:(SCSoundCloudAPI *)scAPI;
-- (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
 @end

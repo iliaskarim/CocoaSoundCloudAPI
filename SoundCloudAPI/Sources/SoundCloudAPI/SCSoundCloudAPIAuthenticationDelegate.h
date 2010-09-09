@@ -18,18 +18,15 @@
  * 
  */
 
-#import "NSString+SoundCloudAPI.h"
+#import <UIKit/UIKit.h>
 
 
-@implementation NSString (SoundCloudAPI)
+@class SCSoundCloudAPI;
 
-+ (NSString *)stringWithUUID;
-{
-	CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-	CFRelease(theUUID);
-	
-    return [(NSString *)string autorelease];
-}
+@protocol SCSoundCloudAPIAuthenticationDelegate <NSObject>
+- (void)soundCloudAPIDidAuthenticate;
+- (void)soundCloudAPIDidResetAuthentication;
+- (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 
+- (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 @end
