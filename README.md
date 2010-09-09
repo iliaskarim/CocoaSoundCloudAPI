@@ -121,7 +121,7 @@ But consider that this bypasses one of the major reasons for using OAuth, by pas
 
 ### Invoking Requests on the API
 
-There is one central method for sending requests to the API: `-performMethod:onResource:withParameters:context:connectionDelegate:`. This method returns an `SCSoundCloudConnection` which you can use to cancel the request later using its `-cancel` method.
+There is one central method for sending requests to the API: `-performMethod:onResource:withParameters:context:connectionDelegate:`. This method returns an `id` which you can use to cancel the request later using `-cancelConnection:` method.
 
 The context can be used to pass data to the delegate callbacks. It is retained for as long as the `SCSoundCloudConnection` instance exists.
 
