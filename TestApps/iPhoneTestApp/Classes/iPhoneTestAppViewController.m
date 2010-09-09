@@ -85,11 +85,26 @@
 
 -(void)soundCloudConnection:(SCSoundCloudConnection *)connection didFinishWithData:(NSData *)data context:(id)context;
 {
+	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	if([context isEqualToString:@"userInfo"]) {
 		[self updateUserInfoFromData:data];
 	}
 	if([context isEqualToString:@"upload"]) {
 		[self requestUserInfo];
+		
+		return; // comment this line to add the track to the field recordings group http://sandbox-soundcloud.com/groups/field-recordings
+		
+		NSString *groupId = @"8";	// check group id for production
+		NSDictionary *newTrack = [dataString JSONValue];
+		NSString *resource = [NSString stringWithFormat:@"/groups/%@/contributions/%@", groupId, [newTrack objectForKey:@"id"]];
+		[appDelegate.soundCloudController.scAPI performMethod:@"PUT"
+												   onResource:resource
+											   withParameters:nil
+													  context:@"addToGroup"
+										   connectionDelegate:self];
+	}
+	if ([context isEqualToString:@"addToGroup"]) {
+		NSLog(@"%@", [dataString JSONValue]);
 	}
 }
 
