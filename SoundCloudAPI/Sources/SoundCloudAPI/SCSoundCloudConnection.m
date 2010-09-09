@@ -8,6 +8,8 @@
 
 #import "SCSoundCloudConnection.h"
 
+#import "SCSoundCloudConnectionDelegate.h"
+
 #import "SCSoundCloudAPI.h"
 
 #import "NXOAuth2Connection.h"
