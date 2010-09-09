@@ -33,7 +33,14 @@
 
 @implementation iPhoneTestAppViewController
 
-
+- (void)dealloc;
+{
+	if (uploadConnectionId) {
+		[appDelegate.soundCloudController.scAPI cancelConnection:uploadConnectionId];
+	}
+	[uploadConnectionId release]; uploadConnectionId = nil;
+	[super dealloc];
+}
 #pragma mark Accessors
 
 @synthesize postButton, trackNameField;
@@ -67,11 +74,15 @@
 	NSURL *dataURL = [NSURL fileURLWithPath:dataPath];
 	
 	[progresBar setProgress:0];
-	[appDelegate.soundCloudController postTrackWithTitle:[trackNameField text]
-												 fileURL:dataURL
-												isPublic:NO
-												 context:@"upload"
-												delegate:self];
+	if (uploadConnectionId) {
+		[appDelegate.soundCloudController.scAPI cancelConnection:uploadConnectionId];
+		[uploadConnectionId release]; uploadConnectionId = nil;
+	}
+	uploadConnectionId = [[appDelegate.soundCloudController postTrackWithTitle:[trackNameField text]
+																	   fileURL:dataURL
+																	  isPublic:NO
+																	   context:@"upload"
+																	  delegate:self] retain];
 }
 
 -(void)didReceiveMemoryWarning;
@@ -90,18 +101,17 @@
 		[self updateUserInfoFromData:data];
 	}
 	if([context isEqualToString:@"upload"]) {
+		[uploadConnectionId release]; uploadConnectionId = nil;
 		[self requestUserInfo];
 		
 		return; // comment this line to add the track to the field recordings group http://sandbox-soundcloud.com/groups/field-recordings
 		
-		NSString *groupId = @"8";	// check group id for production
 		NSDictionary *newTrack = [dataString JSONValue];
-		NSString *resource = [NSString stringWithFormat:@"/groups/%@/contributions/%@", groupId, [newTrack objectForKey:@"id"]];
-		[appDelegate.soundCloudController.scAPI performMethod:@"PUT"
-												   onResource:resource
-											   withParameters:nil
-													  context:@"addToGroup"
-										   connectionDelegate:self];
+		
+		NSNumber *groupId = [NSNumber numberWithInt:8];	// check group id for production
+		NSNumber *trackId = [newTrack objectForKey:@"id"];
+
+		[appDelegate.soundCloudController postTrackWithId:trackId toGroupWithId:groupId context:@"addToGroup" delegate:self];
 	}
 	if ([context isEqualToString:@"addToGroup"]) {
 		NSLog(@"%@", [dataString JSONValue]);
@@ -110,6 +120,9 @@
 
 -(void)soundCloudConnection:(SCSoundCloudConnection *)connection didFailWithError:(NSError *)error context:(id)context;
 {
+	if ([context isEqualToString:@"upload"]) {
+		[uploadConnectionId release]; uploadConnectionId = nil;
+	}
 	// check error code. if it's a http error get it from the userdict (see SCAPIErrors.h)
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
 													message:[error localizedDescription]

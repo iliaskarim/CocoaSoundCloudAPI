@@ -26,6 +26,8 @@
 	IBOutlet UIButton *postButton;
     IBOutlet UILabel *trackNumberLabel;
     IBOutlet UILabel *usernameLabel;
+	
+	id uploadConnectionId;
 }
 @property (nonatomic, retain) IBOutlet UIButton *postButton;
 @property (nonatomic, retain) IBOutlet UITextField *trackNameField;

@@ -56,8 +56,8 @@
 
 #pragma mark API Helper
 
-- (SCSoundCloudConnection *)meWithContext:(id)context
-								 delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+- (id)meWithContext:(id)context
+		   delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
 {
 	return [scAPI performMethod:@"GET"
 					 onResource:@"/me"
@@ -66,11 +66,11 @@
 			 connectionDelegate:delegate];
 }
 
-- (SCSoundCloudConnection *)postTrackWithTitle:(NSString *)title
-									   fileURL:(NSURL *)fileURL
-									  isPublic:(BOOL)public
-									   context:(id)context
-									  delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+- (id)postTrackWithTitle:(NSString *)title
+				 fileURL:(NSURL *)fileURL
+				isPublic:(BOOL)public
+				 context:(id)context
+				delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
 {
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 	[parameters setObject:title forKey:@"track[title]"];
@@ -81,6 +81,19 @@
 					 onResource:@"tracks"
 				 withParameters:parameters
 						context:context
+			 connectionDelegate:delegate];
+}
+
+- (id)postTrackWithId:(NSNumber *)trackId
+		toGroupWithId:(NSNumber *)groupId
+			  context:(id)context
+			 delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+{
+	NSString *resource = [NSString stringWithFormat:@"/groups/%@/contributions/%@", groupId, trackId];
+	return [scAPI performMethod:@"PUT"
+					 onResource:resource
+				 withParameters:nil
+						context:@"addToGroup"
 			 connectionDelegate:delegate];
 }
 

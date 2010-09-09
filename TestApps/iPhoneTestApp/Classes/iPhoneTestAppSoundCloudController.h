@@ -40,12 +40,17 @@
 
 #pragma mark API methods
 
-- (SCSoundCloudConnection *)meWithContext:(id)context
-								 delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+- (id)meWithContext:(id)context
+		   delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
 
-- (SCSoundCloudConnection *)postTrackWithTitle:(NSString *)title
-									   fileURL:(NSURL *)fileURL
-									  isPublic:(BOOL)isPublic
-									   context:(id)context
-									  delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+- (id)postTrackWithTitle:(NSString *)title
+				 fileURL:(NSURL *)fileURL
+				isPublic:(BOOL)isPublic
+				 context:(id)context
+				delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+
+- (id)postTrackWithId:(NSNumber *)trackId
+		toGroupWithId:(NSNumber *)groupId
+			  context:(id)context
+			 delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
 @end
