@@ -190,7 +190,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
 		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context];
 	}
-	[delegate release]; delegate = nil;
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
 
@@ -199,7 +198,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
 		[delegate soundCloudAPI:self didFailWithError:error context:connection.context];
 	}
-	[delegate release]; delegate = nil;
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
 
