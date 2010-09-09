@@ -39,7 +39,7 @@ typedef enum {
 	SCResponseFormat responseFormat;
 	BOOL isAuthenticated;
 	
-	NSMutableSet *apiConnections;
+	NSMutableDictionary *apiConnections;
 }
 
 @property (assign) id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
@@ -55,13 +55,20 @@ typedef enum {
 /*!
  * invokes a request using the specified HTTP method on the specified resource
  * pass your connection delegate here
- * returns a connection object that can be used to cancel the request
+ * returns a connection identifier that can be used to cancel the connection
+ *
+ * NOTE: your connection delegate is going to be retained for as long as the connection is running.
  */
-- (SCSoundCloudConnection *)performMethod:(NSString *)httpMethod
-							   onResource:(NSString *)resource
-						   withParameters:(NSDictionary *)parameters
-								  context:(id)context
-					   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+- (id)performMethod:(NSString *)httpMethod
+		 onResource:(NSString *)resource
+	 withParameters:(NSDictionary *)parameters
+			context:(id)context
+ connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+
+/*!
+ * cancels the connection with the particular connection identifier
+ */
+- (void)cancelConnection:(id)connectionId;
 
 
 #pragma mark Authentication

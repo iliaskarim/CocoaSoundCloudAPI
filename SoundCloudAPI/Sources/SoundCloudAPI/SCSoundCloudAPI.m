@@ -55,14 +55,14 @@
 												  authorizeURL:[configuration authURL]
 													  tokenURL:[configuration accessTokenURL]
 												  authDelegate:self];
-		apiConnections = [[NSMutableSet alloc] init];
+		apiConnections = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
 
 - (void)dealloc;
 {
-	for(SCSoundCloudConnection *connection in apiConnections) {
+	for(SCSoundCloudConnection *connection in [apiConnections allValues]) {
 		[connection cancel];
 	}
 	[apiConnections release];
@@ -117,11 +117,11 @@
 
 #pragma mark API method
 
-- (SCSoundCloudConnection *)performMethod:(NSString *)httpMethod
-							   onResource:(NSString *)resource
-						   withParameters:(NSDictionary *)parameters
-								  context:(id)context
-					   connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
+- (id)performMethod:(NSString *)httpMethod
+		 onResource:(NSString *)resource
+	 withParameters:(NSDictionary *)parameters
+			context:(id)context
+ connectionDelegate:(NSObject<SCSoundCloudConnectionDelegate> *)connectionDelegate;
 {
 	if (!configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
@@ -146,7 +146,19 @@
 		[postStream release];
 	}
 	
-	return [SCSoundCloudConnection connectionFromSoundCloudAPI:self request:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate];
+	id connectionId = [NSString stringWithUUID];
+	SCSoundCloudConnection *connection = [SCSoundCloudConnection connectionFromSoundCloudAPI:self request:request oauthClient:oauthClient context:context connectionDelegate:connectionDelegate];
+	[apiConnections setObject:connection forKey:connectionId];
+	return connectionId;
+}
+
+- (void)cancelConnection:(id)connectionId;
+{
+	SCSoundCloudConnection *connection = [apiConnections objectForKey:connectionId];
+	if (connection) {
+		[connection cancel];
+		[apiConnections removeObjectForKey:connectionId];
+	}
 }
 
 

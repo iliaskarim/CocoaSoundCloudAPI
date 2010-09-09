@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		94135D73123103DF00D42EF1 /* SCSoundCloudConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		94135D73123103DF00D42EF1 /* SCSoundCloudConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 94135D71123103DF00D42EF1 /* SCSoundCloudConnection.h */; settings = {ATTRIBUTES = (); }; };
 		94135D74123103DF00D42EF1 /* SCSoundCloudConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 94135D72123103DF00D42EF1 /* SCSoundCloudConnection.m */; };
 		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,6 +36,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = OAuth2Client;
+		};
+		94EE49C31238D66200EFDAB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 942FFCD612315E0A00E6C65E /* OAuth2Client Framework.framework */;
+			remoteInfo = "OAuth2Client Framework";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -158,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				94E5ADA4122C192900C7021A /* libOAuth2Client.a */,
+				94EE49C41238D66200EFDAB1 /* OAuth2Client Framework.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -230,6 +238,13 @@
 			fileType = archive.ar;
 			path = libOAuth2Client.a;
 			remoteRef = 94E5ADA3122C192900C7021A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		94EE49C41238D66200EFDAB1 /* OAuth2Client Framework.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = "OAuth2Client Framework.framework";
+			remoteRef = 94EE49C31238D66200EFDAB1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

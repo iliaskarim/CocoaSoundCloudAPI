@@ -21,7 +21,7 @@
 @interface SCSoundCloudConnection : NSObject {
 @private
 	NXOAuth2Connection	*connection;
-	NSObject<SCSoundCloudConnectionDelegate>*	delegate;	// assigned
+	NSObject<SCSoundCloudConnectionDelegate>*	delegate;	// retained!!!
 	SCSoundCloudAPI		*soundCloudAPI;	// assigned
 }
 

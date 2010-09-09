@@ -15,14 +15,12 @@
 
 
 @interface SCSoundCloudAPI (SCSoundCloudConnectionRetainer)
-
-- (void)keepTrackOfConnection:(SCSoundCloudConnection *)connection;
+// only used to remove connection once it is finished
 - (void)forgetConnection:(SCSoundCloudConnection *)connection;
-
 @end
 
 
-@interface SCSoundCloudConnection () <NXOAuth2ConnectionDelegate>@end
+@interface SCSoundCloudConnection () <NXOAuth2ConnectionDelegate>@end // private protocol declaration
 
 @implementation SCSoundCloudConnection
 
@@ -47,16 +45,15 @@
 	if (self = [super init]) {
 		connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:oauthClient delegate:self];
 		connection.context = context;
-		delegate = connectionDelegate;
+		delegate = [connectionDelegate retain];
 		soundCloudAPI = theSoundCloudAPI;
-		
-		[soundCloudAPI keepTrackOfConnection:self];
 	}
 	return self;
 }
 
 - (void)dealloc;
 {
+	[delegate release]; delegate = nil; // paranoid
 	[connection cancel];
 	[connection release];
 	[super dealloc];
@@ -67,7 +64,7 @@
 
 - (void)cancel;
 {
-	[soundCloudAPI forgetConnection:self];
+	[delegate release]; delegate = nil;
 	[connection cancel];
 }
 
@@ -79,6 +76,7 @@
 	if ([delegate respondsToSelector:@selector(soundCloudConnection:didFinishWithData:context:)]) {
 		[delegate soundCloudConnection:self didFinishWithData:data context:connection.context];
 	}
+	[delegate release]; delegate = nil;
 	[soundCloudAPI forgetConnection:self];
 }
 
@@ -88,6 +86,7 @@
 	if ([delegate respondsToSelector:@selector(soundCloudConnection:didFailWithError:context:)]) {
 		[delegate soundCloudConnection:self didFailWithError:error context:connection.context];
 	}
+	[delegate release]; delegate = nil;
 	[soundCloudAPI forgetConnection:self];
 }
 
@@ -118,14 +117,9 @@
 
 @implementation SCSoundCloudAPI (SCSoundCloudConnectionRetainer)
 
-- (void)keepTrackOfConnection:(SCSoundCloudConnection *)connection;
-{
-	[apiConnections addObject:connection];
-}
-
 - (void)forgetConnection:(SCSoundCloudConnection *)connection;
 {
-	[apiConnections removeObject:connection];
+	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
 
 @end
