@@ -45,7 +45,7 @@
 
 - (SCSoundCloudConnection *)postTrackWithTitle:(NSString *)title
 									   fileURL:(NSURL *)fileURL
-public:(BOOL)public
-context:(id)context
-delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
+									  isPublic:(BOOL)isPublic
+									   context:(id)context
+									  delegate:(NSObject<SCSoundCloudConnectionDelegate> *)delegate;
 @end

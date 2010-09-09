@@ -69,7 +69,7 @@
 	[progresBar setProgress:0];
 	[appDelegate.soundCloudController postTrackWithTitle:[trackNameField text]
 												 fileURL:dataURL
-												  public:NO
+												isPublic:NO
 												 context:@"upload"
 												delegate:self];
 }
