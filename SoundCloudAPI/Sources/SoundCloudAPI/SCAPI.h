@@ -22,4 +22,4 @@
 #import "SCSoundCloudAPI.h"
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCSoundCloudAPIDelegate.h"
-#import "SCSoundCloudAuthenticationDelegate.h"
+#import "SCSoundCloudAPIAuthenticationDelegate.h"

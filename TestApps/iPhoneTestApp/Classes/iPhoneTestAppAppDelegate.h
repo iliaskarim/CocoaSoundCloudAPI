@@ -38,13 +38,13 @@
 
 #define appDelegate ((iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate])
 
-@class iPhoneTestAppViewController, iPhoneTestAppSoundCloudController;
+@class iPhoneTestAppViewController;
 
 @interface iPhoneTestAppAppDelegate : NSObject <UIApplicationDelegate, SCSoundCloudAPIAuthenticationDelegate> {
     UIWindow *window;
     iPhoneTestAppViewController *viewController;
 
-	iPhoneTestAppSoundCloudController *soundCloudController;
+	SCSoundCloudAPI *soundCloudAPIMaster;
 	
 	UIAlertView *safariAlertView;
 	NSURL *authURL;
@@ -53,7 +53,7 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet iPhoneTestAppViewController *viewController;
 
-@property (nonatomic, readonly) iPhoneTestAppSoundCloudController *soundCloudController;
+@property (nonatomic, readonly) SCSoundCloudAPI *soundCloudAPIMaster;
 
 
 @end

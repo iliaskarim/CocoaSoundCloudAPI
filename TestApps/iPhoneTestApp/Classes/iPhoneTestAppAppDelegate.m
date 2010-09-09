@@ -26,7 +26,6 @@
 
 #import "iPhoneTestAppAppDelegate.h"
 #import "iPhoneTestAppViewController.h"
-#import "iPhoneTestAppSoundCloudController.h"
 
 
 @implementation iPhoneTestAppAppDelegate
@@ -38,35 +37,23 @@
 	[window addSubview:viewController.view];
     [window makeKeyAndVisible];
 	
-#ifdef kUseProduction
-	SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
-																										consumerSecret:kTestAppConsumerSecret
-																										   callbackURL:[NSURL URLWithString:kCallbackURL]];
-#else
-	SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
-																									 consumerSecret:kTestAppConsumerSecret
-																										callbackURL:[NSURL URLWithString:kCallbackURL]];
-#endif
-	soundCloudController = [[iPhoneTestAppSoundCloudController alloc] initWithAuthenticationDelegate:self configuration:scAPIConfig];
-	// make shure to register the myapp url scheme to your app :)
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	BOOL didHandleURL = NO;
 	if (launchURL) {
-		didHandleURL = [soundCloudController.scAPI handleOpenRedirectURL:launchURL];	
+		didHandleURL = [self.soundCloudAPIMaster handleOpenRedirectURL:launchURL];	
 	}
 	
 	// do this at the end and seperatly. this way you ensure that your soundCloudController 
 	// already is accessible via the appDelegate & that the launchURL (if there's one) has been handled
-	[soundCloudController requestAuthentication];
+	[self.soundCloudAPIMaster requestAuthentication];
 	
 	return didHandleURL; 
-
 }
 
 - (void)dealloc;
 {
     [viewController release];
-	[soundCloudController release];
+	[soundCloudAPIMaster release];
     [window release];
 	[authURL release];
 	[safariAlertView release];
@@ -78,19 +65,38 @@
 
 @synthesize window;
 @synthesize viewController;
-@synthesize soundCloudController;
+
+- (SCSoundCloudAPI *)soundCloudAPIMaster;
+{
+	if (!soundCloudAPIMaster) {
+#ifdef kUseProduction
+		SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
+																											consumerSecret:kTestAppConsumerSecret
+																											   callbackURL:[NSURL URLWithString:kCallbackURL]];
+#else
+		SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
+																										 consumerSecret:kTestAppConsumerSecret
+																											callbackURL:[NSURL URLWithString:kCallbackURL]];
+#endif
+		
+		soundCloudAPIMaster = [[SCSoundCloudAPI alloc] initWithDelegate:nil authenticationDelegate:self apiConfiguration:scAPIConfig];
+		// make shure to register the myapp url scheme to your app :)
+		
+	}
+	return soundCloudAPIMaster;
+}
 
 
 #pragma mark -
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-	return [soundCloudController.scAPI handleOpenRedirectURL:url];
+	return [soundCloudAPIMaster handleOpenRedirectURL:url];
 }
 
 #pragma mark SCSoundCloudAPIAuthenticationDelegate
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
+- (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 {
 	authURL = [authorizationURL retain];
 	safariAlertView = [[UIAlertView alloc] initWithTitle:@"OAuth Authentication"
@@ -101,7 +107,7 @@
 	[safariAlertView show];
 }
 
-- (void)soundCloudAPIDidAuthenticate:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPIDidAuthenticate;
 {
 	viewController.postButton.enabled = YES;
 	viewController.trackNameField.enabled = YES;
@@ -111,13 +117,13 @@
 	[viewController requestUserInfo];
 }
 
-- (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;
+- (void)soundCloudAPIDidResetAuthentication;
 {
 	viewController.postButton.enabled = NO;
 	viewController.trackNameField.enabled = NO;
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
+- (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 {
 	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
 		if ([error code] == SCAPIErrorHttpResponseError) {

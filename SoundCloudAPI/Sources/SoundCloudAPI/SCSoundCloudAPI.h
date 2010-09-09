@@ -50,7 +50,7 @@ typedef enum {
  */
 - (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)delegate
 authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
-					apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
+	  apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
 
 /*!
  * pass along an existing api object

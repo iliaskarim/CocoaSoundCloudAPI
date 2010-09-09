@@ -50,15 +50,14 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)aDelegate
+- (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)theDelegate
 authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	  apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
 
 {
-	SCSoundCloudAPIAuthentication *anAuthentication =  [[SCSoundCloudAPIAuthentication alloc] initWithDelegate:aDelegate
-																						authenticationDelegate:authDelegate
-																							  apiConfiguration:configuration];
-	if (self = [self initWithDelegate:aDelegate
+	SCSoundCloudAPIAuthentication *anAuthentication =  [[SCSoundCloudAPIAuthentication alloc] initWithAuthenticationDelegate:authDelegate
+																											apiConfiguration:configuration];
+	if (self = [self initWithDelegate:theDelegate
 					   authentication:anAuthentication]) {
 		responseFormat = SCResponseFormatJSON;
 		apiConnections = [[NSMutableDictionary alloc] init];
@@ -189,7 +188,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFinishWithData:(NSData *)data;
 {
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
-		[delegate soundCloudAPI:self didReceiveData:data context:connection.context];
+		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context];
 	}
 	[delegate release]; delegate = nil;
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];

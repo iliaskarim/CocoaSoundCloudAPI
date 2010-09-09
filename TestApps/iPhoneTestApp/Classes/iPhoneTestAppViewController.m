@@ -20,7 +20,8 @@
 
 #import "iPhoneTestAppViewController.h"
 #import "iPhoneTestAppAppDelegate.h"
-#import "iPhoneTestAppSoundCloudController.h"
+
+#import "SCSoundCloudAPI+TestApp.h"
 
 #import "JSON/JSON.h"
 
@@ -33,25 +34,35 @@
 
 @implementation iPhoneTestAppViewController
 
-- (void)dealloc;
+#pragma mark Lifecycle
+
+- (void)awakeFromNib;
 {
-	if (uploadConnectionId) {
-		[appDelegate.soundCloudController.scAPI cancelConnection:uploadConnectionId];
-	}
-	[uploadConnectionId release]; uploadConnectionId = nil;
+	scAPI = [appDelegate.soundCloudAPIMaster copyWithAPIDelegate:self];
+}
+
+
+- (void)dealloc;
+{ 
+	[uploadConnectionId release];
+	[scAPI release];
 	[super dealloc];
 }
+
+
 #pragma mark Accessors
 
 @synthesize postButton, trackNameField;
-	
+
+
 #pragma mark Private
+
 - (void)requestUserInfo;
 {
-	[appDelegate.soundCloudController meWithContext:@"userInfo" delegate:self];
+	[scAPI meWithContext:@"userInfo"];
 }
 
--(void)updateUserInfoFromData:(NSData *)data;
+- (void)updateUserInfoFromData:(NSData *)data;
 {
 	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	
@@ -75,14 +86,13 @@
 	
 	[progresBar setProgress:0];
 	if (uploadConnectionId) {
-		[appDelegate.soundCloudController.scAPI cancelConnection:uploadConnectionId];
+		[scAPI cancelConnection:uploadConnectionId];
 		[uploadConnectionId release]; uploadConnectionId = nil;
 	}
-	uploadConnectionId = [[appDelegate.soundCloudController postTrackWithTitle:[trackNameField text]
-																	   fileURL:dataURL
-																	  isPublic:NO
-																	   context:@"upload"
-																	  delegate:self] retain];
+	uploadConnectionId = [[scAPI postTrackWithTitle:[trackNameField text]
+											fileURL:dataURL
+										   isPublic:NO
+											context:@"upload"] retain];
 }
 
 -(void)didReceiveMemoryWarning;
@@ -92,9 +102,9 @@
 }
 
 
-#pragma mark SCSoundCloudConnectionDelegate
+#pragma mark SCSoundCloudAPIDelegate
 
--(void)soundCloudConnection:(SCSoundCloudConnection *)connection didFinishWithData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context;
 {
 	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	if([context isEqualToString:@"userInfo"]) {
@@ -111,15 +121,22 @@
 		NSNumber *groupId = [NSNumber numberWithInt:8];	// check group id for production
 		NSNumber *trackId = [newTrack objectForKey:@"id"];
 
-		[appDelegate.soundCloudController postTrackWithId:trackId toGroupWithId:groupId context:@"addToGroup" delegate:self];
+		[scAPI postTrackWithId:trackId toGroupWithId:groupId context:@"addToGroup"];
 	}
 	if ([context isEqualToString:@"addToGroup"]) {
 		NSLog(@"%@", [dataString JSONValue]);
 	}
 }
 
--(void)soundCloudConnection:(SCSoundCloudConnection *)connection didFailWithError:(NSError *)error context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context;
 {
+	
+	if (error.code == SCAPIErrorHttpResponseError) {
+		NSError *httpError = [error.userInfo objectForKey:SCAPIHttpResponseErrorStatusKey];
+		if (httpError.code == 401) {
+			// 401 - not authenticated
+		}
+	}
 	if ([context isEqualToString:@"upload"]) {
 		[uploadConnectionId release]; uploadConnectionId = nil;
 	}
@@ -133,13 +150,13 @@
 	[alert release];
 }
 
--(void)soundCloudConnection:(SCSoundCloudConnection *)connection didReceiveData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveData:(NSData *)data context:(id)context;
 {}
 
--(void)soundCloudConnection:(SCSoundCloudConnection *)connection didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
 {}
 
--(void)soundCloudConnection:(SCSoundCloudConnection *)connection didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
 {
 	if([context isEqual:@"upload"]) {
 		[progresBar setProgress: ((float)sendBytes) / totalBytes];
