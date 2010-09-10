@@ -15,7 +15,7 @@
 		9429A5E7122659D500D31807 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */; };
 		9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; };
 		9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */; };
-		94E5ADA9122C193D00C7021A /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E5ADA4122C192900C7021A /* libOAuth2Client.a */; };
+		94E5ADA9122C193D00C7021A /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E5ADA4122C192900C7021A /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		94EE4A6E1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94EE4B4D12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94EE4B5012390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */; };
