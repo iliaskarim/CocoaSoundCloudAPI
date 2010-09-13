@@ -20,11 +20,11 @@
 
 #define kSoundCloudAPIURL					@"https://api.soundcloud.com"
 #define kSoundCloudAPIAccesTokenURL			@"https://api.soundcloud.com/oauth2/token"
-#define kSoundCloudAuthURL					@"https://soundcloud.com/oauth2/authorize"
+#define kSoundCloudAuthURL					@"https://soundcloud.com/connect"
 
 #define kSoundCloudSandboxAPIURL			@"https://api.sandbox-soundcloud.com"
 #define kSoundCloudSandboxAPIAccesTokenURL	@"https://api.sandbox-soundcloud.com/oauth2/token"
-#define kSoundCloudSandboxAuthURL			@"https://sandbox-soundcloud.com/oauth2/authorize"
+#define kSoundCloudSandboxAuthURL			@"https://sandbox-soundcloud.com/connect"
 
 
 @interface SCSoundCloudAPIConfiguration : NSObject {
