@@ -71,21 +71,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D /* libOAuth2Client.a */;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = OAuth2Client;
 		};
 		948866F3123A89D70085E52C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 942FFCD612315E0A00E6C65E /* OAuth2Client Framework.framework */;
+			remoteGlobalIDString = 942FFCD612315E0A00E6C65E;
 			remoteInfo = "OAuth2Client Framework";
 		};
 		948866F6123A89EB0085E52C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D /* OAuth2Client */;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = OAuth2Client;
 		};
 		94E5AE41122C1E8200C7021A /* PBXContainerItemProxy */ = {
@@ -288,7 +288,14 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iPhoneTestApp" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectReferences = (
@@ -466,7 +473,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
 		};
@@ -478,7 +485,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Release;
 		};
