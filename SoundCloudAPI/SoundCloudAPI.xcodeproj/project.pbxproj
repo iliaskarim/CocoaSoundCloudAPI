@@ -15,8 +15,8 @@
 		9429A5E7122659D500D31807 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */; };
 		9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; };
 		9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */; };
-		94535F90123FB03A00BD668A /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EE49C41238D66200EFDAB1 /* OAuth2Client.framework */; };
-		94535FA6123FB33500BD668A /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; };
+		94535F90123FB03A00BD668A /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EE49C41238D66200EFDAB1 /* OAuth2Client.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		94535FA6123FB33500BD668A /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; settings = {ATTRIBUTES = (); }; };
 		94535FA7123FB33500BD668A /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94535FA8123FB33500BD668A /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94535FA9123FB33500BD668A /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,7 +43,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 942FFCD512315E0A00E6C65E /* OAuth2Client.framework */;
+			remoteGlobalIDString = 942FFCD512315E0A00E6C65E;
 			remoteInfo = OAuth2Client.framework;
 		};
 		94E5ADA3122C192900C7021A /* PBXContainerItemProxy */ = {

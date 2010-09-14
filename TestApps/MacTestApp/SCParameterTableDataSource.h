@@ -21,7 +21,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SCParameterTableDataSource : NSObject {
+@interface SCParameterTableDataSource : NSObject <NSTableViewDataSource> {
 	NSMutableDictionary *parameterDictionary;
 }
 
