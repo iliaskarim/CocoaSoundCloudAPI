@@ -7,7 +7,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>myapp</string>
+				<string>x-wrapper-test</string>
 			</array>
 			<key>CFBundleURLName</key>
 			<string>com.yourcompany.myapp</string>

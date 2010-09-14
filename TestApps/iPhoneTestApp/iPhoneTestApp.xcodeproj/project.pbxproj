@@ -203,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				94E5AE42122C1E8200C7021A /* libSoundCloudAPI.a */,
+				94535FF5123FB6E800BD668A /* SoundCloudAPI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
