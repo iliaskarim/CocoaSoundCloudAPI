@@ -3,4 +3,4 @@
 	url = git://github.com/nxtbgthng/OAuth2Client.git
 [submodule "TestApps/Support/JSON"]
 	path = TestApps/Support/JSON
-	url = git://github.com/stig/json-framework.git
+	url = git://github.com/nxtbgthng/json-framework.git
