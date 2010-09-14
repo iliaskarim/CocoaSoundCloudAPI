@@ -67,6 +67,13 @@
 			remoteGlobalIDString = FE2BBD7F0D8B0D3900184787;
 			remoteInfo = libjson;
 		};
+		94535FF4123FB6E800BD668A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 94535F86123FAFDF00BD668A;
+			remoteInfo = SoundCloudAPI.framework;
+		};
 		948866F1123A89D70085E52C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */;
@@ -235,7 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				948866F2123A89D70085E52C /* libOAuth2Client.a */,
-				948866F4123A89D70085E52C /* OAuth2Client Framework.framework */,
+				948866F4123A89D70085E52C /* OAuth2Client.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -244,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				94E5AE42122C1E8200C7021A /* libSoundCloudAPI.a */,
+				94535FF5123FB6E800BD668A /* SoundCloudAPI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -355,6 +363,13 @@
 			remoteRef = 94135EEA12313C4C00D42EF1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		94535FF5123FB6E800BD668A /* SoundCloudAPI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SoundCloudAPI.framework;
+			remoteRef = 94535FF4123FB6E800BD668A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		948866F2123A89D70085E52C /* libOAuth2Client.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -362,10 +377,10 @@
 			remoteRef = 948866F1123A89D70085E52C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		948866F4123A89D70085E52C /* OAuth2Client Framework.framework */ = {
+		948866F4123A89D70085E52C /* OAuth2Client.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = "OAuth2Client Framework.framework";
+			path = OAuth2Client.framework;
 			remoteRef = 948866F3123A89D70085E52C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

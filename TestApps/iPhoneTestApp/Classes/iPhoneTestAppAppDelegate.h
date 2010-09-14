@@ -33,7 +33,7 @@
 	#define kTestAppConsumerSecret	@"GZcAcJzMCRybR1GBuOjG5wEGITnG9cIHBHMkWR4oFk"
 #endif
 
-#define kCallbackURL	@"myapp://oauth"	//remember that the myapp protocol also is set in the info.plist
+#define kCallbackURL	@"x-wrapper-test://oauth"	//remember that the myapp protocol also is set in the info.plist
 
 
 #define appDelegate ((iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate])
