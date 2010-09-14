@@ -19,11 +19,11 @@
  */
 
 
-#import "NXOAuth2Client.h"
-#import "NXOAuth2Connection.h"
-#import "NXOAuth2ConnectionDelegate.h"
-#import "NXOAuth2PostBodyStream.h"
-#import "NSMutableURLRequest+NXOAuth2.h"
+#if TARGET_OS_IPHONE
+#import "NXOAuth2.h"
+#else
+#import <OAuth2Client/NXOAuth2.h>
+#endif
 
 #import "SCAPIErrors.h"
 #import "SCSoundCloudAPIConfiguration.h"

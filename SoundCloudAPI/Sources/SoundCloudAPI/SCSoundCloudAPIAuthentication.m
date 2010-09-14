@@ -18,7 +18,11 @@
  * 
  */
 
-#import "NXOAuth2Client.h"
+#if TARGET_OS_IPHONE
+#import "NXOAuth2.h"
+#else
+#import <OAuth2Client/NXOAuth2.h>
+#endif
 
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
@@ -26,7 +30,7 @@
 #import "SCSoundCloudAPIAuthentication.h"
 
 
-@interface SCSoundCloudAPIAuthentication () <NXOAuth2ClientAuthDelegate>
+@interface SCSoundCloudAPIAuthentication () <NXOAuth2ClientDelegate>
 - (void)setIsAuthenticated:(BOOL)value;
 @end
 
@@ -46,7 +50,7 @@
 												  clientSecret:[configuration consumerSecret]
 												  authorizeURL:[configuration authURL]
 													  tokenURL:[configuration accessTokenURL]
-												  authDelegate:self];
+													  delegate:self];
 	}
 	return self;
 }
@@ -98,7 +102,7 @@
 
 #pragma mark NXOAuth2ClientAuthDelegate
 
-- (void)oauthClientRequestedAuthorization:(NXOAuth2Client *)client;
+- (void)oauthClientNeedsAuthorization:(NXOAuth2Client *)client;
 {
 	NSURL *authorizationURL = nil;
 	if ([configuration callbackURL]) {

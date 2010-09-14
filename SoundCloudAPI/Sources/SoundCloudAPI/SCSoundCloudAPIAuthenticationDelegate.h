@@ -18,8 +18,6 @@
  * 
  */
 
-#import <UIKit/UIKit.h>
-
 
 @class SCSoundCloudAPI;
 
