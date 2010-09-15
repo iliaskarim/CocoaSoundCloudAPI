@@ -21,12 +21,4 @@
 #import <Foundation/Foundation.h>
 
 // Domain of errors coming from a call to the SoundCloutAPI
-#define SCAPIErrorDomain				@"SoundCloudAPIError"
-
-//TODO: Remove Error-within-Error.
-// If the code of the error is SCAPIErrorHttpResponseError you can find the original HTTPError under this Key in the userInfo
-#define SCAPIHttpResponseErrorStatusKey	@"httpErrorStatus"
-
-enum {
-	SCAPIErrorHttpResponseError =		-2001
-};
+#define SCAPIErrorDomain				@"SCAPIErrorDomain"
