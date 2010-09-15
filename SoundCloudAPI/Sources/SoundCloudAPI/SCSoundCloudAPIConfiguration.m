@@ -23,50 +23,35 @@
 
 @implementation SCSoundCloudAPIConfiguration
 
-#pragma mark Lifecycle
+
+#pragma mark Class Methods
 
 + (id)configurationForProductionWithConsumerKey:(NSString *)inConsumerKey
 								 consumerSecret:(NSString *)inConsumerSecret
 									callbackURL:(NSURL *)inCallbackURL;
 {
-	return [[[self alloc] initForProductionWithConsumerKey:inConsumerKey
-											consumerSecret:inConsumerSecret
-											   callbackURL:inCallbackURL] autorelease];
+	return [[[self alloc] initWithConsumerKey:inConsumerKey
+                               consumerSecret:inConsumerSecret
+                                  callbackURL:inCallbackURL
+                                   apiBaseURL:[NSURL URLWithString:kSoundCloudAPIURL]
+                               accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL]
+                                      authURL:[NSURL URLWithString:kSoundCloudAuthURL]] autorelease];
 }
 
 + (id)configurationForSandboxWithConsumerKey:(NSString *)inConsumerKey
 							  consumerSecret:(NSString *)inConsumerSecret
 								 callbackURL:(NSURL *)inCallbackURL;
 {
-	return [[[self alloc] initForSandboxWithConsumerKey:inConsumerKey
-										 consumerSecret:inConsumerSecret
-											callbackURL:inCallbackURL] autorelease];
-}
-
-- (id)initForProductionWithConsumerKey:(NSString *)inConsumerKey
-						consumerSecret:(NSString *)inConsumerSecret
-						   callbackURL:(NSURL *)inCallbackURL;
-{
-	return [self initWithConsumerKey:inConsumerKey
-					  consumerSecret:inConsumerSecret
-						 callbackURL:inCallbackURL
-						  apiBaseURL:[NSURL URLWithString:kSoundCloudAPIURL]
-					  accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL]
-							 authURL:[NSURL URLWithString:kSoundCloudAuthURL]];
+	return [[[self alloc] initWithConsumerKey:inConsumerKey
+                               consumerSecret:inConsumerSecret
+                                  callbackURL:inCallbackURL
+                                   apiBaseURL:[NSURL URLWithString:kSoundCloudSandboxAPIURL]
+                               accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccesTokenURL]
+                                      authURL:[NSURL URLWithString:kSoundCloudSandboxAuthURL]] autorelease];
 }
 
 
-- (id)initForSandboxWithConsumerKey:(NSString *)inConsumerKey
-					 consumerSecret:(NSString *)inConsumerSecret
-						callbackURL:(NSURL *)inCallbackURL;
-{
-	return [self initWithConsumerKey:inConsumerKey
-					  consumerSecret:inConsumerSecret
-						 callbackURL:inCallbackURL
-						  apiBaseURL:[NSURL URLWithString:kSoundCloudSandboxAPIURL]
-					  accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccesTokenURL]
-							 authURL:[NSURL URLWithString:kSoundCloudSandboxAuthURL]];
-}
+#pragma mark Lifecycle
 
 - (id)initWithConsumerKey:(NSString *)inConsumerKey
 		   consumerSecret:(NSString *)inConsumerSecret
