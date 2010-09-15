@@ -30,11 +30,11 @@
 	
 	NXOAuth2Client *oauthClient;
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;	// assigned
-	BOOL isAuthenticated;
+	BOOL authenticated;
 }
 
 @property (readonly) NXOAuth2Client *oauthClient;
-@property (readonly) BOOL isAuthenticated;
+@property (readonly, getter=isAuthenticated) BOOL authenticated;
 @property (readonly) SCSoundCloudAPIConfiguration *configuration;
 
 - (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate

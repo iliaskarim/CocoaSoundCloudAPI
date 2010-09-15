@@ -90,11 +90,12 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #pragma mark Accessors
 
+@synthesize delegate;
 @synthesize responseFormat;
 
-- (BOOL)isAuthenticated;
+- (BOOL)authenticated;
 {
-	return authentication.isAuthenticated;
+	return authentication.authenticated;
 }
 
 
@@ -121,7 +122,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 }
 
 
-#pragma mark Pirivate methods
+#pragma mark Private
 
 - (NSString *)_responseTypeFromEnum:(SCResponseFormat)inResponseFormat;
 {

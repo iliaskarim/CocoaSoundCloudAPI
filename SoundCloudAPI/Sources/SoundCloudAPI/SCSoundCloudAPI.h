@@ -20,12 +20,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class NXOAuth2Client;
-@class SCSoundCloudAPIConfiguration, SCSoundCloudConnection;
-@class SCSoundCloudAPIAuthentication;
+#import "SCSoundCloudAPIDelegate.h"
+#import "SCSoundCloudAPIAuthenticationDelegate.h"
 
-//TODO: Import protocols instead of forward declaring
-@protocol SCSoundCloudAPIAuthenticationDelegate, SCSoundCloudAPIDelegate;
+@class NXOAuth2Client;
+@class SCSoundCloudAPIConfiguration;
+@class SCSoundCloudConnection;
+@class SCSoundCloudAPIAuthentication;
 
 
 typedef enum {
@@ -43,8 +44,9 @@ typedef enum {
 	id<SCSoundCloudAPIDelegate> delegate;
 }
 
-@property SCResponseFormat responseFormat;
-@property (readonly) BOOL isAuthenticated;	// this might change dynamically. Not observable, atm
+@property (nonatomic, assign) id<SCSoundCloudAPIDelegate> delegate;
+@property (nonatomic, assign) SCResponseFormat responseFormat;
+@property (nonatomic, readonly, getter=isAuthenticated) BOOL authenticated;	// this might change dynamically. Not observable, atm
 
 
 /*!
@@ -58,6 +60,9 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
  * pass along an existing api object
  */
 - (id)copyWithAPIDelegate:(id)apiDelegate;
+
+
+#pragma mark Connection Handling
 
 /*!
  * invokes a request using the specified HTTP method on the specified resource

@@ -31,7 +31,7 @@
 
 
 @interface SCSoundCloudAPIAuthentication () <NXOAuth2ClientDelegate>
-- (void)setIsAuthenticated:(BOOL)value;
+@property (assign, getter=isAuthenticated) BOOL authenticated;
 @end
 
 
@@ -67,14 +67,7 @@
 
 @synthesize oauthClient;
 @synthesize configuration;
-@synthesize isAuthenticated;
-
-- (void)setIsAuthenticated:(BOOL)value;
-{
-	[self willChangeValueForKey:@"isAuthenticated"];
-	isAuthenticated = value;
-	[self didChangeValueForKey:@"isAuthenticated"];
-}
+@synthesize authenticated;
 
 
 #pragma mark Public
@@ -113,13 +106,13 @@
 
 - (void)oauthClientDidLoseAccessToken:(NXOAuth2Client *)client;
 {
-	self.isAuthenticated = NO;
+	self.authenticated = NO;
 	[authDelegate soundCloudAPIDidResetAuthentication];
 }
 
 - (void)oauthClientDidGetAccessToken:(NXOAuth2Client *)client;
 {
-	self.isAuthenticated = YES;
+	self.authenticated = YES;
 	[authDelegate soundCloudAPIDidAuthenticate];
 }
 
