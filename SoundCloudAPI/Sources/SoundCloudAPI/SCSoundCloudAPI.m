@@ -90,7 +90,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #pragma mark Accessors
 
-@synthesize delegate;
 @synthesize responseFormat;
 
 - (BOOL)authenticated;
