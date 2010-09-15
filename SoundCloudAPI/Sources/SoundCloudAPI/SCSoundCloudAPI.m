@@ -170,6 +170,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	connection.context = context;
 	
 	[apiConnections setObject:connection forKey:connectionId];
+    [connection release];
 	return connectionId;
 }
 
