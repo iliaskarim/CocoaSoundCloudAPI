@@ -45,6 +45,7 @@
 							  consumerSecret:(NSString *)consumerSecret
 								 callbackURL:(NSURL *)callbackURL;
 
+//TODO: Clean those up, we already have convenience methods above
 - (id)initForProductionWithConsumerKey:(NSString *)inConsumerKey
 						consumerSecret:(NSString *)inConsumerSecret
 						   callbackURL:(NSURL *)inCallbackURL;

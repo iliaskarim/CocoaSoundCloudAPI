@@ -221,7 +221,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #pragma mark NSCopying
 
-- (SCSoundCloudAPI *)copy;
+- (id)copy;
 {
 	SCSoundCloudAPI *copy = [[[self class] alloc] initWithDelegate:delegate
 													authentication:authentication];	// same authentication
@@ -229,12 +229,12 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	return copy;
 }
 
-- (SCSoundCloudAPI *)copyWithZone:(NSZone *)zone;
+- (id)copyWithZone:(NSZone *)zone;
 {
 	return [self copy];
 }
 
-- (SCSoundCloudAPI *)copyWithAPIDelegate:(id)apiDelegate;
+- (id)copyWithAPIDelegate:(id)apiDelegate;
 {
 	SCSoundCloudAPI *copy = [self copy];	// same authentication
 	copy->delegate = apiDelegate;

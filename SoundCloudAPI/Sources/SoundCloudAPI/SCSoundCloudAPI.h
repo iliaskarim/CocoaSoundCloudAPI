@@ -23,6 +23,8 @@
 @class NXOAuth2Client;
 @class SCSoundCloudAPIConfiguration, SCSoundCloudConnection;
 @class SCSoundCloudAPIAuthentication;
+
+//TODO: Import protocols instead of forward declaring
 @protocol SCSoundCloudAPIAuthenticationDelegate, SCSoundCloudAPIDelegate;
 
 
@@ -42,7 +44,7 @@ typedef enum {
 }
 
 @property SCResponseFormat responseFormat;
-@property (readonly) BOOL isAuthenticated;	// this might change dynamicaly. not observable, atm
+@property (readonly) BOOL isAuthenticated;	// this might change dynamically. Not observable, atm
 
 
 /*!
@@ -55,7 +57,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 /*!
  * pass along an existing api object
  */
-- (SCSoundCloudAPI *)copyWithAPIDelegate:(id)apiDelegate;
+- (id)copyWithAPIDelegate:(id)apiDelegate;
 
 /*!
  * invokes a request using the specified HTTP method on the specified resource
@@ -74,6 +76,8 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #pragma mark Authentication
 
+
+//TODO: Should it be named -checkAuthentication then?
 /*!
  * checks if authorized, and if not lets you know in the authDelegate
  */
@@ -84,12 +88,14 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
  */
 - (void)resetAuthentication;
 
+//TODO: rename -handleRedirectURL: ?
 /*!
- * When you app recieves the callback via it's callback URL pass it on to this method
- * returns YES if the redirectURL was handled
+ * When your app receives the callback via its callback URL, pass it on to this method.
+ * Returns YES if the redirectURL was handled
  */
 - (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
 
+//TODO: Note to handle with care?
 /*!
  * Use this method to pass Username & Password on Credentials flow
  */

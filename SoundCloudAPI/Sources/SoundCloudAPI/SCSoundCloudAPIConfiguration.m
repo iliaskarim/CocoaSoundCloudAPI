@@ -51,7 +51,7 @@
 					  consumerSecret:inConsumerSecret
 						 callbackURL:inCallbackURL
 						  apiBaseURL:[NSURL URLWithString:kSoundCloudAPIURL]
-					  accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccesTokenURL]
+					  accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL]
 							 authURL:[NSURL URLWithString:kSoundCloudAuthURL]];
 }
 
