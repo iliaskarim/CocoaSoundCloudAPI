@@ -72,6 +72,15 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	 withParameters:(NSDictionary *)parameters
 			context:(id)context;
 
+#if NS_BLOCKS_AVAILABLE
+- (id)performMethod:(NSString *)httpMethod
+         onResource:(NSString *)resource
+     withParameters:(NSDictionary *)parameters
+             finish:(void (^)(void))finishBlock 
+               fail:(void (^)(NSError *error))failBlock
+            context:(id)context;  
+#endif
+
 /*!
  * cancels the connection with the particular connection identifier
  */

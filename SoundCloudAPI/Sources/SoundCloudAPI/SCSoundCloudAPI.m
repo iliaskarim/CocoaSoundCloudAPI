@@ -39,6 +39,9 @@
 
 @interface SCSoundCloudAPI () <NXOAuth2ConnectionDelegate>
 - (NSString *)_responseTypeFromEnum:(SCResponseFormat)responseFormat;
+- (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
+                                onResource:(NSString *)resource
+                            withParameters:(NSDictionary *)parameters;
 
 // private initializer used for NSCopying
 - (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)aDelegate
@@ -134,14 +137,11 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	}	
 }
 
-#pragma mark API method
-
-- (id)performMethod:(NSString *)httpMethod
-		 onResource:(NSString *)resource
-	 withParameters:(NSDictionary *)parameters
-			context:(id)context;
+- (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
+                                onResource:(NSString *)resource
+                            withParameters:(NSDictionary *)parameters;
 {
-	if (!authentication.configuration.apiBaseURL) {
+    if (!authentication.configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
 		return nil;
 	}
@@ -163,16 +163,50 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 		[request setHTTPBodyStream:postStream];
 		[postStream release];
 	}
-	
-	id connectionId = [NSString stringWithUUID];
+    return request;
+}
+
+#pragma mark API method
+
+- (id)performMethod:(NSString *)httpMethod
+		 onResource:(NSString *)resource
+	 withParameters:(NSDictionary *)parameters
+			context:(id)context;
+{
+	NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
 	
 	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:authentication.oauthClient delegate:self];
 	connection.context = context;
 	
+    id connectionId = [NSString stringWithUUID];
 	[apiConnections setObject:connection forKey:connectionId];
     [connection release];
 	return connectionId;
 }
+
+#if NS_BLOCKS_AVAILABLE
+- (id)performMethod:(NSString *)httpMethod
+         onResource:(NSString *)resource
+     withParameters:(NSDictionary *)parameters
+             finish:(void (^)(void))finishBlock 
+               fail:(void (^)(NSError *error))failBlock
+            context:(id)context;
+{
+    NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
+	
+	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request
+                                                                     oauthClient:authentication.oauthClient
+                                                                          finish:finishBlock 
+                                                                            fail:failBlock];
+    connection.delegate = self;
+	connection.context = context;
+	
+    id connectionId = [NSString stringWithUUID];
+	[apiConnections setObject:connection forKey:connectionId];
+    [connection release];
+	return connectionId;
+}
+#endif
 
 - (void)cancelConnection:(id)connectionId;
 {
