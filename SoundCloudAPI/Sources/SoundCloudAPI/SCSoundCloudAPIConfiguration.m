@@ -46,7 +46,7 @@
                                consumerSecret:inConsumerSecret
                                   callbackURL:inCallbackURL
                                    apiBaseURL:[NSURL URLWithString:kSoundCloudSandboxAPIURL]
-                               accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccesTokenURL]
+                               accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccessTokenURL]
                                       authURL:[NSURL URLWithString:kSoundCloudSandboxAuthURL]] autorelease];
 }
 
