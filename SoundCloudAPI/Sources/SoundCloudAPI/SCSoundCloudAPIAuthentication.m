@@ -85,7 +85,7 @@
 
 - (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
 {
-	[oauthClient authorizeWithUsername:username password:password];
+	[oauthClient authenticateWithUsername:username password:password];
 }
 
 
