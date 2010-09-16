@@ -90,11 +90,10 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 #pragma mark Authentication
 
 
-//TODO: Should it be named -checkAuthentication then?
 /*!
- * checks if authorized, and if not lets you know in the authDelegate
+ * checks if authenticated, and if not lets you know in the authDelegate
  */
-- (void)requestAuthentication;
+- (void)checkAuthentication;
 
 /*!
  * resets token to nil, and removes it from the keychain
@@ -106,13 +105,13 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
  * When your app receives the callback via its callback URL, pass it on to this method.
  * Returns YES if the redirectURL was handled
  */
-- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
+- (BOOL)handleRedirectURL:(NSURL *)redirectURL;
 
-//TODO: Note to handle with care?
 /*!
- * Use this method to pass Username & Password on Credentials flow
+ * !!!ONLY!!! use this method to pass Username & Password on Credentials flow
+ * Normally, you should use -checkAuthentication
  */
-- (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
+- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
 
 @end

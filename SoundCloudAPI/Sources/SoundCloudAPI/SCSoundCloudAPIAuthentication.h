@@ -44,6 +44,6 @@
 - (void)requestAuthentication;
 - (void)resetAuthentication;
 - (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
-- (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
+- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
 @end

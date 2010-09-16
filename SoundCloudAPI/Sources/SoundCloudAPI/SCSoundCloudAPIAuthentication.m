@@ -83,7 +83,7 @@
 	return [oauthClient openRedirectURL:redirectURL];
 }
 
-- (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
+- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 {
 	[oauthClient authenticateWithUsername:username password:password];
 }
@@ -91,7 +91,7 @@
 
 #pragma mark NXOAuth2ClientAuthDelegate
 
-- (void)oauthClientNeedsAuthorization:(NXOAuth2Client *)client;
+- (void)oauthClientNeedsAuthentication:(NXOAuth2Client *)client;
 {
 	NSURL *authorizationURL = nil;
 	if ([configuration callbackURL]) {

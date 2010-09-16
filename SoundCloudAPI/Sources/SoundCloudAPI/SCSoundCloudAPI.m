@@ -99,7 +99,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #pragma mark Public methods
 
-- (void)requestAuthentication;
+- (void)checkAuthentication;
 {
 	[authentication requestAuthentication];
 }
@@ -109,14 +109,14 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	[authentication resetAuthentication];
 }
 
-- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
+- (BOOL)handleRedirectURL:(NSURL *)redirectURL;
 {
 	return [authentication handleOpenRedirectURL:redirectURL];
 }
 
-- (void)authorizeWithUsername:(NSString *)username password:(NSString *)password;
+- (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 {
-	[authentication authorizeWithUsername:username password:password];
+	[authentication authenticateWithUsername:username password:password];
 }
 
 
