@@ -18,11 +18,7 @@
  * 
  */
 
-#if TARGET_OS_IPHONE
 #import "NXOAuth2.h"
-#else
-#import <OAuth2Client/NXOAuth2.h>
-#endif
 
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
