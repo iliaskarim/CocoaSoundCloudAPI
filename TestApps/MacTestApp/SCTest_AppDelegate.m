@@ -184,7 +184,7 @@
 		return;
 	}
 	
-	[responseField setString:[[dataStr JSONValue] JSONRepresentation]];
+	[responseField setString:[[dataStr JSONValue] description]];
 }
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context;
