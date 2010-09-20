@@ -76,7 +76,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (id)performMethod:(NSString *)httpMethod
          onResource:(NSString *)resource
      withParameters:(NSDictionary *)parameters
-             finish:(void (^)(void))finishBlock 
+             finish:(void (^)(NSData *data))finishBlock 
                fail:(void (^)(NSError *error))failBlock
             context:(id)context;  
 #endif

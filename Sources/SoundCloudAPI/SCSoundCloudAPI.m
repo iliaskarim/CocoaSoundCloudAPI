@@ -184,16 +184,20 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (id)performMethod:(NSString *)httpMethod
          onResource:(NSString *)resource
      withParameters:(NSDictionary *)parameters
-             finish:(void (^)(void))finishBlock 
+             finish:(void (^)(NSData *data))finishBlock 
                fail:(void (^)(NSError *error))failBlock
             context:(id)context;
 {
     NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
-	
-	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request
-                                                                     oauthClient:authentication.oauthClient
-                                                                          finish:finishBlock 
-                                                                            fail:failBlock];
+    
+	__block NXOAuth2Connection *connection = nil;
+    connection = [[NXOAuth2Connection alloc] initWithRequest:request
+                                                 oauthClient:authentication.oauthClient
+                                                      finish:^(void){
+                                                          NSLog(@"Connection: %@", connection);
+                                                          finishBlock(connection.data);
+                                                      } 
+                                                        fail:failBlock];
     connection.delegate = self;
 	connection.context = context;
 	
