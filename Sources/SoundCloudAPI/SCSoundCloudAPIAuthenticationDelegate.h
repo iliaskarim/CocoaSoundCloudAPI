@@ -18,13 +18,26 @@
  * 
  */
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
+
 
 @class SCSoundCloudAPI;
+@class SCLoginViewController;
 
 @protocol SCSoundCloudAPIAuthenticationDelegate <NSObject>
+
+@optional
 - (void)soundCloudAPIDidAuthenticate;
 - (void)soundCloudAPIDidResetAuthentication;
 - (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 
 - (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
+
+#if TARGET_OS_IPHONE
+- (void)soundCloudAPIDisplayViewController:(UIViewController *)soundCloudViewController;
+- (void)soundCloudAPIDismissViewController:(UIViewController *)soundCloudViewController;
+#endif
+
 @end

@@ -29,7 +29,7 @@
 	SCSoundCloudAPIConfiguration *configuration;
 	
 	NXOAuth2Client *oauthClient;
-	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;	// assigned
+	id<SCSoundCloudAPIAuthenticationDelegate> delegate;	// assigned
 	BOOL authenticated;
 }
 
@@ -43,7 +43,7 @@
 
 - (void)requestAuthentication;
 - (void)resetAuthentication;
-- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
+- (BOOL)handleRedirectURL:(NSURL *)redirectURL;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
 @end

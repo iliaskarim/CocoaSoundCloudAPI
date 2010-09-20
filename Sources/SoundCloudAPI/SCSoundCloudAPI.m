@@ -111,7 +111,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 - (BOOL)handleRedirectURL:(NSURL *)redirectURL;
 {
-	return [authentication handleOpenRedirectURL:redirectURL];
+	return [authentication handleRedirectURL:redirectURL];
 }
 
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;

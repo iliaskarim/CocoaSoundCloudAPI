@@ -22,12 +22,17 @@
 
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
+#import "SCLoginViewController.h"
 
 #import "SCSoundCloudAPIAuthentication.h"
 
 
 @interface SCSoundCloudAPIAuthentication () <NXOAuth2ClientDelegate>
 @property (assign, getter=isAuthenticated) BOOL authenticated;
+#if TARGET_OS_IPHONE
+- (void)displayLoginViewControllerWithURL:(NSURL *)URL;
+- (void)dismissLoginViewController:(UIViewController *)viewController;
+#endif
 @end
 
 
@@ -35,11 +40,12 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)inAuthDelegate
+- (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)aDelegate
 					apiConfiguration:(SCSoundCloudAPIConfiguration *)aConfiguration;
 {
 	if (self = [super init]) {
-		authDelegate = inAuthDelegate;
+		delegate = aDelegate;
+        
 		configuration = [aConfiguration retain];
 		
 		oauthClient = [[NXOAuth2Client alloc] initWithClientID:[configuration consumerKey]
@@ -78,7 +84,7 @@
 	oauthClient.accessToken = nil;
 }
 
-- (BOOL)handleOpenRedirectURL:(NSURL *)redirectURL;
+- (BOOL)handleRedirectURL:(NSURL *)redirectURL;
 {
 	return [oauthClient openRedirectURL:redirectURL];
 }
@@ -97,25 +103,62 @@
 	if ([configuration callbackURL]) {
 		authorizationURL = [client authorizationURLWithRedirectURL:[configuration callbackURL]];
 	}
-	[authDelegate soundCloudAPIPreparedAuthorizationURL:authorizationURL];
+    if ([delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]) {
+        [delegate soundCloudAPIPreparedAuthorizationURL:authorizationURL];
+    }
+#if TARGET_OS_IPHONE
+    if ([delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
+        [self displayLoginViewControllerWithURL:authorizationURL];
+    }
+#endif
+         
 }
 
 - (void)oauthClientDidLoseAccessToken:(NXOAuth2Client *)client;
 {
 	self.authenticated = NO;
-	[authDelegate soundCloudAPIDidResetAuthentication];
+    if ([delegate respondsToSelector:@selector(soundCloudAPIDidResetAuthentication)]){
+        [delegate soundCloudAPIDidResetAuthentication];
+    }
 }
 
 - (void)oauthClientDidGetAccessToken:(NXOAuth2Client *)client;
 {
 	self.authenticated = YES;
-	[authDelegate soundCloudAPIDidAuthenticate];
+    if ([delegate respondsToSelector:@selector(soundCloudAPIDidAuthenticate)]) {
+        [delegate soundCloudAPIDidAuthenticate];
+    }
 }
 
 - (void)oauthClient:(NXOAuth2Client *)client didFailToGetAccessTokenWithError:(NSError *)error;
 {
-	[authDelegate soundCloudAPIDidFailToGetAccessTokenWithError:error];
+    if ([delegate respondsToSelector:@selector(soundCloudAPIDidFailToGetAccessTokenWithError:)]) {
+        [delegate soundCloudAPIDidFailToGetAccessTokenWithError:error];
+    }
 }
 
+#if TARGET_OS_IPHONE
+
+#pragma mark Login ViewController
+
+- (void)displayLoginViewControllerWithURL:(NSURL *)URL;
+{    
+    SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:URL authentication:self];
+    UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:loginViewController] autorelease];
+    navController.navigationBar.tintColor = [UIColor orangeColor];
+    [loginViewController release];
+    
+    //this method ony called when the delegate responds to this selector, so we don't need to re-check
+    [delegate soundCloudAPIDisplayViewController:navController];
+}
+
+- (void)dismissLoginViewController:(UIViewController *)viewController;
+{
+    if ([delegate respondsToSelector:@selector(soundCloudAPIDismissViewController:)]) {
+        [delegate soundCloudAPIDismissViewController:viewController];
+    }
+}
+
+#endif
 
 @end
