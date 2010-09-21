@@ -60,6 +60,7 @@
 		   accessTokenURL:(NSURL *)inAccessTokenURL
 				  authURL:(NSURL *)inAuthURL;
 {
+	// TODO: use assert
 	if (!inConsumerKey){
 		NSLog(@"No ConsumerKey supplied");
 		return nil;
@@ -68,10 +69,10 @@
 		NSLog(@"No ConsumerSecret supplied");
 		return nil;
 	}	
-	if (!inCallbackURL){
+/*	if (!inCallbackURL){
 		NSLog(@"No CallbackURL supplied");
 		return nil;
-	}
+	}*/
 	if (!inApiBaseURL){
 		NSLog(@"No ApiBaseURL supplied");
 		return nil;

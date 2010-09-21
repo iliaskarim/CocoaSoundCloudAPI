@@ -27,6 +27,7 @@
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
 #import "SCSoundCloudAPIDelegate.h"
 
+#import "SCAudioStream.h"
 
 #import "NSString+SoundCloudAPI.h"
 
@@ -215,6 +216,14 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 		[connection cancel];
 		[apiConnections removeObjectForKey:connectionId];
 	}
+}
+
+
+#pragma mark Streaming
+
+- (SCAudioStream *)audioStreamWithURL:(NSURL *)streamURL;
+{
+	return [[[SCAudioStream alloc] initWithURL:streamURL authentication:authentication] autorelease];
 }
 
 

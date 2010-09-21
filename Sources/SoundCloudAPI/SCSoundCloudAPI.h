@@ -27,7 +27,7 @@
 @class SCSoundCloudAPIConfiguration;
 @class SCSoundCloudConnection;
 @class SCSoundCloudAPIAuthentication;
-
+@class SCAudioStream;
 
 typedef enum {
 	SCResponseFormatXML,
@@ -89,7 +89,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #pragma mark Authentication
 
-
 /*!
  * checks if authenticated, and if not lets you know in the authDelegate
  */
@@ -113,5 +112,13 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
  */
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
+
+#pragma mark Streaming
+
+/*!
+ * 
+ */
+
+- (SCAudioStream *)audioStreamWithURL:(NSURL *)streamURL;
 
 @end
