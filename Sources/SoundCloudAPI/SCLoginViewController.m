@@ -86,7 +86,7 @@
     CGRectDivide(connectRect, &closeRect, &connectRect, 27.0, CGRectMaxXEdge);
     
     UIImageView *cloudImageView = [[UIImageView alloc] initWithFrame:logoRect];
-    UIImage *cloudImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"tiny-cloud" ofType:@"png"]];
+    UIImage *cloudImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"cloud" ofType:@"png"]];
     cloudImageView.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
     cloudImageView.image = cloudImage;
     cloudImageView.contentMode = UIViewContentModeCenter;
