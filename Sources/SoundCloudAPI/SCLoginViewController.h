@@ -18,6 +18,8 @@
     NSURL *URL;
     UIWebView *webView;
     UIActivityIndicatorView *activityIndicator;
+    UIView *titleBarView;
+    NSBundle *resourceBundle;
 }
 
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;

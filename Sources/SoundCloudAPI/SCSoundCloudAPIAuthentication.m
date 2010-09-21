@@ -107,9 +107,7 @@
         [delegate soundCloudAPIPreparedAuthorizationURL:authorizationURL];
     }
 #if TARGET_OS_IPHONE
-    if ([delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
-        [self displayLoginViewControllerWithURL:authorizationURL];
-    }
+    [self displayLoginViewControllerWithURL:authorizationURL];
 #endif
          
 }
@@ -143,19 +141,50 @@
 
 - (void)displayLoginViewControllerWithURL:(NSURL *)URL;
 {    
-    SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:URL authentication:self];
+    SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:URL authentication:self] autorelease];
+    
+    /*
     UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:loginViewController] autorelease];
     navController.navigationBar.tintColor = [UIColor orangeColor];
-    [loginViewController release];
-    
-    //this method ony called when the delegate responds to this selector, so we don't need to re-check
-    [delegate soundCloudAPIDisplayViewController:navController];
+    if ([navController respondsToSelector:@selector(setModalPresentationStyle:)]){
+        [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+    } */
+        
+    if ([delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
+        [delegate soundCloudAPIDisplayViewController:loginViewController];
+        
+    } else if (![delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]) {
+        //do the presentation yourself when the delegate really does not respond to any of the callbacks for doing it himself
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        NSLog(@"Windows: %@", windows);
+        UIWindow *window = nil;
+        if (windows.count > 0) window = [windows objectAtIndex:0];
+        if ([window respondsToSelector:@selector(rootViewController)]) {
+            UIViewController *rootViewController = [window rootViewController];
+            NSLog(@"RootViewController: %@", rootViewController);
+            [rootViewController presentModalViewController: loginViewController animated:YES];
+        } else {
+            //TODO: Assert
+        }
+
+    }
 }
 
 - (void)dismissLoginViewController:(UIViewController *)viewController;
 {
     if ([delegate respondsToSelector:@selector(soundCloudAPIDismissViewController:)]) {
         [delegate soundCloudAPIDismissViewController:viewController];
+    }
+    
+    else if (![delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]
+        && ![delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        UIWindow *window = nil;
+        if (windows.count > 0) window = [windows objectAtIndex:0];
+        if ([window respondsToSelector:@selector(rootViewController)]) {
+            UIViewController *rootViewController = [window rootViewController];
+            [rootViewController dismissModalViewControllerAnimated:YES];
+        }
     }
 }
 
