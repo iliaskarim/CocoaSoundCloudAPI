@@ -16,13 +16,19 @@
 @interface SCLoginViewController : UIViewController <UIWebViewDelegate> {
     SCSoundCloudAPIAuthentication *authentication;
     NSURL *URL;
-    UIWebView *webView;
+    NSArray *webViews;
+    NSArray *sectionBars;
     UIActivityIndicatorView *activityIndicator;
     UIView *titleBarView;
     NSBundle *resourceBundle;
+    
+    NSInteger numberOfSections;
+    NSInteger currentSection;
 }
 
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;
+
+- (void)updateInterface:(BOOL)animated;
 
 @end
 
