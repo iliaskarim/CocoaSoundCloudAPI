@@ -97,6 +97,8 @@
 
 #pragma mark NXOAuth2ClientAuthDelegate
 
+//TODO: Error handling if using the LoginViewController
+
 - (void)oauthClientNeedsAuthentication:(NXOAuth2Client *)client;
 {
 	NSURL *authorizationURL = nil;

@@ -36,6 +36,7 @@
 - (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 
 #if TARGET_OS_IPHONE
+//TODO: PresentViewConttroller
 - (void)soundCloudAPIDisplayViewController:(UIViewController *)soundCloudViewController;
 - (void)soundCloudAPIDismissViewController:(UIViewController *)soundCloudViewController;
 #endif
