@@ -96,7 +96,7 @@
 
 -(void)soundCloudConnection:(SCSoundCloudConnection *)connection didFinishWithData:(NSData *)data context:(id)context;
 {
-	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 	if([context isEqualToString:@"userInfo"]) {
 		[self updateUserInfoFromData:data];
 	}
