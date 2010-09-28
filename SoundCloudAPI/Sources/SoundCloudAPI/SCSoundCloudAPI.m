@@ -434,7 +434,9 @@
 
 - (void)scDataFetcher:(SCDataFetcher *)fetcher didFailWithError:(NSError *)error context:(id)context;
 {
-	if([error code] == 401) {
+    NSDictionary *userInfo = [error userInfo];
+    NSError *httpError = [userInfo objectForKey:SCAPIHttpResponseErrorStatusKey];
+	if([httpError code] == 401) {
 		[self resetAuthentication];
 	}
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
