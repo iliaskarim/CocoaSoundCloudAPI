@@ -126,6 +126,11 @@
 	} else {
 		viewController.postButton.enabled = NO;
 		viewController.trackNameField.enabled = NO;
+		
+		if (status == SCAuthenticationStatusNotAuthenticated) {
+			// reauthenticate at will
+			[_scAPI authorizeRequestToken];
+		}
 	}
 }
 
