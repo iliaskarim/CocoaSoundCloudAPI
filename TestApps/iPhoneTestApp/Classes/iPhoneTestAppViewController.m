@@ -130,11 +130,9 @@
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context;
 {
-	
-	if (error.code == SCAPIErrorHttpResponseError) {
-		NSError *httpError = [error.userInfo objectForKey:SCAPIHttpResponseErrorStatusKey];
-		if (httpError.code == 401) {
-			// 401 - not authenticated
+	if ([error.domain isEqualToString:NSURLErrorDomain]) {
+		if (error.code == 401) {
+			NSLog(@"401 - not authenticated");
 		}
 	}
 	if ([context isEqualToString:@"upload"]) {

@@ -40,12 +40,12 @@
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	BOOL didHandleURL = NO;
 	if (launchURL) {
-		didHandleURL = [self.soundCloudAPIMaster handleOpenRedirectURL:launchURL];	
+		didHandleURL = [self.soundCloudAPIMaster handleRedirectURL:launchURL];	
 	}
 	
 	// do this at the end and seperatly. this way you ensure that your soundCloudController 
 	// already is accessible via the appDelegate & that the launchURL (if there's one) has been handled
-	[self.soundCloudAPIMaster requestAuthentication];
+	[self.soundCloudAPIMaster checkAuthentication];
 	
 	return didHandleURL; 
 }
@@ -70,13 +70,13 @@
 {
 	if (!soundCloudAPIMaster) {
 #ifdef kUseProduction
-		SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
-																											consumerSecret:kTestAppConsumerSecret
-																											   callbackURL:[NSURL URLWithString:kCallbackURL]];
+		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:kTestAppConsumerKey
+																											 consumerSecret:kTestAppConsumerSecret
+																												callbackURL:[NSURL URLWithString:kCallbackURL]];
 #else
-		SCSoundCloudAPIConfiguration *scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
-																										 consumerSecret:kTestAppConsumerSecret
-																											callbackURL:[NSURL URLWithString:kCallbackURL]];
+		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithConsumerKey:kTestAppConsumerKey
+																										  consumerSecret:kTestAppConsumerSecret
+																											 callbackURL:[NSURL URLWithString:kCallbackURL]];
 #endif
 		
 		soundCloudAPIMaster = [[SCSoundCloudAPI alloc] initWithDelegate:nil authenticationDelegate:self apiConfiguration:scAPIConfig];
@@ -91,7 +91,7 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-	return [soundCloudAPIMaster handleOpenRedirectURL:url];
+	return [soundCloudAPIMaster handleRedirectURL:url];
 }
 
 #pragma mark SCSoundCloudAPIAuthenticationDelegate
@@ -121,21 +121,22 @@
 {
 	viewController.postButton.enabled = NO;
 	viewController.trackNameField.enabled = NO;
+	
+	// reauthenticate
+	[self.soundCloudAPIMaster checkAuthentication];
 }
 
 - (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 {
-	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
-		if ([error code] == SCAPIErrorHttpResponseError) {
-			// inform the user and offer him to retry.
-			NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
-			if ([httpError code] == NSURLErrorNotConnectedToInternet) {
-				[viewController.postButton setTitle:@"No internet connection" forState:UIControlStateDisabled];
-				[viewController.postButton setEnabled:NO];
-			} else {
-				NSLog(@"error: %@", [httpError localizedDescription]);
-			}
+	if ([error.domain isEqualToString:SCAPIErrorDomain]) {
+	} else if ([error.domain isEqualToString:NSURLErrorDomain]) {
+		if ([error code] == NSURLErrorNotConnectedToInternet) {
+			[viewController.postButton setTitle:@"No internet connection" forState:UIControlStateDisabled];
+			[viewController.postButton setEnabled:NO];
+		} else {
+			NSLog(@"error: %@", [error localizedDescription]);
 		}
+		
 	}
 }
 
