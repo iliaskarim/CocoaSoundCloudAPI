@@ -57,19 +57,14 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 {
 	SCSoundCloudAPIAuthentication *anAuthentication =  [[SCSoundCloudAPIAuthentication alloc] initWithAuthenticationDelegate:authDelegate
 																											apiConfiguration:configuration];
-	if (self = [self initWithDelegate:theDelegate
-					   authentication:anAuthentication]) {
-		responseFormat = SCResponseFormatJSON;
-		apiConnections = [[NSMutableDictionary alloc] init];
-	}
-	return self;
+	return [self initWithDelegate:theDelegate authentication:anAuthentication];
 }
 
 - (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)aDelegate
 		authentication:(SCSoundCloudAPIAuthentication *)anAuthentication;
 {
 	if (self = [super init]) {
-		responseFormat = SCResponseFormatXML;
+		responseFormat = SCResponseFormatJSON;
 		delegate = aDelegate;
 		authentication = [anAuthentication retain];
 		apiConnections = [[NSMutableDictionary alloc] init];
