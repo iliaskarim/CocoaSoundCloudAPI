@@ -20,13 +20,14 @@
 
 #include "SCAPI.h"
 
-@interface iPhoneTestAppViewController : UIViewController <SCSoundCloudConnectionDelegate> {
+@interface iPhoneTestAppViewController : UIViewController <SCSoundCloudAPIDelegate> {
     IBOutlet UIProgressView *progresBar;
     IBOutlet UITextField *trackNameField;
 	IBOutlet UIButton *postButton;
     IBOutlet UILabel *trackNumberLabel;
     IBOutlet UILabel *usernameLabel;
 	
+	SCSoundCloudAPI *scAPI;
 	id uploadConnectionId;
 }
 @property (nonatomic, retain) IBOutlet UIButton *postButton;

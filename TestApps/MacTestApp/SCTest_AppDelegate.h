@@ -18,30 +18,29 @@
  * 
  */
 
-#import <Cocoa/Cocoa.h>
 
 #import <SoundCloudAPI/SCAPI.h>
 
-#define kUseProduction
+
+//#define kUseProduction
 
 #ifdef kUseProduction
-	// for production
+	//Production key & secret
 	#define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"
 	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
 #else
-	// for sandbox
-	#define kTestAppConsumerKey		@"gAnpKglV95xfMtb64zYAsg"
-	#define kTestAppConsumerSecret	@"cshaWBLTZR2a1PQK3qVwuq4IpjNZcrJN1NhSY8b4vIk"
+	//Sandbox key & secret
+	#define kTestAppConsumerKey		@"18a7l4oj7YA3L994boCw"
+	#define kTestAppConsumerSecret	@"GZcAcJzMCRybR1GBuOjG5wEGITnG9cIHBHMkWR4oFk"
 #endif
 
-#define kCallbackURL	@"myapp://oauth"	//remember that the myapp protocol also is set in the info.plist
+#define kCallbackURL	@"x-wrapper-test://oauth"	//remember that the myapp protocol also is set in the info.plist
 
 @class SCParameterTableDataSource;
 
 @interface SCTest_AppDelegate : NSObject <SCSoundCloudAPIAuthenticationDelegate, SCSoundCloudAPIDelegate> {
-	SCSoundCloudAPI *scAPI; // create one for each delegate you want. init with singleton config instance
+	SCSoundCloudAPI *scAPI;
 	SCParameterTableDataSource *parametersDataSource;
-	SCSoundCloudAPIConfiguration *scAPIConfig;
 	
 	// Outlets
     IBOutlet NSProgressIndicator *fetchProgressIndicator;

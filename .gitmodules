@@ -1,6 +1,6 @@
-[submodule "SoundCloudAPI/Outsourced/OAuth2Client"]
-	path = SoundCloudAPI/Outsourced/OAuth2Client
+[submodule "Outsourced/OAuth2Client"]
+	path = Outsourced/OAuth2Client
 	url = git://github.com/nxtbgthng/OAuth2Client.git
 [submodule "TestApps/Support/JSON"]
 	path = TestApps/Support/JSON
-	url = git://github.com/stig/json-framework.git
+	url = git://github.com/nxtbgthng/json-framework.git
