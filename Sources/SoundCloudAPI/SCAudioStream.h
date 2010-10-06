@@ -62,6 +62,7 @@ typedef enum {
 	SCAudioBufferQueue				*audioBufferQueue;
 	
 	NSUInteger						playPosition;
+	float							volume;
 
 	// is set to new value on seek
 	// incremented when parser parses new packages
@@ -90,6 +91,7 @@ typedef enum {
 @property (readonly) SCAudioStreamBufferState bufferState;	// observable
 @property (readonly) NSUInteger playPosition;	// in milliseconds // not observable
 @property (readonly) float bufferingProgress;	// not observable
+@property (readwrite, assign) float volume;
 
 - (id)initWithURL:(NSURL *)aURL authentication:(SCSoundCloudAPIAuthentication *)apiAuthentication;
 

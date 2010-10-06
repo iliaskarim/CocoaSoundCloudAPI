@@ -61,8 +61,14 @@ extern NSString * const SCAudioBufferBufferStateChangedNotification;
 @property (readonly) SCAudioBufferPlayState playState;
 @property (readonly) SCAudioBufferBufferState bufferState;
 
+@property (readwrite, assign) float volume; // not observable
+
 - (id)initWithBasicDescription:(AudioStreamBasicDescription)basicDescription
 			   magicCookieData:(NSData *)magicCookieData;
+
+- (id)initWithBasicDescription:(AudioStreamBasicDescription)basicDescription
+			   magicCookieData:(NSData *)magicCookieData
+						volume:(float)volume;
 
 - (void)enqueueData:(NSData *)data withPacketDescriptions:(SCAudioStreamPacketDescriptions *)packetDescriptions endOfStream:(BOOL)eos;
 

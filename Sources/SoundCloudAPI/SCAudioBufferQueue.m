@@ -58,7 +58,7 @@ NSString * const SCAudioBufferBufferStateChangedNotification = @"SCAudioBufferBu
 // function signals from the AudioQueue thread to the AudioStream thread that
 // the buffer is ready to be reused.
 void SCAudioQueueOutputCallback(void* clientData, 
-								AudioQueueRef inAudioQueue, 
+								AudioQueueRef inAudioQueue,
 								AudioQueueBufferRef buffer)
 {
 	AudioQueueFreeBuffer(inAudioQueue, buffer);
@@ -190,6 +190,13 @@ void SCAudioRouteChangedCallback(void *clientData,
 	return self;
 }
 
+- (id) initWithBasicDescription:(AudioStreamBasicDescription)basicDescription magicCookieData:(NSData *)magicCookieData volume:(float)initialVolume {
+	if (self = [self initWithBasicDescription:basicDescription magicCookieData:magicCookieData]) {
+		[self setVolume:initialVolume];
+	}
+	return self;
+}
+
 - (void)dealloc;
 {
 	delegate = nil;
@@ -261,6 +268,27 @@ void SCAudioRouteChangedCallback(void *clientData,
 	[self _postNotificationOnDelegateThread:notification];
 }
 
+- (float)volume;
+{
+	AudioQueueParameterValue value;
+	
+	OSStatus err = AudioQueueGetParameter(audioQueue, kAudioQueueParam_Volume, &value);
+	if (err != noErr) {
+		return 1.0f;	// default volume
+	}
+	return (float)value;
+}
+
+- (void)setVolume:(float)value;
+{
+	value = fmaxf(value, 0.0f);
+	value = fminf(value, 1.0f);
+	
+	OSStatus err = AudioQueueSetParameter(audioQueue, kAudioQueueParam_Volume, (AudioQueueParameterValue)value);
+	if (err != noErr) {
+		// TODO: handle errors
+	}
+}
 
 #pragma mark AutioToolboxHooks
 - (void)audioQueueReadyToReuseBuffer;

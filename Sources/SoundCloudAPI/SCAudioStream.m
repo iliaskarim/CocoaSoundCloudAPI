@@ -80,6 +80,8 @@
 		audioFileStreamParser = [[SCAudioFileStreamParser alloc] init];
 		audioFileStreamParser.delegate = self;
 		
+		volume = 1.0f;
+
 		[self sendHeadRequest];
 	}
 	return self;
@@ -102,6 +104,7 @@
 
 #pragma mark Accessors
 @synthesize playState, bufferState;
+@synthesize volume;
 
 - (NSUInteger)playPosition;
 {
@@ -144,12 +147,22 @@
 	[self didChangeValueForKey:@"bufferState"];
 }
 
+- (float)volume;
+{
+	return volume;
+}
+
+- (void)setVolume:(float)value;
+{
+	volume = value;
+	[audioBufferQueue setVolume:value];
+}
 
 #pragma mark P
 
 - (void)sendHeadRequest;
 {
-	// gathering initial information 
+	// gathering initial information
 	// the signing of HEAD requests on media.soundcloud.com is currently buggy. so we fake a head request by a very small GET request
 	int timeout = kHTTPTimeOutIntervall;
 	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
@@ -293,7 +306,8 @@
 		
 		packageAtQueueStart = currentPackage;
 		audioBufferQueue = [[SCAudioBufferQueue alloc] initWithBasicDescription:audioFileStreamParser.basicDescription
-																magicCookieData:audioFileStreamParser.magicCookieData];
+																magicCookieData:audioFileStreamParser.magicCookieData
+																		 volume:volume];
 		audioBufferQueue.delegate = self;
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(queuePlayStateChanged:)
