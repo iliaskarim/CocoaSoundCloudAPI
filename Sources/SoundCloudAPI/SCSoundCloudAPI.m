@@ -146,7 +146,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	if ((![[httpMethod uppercaseString] isEqualToString:@"POST"]
 		 && ![[httpMethod uppercaseString] isEqualToString:@"PUT"])
 		|| parameters.count == 0) {
-		[request setParameters:parameters];
+		[request nxoauth2_setParameters:parameters];
 	} else {
 		NXOAuth2PostBodyStream *postStream = [[NXOAuth2PostBodyStream alloc] initWithParameters:parameters];
 		[request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", [postStream boundary]] forHTTPHeaderField: @"Content-Type"];

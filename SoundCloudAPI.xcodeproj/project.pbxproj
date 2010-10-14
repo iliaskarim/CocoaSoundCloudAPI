@@ -474,7 +474,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos4.1;
 				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
@@ -491,7 +491,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos4.1;
 				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
