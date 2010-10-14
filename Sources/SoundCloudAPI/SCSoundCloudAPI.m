@@ -87,7 +87,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 @synthesize responseFormat;
 
-- (BOOL)authenticated;
+- (BOOL)isAuthenticated;
 {
 	return authentication.authenticated;
 }
