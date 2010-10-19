@@ -70,7 +70,8 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (id)performMethod:(NSString *)httpMethod
 		 onResource:(NSString *)resource
 	 withParameters:(NSDictionary *)parameters
-			context:(id)context;
+			context:(id)context
+		   userInfo:(id)userInfo;
 
 #if NS_BLOCKS_AVAILABLE
 - (id)performMethod:(NSString *)httpMethod
@@ -78,7 +79,8 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
      withParameters:(NSDictionary *)parameters
              finish:(void (^)(NSData *data))finishBlock 
                fail:(void (^)(NSError *error))failBlock
-            context:(id)context;  
+            context:(id)context
+		   userInfo:(id)userInfo;
 #endif
 
 /*!

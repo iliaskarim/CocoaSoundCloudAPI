@@ -163,12 +163,14 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (id)performMethod:(NSString *)httpMethod
 		 onResource:(NSString *)resource
 	 withParameters:(NSDictionary *)parameters
-			context:(id)context;
+			context:(id)context
+		   userInfo:(id)userInfo;
 {
 	NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
 	
 	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:authentication.oauthClient delegate:self];
 	connection.context = context;
+	connection.userInfo = userInfo;
 	
     id connectionId = [NSString stringWithUUID];
 	[apiConnections setObject:connection forKey:connectionId];
@@ -182,7 +184,8 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
      withParameters:(NSDictionary *)parameters
              finish:(void (^)(NSData *data))finishBlock 
                fail:(void (^)(NSError *error))failBlock
-            context:(id)context;
+            context:(id)context
+		   userInfo:(id)userInfo;
 {
     NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
     
@@ -196,6 +199,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
                                                         fail:failBlock];
     connection.delegate = self;
 	connection.context = context;
+	connection.userInfo = userInfo;
 	
     id connectionId = [NSString stringWithUUID];
 	[apiConnections setObject:connection forKey:connectionId];
@@ -227,7 +231,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFinishWithData:(NSData *)data;
 {
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
-		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context];
+		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context userInfo:connection.userInfo];
 	}
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
@@ -235,7 +239,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFailWithError:(NSError *)error;
 {
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
-		[delegate soundCloudAPI:self didFailWithError:error context:connection.context];
+		[delegate soundCloudAPI:self didFailWithError:error context:connection.context userInfo:connection.userInfo];
 	}
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
@@ -243,17 +247,17 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 - (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveData:(NSData *)data;
 {
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveData:context:)]) {
-		[delegate soundCloudAPI:self didReceiveData:data context:connection.context];
+		[delegate soundCloudAPI:self didReceiveData:data context:connection.context userInfo:connection.userInfo];
 	}
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveBytes:total:context:)]) {
-		[delegate soundCloudAPI:self didReceiveBytes:connection.data.length total:connection.expectedContentLength context:connection.context];
+		[delegate soundCloudAPI:self didReceiveBytes:connection.data.length total:connection.expectedContentLength context:connection.context userInfo:connection.userInfo];
 	}
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didSendBytes:(unsigned long long)bytesSend ofTotal:(unsigned long long)bytesTotal;
 {
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didSendBytes:total:context:)]) {
-		[delegate soundCloudAPI:self didSendBytes:bytesSend total:bytesTotal context:connection.context];
+		[delegate soundCloudAPI:self didSendBytes:bytesSend total:bytesTotal context:connection.context userInfo:connection.userInfo];
 	}
 }
 
