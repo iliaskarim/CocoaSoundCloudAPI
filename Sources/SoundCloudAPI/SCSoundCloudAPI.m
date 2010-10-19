@@ -230,7 +230,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFinishWithData:(NSData *)data;
 {
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:)]) {
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context userInfo:connection.userInfo];
 	}
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
@@ -238,7 +238,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFailWithError:(NSError *)error;
 {
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:)]) {
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didFailWithError:error context:connection.context userInfo:connection.userInfo];
 	}
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
@@ -246,17 +246,17 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveData:(NSData *)data;
 {
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveData:context:)]) {
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveData:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didReceiveData:data context:connection.context userInfo:connection.userInfo];
 	}
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveBytes:total:context:)]) {
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didReceiveBytes:total:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didReceiveBytes:connection.data.length total:connection.expectedContentLength context:connection.context userInfo:connection.userInfo];
 	}
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didSendBytes:(unsigned long long)bytesSend ofTotal:(unsigned long long)bytesTotal;
 {
-	if ([delegate respondsToSelector:@selector(soundCloudAPI:didSendBytes:total:context:)]) {
+	if ([delegate respondsToSelector:@selector(soundCloudAPI:didSendBytes:total:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didSendBytes:bytesSend total:bytesTotal context:connection.context userInfo:connection.userInfo];
 	}
 }
