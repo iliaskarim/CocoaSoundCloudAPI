@@ -1,5 +1,12 @@
 # SoundCloud API Wrapper
 
+
+## WARNING
+*WARNING: The details of the Readme differ from the implementation of the current version 2.0beta6 and will be updated in the coming days.*  
+*Also note that the Streaming library that now comes with the API Wrapper is still early alpha and will be updated in the near future.*
+
+## Intro
+
 A wrapper on the [SoundCloud](http://soundcloud.com) API for Mac OS & iOS (Cocoa & Cocoa touch). This wrapper supports the [OAuth 2](http://oauth.net/2) version of the API and uses the [OAuth2Client](http://github.com/nxtbgthng/OAuth2Client) project.
 
 If you haven't yet now is the right time to have a look at the [SoundCloud API wiki](http://wiki.github.com/soundcloud/api/).
