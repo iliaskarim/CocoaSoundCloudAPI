@@ -9,6 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "SCSoundCloudAPIAuthentication.h"
+#import "SCSoundCloudAPIConfiguration.h"
 
 #import "SCLoginViewController.h"
 
@@ -266,15 +267,17 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 {
     if (![request.URL isEqual:URL]) {
-        BOOL hasBeenHandled = [authentication handleRedirectURL:request.URL];
-        if (hasBeenHandled) {
-            [self close];
-            return NO;
-        } else {
-            return YES;
-        }
-
-    }
+		BOOL hasBeenHandled = NO;
+		
+		NSURL *callbackURL = authentication.configuration.callbackURL;
+		if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+	        hasBeenHandled = [authentication handleRedirectURL:request.URL];
+			if (hasBeenHandled) {
+				[self close];
+				return NO;
+			}
+		}
+	}
     
     return YES;
 }
