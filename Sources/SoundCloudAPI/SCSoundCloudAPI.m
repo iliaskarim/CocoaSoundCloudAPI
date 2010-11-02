@@ -178,7 +178,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	return connectionId;
 }
 
-#if NS_BLOCKS_AVAILABLE
+#if NX_BLOCKS_AVAILABLE && NS_BLOCKS_AVAILABLE
 - (id)performMethod:(NSString *)httpMethod
          onResource:(NSString *)resource
      withParameters:(NSDictionary *)parameters

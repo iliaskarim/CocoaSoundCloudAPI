@@ -73,7 +73,10 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 			context:(id)context
 		   userInfo:(id)userInfo;
 
-#if NS_BLOCKS_AVAILABLE
+#if NX_BLOCKS_AVAILABLE && NS_BLOCKS_AVAILABLE
+
+#warning Compiling SoundCloud API with Blocks. This is an unsupported feature.
+
 - (id)performMethod:(NSString *)httpMethod
          onResource:(NSString *)resource
      withParameters:(NSDictionary *)parameters
