@@ -20,6 +20,7 @@
 
 
 #import <SoundCloudAPI/SCAPI.h>
+#import <OAuth2Client/NXOAuth2.h>
 
 
 //#define kUseProduction

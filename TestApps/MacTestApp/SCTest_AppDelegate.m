@@ -52,13 +52,13 @@
 {
 	SCSoundCloudAPIConfiguration *scAPIConfig = nil;
 #ifdef kUseProduction
-	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
-																		  consumerSecret:kTestAppConsumerSecret
-																			 callbackURL:[NSURL URLWithString:kCallbackURL]];
+	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:kTestAppConsumerKey
+																		   consumerSecret:kTestAppConsumerSecret
+																			  callbackURL:[NSURL URLWithString:kCallbackURL]];
 #else
-	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
-																	   consumerSecret:kTestAppConsumerSecret
-																		  callbackURL:[NSURL URLWithString:kCallbackURL]];
+	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithConsumerKey:kTestAppConsumerKey
+																		consumerSecret:kTestAppConsumerSecret
+																		   callbackURL:[NSURL URLWithString:kCallbackURL]];
 #endif
 	
 	scAPI = [[SCSoundCloudAPI alloc] initWithDelegate:self
@@ -71,7 +71,7 @@
 	
 	[self _registerMyApp];
 	
-	[scAPI requestAuthentication];
+	[scAPI checkAuthentication];
 }	
 
 - (void)dealloc;
@@ -107,7 +107,7 @@
 	if([urlStr hasPrefix:kCallbackURL]) {
 		NSLog(@"handling oauth callback");
 		NSURL *url = [NSURL URLWithString:urlStr];
-		[scAPI handleOpenRedirectURL:url];
+		[scAPI handleRedirectURL:url];
 	}
 }
 
@@ -132,7 +132,8 @@
 	[scAPI performMethod:[httpMethodCombo stringValue]
 			  onResource:[resourceField stringValue]
 		  withParameters:[parametersDataSource parameterDictionary]
-				 context:nil];
+				 context:nil
+				userInfo:nil];
 }
 
 - (IBAction)postTest:(id)sender;
@@ -148,7 +149,8 @@
 	[scAPI performMethod:@"POST"
 			  onResource:[resourceField stringValue]
 		  withParameters:parameters
-				 context:nil];
+				 context:nil
+				userInfo:nil];
 	[parameters release];
 }
 
@@ -157,7 +159,8 @@
 	[scAPI performMethod:@"GET"
 			  onResource:@"me/tracks"
 		  withParameters:nil
-				 context:@"deleteMyTracks"];
+				 context:@"deleteMyTracks"
+				userInfo:nil];
 }
 
 - (void)deleteTracks:(NSArray *)tracks;
@@ -166,14 +169,15 @@
 		[scAPI performMethod:@"DELETE"
 				  onResource:[NSString stringWithFormat:@"tracks/%@", [track objectForKey:@"id"]]
 			  withParameters:nil
-					 context:nil];
+					 context:nil
+					userInfo:nil];
 	}
 }
 
 
 #pragma mark request delegates
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {
 	[fetchProgressIndicator stopAnimation:nil];
 	[postProgress setDoubleValue:0];
@@ -187,32 +191,35 @@
 	[responseField setString:[[dataStr JSONValue] description]];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;
 {
 	[fetchProgressIndicator stopAnimation:nil];
 	[postProgress setDoubleValue:0];
-	NSString *message = nil;
-	if ([error.domain isEqualToString:SCAPIErrorDomain] && error.code == SCAPIErrorHttpResponseError) {
-		NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
-		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [httpError localizedDescription]];
-	} else {
-		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
+	if ([[error domain] isEqualToString:NSURLErrorDomain]){
+		if (error.code == NSURLErrorNotConnectedToInternet) {
+			// inform the user and offer him to retry
+			[sendRequestButton setTitle:@"No internet"];
+			[postTestButton setTitle:@"No internet"];
+		}
+	} else if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
+	} else if ([[error domain] isEqualToString:NXOAuth2ErrorDomain]) {
 	}
+	NSString *message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
 	NSLog(@"%@", message);
 	[responseField setString:message];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {
 	NSLog(@"Did Recieve Data");
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
 {
 	NSLog(@"Did receive Bytes %qu of %qu", loadedBytes, totalBytes);
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
 {
 	NSLog(@"Did send Bytes %qu of %qu", sendBytes, totalBytes);
 	[postProgress setDoubleValue:100 * sendBytes / totalBytes];
@@ -244,16 +251,18 @@
 
 - (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 {
-	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
-		if ([error code] == SCAPIErrorHttpResponseError) {
-			NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
-			if (httpError.code == NSURLErrorNotConnectedToInternet) {
-				// inform the user and offer him to retry
-				[sendRequestButton setTitle:@"No internet"];
-				[postTestButton setTitle:@"No internet"];
-			}
+	if ([[error domain] isEqualToString:NSURLErrorDomain]){
+		if (error.code == NSURLErrorNotConnectedToInternet) {
+			// inform the user and offer him to retry
+			[sendRequestButton setTitle:@"No internet"];
+			[postTestButton setTitle:@"No internet"];
 		}
+	} else if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
+	} else if ([[error domain] isEqualToString:NXOAuth2ErrorDomain]) {
 	}
+	NSString *message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
+	NSLog(@"%@", message);
+	[responseField setString:message];
 }
 
 @end
