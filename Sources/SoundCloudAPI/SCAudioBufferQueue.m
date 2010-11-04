@@ -87,6 +87,7 @@ void SCQueuePropertyListenerProc(void *clientData,
 	}
 }
 
+#if TARGET_OS_IPHONE
 // invoked by the audio session whenever its route changes
 void SCAudioRouteChangedCallback(void *clientData,
 								 AudioSessionPropertyID propertyID,
@@ -104,6 +105,7 @@ void SCAudioRouteChangedCallback(void *clientData,
 		[pool release];
 	}
 }
+#endif
 
 
 @implementation SCAudioBufferQueue
@@ -118,11 +120,13 @@ void SCAudioRouteChangedCallback(void *clientData,
 		buffersInQueue = 0;
 		endOfData = NO;
 		
+		OSStatus err = noErr;
+#if TARGET_OS_IPHONE
 		// setting autio session category yo media playback
 		AudioSessionInitialize(NULL, NULL, NULL, NULL);
 		
 		UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;
-        OSStatus err = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory,
+        err = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory,
 											   sizeof(sessionCategory),
 											   &sessionCategory);
 		AudioSessionSetActive(TRUE);
@@ -137,6 +141,7 @@ void SCAudioRouteChangedCallback(void *clientData,
 		if (err) {
 			NSLog(@"AudioSessionAddPropertyListener kAudioSessionProperty_AudioRouteChange failed: %d", err);
 		}
+#endif
 		
 		// create audio queue object
 		err = AudioQueueNewOutput(&basicDescription,
@@ -188,9 +193,11 @@ void SCAudioRouteChangedCallback(void *clientData,
 - (void)dealloc;
 {
 	delegate = nil;
+#if TARGET_OS_IPHONE
 	AudioSessionRemovePropertyListenerWithUserData(kAudioSessionProperty_AudioRouteChange,
 												   SCAudioRouteChangedCallback,
 												   self);
+#endif
 	AudioQueueRemovePropertyListener(audioQueue,
 									 kAudioQueueProperty_IsRunning,
 									 SCQueuePropertyListenerProc,
@@ -319,6 +326,7 @@ void SCAudioRouteChangedCallback(void *clientData,
 	}
 }
 
+#if TARGET_OS_IPHONE
 - (void)audioSessionRouteChangedWithChangeDict:(NSDictionary *)routeChangeDictionary;
 {
 	NSNumber *changeReason = [routeChangeDictionary valueForKey:(NSString *)CFSTR(kAudioSession_AudioRouteChangeKey_Reason)];
@@ -332,6 +340,7 @@ void SCAudioRouteChangedCallback(void *clientData,
 		[self pause];
 	}
 }
+#endif
 
 
 #pragma mark Publics
