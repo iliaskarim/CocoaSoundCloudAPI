@@ -56,6 +56,7 @@
 		94EE4B4D12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94EE4B5012390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */; };
 		94EE4B5112390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE4B4F12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m */; };
+		94F5B56E1282FD16000D7CD1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F5B56D1282FD16000D7CD1 /* CoreServices.framework */; };
 		AA747D9F0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -120,6 +121,7 @@
 		94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIAuthenticationDelegate.h; sourceTree = "<group>"; };
 		94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIAuthentication.h; sourceTree = "<group>"; };
 		94EE4B4F12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIAuthentication.m; sourceTree = "<group>"; };
+		94F5B56D1282FD16000D7CD1 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCloudAPI_Prefix.pch; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundCloudAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 				94535F90123FB03A00BD668A /* OAuth2Client.framework in Frameworks */,
 				9454819A1248D95E00E6BD3D /* AudioToolbox.framework in Frameworks */,
 				9454819B1248D95E00E6BD3D /* Foundation.framework in Frameworks */,
+				94F5B56E1282FD16000D7CD1 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +177,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94F5B56D1282FD16000D7CD1 /* CoreServices.framework */,
 				945481851248D94900E6BD3D /* AudioToolbox.framework */,
 				82CC4EAE1247C361000F468E /* UIKit.framework */,
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
