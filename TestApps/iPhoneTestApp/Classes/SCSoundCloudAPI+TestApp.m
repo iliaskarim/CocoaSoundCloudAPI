@@ -14,9 +14,10 @@
 - (id)meWithContext:(id)context;
 {
 	return [self performMethod:@"GET"
-					 onResource:@"/me"
-				 withParameters:nil
-						context:context];
+					onResource:@"/me"
+				withParameters:nil
+					   context:context
+					  userInfo:nil];
 }
 
 - (id)postTrackWithTitle:(NSString *)title
@@ -30,9 +31,10 @@
 	[parameters setObject:fileURL forKey:@"track[asset_data]"];
 	
 	return [self performMethod:@"POST"
-					 onResource:@"tracks"
-				 withParameters:parameters
-						context:context];
+					onResource:@"tracks"
+				withParameters:parameters
+					   context:context
+					  userInfo:nil];
 }
 
 - (id)postTrackWithId:(NSNumber *)trackId
@@ -41,9 +43,10 @@
 {
 	NSString *resource = [NSString stringWithFormat:@"/groups/%@/contributions/%@", groupId, trackId];
 	return [self performMethod:@"PUT"
-					 onResource:resource
-				 withParameters:nil
-						context:@"addToGroup"];
+					onResource:resource
+				withParameters:nil
+					   context:@"addToGroup"
+					  userInfo:nil];
 }
 
 @end

@@ -14,6 +14,7 @@
 		28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* iPhoneTestAppViewController.m */; };
 		94135EEC12313C5500D42EF1 /* libjson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94135EE712313C4C00D42EF1 /* libjson.a */; };
 		9431457C12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9431457B12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m */; };
+		9469478F128319C1006181DF /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9469478E128319C1006181DF /* SoundCloud.bundle */; };
 		948711A8124CDF9B002557D1 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487119D124CDF8E002557D1 /* libOAuth2Client.a */; };
 		948711A9124CDF9B002557D1 /* libSoundCloudAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94871194124CDF83002557D1 /* libSoundCloudAPI.a */; };
 		948711F4124CE0E6002557D1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948711F3124CE0E6002557D1 /* AudioToolbox.framework */; };
@@ -127,6 +128,7 @@
 		94135ED412313C4B00D42EF1 /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = ../Support/JSON/JSON.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9431457A12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloudAPI+TestApp.h"; sourceTree = "<group>"; };
 		9431457B12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloudAPI+TestApp.m"; sourceTree = "<group>"; };
+		9469478E128319C1006181DF /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../../SoundCloud.bundle; sourceTree = "<group>"; };
 		948711F3124CE0E6002557D1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		94871286124CE1FC002557D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../../Outsourced/OAuth2Client/OAuth2Client.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -249,8 +251,8 @@
 		9487118F124CDF83002557D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				94871196124CDF83002557D1 /* SoundCloudAPI.framework */,
 				94871194124CDF83002557D1 /* libSoundCloudAPI.a */,
-				94871196124CDF83002557D1 /* SoundCloudAPI */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,8 +260,8 @@
 		94871198124CDF8E002557D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9487119D124CDF8E002557D1 /* libOAuth2Client.a */,
 				9487119F124CDF8E002557D1 /* OAuth2Client.framework */,
+				9487119D124CDF8E002557D1 /* libOAuth2Client.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,6 +269,7 @@
 		D3A305890F336D9800408EA8 /* Outsourced */ = {
 			isa = PBXGroup;
 			children = (
+				9469478E128319C1006181DF /* SoundCloud.bundle */,
 				948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */,
 				94135ED412313C4B00D42EF1 /* JSON.xcodeproj */,
 				94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */,
@@ -378,10 +381,10 @@
 			remoteRef = 94871193124CDF83002557D1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		94871196124CDF83002557D1 /* SoundCloudAPI */ = {
+		94871196124CDF83002557D1 /* SoundCloudAPI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SoundCloudAPI;
+			path = SoundCloudAPI.framework;
 			remoteRef = 94871195124CDF83002557D1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -411,6 +414,7 @@
 				D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */,
 				D355263B0F4D7C650074030D /* LICENSE in Resources */,
 				D355263C0F4D7C650074030D /* NOTICE in Resources */,
+				9469478F128319C1006181DF /* SoundCloud.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
