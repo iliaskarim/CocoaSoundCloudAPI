@@ -86,6 +86,12 @@ typedef enum {
 - (void)authorizeRequestToken;
 
 /*!
+ * like -autorizeRequestToken
+ * but you can pass the oauth verifier you get from parsing your callback url
+ */
+- (void)authorizeRequestTokenWithOAuthVerifier:(NSString *)verifier;
+
+/*!
  * resets all tokens to nil, and removes them from the keychain
  */
 - (void)resetAuthentication;

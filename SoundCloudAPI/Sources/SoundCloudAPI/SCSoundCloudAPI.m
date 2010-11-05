@@ -236,6 +236,12 @@
 	[request release];
 }
 
+- (void)authorizeRequestTokenWithOAuthVerifier:(NSString *)verifier;
+{
+	self.requestToken.verifier = verifier;
+	[self authorizeRequestToken];
+}
+
 - (void)resetAuthentication;
 {
 	self.requestToken = nil;
