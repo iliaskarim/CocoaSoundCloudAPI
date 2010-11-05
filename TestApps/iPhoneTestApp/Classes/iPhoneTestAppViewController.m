@@ -48,35 +48,47 @@
 	return self;
 }
 
--(void)viewDidLoad;
+- (void)awakeFromNib;
 {
-	[super viewDidLoad];
+	[super awakeFromNib];
 	[self commonAwake];
 }
 
 -(void)commonAwake;
 {
-	iPhoneTestAppAppDelegate *appDelegate = (iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate];
-	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate tokenVerifier:appDelegate.oauthVerifier];
-	[scAPI setResponseFormat:SCResponseFormatJSON];
-	[scAPI setDelegate:self];
-//	[scAPI resetAuthentication];  // uncomment to remove tokens from keychain
-	[self requestUserInfo];
+	if (self.scAPI.status == SCAuthenticationStatusAuthenticated)
+		[self requestUserInfo];
 }
 
 -(void)dealloc;
 {
 	[scAPI dealloc];
+	[postButton release];
+	[trackNameField release];
 	[super dealloc];
 }
 
 #pragma mark Accessors
 @synthesize postButton, trackNameField;
+
+@dynamic scAPI;
+
+- (SCSoundCloudAPI *)scAPI; // lazy loaded
+{
+	if (!scAPI) {
+		iPhoneTestAppAppDelegate *appDelegate = (iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate];
+		scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate tokenVerifier:appDelegate.oauthVerifier];
+		[scAPI setResponseFormat:SCResponseFormatJSON];
+		[scAPI setDelegate:self];
+		//	[scAPI resetAuthentication];  // uncomment to remove tokens from keychain
+	}
+	return scAPI;
+}
 	
 #pragma mark Private
-- (void)requestUserInfo;
+- (IBAction)requestUserInfo;
 {
-	[scAPI performMethod:@"GET" onResource:@"me" withParameters:nil context:@"userInfo"];
+	[self.scAPI performMethod:@"GET" onResource:@"me" withParameters:nil context:@"userInfo"];
 }
 
 -(void)updateUserInfoFromData:(NSData *)data;
@@ -114,7 +126,7 @@
 	[parameters setObject:dataURL forKey:@"track[asset_data]"];
 	
 	[progresBar setProgress:0];
-	[scAPI performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:@"upload"];
+	[self.scAPI performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:@"upload"];
 }
 
 -(void)didReceiveMemoryWarning;

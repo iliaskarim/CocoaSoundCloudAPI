@@ -31,8 +31,11 @@
 }
 @property (nonatomic, retain) IBOutlet UIButton *postButton;
 @property (nonatomic, retain) IBOutlet UITextField *trackNameField;
+@property (nonatomic, retain, readonly) SCSoundCloudAPI *scAPI;
 
 - (IBAction)sendRequest:(id)sender;
+
+- (IBAction)requestUserInfo;
 
 @end
 

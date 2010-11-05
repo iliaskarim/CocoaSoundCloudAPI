@@ -29,10 +29,11 @@
 @protocol SCSoundCloudAPIAuthenticationDelegate;
 
 typedef enum {
-	SCAuthenticationStatusNotAuthenticated,			// api is not authenticated. -> requestAuthentication
-	SCAuthenticationStatusAuthenticated,			// api is authenticated and ready to use
-	SCAuthenticationStatusGettingToken,				// wait till 
-	SCAuthenticationStatusWillAuthorizeRequestToken	// got request token. need to authenticate it. -> authorizeRequestToken
+	SCAuthenticationStatusNotAuthenticated,				// api is not authenticated. -> requestAuthentication
+	SCAuthenticationStatusAuthenticated,				// api is authenticated and ready to use
+	SCAuthenticationStatusGettingToken,					// wait till
+	SCAuthenticationStatusWillAuthorizeRequestToken,	// got request token. need to authenticate it. -> authorizeRequestToken
+	SCAuthenticationStatusCannotAuthenticate			// error occured during token exchange
 } SCAuthenticationStatus;
 
 typedef enum {
@@ -46,7 +47,7 @@ typedef enum {
 	
 	id<SCSoundCloudAPIDelegate> delegate;
 	id<SCSoundCloudAPIAuthenticationDelegate> authDelegate;
-	NSMutableArray *_dataFetchers;
+	NSMutableDictionary *_dataFetchers;
 	OADataFetcher *_authDataFetcher;
 	
 	OAToken *_requestToken;
@@ -85,6 +86,12 @@ typedef enum {
 - (void)authorizeRequestToken;
 
 /*!
+ * like -autorizeRequestToken
+ * but you can pass the oauth verifier you get from parsing your callback url
+ */
+- (void)authorizeRequestTokenWithOAuthVerifier:(NSString *)verifier;
+
+/*!
  * resets all tokens to nil, and removes them from the keychain
  */
 - (void)resetAuthentication;
@@ -95,11 +102,22 @@ typedef enum {
  */
 - (void)setRequestTokenVerifier:(NSString *)verifier;
 
-// API method
-- (void)performMethod:(NSString *)httpMethod
-		   onResource:(NSString *)resource
-	   withParameters:(NSDictionary *)parameters
-			  context:(id)targetContext;
+// API method 
+/*!
+ * invokes a request using the specified HTTP method on the specified resource
+ * returns a request identifier which can be used to cancel the request.
+ * returns nil if an error occured
+ */
+- (id)performMethod:(NSString *)httpMethod
+		 onResource:(NSString *)resource
+	 withParameters:(NSDictionary *)parameters
+			context:(id)targetContext;
+
+/*!
+ * cancels the request with the particular request identifier
+ */
+- (void)cancelRequest:(id)requestIdentifier;
+
 
 @end
 
@@ -113,8 +131,10 @@ typedef enum {
 
 
 @protocol SCSoundCloudAPIDelegate <NSObject>
+@optional
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didFinishWithData:(NSData *)data context:(id)context;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didFailWithError:(NSError *)error context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)api didCancelRequestWithContext:(id)context;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveData:(NSData *)data context:(id)context;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
 - (void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
