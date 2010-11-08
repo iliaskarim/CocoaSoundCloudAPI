@@ -221,6 +221,10 @@
 	NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
 	[userAgentString appendFormat:@"%@/%@;", appName, appVersion];
 	
+	NSString *apiWrapperName = @"SCSoundCloudAPI";
+	NSString *apiWrapperVersion = SCAPI_VERSION;
+	[userAgentString appendFormat:@" %@/%@;", apiWrapperName, apiWrapperVersion];
+	
 	NSString *hwModel = nil;
 	NSString *hwMachine = [self sysctlValueForName:@"hw.machine"];
 #if TARGET_OS_IPHONE
