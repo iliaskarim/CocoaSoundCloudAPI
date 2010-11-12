@@ -61,6 +61,7 @@ typedef enum {
 	SCAudioFileStreamParser			*audioFileStreamParser;
 	SCAudioBufferQueue				*audioBufferQueue;
 	
+	NSUInteger						playPosition;
 
 	// is set to new value on seek
 	// incremented when parser parses new packages

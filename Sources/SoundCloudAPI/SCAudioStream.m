@@ -62,6 +62,7 @@
 		return nil;
 	
 	if (self = [super init]) {
+		playPosition = 0;
 		currentStreamOffset = 0;
 		currentPackage = 0;
 		packageAtQueueStart = 0;
@@ -106,14 +107,16 @@
 {
 	assert([NSThread isMainThread]);
 	if (self.playState == SCAudioStreamState_Stopped)
-		return 0;
+		return playPosition;
 	unsigned long long samples = 0;
 	samples = packageAtQueueStart * kMP3FrameSize;
 	NSUInteger playedSamples = audioBufferQueue.playedSamples;
-	if (playedSamples == NSUIntegerMax)
-		return NSUIntegerMax;
-	samples += playedSamples;
-	return samples / (kMP3SampleRate / 1000);
+	if (playedSamples != NSUIntegerMax) {	// audioBufferQueue couldn't get playedSamples
+		samples += playedSamples;
+		playPosition = samples / (kMP3SampleRate / 1000);
+	}
+	
+	return playPosition;
 }
 
 - (float)bufferingProgress;
