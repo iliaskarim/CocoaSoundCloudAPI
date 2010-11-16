@@ -181,17 +181,14 @@
     } else if (![delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]) {
         //do the presentation yourself when the delegate really does not respond to any of the callbacks for doing it himself
         NSArray *windows = [[UIApplication sharedApplication] windows];
-        NSLog(@"Windows: %@", windows);
         UIWindow *window = nil;
         if (windows.count > 0) window = [windows objectAtIndex:0];
         if ([window respondsToSelector:@selector(rootViewController)]) {
             UIViewController *rootViewController = [window rootViewController];
-            NSLog(@"RootViewController: %@", rootViewController);
             [rootViewController presentModalViewController: loginViewController animated:YES];
         } else {
-            //TODO: Assert
+			NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
         }
-
     }
 }
 
@@ -209,7 +206,9 @@
         if ([window respondsToSelector:@selector(rootViewController)]) {
             UIViewController *rootViewController = [window rootViewController];
             [rootViewController dismissModalViewControllerAnimated:YES];
-        }
+        } else {
+			NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDismissViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
+		}
     }
 }
 
