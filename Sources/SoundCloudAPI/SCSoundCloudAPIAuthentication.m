@@ -170,7 +170,11 @@
     if ([navController respondsToSelector:@selector(setModalPresentationStyle:)]){
         [navController setModalPresentationStyle:UIModalPresentationFormSheet];
     } */
-        
+	
+	if ([delegate respondsToSelector:@selector(soundCloudAPIWillDisplayLoginViewController:)]) {
+		[delegate soundCloudAPIWillDisplayLoginViewController:loginViewController];
+	}
+	
     if ([delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
         [delegate soundCloudAPIDisplayViewController:loginViewController];
         

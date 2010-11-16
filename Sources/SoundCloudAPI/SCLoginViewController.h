@@ -24,9 +24,14 @@
     
     NSInteger numberOfSections;
     NSInteger currentSection;
+	
+	UIButton *closeButton;
+	BOOL closeButtonHidden;
 }
 
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;
+
+@property (nonatomic, assign, getter=isCloseButtonHidden) BOOL closeButtonHidden;	// default = NO
 
 - (void)updateInterface:(BOOL)animated;
 

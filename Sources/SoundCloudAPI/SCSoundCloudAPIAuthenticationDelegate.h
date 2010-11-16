@@ -37,6 +37,7 @@
 
 #if TARGET_OS_IPHONE
 //TODO: PresentViewConttroller
+- (void)soundCloudAPIWillDisplayLoginViewController:(SCLoginViewController *)soundCloudViewController;
 - (void)soundCloudAPIDisplayViewController:(UIViewController *)soundCloudViewController;
 - (void)soundCloudAPIDismissViewController:(UIViewController *)soundCloudViewController;
 #endif

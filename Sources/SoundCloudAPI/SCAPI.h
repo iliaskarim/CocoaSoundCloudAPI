@@ -23,5 +23,6 @@
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCSoundCloudAPIDelegate.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
+#import "SCLoginViewController.h"
 
 #import "SCAudioStream.h"

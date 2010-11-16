@@ -43,6 +43,8 @@
         
         numberOfSections = 1;
         currentSection = 0;
+		
+		closeButtonHidden = NO;
         
         if ([self respondsToSelector:@selector(setModalPresentationStyle:)]){
             [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -63,6 +65,7 @@
 
 - (void)dealloc;
 {
+	[closeButton release];
     [resourceBundle release];
     [titleBarView release];
     [authentication release];
@@ -72,6 +75,25 @@
     [sectionBars release];
     [super dealloc];
 }
+
+
+#pragma mark Accessors
+
+@dynamic closeButtonHidden;
+
+- (BOOL)closeButtonHidden;
+{
+	return closeButtonHidden;
+}
+
+- (void)setCloseButtonHidden:(BOOL)value;
+{
+	closeButtonHidden = value;
+	closeButton.hidden = closeButtonHidden;
+}
+
+
+#pragma mark UIViewController
 
 - (void)viewDidLoad;
 {
@@ -109,22 +131,23 @@
     [titleBarView addSubview:titleImageView];
     [titleImageView release];
     
-    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    closeButton.frame = closeRect;
-    closeButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-    closeButton.showsTouchWhenHighlighted = YES;
-    [closeButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
-    [closeButton setImage:closeImage forState:UIControlStateNormal];
-    closeButton.imageView.contentMode = UIViewContentModeCenter;
-    [titleBarView addSubview:closeButton];
-    
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
-    activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin);
-    activityIndicator.hidesWhenStopped = YES;
-    [self.view addSubview:activityIndicator];
-    
+	closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	closeButton.frame = closeRect;
+	closeButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+	closeButton.showsTouchWhenHighlighted = YES;
+	[closeButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+	UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
+	[closeButton setImage:closeImage forState:UIControlStateNormal];
+	closeButton.imageView.contentMode = UIViewContentModeCenter;
+	closeButton.hidden = closeButtonHidden;
+	[titleBarView addSubview:closeButton];
+	
+	activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+	activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin);
+	activityIndicator.hidesWhenStopped = YES;
+	[self.view addSubview:activityIndicator];
+	
     NSMutableArray *mutableWebViews = [NSMutableArray arrayWithCapacity:numberOfSections];
     NSMutableArray *mutableSectionBars = [NSMutableArray arrayWithCapacity:numberOfSections];
     for (int section = 0; section < numberOfSections; section++) {
