@@ -204,6 +204,8 @@
 	
 	SInt64 dataByteOffset = [audioFileStreamParser offsetForPacket:packet];
 	currentStreamOffset = dataByteOffset;
+    
+    playPosition = milli;
 	
 	[self _bufferFromByteOffset:dataByteOffset];
 	if (play)
