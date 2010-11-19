@@ -23,6 +23,9 @@
 #import "SCSoundCloudAPIConfiguration.h"
 #import "SCSoundCloudAPIDelegate.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
+
+#if TARGET_OS_IPHONE
 #import "SCLoginViewController.h"
+#endif
 
 #import "SCAudioStream.h"
