@@ -233,18 +233,20 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFinishWithData:(NSData *)data;
 {
+	[[connection retain] autorelease];
+	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFinishWithData:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didFinishWithData:data context:connection.context userInfo:connection.userInfo];
 	}
-	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFailWithError:(NSError *)error;
 {
+	[[connection retain] autorelease];
+	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didFailWithError:error context:connection.context userInfo:connection.userInfo];
 	}
-	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveData:(NSData *)data;
