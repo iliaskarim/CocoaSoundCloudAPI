@@ -25,15 +25,22 @@
     NSInteger numberOfSections;
     NSInteger currentSection;
 	
-	UIButton *closeButton;
-	BOOL closeButtonHidden;
+	UIButton *titleBarButton;
+	BOOL showReloadButton;
 }
 
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;
 
-@property (nonatomic, assign, getter=isCloseButtonHidden) BOOL closeButtonHidden;	// default = NO
+/*
+ * Replaces the close ('X') button in the top bar with a reload button
+ * Default - NO
+ */
+@property (nonatomic,assign) BOOL showReloadButton;
 
 - (void)updateInterface:(BOOL)animated;
+
+- (IBAction)close;
+- (IBAction)reload;
 
 @end
 

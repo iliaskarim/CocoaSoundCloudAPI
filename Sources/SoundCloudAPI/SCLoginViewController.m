@@ -24,7 +24,6 @@
 
 @interface SCLoginViewController ()
 - (void)sectionAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
-- (IBAction)close;
 - (IBAction)didSelectSectionbar:(SCLoginSectionBar *)sectionBar;
 @end
 
@@ -44,7 +43,7 @@
         numberOfSections = 1;
         currentSection = 0;
 		
-		closeButtonHidden = NO;
+		showReloadButton = NO;
         
         if ([self respondsToSelector:@selector(setModalPresentationStyle:)]){
             [self setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -65,7 +64,7 @@
 
 - (void)dealloc;
 {
-	[closeButton release];
+	[titleBarButton release];
     [resourceBundle release];
     [titleBarView release];
     [authentication release];
@@ -79,17 +78,12 @@
 
 #pragma mark Accessors
 
-@dynamic closeButtonHidden;
+@synthesize showReloadButton;
 
-- (BOOL)closeButtonHidden;
+- (void)setShowReloadButton:(BOOL)value;
 {
-	return closeButtonHidden;
-}
-
-- (void)setCloseButtonHidden:(BOOL)value;
-{
-	closeButtonHidden = value;
-	closeButton.hidden = closeButtonHidden;
+	showReloadButton = value;
+	[self updateInterface:NO];
 }
 
 
@@ -131,16 +125,15 @@
     [titleBarView addSubview:titleImageView];
     [titleImageView release];
     
-	closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	closeButton.frame = closeRect;
-	closeButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-	closeButton.showsTouchWhenHighlighted = YES;
-	[closeButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+	titleBarButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	titleBarButton.frame = closeRect;
+	titleBarButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+	titleBarButton.showsTouchWhenHighlighted = YES;
+	[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
 	UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
-	[closeButton setImage:closeImage forState:UIControlStateNormal];
-	closeButton.imageView.contentMode = UIViewContentModeCenter;
-	closeButton.hidden = closeButtonHidden;
-	[titleBarView addSubview:closeButton];
+	[titleBarButton setImage:closeImage forState:UIControlStateNormal];
+	titleBarButton.imageView.contentMode = UIViewContentModeCenter;
+	[titleBarView addSubview:titleBarButton];
 	
 	activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
@@ -251,6 +244,17 @@
         }
         bar.userInteractionEnabled = !animated; //We don't want no userInteraction during the animation
     }
+	
+	[titleBarButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+	if (!showReloadButton) {
+		[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+		UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
+		[titleBarButton setImage:closeImage forState:UIControlStateNormal];
+	} else {
+		[titleBarButton addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
+		UIImage *reloadImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"reload" ofType:@"png"]];
+		[titleBarButton setImage:reloadImage forState:UIControlStateNormal];
+	}
     if (animated) {
         [UIView commitAnimations];
     }
@@ -297,12 +301,17 @@
 	        hasBeenHandled = [authentication handleRedirectURL:request.URL];
 			if (hasBeenHandled) {
 				[self close];
-				return NO;
 			}
+			return NO;
 		}
 	}
     
-    return YES;
+	if (![[request.URL absoluteString] hasPrefix:[authentication.configuration.authURL absoluteString]]) {
+		[[UIApplication sharedApplication] openURL:request.URL];
+		return NO;
+	}
+	
+	return YES;
 }
 
 #pragma mark Private
@@ -310,6 +319,13 @@
 - (IBAction)close;
 {
     [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
+}
+
+- (IBAction)reload;
+{
+	for (UIWebView *webView in webViews) {
+		[webView reload];
+	}
 }
 
 - (IBAction)didSelectSectionbar:(SCLoginSectionBar *)sectionBar;
