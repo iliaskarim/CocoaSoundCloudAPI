@@ -153,7 +153,7 @@
 	// the signing of HEAD requests on media.soundcloud.com is currently buggy. so we fake a head request by a very small GET request
 	int timeout = kHTTPTimeOutIntervall;
 	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
-																	 cachePolicy:NSURLRequestUseProtocolCachePolicy
+																	 cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 																 timeoutInterval:timeout] autorelease];
 	[headRequest setHTTPMethod:@"GET"];
 	[headRequest setValue:@"bytes=0-0" forHTTPHeaderField:@"Range"];
@@ -260,7 +260,7 @@
 	
 	int timeout = kHTTPTimeOutIntervall;
 	NSMutableURLRequest *streamRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
-																	   cachePolicy:NSURLRequestUseProtocolCachePolicy
+																	   cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 																   timeoutInterval:timeout] autorelease];
 	[streamRequest setHTTPMethod:@"GET"];
 	[streamRequest addValue:rangeString
