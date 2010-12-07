@@ -431,8 +431,7 @@
 	int retryCount = [[connection.userInfo objectForKey:SCAudioStream_HTTPRetryCount] intValue];
 	int timeout = [[connection.userInfo objectForKey:SCAudioStream_HTTPRetryTimeout] intValue];
 	retryCount++;
-	timeout *= 2;
-	timeout = MAX(timeout, 10);
+	timeout += kHTTPTimeOutIncrements;
 	
 	[connection release]; connection = nil;
 	

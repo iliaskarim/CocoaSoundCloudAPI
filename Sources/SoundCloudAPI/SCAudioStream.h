@@ -25,8 +25,9 @@
 #define kMP3SampleRate		44100
 
 // http request timeout intervall (in seconds)
-// 1st request has 2s, 2nd 4s, 3rd 8s and 4th has 16s and incrementing
-#define kHTTPTimeOutIntervall		2
+// 1st request has 20s, 2nd 30s, 3rd 40s and 4th has 50s and incrementing
+#define kHTTPTimeOutIntervall		20
+#define kHTTPTimeOutIncrements		10
 
 // lets get chunks of 128k size
 #define kHTTPRangeChunkChunkSize	(128 * 1024)
