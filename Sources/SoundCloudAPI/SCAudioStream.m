@@ -243,6 +243,7 @@
 - (void)pause;
 {
 	if (!audioBufferQueue) {
+		[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(play) object:nil];
 		return;
 	}
 	[audioBufferQueue pause];
