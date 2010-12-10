@@ -227,10 +227,11 @@
 	// the signing of HEAD requests on media.soundcloud.com is currently buggy. so we fake a head request by a very small GET request
 	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
 																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																 timeoutInterval:60.0] autorelease];
+																 timeoutInterval:kHTTPConnectionTimeout] autorelease];
 	[headRequest setHTTPMethod:@"GET"];
 	[headRequest setValue:@"bytes=0-0" forHTTPHeaderField:@"Range"];
 	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
+	[headRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
 	connection = [[NXOAuth2Connection alloc] initWithRequest:headRequest
 												 oauthClient:authentication.oauthClient
 													delegate:self];
@@ -260,12 +261,13 @@
 	
 	NSMutableURLRequest *streamRequest = [[[NSMutableURLRequest alloc] initWithURL:(redirectURL) ? redirectURL : URL
 																	   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																   timeoutInterval:60.0] autorelease];
+																   timeoutInterval:kHTTPConnectionTimeout] autorelease];
 	[streamRequest setHTTPMethod:@"GET"];
 	[streamRequest addValue:rangeString
 		 forHTTPHeaderField:@"Range"];
 //	[streamRequest addValue:[NSString stringWithFormat:@"bufferingProgress: %f", [self bufferingProgress]]
 //		 forHTTPHeaderField:@"X-DEBUG"];
+	[streamRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
 	connection = [[NXOAuth2Connection alloc] initWithRequest:streamRequest
 												 oauthClient:authentication.oauthClient
 													delegate:self];

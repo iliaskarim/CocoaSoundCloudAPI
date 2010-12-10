@@ -24,6 +24,9 @@
 // the samplerate in Hz. we can assume 44.1kHz here
 #define kMP3SampleRate		44100
 
+// connection timeout in secods
+#define kHTTPConnectionTimeout		20.0
+
 // lets get chunks of 128k size
 #define kHTTPRangeChunkChunkSize	(128 * 1024)
 
