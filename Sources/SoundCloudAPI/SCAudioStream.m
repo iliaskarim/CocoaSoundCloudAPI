@@ -224,12 +224,10 @@
 - (void)_sendHeadRequest;
 {
 	// gathering initial information
-	// the signing of HEAD requests on media.soundcloud.com is currently buggy. so we fake a head request by a very small GET request
 	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
 																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
 																 timeoutInterval:kHTTPConnectionTimeout] autorelease];
-	[headRequest setHTTPMethod:@"GET"];
-	[headRequest setValue:@"bytes=0-0" forHTTPHeaderField:@"Range"];
+	[headRequest setHTTPMethod:@"HEAD"];
 	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
 	[headRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
 	connection = [[NXOAuth2Connection alloc] initWithRequest:headRequest
@@ -349,6 +347,7 @@
 	NSAssert(fetcher == connection, @"invalid state");
 	
 	BOOL connectionDidSucceed = (connection.statusCode >= 200 && connection.statusCode < 300);
+	long long expectedContentLength = connection.expectedContentLength;
 	id context = [connection.context retain];
 	
 	connection.delegate = nil;
@@ -356,9 +355,7 @@
 	
 	if (connectionDidSucceed) {
 		if ([context isEqualToString:SCAudioStream_HTTPHeadContext]) {
-			assert(streamLength >= 0);
-			
-			//streamLength = _connection.expectedContentLength; // HEAD & media.soundcloud.com bug -> streamlength set with response
+			streamLength = expectedContentLength;
 			
 			NSParameterAssert(currentStreamOffset == 0);
 			[self _bufferFromCurrentStreamOffset];
@@ -379,31 +376,11 @@
 	NSAssert([NSThread isMainThread], @"invalid thread");
 	NSAssert(fetcher == connection, @"invalid state");
 	
-	BOOL connectionDidSucceed = (connection.statusCode >= 200 && connection.statusCode < 300);
-	id context = [connection.context retain];
-	
 	currentConnectionStillToFetch = connection.expectedContentLength;
-	
-	if (connectionDidSucceed) {
-		if ([context isEqualToString:SCAudioStream_HTTPHeadContext]) {
-			NSString *contentRange = [[(NSHTTPURLResponse *)response allHeaderFields] valueForKey:@"Content-Range"];
-			if (contentRange) {
-				NSArray *rangeComponents = [contentRange componentsSeparatedByString:@"/"];
-				if (rangeComponents.count == 2)
-					streamLength = [(NSString *)[rangeComponents objectAtIndex:1] longLongValue];
-			}
-			
-		} else if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
-			// nothing to be done here
-			
-		} else {
-			NSLog(@"invalid state");
-		}
-	} else {
+
+	if (connection.statusCode == 403) {
 		[redirectURL release]; redirectURL = nil;
 	}
-	
-	[context release];
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)fetcher didFailWithError:(NSError *)error;
