@@ -481,7 +481,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SoundCloudAPI;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
 			};
 			name = Debug;
@@ -499,7 +499,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SoundCloudAPI;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
 			};
 			name = Release;
