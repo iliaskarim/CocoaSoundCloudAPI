@@ -24,11 +24,6 @@
 // the samplerate in Hz. we can assume 44.1kHz here
 #define kMP3SampleRate		44100
 
-// http request timeout intervall (in seconds)
-// 1st request has 20s, 2nd 30s, 3rd 40s and 4th has 50s and incrementing
-#define kHTTPTimeOutIntervall		20
-#define kHTTPTimeOutIncrements		10
-
 // lets get chunks of 128k size
 #define kHTTPRangeChunkChunkSize	(128 * 1024)
 
@@ -56,6 +51,7 @@ typedef enum {
 	SCSoundCloudAPIAuthentication	*authentication;
 @private
 	NSURL							*URL;
+	NSURL							*redirectURL;
 	SCAudioStreamState				playState;
 	SCAudioStreamBufferState		bufferState;
 	

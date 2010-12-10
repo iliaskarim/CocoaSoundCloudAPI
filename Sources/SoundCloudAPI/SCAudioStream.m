@@ -31,12 +31,6 @@
 
 #import "SCAudioStreamPacketDescriptions.h"
 
-#define SCAudioStreamRetryCount				10
-
-#define SCAudioStream_HTTPRetryRequest		@"retryRequest"
-#define SCAudioStream_HTTPRetryCount		@"retryCount"
-#define SCAudioStream_HTTPRetryTimeout		@"timoutIntervall"
-
 #define SCAudioStream_HTTPHeadContext		@"head"
 #define SCAudioStream_HTTPStreamContext		@"stream"
 
@@ -44,9 +38,9 @@
 
 
 @interface SCAudioStream () <SCAudioFileStreamParserDelegate, SCAudioBufferQueueDelegate, NXOAuth2ConnectionDelegate>
-- (void)sendHeadRequest;
+- (void)_sendHeadRequest;
 - (void)_fetchNextData;
-- (void)_bufferFromByteOffset:(NSUInteger)dataByteOffset;
+- (void)_bufferFromCurrentStreamOffset;
 - (void)_createNewAudioQueue;
 - (void)queueBufferStateChanged:(NSNotification *)notification;
 - (void)queuePlayStateChanged:(NSNotification *)notification;
@@ -82,7 +76,7 @@
 		
 		volume = 1.0f;
 
-		[self sendHeadRequest];
+		[self _sendHeadRequest];
 	}
 	return self;
 }
@@ -97,6 +91,7 @@
 	[audioFileStreamParser release];
 	audioBufferQueue.delegate = nil;
 	[audioBufferQueue release];
+	[redirectURL release];
 	[URL release];
 	[super dealloc];
 }
@@ -158,31 +153,6 @@
 	[audioBufferQueue setVolume:value];
 }
 
-#pragma mark P
-
-- (void)sendHeadRequest;
-{
-	// gathering initial information
-	// the signing of HEAD requests on media.soundcloud.com is currently buggy. so we fake a head request by a very small GET request
-	int timeout = kHTTPTimeOutIntervall;
-	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
-																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																 timeoutInterval:timeout] autorelease];
-	[headRequest setHTTPMethod:@"GET"];
-	[headRequest setValue:@"bytes=0-0" forHTTPHeaderField:@"Range"];
-	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
-	[headRequest setTimeoutInterval:timeout];
-	connection = [[NXOAuth2Connection alloc] initWithRequest:headRequest
-												 oauthClient:authentication.oauthClient
-													delegate:self];
-	connection.context = SCAudioStream_HTTPHeadContext;
-	connection.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-						   headRequest, SCAudioStream_HTTPRetryRequest,
-						   [NSNumber numberWithInt:timeout], SCAudioStream_HTTPRetryTimeout,
-						   [NSNumber numberWithInt:0], SCAudioStream_HTTPRetryCount,
-						   nil];
-}
-
 
 #pragma mark Publics
 - (void)seekToMillisecond:(NSUInteger)milli startPlaying:(BOOL)play;
@@ -220,7 +190,7 @@
     
     playPosition = milli;
 	
-	[self _bufferFromByteOffset:dataByteOffset];
+	[self _bufferFromCurrentStreamOffset];
 	if (play)
 		[self play];
 }
@@ -251,15 +221,31 @@
 
 
 #pragma mark Privates
-- (void)_bufferFromByteOffset:(NSUInteger)dataByteOffset;
+- (void)_sendHeadRequest;
+{
+	// gathering initial information
+	// the signing of HEAD requests on media.soundcloud.com is currently buggy. so we fake a head request by a very small GET request
+	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
+																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+																 timeoutInterval:60.0] autorelease];
+	[headRequest setHTTPMethod:@"GET"];
+	[headRequest setValue:@"bytes=0-0" forHTTPHeaderField:@"Range"];
+	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
+	connection = [[NXOAuth2Connection alloc] initWithRequest:headRequest
+												 oauthClient:authentication.oauthClient
+													delegate:self];
+	connection.context = SCAudioStream_HTTPHeadContext;
+}
+
+- (void)_bufferFromCurrentStreamOffset;
 {
 	assert([NSThread isMainThread]);
 	assert(streamLength >= 0);
-	long long rangeEnd = dataByteOffset + kHTTPRangeChunkChunkSize;
+	long long rangeEnd = currentStreamOffset + kHTTPRangeChunkChunkSize;
 	
 	rangeEnd = MIN(streamLength, rangeEnd);
 	
-	if (dataByteOffset == streamLength) {
+	if (currentStreamOffset == streamLength) {
 		NSLog(@"blala");
 		return;
 	}
@@ -270,27 +256,20 @@
 		reachedEOF = NO;
 	}
 	
-	NSString *rangeString = [NSString stringWithFormat:@"bytes=%u-%qi", dataByteOffset, (rangeEnd - 1)];
+	NSString *rangeString = [NSString stringWithFormat:@"bytes=%lld-%lld", currentStreamOffset, (rangeEnd - 1)];
 	
-	int timeout = kHTTPTimeOutIntervall;
-	NSMutableURLRequest *streamRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
+	NSMutableURLRequest *streamRequest = [[[NSMutableURLRequest alloc] initWithURL:(redirectURL) ? redirectURL : URL
 																	   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																   timeoutInterval:timeout] autorelease];
+																   timeoutInterval:60.0] autorelease];
 	[streamRequest setHTTPMethod:@"GET"];
 	[streamRequest addValue:rangeString
 		 forHTTPHeaderField:@"Range"];
 //	[streamRequest addValue:[NSString stringWithFormat:@"bufferingProgress: %f", [self bufferingProgress]]
 //		 forHTTPHeaderField:@"X-DEBUG"];
-	[streamRequest setTimeoutInterval:timeout];
 	connection = [[NXOAuth2Connection alloc] initWithRequest:streamRequest
 												 oauthClient:authentication.oauthClient
 													delegate:self];
 	connection.context = SCAudioStream_HTTPStreamContext;
-	connection.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-						   streamRequest, SCAudioStream_HTTPRetryRequest,
-						   [NSNumber numberWithInt:timeout], SCAudioStream_HTTPRetryTimeout,
-						   [NSNumber numberWithInt:0], SCAudioStream_HTTPRetryCount,
-						   nil];
 	
 	[self queuePlayStateChanged:nil];
 	[self queueBufferStateChanged:nil];
@@ -327,7 +306,7 @@
 
 	if (audioBufferQueue.bufferState != SCAudioBufferBufferState_NotBuffering
 		&& !reachedEOF) {
-		[self _bufferFromByteOffset:currentStreamOffset];
+		[self _bufferFromCurrentStreamOffset];
 	}
 }
 
@@ -379,7 +358,8 @@
 			
 			//streamLength = _connection.expectedContentLength; // HEAD & media.soundcloud.com bug -> streamlength set with response
 			
-			[self _bufferFromByteOffset:0];
+			NSParameterAssert(currentStreamOffset == 0);
+			[self _bufferFromCurrentStreamOffset];
 			
 		} else if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
 			[self _fetchNextData];
@@ -417,6 +397,8 @@
 		} else {
 			NSLog(@"invalid state");
 		}
+	} else {
+		[redirectURL release]; redirectURL = nil;
 	}
 	
 	[context release];
@@ -427,30 +409,32 @@
 	NSAssert([NSThread isMainThread], @"invalid thread");
 	NSAssert(fetcher == connection, @"invalid state");
 	
+	[redirectURL release]; redirectURL = nil;
+	
 	id context = [connection.context retain];
-	NSMutableURLRequest *retryRequest = [[connection.userInfo objectForKey:SCAudioStream_HTTPRetryRequest] retain];
-	int retryCount = [[connection.userInfo objectForKey:SCAudioStream_HTTPRetryCount] intValue];
-	int timeout = [[connection.userInfo objectForKey:SCAudioStream_HTTPRetryTimeout] intValue];
-	retryCount++;
-	timeout += kHTTPTimeOutIncrements;
+	NSInteger statusCode = connection.statusCode;
 	
 	[connection release]; connection = nil;
 	
-	if (retryRequest) {
-		[retryRequest setTimeoutInterval:timeout];
-		connection = [[NXOAuth2Connection alloc] initWithRequest:retryRequest
-													 oauthClient:authentication.oauthClient
-														delegate:self];
-		connection.context = context;
-		connection.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							   retryRequest, SCAudioStream_HTTPRetryRequest,
-							   [NSNumber numberWithInt:timeout], SCAudioStream_HTTPRetryTimeout,
-							   [NSNumber numberWithInt:retryCount], SCAudioStream_HTTPRetryCount,
-							   nil];
+	if ([context isEqualToString:SCAudioStream_HTTPHeadContext]) {
+		[self performSelector:@selector(_sendHeadRequest) withObject:nil afterDelay:5.0];
+	} else if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
+		NSTimeInterval retryDelay = 5.0;
+		if (statusCode == 403) {
+			// decrease timout if redirectURL timed out
+			retryDelay = 0.0;
+		}
+		
+		[self performSelector:@selector(_bufferFromCurrentStreamOffset) withObject:nil afterDelay:retryDelay];
 	}
 	
 	[context release];
-	[retryRequest release];
+}
+
+- (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveRedirectToURL:(NSURL *)aRedirectURL;
+{
+	[redirectURL release];
+	redirectURL = [aRedirectURL retain];
 }
 
 
