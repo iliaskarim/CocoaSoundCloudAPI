@@ -279,26 +279,26 @@
 
 - (void)_createNewAudioQueue;
 {
-		if (audioBufferQueue) {
-			[[NSNotificationCenter defaultCenter] removeObserver:self];
-			audioBufferQueue.delegate = nil;
-			[audioBufferQueue release]; audioBufferQueue = nil;
-		}
-		
-		packageAtQueueStart = currentPackage;
-		audioBufferQueue = [[SCAudioBufferQueue alloc] initWithBasicDescription:audioFileStreamParser.basicDescription
-																magicCookieData:audioFileStreamParser.magicCookieData
-																		 volume:volume];
-		audioBufferQueue.delegate = self;
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(queuePlayStateChanged:)
-													 name:SCAudioBufferPlayStateChangedNotification
-												   object:audioBufferQueue];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(queueBufferStateChanged:)
-													 name:SCAudioBufferBufferStateChangedNotification
-												   object:audioBufferQueue];
 	NSParameterAssert([NSThread isMainThread]);
+	if (audioBufferQueue) {
+		[[NSNotificationCenter defaultCenter] removeObserver:self];
+		audioBufferQueue.delegate = nil;
+		[audioBufferQueue release]; audioBufferQueue = nil;
+	}
+	
+	packageAtQueueStart = currentPackage;
+	audioBufferQueue = [[SCAudioBufferQueue alloc] initWithBasicDescription:audioFileStreamParser.basicDescription
+															magicCookieData:audioFileStreamParser.magicCookieData
+																	 volume:volume];
+	audioBufferQueue.delegate = self;
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(queuePlayStateChanged:)
+												 name:SCAudioBufferPlayStateChangedNotification
+											   object:audioBufferQueue];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(queueBufferStateChanged:)
+												 name:SCAudioBufferBufferStateChangedNotification
+											   object:audioBufferQueue];
 }
 
 - (void)_fetchNextData;
