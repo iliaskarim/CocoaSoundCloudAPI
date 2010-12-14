@@ -103,7 +103,7 @@
 
 - (NSUInteger)playPosition;
 {
-	assert([NSThread isMainThread]);
+	NSParameterAssert([NSThread isMainThread]);
 	if (self.playState == SCAudioStreamState_Stopped)
 		return playPosition;
 	unsigned long long samples = 0;
@@ -157,7 +157,7 @@
 #pragma mark Publics
 - (void)seekToMillisecond:(NSUInteger)milli startPlaying:(BOOL)play;
 {
-	assert([NSThread isMainThread]);
+	NSParameterAssert([NSThread isMainThread]);
 	if (streamLength < 0) {
 		NSLog(@"illigal state for seeking in the stream");
 		return;
@@ -223,6 +223,8 @@
 #pragma mark Privates
 - (void)_sendHeadRequest;
 {
+	NSParameterAssert(connection == nil);
+	
 	// gathering initial information
 	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
 																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -238,8 +240,8 @@
 
 - (void)_bufferFromCurrentStreamOffset;
 {
-	assert([NSThread isMainThread]);
-	assert(streamLength >= 0);
+	NSParameterAssert([NSThread isMainThread]);
+	NSParameterAssert(streamLength >= 0);
 	long long rangeEnd = currentStreamOffset + kHTTPRangeChunkChunkSize;
 	
 	rangeEnd = MIN(streamLength, rangeEnd);
@@ -277,7 +279,6 @@
 
 - (void)_createNewAudioQueue;
 {
-	assert([NSThread isMainThread]);
 		if (audioBufferQueue) {
 			[[NSNotificationCenter defaultCenter] removeObserver:self];
 			audioBufferQueue.delegate = nil;
@@ -297,6 +298,7 @@
 												 selector:@selector(queueBufferStateChanged:)
 													 name:SCAudioBufferBufferStateChangedNotification
 												   object:audioBufferQueue];
+	NSParameterAssert([NSThread isMainThread]);
 }
 
 - (void)_fetchNextData;
@@ -420,7 +422,7 @@
 #pragma mark SCAudioFileStreamParserDelegate
 - (void)audioFileStreamParserIsReadyToProducePackages:(SCAudioFileStreamParser *)fileStreamParser;
 {
-	assert([NSThread isMainThread]);
+	NSParameterAssert([NSThread isMainThread]);
 	if (!audioBufferQueue) {
 		[self _createNewAudioQueue];
 	} else {
@@ -432,7 +434,7 @@
 			  parsedAudioData:(NSData *)data
 		   packetDescriptions:(SCAudioStreamPacketDescriptions *)packetDescriptions;
 {
-	assert([NSThread isMainThread]);
+	NSParameterAssert([NSThread isMainThread]);
 	[audioBufferQueue enqueueData:data
 		   withPacketDescriptions:packetDescriptions
 					  endOfStream:(loadedEOF && reachedEOF)];// && !fileStreamParser.hasBytesToParse];
