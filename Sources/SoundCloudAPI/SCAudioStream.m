@@ -35,6 +35,7 @@
 #define SCAudioStream_HTTPStreamContext		@"stream"
 
 
+NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamHeadphonesUnpluggedNotification";
 
 
 @interface SCAudioStream () <SCAudioFileStreamParserDelegate, SCAudioBufferQueueDelegate, NXOAuth2ConnectionDelegate>
@@ -240,6 +241,10 @@
 
 - (void)_bufferFromCurrentStreamOffset;
 {
+	if (connection != nil) {
+		return;
+	}
+	
 	NSParameterAssert([NSThread isMainThread]);
 	NSParameterAssert(streamLength >= 0);
 	long long rangeEnd = currentStreamOffset + kHTTPRangeChunkChunkSize;
@@ -298,6 +303,10 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(queueBufferStateChanged:)
 												 name:SCAudioBufferBufferStateChangedNotification
+											   object:audioBufferQueue];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(didUnpluggHeadphones:)
+												 name:SCAudioRouteDidUnpluggHeadphonesNotification
 											   object:audioBufferQueue];
 }
 
@@ -486,6 +495,12 @@
 	} else {
 		self.bufferState = SCAudioStreamBufferState_NotBuffering;
 	}
+}
+
+- (void)didUnpluggHeadphones:(NSNotification *)notification;
+{
+	[self pause];
+	[[NSNotificationCenter defaultCenter] postNotificationName:SCAudioStreamHeadphonesUnpluggedNotification object:self];
 }
 
 

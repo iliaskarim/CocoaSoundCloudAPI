@@ -31,6 +31,8 @@
 #define kHTTPRangeChunkChunkSize	(128 * 1024)
 
 
+extern NSString * const SCAudioStreamHeadphonesUnpluggedNotification;
+
 @class SCSoundCloudAPIAuthentication;
 @class SCAudioFileStreamParser, SCAudioBufferQueue, SCAudioStreamDataFetcher;
 @protocol SCAudioFileStreamParserDelegate, SCAudioBufferQueueDelegate;

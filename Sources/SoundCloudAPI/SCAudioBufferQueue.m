@@ -49,7 +49,7 @@ NSString * const SCAudioBufferBufferStateChangedNotification = @"SCAudioBufferBu
 
 - (void)audioQueueReadyToReuseBuffer;
 
-- (void)audioSessionRouteChangedWithChangeDict:(NSDictionary *)routeChangeDictionary;
+- (void)audioSessionRouteChangedWithChangeDict:(NSDictionary *)routeChangeDictionary;	// TODO: move to a seperate audio session controller
 @end
 
 
@@ -89,6 +89,7 @@ void SCQueuePropertyListenerProc(void *clientData,
 
 #if TARGET_OS_IPHONE
 // invoked by the audio session whenever its route changes
+// TODO: move to a seperate audio session controller
 void SCAudioRouteChangedCallback(void *clientData,
 								 AudioSessionPropertyID propertyID,
 								 UInt32 propertySize,
@@ -123,6 +124,7 @@ void SCAudioRouteChangedCallback(void *clientData,
 		OSStatus err = noErr;
 #if TARGET_OS_IPHONE
 		// setting autio session category yo media playback
+		// TODO: move to a seperate audio session controller
 		AudioSessionInitialize(NULL, NULL, NULL, NULL);
 		
 		UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;
@@ -365,7 +367,7 @@ void SCAudioRouteChangedCallback(void *clientData,
 	// kAudioSessionRouteChangeReason_OldDeviceUnavailable - headphone have been unplugged
 	if ([changeReason intValue] == kAudioSessionRouteChangeReason_OldDeviceUnavailable
 		&& [oldDevice isEqualToString:@"Headphone"]) {
-		[self pause];
+		[[NSNotificationCenter defaultCenter] postNotificationName:SCAudioRouteDidUnpluggHeadphonesNotification object:self];
 	}
 }
 #endif

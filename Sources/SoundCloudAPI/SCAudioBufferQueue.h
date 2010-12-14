@@ -41,6 +41,7 @@ typedef enum {
 
 extern NSString * const SCAudioBufferPlayStateChangedNotification;
 extern NSString * const SCAudioBufferBufferStateChangedNotification;
+extern NSString * const SCAudioRouteDidUnpluggHeadphonesNotification;
 
 @interface SCAudioBufferQueue : NSObject {
 @private
