@@ -28,6 +28,7 @@
 
 NSString * const SCAudioBufferPlayStateChangedNotification = @"SCAudioBufferPlayStateChangedNotification";
 NSString * const SCAudioBufferBufferStateChangedNotification = @"SCAudioBufferBufferStateChangedNotification";
+NSString * const SCAudioRouteDidUnpluggHeadphonesNotification = @"SCAudioRouteDidUnpluggHeadphonesNotification";
 
 
 @interface SCAudioBufferQueue (Private)
