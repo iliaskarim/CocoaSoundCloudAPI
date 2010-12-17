@@ -25,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		94392B8612BB79CF002FF0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9439291F12BB7804002FF0B3;
+			remoteInfo = "SoundCloudAPI for iPhone";
+		};
 		D3138C970F55AEB4002215C1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
@@ -32,33 +39,12 @@
 			remoteGlobalIDString = D396C70D0F4C422400DF5CA4;
 			remoteInfo = "SoundCloudAPI for Mac";
 		};
-		D35525FE0F4D7C130074030D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D3FC21010F4C7BF600DFB493;
-			remoteInfo = "SoundCloudAPI for iPhone Device and Simulator";
-		};
 		D3FC1FF70F4C515700DFB493 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D396C70E0F4C422400DF5CA4;
 			remoteInfo = "SoundCloudAPI for Mac";
-		};
-		D3FC1FF90F4C515700DFB493 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D396C7870F4C439600DF5CA4;
-			remoteInfo = "SoundCloudAPI for iPhone Device";
-		};
-		D3FC1FFB0F4C515700DFB493 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3FC1FED0F4C515700DFB493 /* SoundCloudAPI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D396C78E0F4C43A700DF5CA4;
-			remoteInfo = "SoundCloudAPI for iPhone Simulator";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -230,9 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				D3FC1FF80F4C515700DFB493 /* SoundCloudAPI.framework */,
-				D3FC1FFA0F4C515700DFB493 /* libSoundCloudAPI dev.a */,
-				D3FC1FFC0F4C515700DFB493 /* libSoundCloudAPI sim.a */,
-				D35525FF0F4D7C130074030D /* libSoundCloudAPI.a */,
+				94392B8712BB79CF002FF0B3 /* libSoundCloudAPI.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,7 +251,14 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MacTestApp" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* MacTestApp */;
 			projectDirPath = "";
 			projectReferences = (
@@ -284,11 +275,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		D35525FF0F4D7C130074030D /* libSoundCloudAPI.a */ = {
+		94392B8712BB79CF002FF0B3 /* libSoundCloudAPI.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libSoundCloudAPI.a;
-			remoteRef = D35525FE0F4D7C130074030D /* PBXContainerItemProxy */;
+			remoteRef = 94392B8612BB79CF002FF0B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D3FC1FF80F4C515700DFB493 /* SoundCloudAPI.framework */ = {
@@ -296,20 +287,6 @@
 			fileType = wrapper.framework;
 			path = SoundCloudAPI.framework;
 			remoteRef = D3FC1FF70F4C515700DFB493 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D3FC1FFA0F4C515700DFB493 /* libSoundCloudAPI dev.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libSoundCloudAPI dev.a";
-			remoteRef = D3FC1FF90F4C515700DFB493 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D3FC1FFC0F4C515700DFB493 /* libSoundCloudAPI sim.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libSoundCloudAPI sim.a";
-			remoteRef = D3FC1FFB0F4C515700DFB493 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
