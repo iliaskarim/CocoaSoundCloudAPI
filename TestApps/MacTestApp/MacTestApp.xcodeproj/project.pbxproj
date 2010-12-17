@@ -380,10 +380,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../SoundCloudFramework/build/Debug\"",
-					"\"$(SRCROOT)/../../../../../../Library/Frameworks\"",
-					"\"$(SRCROOT)/../../SoundCloudFramework/build/Release\"",
-					"\"$(SRCROOT)/../../SoundCloudAPI/build/Release\"",
+					"\"$(SRCROOT)/../../SoundCloudAPI/build/Debug\"",
 					"\"$(SRCROOT)/../../SoundCloudAPI/build\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -406,7 +403,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../../../../Library/Frameworks\"",
 					"\"$(SRCROOT)/../../SoundCloudAPI/build/Release\"",
 					"\"$(SRCROOT)/../../SoundCloudAPI/build\"",
 				);
