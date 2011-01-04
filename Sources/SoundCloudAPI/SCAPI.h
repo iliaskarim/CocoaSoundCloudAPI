@@ -27,5 +27,3 @@
 #if TARGET_OS_IPHONE
 #import "SCLoginViewController.h"
 #endif
-
-#import "SCAudioStream.h"
