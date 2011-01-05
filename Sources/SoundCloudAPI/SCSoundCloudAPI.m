@@ -32,6 +32,8 @@
 
 #import "NSString+SoundCloudAPI.h"
 
+#import "SCSoundCloudAPI-Private.h"
+
 #import "SCSoundCloudAPI.h"
 
 
@@ -281,4 +283,18 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 
 @end
+
+
+#pragma mark -
+/****************** PRIVATE *****************/
+
+@implementation SCSoundCloudAPI (Private)
+
+- (SCSoundCloudAPIAuthentication *)authentication;
+{
+	return authentication;
+}
+
+@end
+
 
