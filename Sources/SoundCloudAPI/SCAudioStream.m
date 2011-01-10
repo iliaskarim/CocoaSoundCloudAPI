@@ -227,9 +227,9 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 	NSParameterAssert(connection == nil);
 	
 	// gathering initial information
-	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
-																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																 timeoutInterval:kHTTPConnectionTimeout] autorelease];
+	NXOAuth2URLRequest *headRequest = [[[NXOAuth2URLRequest alloc] initWithURL:URL
+																   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+															   timeoutInterval:kHTTPConnectionTimeout] autorelease];
 	[headRequest setHTTPMethod:@"HEAD"];
 	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
 	[headRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
@@ -264,9 +264,9 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 	
 	NSString *rangeString = [NSString stringWithFormat:@"bytes=%lld-%lld", currentStreamOffset, (rangeEnd - 1)];
 	
-	NSMutableURLRequest *streamRequest = [[[NSMutableURLRequest alloc] initWithURL:(redirectURL) ? redirectURL : URL
-																	   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																   timeoutInterval:kHTTPConnectionTimeout] autorelease];
+	NXOAuth2URLRequest *streamRequest = [[[NXOAuth2URLRequest alloc] initWithURL:(redirectURL) ? redirectURL : URL
+																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+																 timeoutInterval:kHTTPConnectionTimeout] autorelease];
 	[streamRequest setHTTPMethod:@"GET"];
 	[streamRequest addValue:rangeString
 		 forHTTPHeaderField:@"Range"];
