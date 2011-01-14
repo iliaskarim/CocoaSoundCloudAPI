@@ -198,6 +198,14 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 
 - (void)play;
 {
+	if (streamLength < 0) {
+		[self _sendHeadRequest];
+		[self performSelector:@selector(play)
+				   withObject:nil
+				   afterDelay:0.5];
+		return;
+	}
+	
 	if (self.playState == SCAudioStreamState_Stopped) {
 		[self seekToMillisecond:0 startPlaying:YES];
 	}
@@ -215,6 +223,7 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 {
 	if (!audioBufferQueue) {
 		[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(play) object:nil];
+		self.playState = SCAudioStreamState_Paused;
 		return;
 	}
 	[audioBufferQueue pause];
@@ -224,7 +233,7 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 #pragma mark Privates
 - (void)_sendHeadRequest;
 {
-	NSParameterAssert(connection == nil);
+	if (connection) return;
 	
 	// gathering initial information
 	NXOAuth2URLRequest *headRequest = [[[NXOAuth2URLRequest alloc] initWithURL:URL
@@ -388,10 +397,6 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 	NSAssert(fetcher == connection, @"invalid state");
 	
 	currentConnectionStillToFetch = connection.expectedContentLength;
-
-	if (connection.statusCode == 403) {
-		[redirectURL release]; redirectURL = nil;
-	}
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)fetcher didFailWithError:(NSError *)error;
@@ -399,26 +404,32 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 	NSAssert([NSThread isMainThread], @"invalid thread");
 	NSAssert(fetcher == connection, @"invalid state");
 	
-	[redirectURL release]; redirectURL = nil;
-	
-	id context = [connection.context retain];
+	id context = [[connection.context retain] autorelease];
 	NSInteger statusCode = connection.statusCode;
 	
 	[connection release]; connection = nil;
 	
+	if (statusCode == 404 ||
+		statusCode == 401 ||
+		(statusCode == 403 && !redirectURL)) {
+		[redirectURL release]; redirectURL = nil;
+		[self pause];
+		return;
+	}
+	
 	if ([context isEqualToString:SCAudioStream_HTTPHeadContext]) {
 		[self performSelector:@selector(_sendHeadRequest) withObject:nil afterDelay:5.0];
+		
 	} else if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
 		NSTimeInterval retryDelay = 5.0;
 		if (statusCode == 403) {
 			// decrease timout if redirectURL timed out
+			[redirectURL release]; redirectURL = nil;
 			retryDelay = 0.0;
 		}
 		
 		[self performSelector:@selector(_bufferFromCurrentStreamOffset) withObject:nil afterDelay:retryDelay];
 	}
-	
-	[context release];
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveRedirectToURL:(NSURL *)aRedirectURL;
