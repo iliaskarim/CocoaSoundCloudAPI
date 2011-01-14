@@ -32,6 +32,7 @@
 
 
 extern NSString * const SCAudioStreamHeadphonesUnpluggedNotification;
+extern NSString * const SCAudioStreamDidBecomeUnavailableNotification;
 
 @class SCSoundCloudAPIAuthentication;
 @class SCAudioFileStreamParser, SCAudioBufferQueue, SCAudioStreamDataFetcher;
@@ -94,6 +95,7 @@ typedef enum {
 @property (readonly) NSUInteger playPosition;	// in milliseconds // not observable
 @property (readonly) float bufferingProgress;	// not observable
 @property (readwrite, assign) float volume;
+@property (readonly) NSURL *URL;
 
 - (id)initWithURL:(NSURL *)aURL authentication:(SCSoundCloudAPIAuthentication *)apiAuthentication;
 

@@ -36,6 +36,7 @@
 
 
 NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamHeadphonesUnpluggedNotification";
+NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStreamDidBecomeUnavailableNotification";
 
 
 @interface SCAudioStream () <SCAudioFileStreamParserDelegate, SCAudioBufferQueueDelegate, NXOAuth2ConnectionDelegate>
@@ -101,6 +102,7 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 #pragma mark Accessors
 @synthesize playState, bufferState;
 @synthesize volume;
+@synthesize URL;
 
 - (NSUInteger)playPosition;
 {
@@ -413,6 +415,7 @@ NSString * const SCAudioStreamHeadphonesUnpluggedNotification = @"SCAudioStreamH
 		statusCode == 401 ||
 		(statusCode == 403 && !redirectURL)) {
 		[redirectURL release]; redirectURL = nil;
+		[[NSNotificationCenter defaultCenter] postNotificationName:SCAudioStreamDidBecomeUnavailableNotification object:self];
 		[self pause];
 		return;
 	}
