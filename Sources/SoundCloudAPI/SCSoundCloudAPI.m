@@ -39,9 +39,9 @@
 
 @interface SCSoundCloudAPI () <NXOAuth2ConnectionDelegate>
 - (NSString *)_responseTypeFromEnum:(SCResponseFormat)responseFormat;
-- (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
-                                onResource:(NSString *)resource
-                            withParameters:(NSDictionary *)parameters;
+- (NXOAuth2URLRequest *)_requestForMethod:(NSString *)httpMethod
+							   onResource:(NSString *)resource
+						   withParameters:(NSDictionary *)parameters;
 
 // private initializer used for NSCopying
 - (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)aDelegate
@@ -132,9 +132,9 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	}	
 }
 
-- (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
-                                onResource:(NSString *)resource
-                            withParameters:(NSDictionary *)parameters;
+- (NXOAuth2URLRequest *)_requestForMethod:(NSString *)httpMethod
+							   onResource:(NSString *)resource
+						   withParameters:(NSDictionary *)parameters;
 {
     if (!authentication.configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
@@ -142,22 +142,11 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	}
 	
 	NSURL *url = [NSURL URLWithString:resource relativeToURL:authentication.configuration.apiBaseURL];
-	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
+	NXOAuth2URLRequest *request = [[[NXOAuth2URLRequest alloc] initWithURL:url] autorelease];
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
-	if ((![[httpMethod uppercaseString] isEqualToString:@"POST"]
-		 && ![[httpMethod uppercaseString] isEqualToString:@"PUT"])
-		|| parameters.count == 0) {
-		[request nxoauth2_setParameters:parameters];
-	} else {
-		NXOAuth2PostBodyStream *postStream = [[NXOAuth2PostBodyStream alloc] initWithParameters:parameters];
-		[request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", [postStream boundary]] forHTTPHeaderField: @"Content-Type"];
-		[request setValue:[NSString stringWithFormat:@"%d", [postStream length]] forHTTPHeaderField:@"Content-Length"];
-		
-		[request setHTTPBodyStream:postStream];
-		[postStream release];
-	}
+	[request setParameters:parameters];
     return request;
 }
 
@@ -169,7 +158,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 			context:(id)context
 		   userInfo:(id)userInfo;
 {
-	NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
+	NXOAuth2URLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
 	
 	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:authentication.oauthClient delegate:self];
 	connection.context = context;
