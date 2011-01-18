@@ -39,9 +39,8 @@
 
 @interface SCSoundCloudAPI () <NXOAuth2ConnectionDelegate>
 - (NSString *)_responseTypeFromEnum:(SCResponseFormat)responseFormat;
-- (NXOAuth2URLRequest *)_requestForMethod:(NSString *)httpMethod
-							   onResource:(NSString *)resource
-						   withParameters:(NSDictionary *)parameters;
+- (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
+								onResource:(NSString *)resource;
 
 // private initializer used for NSCopying
 - (id)initWithDelegate:(id<SCSoundCloudAPIDelegate>)aDelegate
@@ -132,9 +131,8 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	}	
 }
 
-- (NXOAuth2URLRequest *)_requestForMethod:(NSString *)httpMethod
-							   onResource:(NSString *)resource
-						   withParameters:(NSDictionary *)parameters;
+- (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
+								onResource:(NSString *)resource;
 {
     if (!authentication.configuration.apiBaseURL) {
 		NSLog(@"API is not configured with base URL");
@@ -142,11 +140,10 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	}
 	
 	NSURL *url = [NSURL URLWithString:resource relativeToURL:authentication.configuration.apiBaseURL];
-	NXOAuth2URLRequest *request = [[[NXOAuth2URLRequest alloc] initWithURL:url] autorelease];
+	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	[request addValue:[self _responseTypeFromEnum:self.responseFormat] forHTTPHeaderField:@"Accept"];
 	
 	[request setHTTPMethod:[httpMethod uppercaseString]];
-	[request setParameters:parameters];
     return request;
 }
 
@@ -158,9 +155,12 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 			context:(id)context
 		   userInfo:(id)userInfo;
 {
-	NXOAuth2URLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
+	NSMutableURLRequest *request = [self _requestForMethod:httpMethod onResource:resource];
 	
-	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request oauthClient:authentication.oauthClient delegate:self];
+	NXOAuth2Connection *connection = [[NXOAuth2Connection alloc] initWithRequest:request
+															   requestParameters:parameters
+																	 oauthClient:authentication.oauthClient
+																		delegate:self];
 	connection.context = context;
 	connection.userInfo = userInfo;
 	

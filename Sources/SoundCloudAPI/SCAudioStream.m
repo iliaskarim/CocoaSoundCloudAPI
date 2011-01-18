@@ -238,13 +238,14 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	if (connection) return;
 	
 	// gathering initial information
-	NXOAuth2URLRequest *headRequest = [[[NXOAuth2URLRequest alloc] initWithURL:URL
-																   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-															   timeoutInterval:kHTTPConnectionTimeout] autorelease];
+	NSMutableURLRequest *headRequest = [[[NSMutableURLRequest alloc] initWithURL:URL
+																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+																 timeoutInterval:kHTTPConnectionTimeout] autorelease];
 	[headRequest setHTTPMethod:@"HEAD"];
 	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
 	[headRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
 	connection = [[NXOAuth2Connection alloc] initWithRequest:headRequest
+										   requestParameters:nil
 												 oauthClient:authentication.oauthClient
 													delegate:self];
 	connection.context = SCAudioStream_HTTPHeadContext;
@@ -275,9 +276,9 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	
 	NSString *rangeString = [NSString stringWithFormat:@"bytes=%lld-%lld", currentStreamOffset, (rangeEnd - 1)];
 	
-	NXOAuth2URLRequest *streamRequest = [[[NXOAuth2URLRequest alloc] initWithURL:(redirectURL) ? redirectURL : URL
-																	 cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-																 timeoutInterval:kHTTPConnectionTimeout] autorelease];
+	NSMutableURLRequest *streamRequest = [[[NSMutableURLRequest alloc] initWithURL:(redirectURL) ? redirectURL : URL
+																	   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+																   timeoutInterval:kHTTPConnectionTimeout] autorelease];
 	[streamRequest setHTTPMethod:@"GET"];
 	[streamRequest addValue:rangeString
 		 forHTTPHeaderField:@"Range"];
@@ -285,6 +286,7 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 //		 forHTTPHeaderField:@"X-DEBUG"];
 	[streamRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
 	connection = [[NXOAuth2Connection alloc] initWithRequest:streamRequest
+										   requestParameters:nil
 												 oauthClient:authentication.oauthClient
 													delegate:self];
 	connection.context = SCAudioStream_HTTPStreamContext;
