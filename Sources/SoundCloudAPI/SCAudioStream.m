@@ -58,6 +58,8 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 		return nil;
 	
 	if (self = [super init]) {
+		retryDelay = 0;
+		
 		playPosition = 0;
 		currentStreamOffset = 0;
 		currentPackage = 0;
@@ -287,7 +289,7 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	[streamRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
 	connection = [[NXOAuth2Connection alloc] initWithRequest:streamRequest
 										   requestParameters:nil
-												 oauthClient:authentication.oauthClient
+												 oauthClient:(redirectURL) ? nil : authentication.oauthClient
 													delegate:self];
 	connection.context = SCAudioStream_HTTPStreamContext;
 	
@@ -393,6 +395,8 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	}
 	
 	[context release];
+	
+	retryDelay = 0;
 }
 
 - (void)oauthConnection:(NXOAuth2Connection *)fetcher didReceiveResponse:(NSURLResponse *)response;
@@ -413,27 +417,32 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	
 	[connection release]; connection = nil;
 	
-	if (statusCode == 404 ||
-		statusCode == 401 ||
-		(statusCode == 403 && !redirectURL)) {
-		[redirectURL release]; redirectURL = nil;
-		[[NSNotificationCenter defaultCenter] postNotificationName:SCAudioStreamDidBecomeUnavailableNotification object:self];
-		[self pause];
-		return;
-	}
+	retryDelay += 1;
 	
-	if ([context isEqualToString:SCAudioStream_HTTPHeadContext]) {
-		[self performSelector:@selector(_sendHeadRequest) withObject:nil afterDelay:5.0];
+	// redirect url did timeout
+	if (redirectURL && statusCode == 403) {
+		[redirectURL release]; redirectURL = nil;
+	
+		if ([context isEqualToString:SCAudioStream_HTTPHeadContext]) {
+			[self performSelector:@selector(_sendHeadRequest) withObject:nil afterDelay:retryDelay];
 		
-	} else if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
-		NSTimeInterval retryDelay = 5.0;
-		if (statusCode == 403) {
-			// decrease timout if redirectURL timed out
-			[redirectURL release]; redirectURL = nil;
-			retryDelay = 0.0;
+		} else if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
+			[self performSelector:@selector(_bufferFromCurrentStreamOffset) withObject:nil afterDelay:retryDelay];
 		}
 		
-		[self performSelector:@selector(_bufferFromCurrentStreamOffset) withObject:nil afterDelay:retryDelay];
+	} else if (statusCode > 400) {
+		
+		// always forget redirectURL
+		[redirectURL release]; redirectURL = nil;
+		
+		// tell the world if Not Found or Gone
+		if (statusCode == 404 ||
+			statusCode == 410) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:SCAudioStreamDidBecomeUnavailableNotification object:self];
+		}
+		
+		// pause player
+		[self pause];
 	}
 }
 

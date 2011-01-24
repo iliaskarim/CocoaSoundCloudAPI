@@ -89,6 +89,7 @@ typedef enum {
 	
 	
 	NXOAuth2Connection				*connection;
+	NSUInteger						retryDelay;
 }
 @property (readonly) SCAudioStreamState playState;			// observable
 @property (readonly) SCAudioStreamBufferState bufferState;	// observable
