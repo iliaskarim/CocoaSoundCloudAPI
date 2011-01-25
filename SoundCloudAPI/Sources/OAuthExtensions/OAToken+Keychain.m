@@ -120,11 +120,13 @@
     
     status = SecKeychainItemCopyContent(item, NULL, &list, &length, (void **)&password);
     if (status == noErr) {
-        self.key = [[[NSString alloc] initWithCString:list.attr[0].data
-											   length:list.attr[0].length] autorelease];
+        self.key = [[[NSString alloc] initWithBytes:list.attr[0].data
+											 length:list.attr[0].length
+										   encoding:NSUTF8StringEncoding] autorelease];
         if (password != NULL) {
-			NSString *passwordString = [[[NSString alloc] initWithCString:password
-																   length:length] autorelease];
+			NSString *passwordString = [[[NSString alloc] initWithBytes:password
+																 length:length
+															   encoding:NSUTF8StringEncoding] autorelease];
 			NSArray *passwordComponents = [passwordString componentsSeparatedByString:@"&"];
 			self.secret = [passwordComponents objectAtIndex:0];
 			if (passwordComponents.count >= 2) { 
