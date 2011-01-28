@@ -437,6 +437,7 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 		
 		// tell the world if Not Found or Gone
 		if (statusCode == 404 ||
+			statusCode == 403 ||
 			statusCode == 410) {
 			[[NSNotificationCenter defaultCenter] postNotificationName:SCAudioStreamDidBecomeUnavailableNotification object:self];
 		}
