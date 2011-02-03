@@ -26,7 +26,7 @@ Getting the users connections
 
 For getting the user's connections, use the connections resource at [`/me/connections.json`](https://github.com/soundcloud/api/wiki/10.7-Resources%3A-connections). With the API Wrapper, it looks like this:
 
-	[api performMethod:@"GET" onResource:@"me/connections.json" withParameters:nil context:@"shareConnections" userInfo:nil];
+	[api performMethod:@"GET" onResource:@"me/connections.json" withParameters:nil context:nil userInfo:nil];
 
 What this returns is a JSON array of connections which looks like this:
 
@@ -53,14 +53,14 @@ The *Foursquare* sharing needs special treatment, though: If the user has not ch
 
 When the user is done entering metadata and setting the sharing options, you should end up with an array of connections that the user has chosen.
 
-In case of *private* sharing, provide a way to specify an array of email adresses.
+In case of *private* sharing, provide a way to specify an array of email adresses. SoundCloud will take care of sending the mail, and shares internally if the user if he already has a SoundCloud account!
 
 Upload the file
 ---------------
 
 One all the metadata is in place, the file can be uploaded. For this, we use the API wrapper again:
 
-	[api performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:@"recordingUpload" userInfo:nil]
+	[api performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:nil userInfo:nil]
 
 You can get more info about this call and its parameters from the [API documentation for tracks](https://github.com/soundcloud/api/wiki/10.2-Resources%3A-tracks-continued).
 
@@ -79,10 +79,10 @@ The parameters dictionary can look something like this:
 If you don't supply a `track[post_to][][id]` parameter, SoundCloud will use the default settings on the website. So to share to nobody, use this:
 
 	[NSDictionary dictionaryWithObjectsAndKeys:
-	…
-	@"", @"track[post_to][]",
-	…
-	nil];
+		…
+		@"", @"track[post_to][]",
+		…
+		nil];
 
 But how to supply geo coordinates and how to set the foursquare venue ID? For this we use machine tags that get into the array you send with `track[tag_list]`. The following tags are currently supported:
 
@@ -97,7 +97,7 @@ Bonus: Making new connections
 
 So what about users that have not yet connected their favorite services to SoundCloud? Can they do it from within your app? Yes, they can, and it's quite easy.
 
-You just need to send a POST with the type of the connection and you get back an URL:
+You just need to send a `POST` with the type of the connection and you get back an URL:
 
 	 [api performMethod:@"POST"
 	         onResource:@"connections"
@@ -116,6 +116,6 @@ The types that are currently supported are:
 - `foursquare`
 - `myspace`
 
-The URL you get back in the JSON should be opened in a WebView. Listen for your callback URL in `-webView:shouldStartLoadWithRequest:navigationType:`. If you get it, close the webView and reload the connections. Voilá, your new connections are there and ready to use!
+The URL you get back in the JSON should be opened in a WebView. Listen for your callback URL in `-webView:shouldStartLoadWithRequest:navigationType:`. If you get it, close the webView and reload the connections. Voilà, your new connections are there and ready to use!
 
 That's it! And when you're done, don't forget to promote your app in the [SoundCLoud App Gallery](http://soundcloud.com/apps)!
