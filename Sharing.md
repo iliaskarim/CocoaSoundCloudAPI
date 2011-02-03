@@ -17,7 +17,7 @@ Here's what you need to do for sharing:
 - Getting the users connections
 - Provide UI for choosing connections (public sharing) or mail addresses (private sharing)
 - Upload the file
-- Establishing new connections (optional)
+- Establish new connections (optional)
 
 Depending on the privacy settings of your upload, the task is a little bit different: You want to share public tracks on social networks, and private uploads via mail.
 
@@ -40,12 +40,12 @@ What this returns is a JSON array of connections which looks like this:
 		"uri":"https://api.soundcloud.com/connections/12345"
 	}, …]
 
-Use a JSON library to transform this into Ojbective-C structures. We recommend to do this as soon as possible, preferrably directly after the start of the App, so the user does not have to wait for connections to load. You might even want to store this info, but make sure to update it it on use, because not only your app might change it!
+Use a [JSON library](http://code.google.com/p/json-framework/) to transform this into Ojbective-C structures. We recommend to do this as soon as possible, preferrably directly after the start of the App, so the user does not have to wait for connections to load. You might even want to store this info, but make sure to update it it on use, because not only your app might change it!
 
 Provide a UI for the User's connections
 ---------------------------------------
 
-In your upload screen for *public* files, we recommend using a table to display the connections. You can use `UISwitch` controls als AccessoryViews of your `UITableCells`.
+In your upload screen for *public* files, we recommend using a table to display the connections. You can use `UISwitch` controls as AccessoryViews of your `UITableCell`s.
 
 When publishing a file, it is important to respect the default sharing settings that have been made on the SoundCloud website. The `post_publish` field represents this and should be used as the default setting for the switch.
 
@@ -53,7 +53,7 @@ The *Foursquare* sharing needs special treatment, though: If the user has not ch
 
 When the user is done entering metadata and setting the sharing options, you should end up with an array of connections that the user has chosen.
 
-In case of *private* sharing, provide a way to specify an array of email adresses. SoundCloud will take care of sending the mail, and shares internally if the user if he already has a SoundCloud account!
+In case of *private* sharing, provide a way to specify an array of email adresses. SoundCloud will take care of sending the mail, and shares internally if the user already has a SoundCloud account!
 
 Upload the file
 ---------------
@@ -84,7 +84,7 @@ If you don't supply a `track[post_to][][id]` parameter, SoundCloud will use the 
 		…
 		nil];
 
-But how to supply geo coordinates and how to set the foursquare venue ID? For this we use machine tags that get into the array you send with `track[tag_list]`. The following tags are currently supported:
+But how to supply geo coordinates and how to set the Foursquare venue ID? For this we use machine tags that get into the array you send with `track[tag_list]`. The following tags are currently supported:
 
 - `geo:lat=12.34567`
 - `geo:lon=56.67890`
@@ -111,11 +111,11 @@ You just need to send a `POST` with the type of the connection and you get back 
 
 The types that are currently supported are:
 
-- `facebook`
 - `twitter`
+- `facebook_profile` (this will also connect Facebook pages!)
 - `foursquare`
 - `myspace`
 
 The URL you get back in the JSON should be opened in a WebView. Listen for your callback URL in `-webView:shouldStartLoadWithRequest:navigationType:`. If you get it, close the webView and reload the connections. Voilà, your new connections are there and ready to use!
 
-That's it! And when you're done, don't forget to promote your app in the [SoundCLoud App Gallery](http://soundcloud.com/apps)!
+That's it! And when you're done, don't forget to promote your app in the [SoundCloud App Gallery](http://soundcloud.com/apps)!
