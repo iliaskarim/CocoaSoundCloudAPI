@@ -67,14 +67,14 @@ You can get more info about this call and its parameters from the [API documenta
 The parameters dictionary can look something like this:
 
 	[NSDictionary dictionaryWithObjectsAndKeys:
-	fileURL, track[assetdata], //a file URL
-	title, track[title],
-	(private) ? @"private" : @"public", @"track[sharing]", //a BOOL
-	@"recording", @"track[type]",
-	sharingConnections, @"track[post_to][][id]", //array of id strings
-	tags, track[tag_list], //also an array of strings
-	…
-	nil];
+		fileURL, track[assetdata], //a file URL
+		title, track[title],
+		(private) ? @"private" : @"public", @"track[sharing]", //a BOOL
+		@"recording", @"track[type]",
+		sharingConnections, @"track[post_to][][id]", //array of id strings
+		tags, track[tag_list], //also an array of strings
+		…
+		nil];
 
 If you don't supply a `track[post_to][][id]` parameter, SoundCloud will use the default settings on the website. So to share to nobody, use this:
 
