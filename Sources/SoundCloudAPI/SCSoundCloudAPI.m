@@ -179,10 +179,11 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
             context:(id)context
 		   userInfo:(id)userInfo;
 {
-    NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource withParameters:parameters];
+    NSURLRequest *request = [self _requestForMethod:httpMethod onResource:resource];
     
 	__block NXOAuth2Connection *connection = nil;
     connection = [[NXOAuth2Connection alloc] initWithRequest:request
+																					 requestParameters:parameters
                                                  oauthClient:authentication.oauthClient
                                                       finish:^(void){
                                                           NSLog(@"Connection: %@", connection);
