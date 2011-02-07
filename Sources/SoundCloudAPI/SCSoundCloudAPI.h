@@ -75,7 +75,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 #if NX_BLOCKS_AVAILABLE && NS_BLOCKS_AVAILABLE
 
-#warning Compiling SoundCloud API with Blocks. This is an unsupported feature.
+// WARNING: Compiling SoundCloud API with Blocks. This is an unsupported feature.
 
 - (id)performMethod:(NSString *)httpMethod
          onResource:(NSString *)resource
