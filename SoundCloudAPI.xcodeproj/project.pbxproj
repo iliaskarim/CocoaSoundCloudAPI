@@ -23,7 +23,7 @@
 		94535FA7123FB33500BD668A /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94535FA8123FB33500BD668A /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94535FA9123FB33500BD668A /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		94535FAA123FB33500BD668A /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */; };
+		94535FAA123FB33500BD668A /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		94535FAB123FB33500BD668A /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94535FAC123FB33500BD668A /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94535FAD123FB33500BD668A /* SCSoundCloudAPIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
