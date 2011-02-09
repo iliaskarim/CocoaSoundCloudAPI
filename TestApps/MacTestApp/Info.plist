@@ -7,10 +7,10 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>myapp</string>
+				<string>x-wrapper-test</string>
 			</array>
 			<key>CFBundleURLName</key>
-			<string>MyApp</string>
+			<string>SoundCloudWrapperTestApp</string>
 		</dict>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>

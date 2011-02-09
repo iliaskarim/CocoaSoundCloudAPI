@@ -50,30 +50,32 @@
 
 - (void)commonAwake;
 {
-	
+	SCSoundCloudAPIConfiguration *scAPIConfig = nil;
 #ifdef kUseProduction
-	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForProductionWithConsumerKey:kTestAppConsumerKey
-																		  consumerSecret:kTestAppConsumerSecret
-																			 callbackURL:[NSURL URLWithString:kCallbackURL]];
+	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:kTestAppConsumerKey
+																		   consumerSecret:kTestAppConsumerSecret
+																			  callbackURL:[NSURL URLWithString:kCallbackURL]];
 #else
-	scAPIConfig = [[SCSoundCloudAPIConfiguration alloc] initForSandboxWithConsumerKey:kTestAppConsumerKey
-																	   consumerSecret:kTestAppConsumerSecret
-																		  callbackURL:[NSURL URLWithString:kCallbackURL]];
+	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithConsumerKey:kTestAppConsumerKey
+																		consumerSecret:kTestAppConsumerSecret
+																		   callbackURL:[NSURL URLWithString:kCallbackURL]];
 #endif
 	
-	scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:self];
-	[scAPI setDelegate:self];
+	scAPI = [[SCSoundCloudAPI alloc] initWithDelegate:self
+							   authenticationDelegate:self
+									 apiConfiguration:scAPIConfig];
 	[scAPI setResponseFormat:SCResponseFormatJSON];
 	
 	parametersDataSource = [[SCParameterTableDataSource alloc] init];
 	[parametersTableView setDataSource:parametersDataSource];
 	
 	[self _registerMyApp];
+	
+	[scAPI checkAuthentication];
 }	
 
--(void)dealloc;
+- (void)dealloc;
 {
-	[scAPIConfig release];
 	[scAPI release];
 	[parametersDataSource release];
 	[super dealloc];
@@ -90,9 +92,9 @@
 			 andEventID:kAEGetURL];
 	
 	NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
-	OSStatus result = LSSetDefaultHandlerForURLScheme((CFStringRef)@"myapp", (CFStringRef)bundleID);
+	OSStatus result = LSSetDefaultHandlerForURLScheme((CFStringRef)@"x-wrapper-test", (CFStringRef)bundleID);
 	if(result != noErr) {
-		NSLog(@"could not register to \"myapp\" URL scheme");
+		NSLog(@"could not register to \"x-wrapper-test\" URL scheme");
 	}
 }
 
@@ -105,9 +107,7 @@
 	if([urlStr hasPrefix:kCallbackURL]) {
 		NSLog(@"handling oauth callback");
 		NSURL *url = [NSURL URLWithString:urlStr];
-		NSString *verifier = [url valueForQueryParameterKey:@"oauth_verifier"];
-		[scAPI setRequestTokenVerifier:verifier];
-		[scAPI authorizeRequestToken]; 
+		[scAPI handleRedirectURL:url];
 	}
 }
 
@@ -132,7 +132,8 @@
 	[scAPI performMethod:[httpMethodCombo stringValue]
 			  onResource:[resourceField stringValue]
 		  withParameters:[parametersDataSource parameterDictionary]
-				 context:nil];
+				 context:nil
+				userInfo:nil];
 }
 
 - (IBAction)postTest:(id)sender;
@@ -148,7 +149,8 @@
 	[scAPI performMethod:@"POST"
 			  onResource:[resourceField stringValue]
 		  withParameters:parameters
-				 context:nil];
+				 context:nil
+				userInfo:nil];
 	[parameters release];
 }
 
@@ -157,7 +159,8 @@
 	[scAPI performMethod:@"GET"
 			  onResource:@"me/tracks"
 		  withParameters:nil
-				 context:@"deleteMyTracks"];
+				 context:@"deleteMyTracks"
+				userInfo:nil];
 }
 
 - (void)deleteTracks:(NSArray *)tracks;
@@ -166,63 +169,57 @@
 		[scAPI performMethod:@"DELETE"
 				  onResource:[NSString stringWithFormat:@"tracks/%@", [track objectForKey:@"id"]]
 			  withParameters:nil
-					 context:nil];
+					 context:nil
+					userInfo:nil];
 	}
 }
 
 
 #pragma mark request delegates
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didFinishWithData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {
 	[fetchProgressIndicator stopAnimation:nil];
 	[postProgress setDoubleValue:0];
 	
-	NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-	SBJSON *json = [[[SBJSON alloc] init] autorelease];
-	[json setHumanReadable:YES];
-	NSError *error;
-	id object = [json objectWithString:dataStr error:&error];
-	
+	NSString *dataStr = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];	
 	if([context isEqualToString:@"deleteMyTracks"]) {
-		[self deleteTracks:object];
-		[dataStr release];
+		[self deleteTracks:[dataStr JSONValue]];
 		return;
 	}
 	
-	if(object){
-		[dataStr release]; dataStr = [json stringWithObject:object error:&error]; [dataStr retain];
-	}
-	[responseField setString:dataStr];
-	[dataStr release];
+	[responseField setString:[[dataStr JSONValue] description]];
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didFailWithError:(NSError *)error context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;
 {
 	[fetchProgressIndicator stopAnimation:nil];
 	[postProgress setDoubleValue:0];
-	NSString *message = nil;
-	if ([error.domain isEqualToString:SCAPIErrorDomain] && error.code == SCAPIErrorHttpResponseError) {
-		NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
-		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [httpError localizedDescription]];
-	} else {
-		message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
+	if ([[error domain] isEqualToString:NSURLErrorDomain]){
+		if (error.code == NSURLErrorNotConnectedToInternet) {
+			// inform the user and offer him to retry
+			[sendRequestButton setTitle:@"No internet"];
+			[postTestButton setTitle:@"No internet"];
+		}
+	} else if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
+	} else if ([[error domain] isEqualToString:NXOAuth2ErrorDomain]) {
 	}
+	NSString *message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
 	NSLog(@"%@", message);
 	[responseField setString:message];
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {
 	NSLog(@"Did Recieve Data");
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
 {
 	NSLog(@"Did receive Bytes %qu of %qu", loadedBytes, totalBytes);
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
 {
 	NSLog(@"Did send Bytes %qu of %qu", sendBytes, totalBytes);
 	[postProgress setDoubleValue:100 * sendBytes / totalBytes];
@@ -231,44 +228,41 @@
 
 
 #pragma mark SoundCloudAPI authorization delegate
-- (SCSoundCloudAPIConfiguration *)configurationForSoundCloudAPI:(SCSoundCloudAPI *)scAPI;
+
+- (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 {
-	return scAPIConfig;
+	[[NSWorkspace sharedWorkspace] openURL:authorizationURL];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI requestedAuthenticationWithURL:(NSURL *)authURL;
+- (void)soundCloudAPIDidAuthenticate;
 {
-	[[NSWorkspace sharedWorkspace] openURL:authURL];
+	// authenticated
+	[sendRequestButton setEnabled:YES];
+	// not the most elegant way to enable/disable the ui
+	// but this is up to you (the developer of apps) to prove your cocoa skills :)
+	[postTestButton setEnabled:YES];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didChangeAuthenticationStatus:(SCAuthenticationStatus)status;
+- (void)soundCloudAPIDidResetAuthentication;
 {
-	if (status == SCAuthenticationStatusAuthenticated) {
-		// authenticated
-		[sendRequestButton setEnabled:YES];
-		// not the most elegant way to enable/disable the ui
-		// but this is up to you (the developer of apps) to prove your cocoa skills :)
-		[postTestButton setEnabled:YES];
-	} else {
-		[sendRequestButton setEnabled:NO];
-		[postTestButton setEnabled:NO];
-	}
+	[sendRequestButton setEnabled:NO];
+	[postTestButton setEnabled:NO];
 }
 
-- (void)soundCloudAPI:(SCSoundCloudAPI *)_scAPI didEncounterError:(NSError *)error;
+- (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 {
-	if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
-		if ([error code] == SCAPIErrorHttpResponseError) {
-			NSError *httpError = [[error userInfo] objectForKey:SCAPIHttpResponseErrorStatusKey];
-			if (httpError.code == NSURLErrorNotConnectedToInternet) {
-				// inform the user and offer him to retry
-				[sendRequestButton setTitle:@"No internet"];
-				[postTestButton setTitle:@"No internet"];
-			}
-		} else if ([error code] == SCAPIErrorNotAuthenticted) {
-			[_scAPI requestAuthentication];
+	if ([[error domain] isEqualToString:NSURLErrorDomain]){
+		if (error.code == NSURLErrorNotConnectedToInternet) {
+			// inform the user and offer him to retry
+			[sendRequestButton setTitle:@"No internet"];
+			[postTestButton setTitle:@"No internet"];
 		}
+	} else if ([[error domain] isEqualToString:SCAPIErrorDomain]) {
+	} else if ([[error domain] isEqualToString:NXOAuth2ErrorDomain]) {
 	}
+	NSString *message = [NSString stringWithFormat:@"Request finished with Error: \n%@", [error localizedDescription]];
+	NSLog(@"%@", message);
+	[responseField setString:message];
 }
 
 @end

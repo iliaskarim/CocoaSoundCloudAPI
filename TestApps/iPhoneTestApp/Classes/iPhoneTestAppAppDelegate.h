@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ * Copyright 2010 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,7 +21,7 @@
 #import "SCAPI.h"
 
 // define to use production. else use sandbox
-#define kUseProduction
+//#define kUseProduction
 
 #ifdef kUseProduction
 	//Production key & secret
@@ -29,19 +29,22 @@
 	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
 #else
 	//Sandbox key & secret
-	#define kTestAppConsumerKey		@"gAnpKglV95xfMtb64zYAsg"
-	#define kTestAppConsumerSecret	@"cshaWBLTZR2a1PQK3qVwuq4IpjNZcrJN1NhSY8b4vIk"
+	#define kTestAppConsumerKey		@"18a7l4oj7YA3L994boCw"
+	#define kTestAppConsumerSecret	@"GZcAcJzMCRybR1GBuOjG5wEGITnG9cIHBHMkWR4oFk"
 #endif
 
-#define kCallbackURL	@"myapp://oauth"	//remember that the myapp protocol also is set in the info.plist
+#define kCallbackURL	@"x-wrapper-test://oauth"	//remember that the myapp protocol also is set in the info.plist
+
+
+#define appDelegate ((iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate])
 
 @class iPhoneTestAppViewController;
 
 @interface iPhoneTestAppAppDelegate : NSObject <UIApplicationDelegate, SCSoundCloudAPIAuthenticationDelegate> {
     UIWindow *window;
     iPhoneTestAppViewController *viewController;
-	SCSoundCloudAPIConfiguration *scAPIConfig;
-	NSString *oauthVerifier;
+
+	SCSoundCloudAPI *soundCloudAPIMaster;
 	
 	UIAlertView *safariAlertView;
 	NSURL *authURL;
@@ -50,8 +53,8 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet iPhoneTestAppViewController *viewController;
 
-@property (nonatomic, readonly) SCSoundCloudAPIConfiguration *scAPIConfig;
-@property (nonatomic, retain) NSString *oauthVerifier;
+@property (nonatomic, readonly) SCSoundCloudAPI *soundCloudAPIMaster;
+
 
 @end
 

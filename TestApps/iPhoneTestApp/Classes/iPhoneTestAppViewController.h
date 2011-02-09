@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ * Copyright 2010 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,16 +26,16 @@
 	IBOutlet UIButton *postButton;
     IBOutlet UILabel *trackNumberLabel;
     IBOutlet UILabel *usernameLabel;
-
+	
 	SCSoundCloudAPI *scAPI;
+	id uploadConnectionId;
 }
 @property (nonatomic, retain) IBOutlet UIButton *postButton;
 @property (nonatomic, retain) IBOutlet UITextField *trackNameField;
-@property (nonatomic, retain, readonly) SCSoundCloudAPI *scAPI;
 
 - (IBAction)sendRequest:(id)sender;
 
-- (IBAction)requestUserInfo;
+-(void)requestUserInfo;
 
 @end
 

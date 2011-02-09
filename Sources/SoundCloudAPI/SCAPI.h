@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ * Copyright 2010 nxtbgthng for SoundCloud Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,16 +18,14 @@
  * 
  */
 
-#import <Cocoa/Cocoa.h>
+#import "SCAPIErrors.h"
+#import "SCSoundCloudAPI.h"
+#import "SCSoundCloudAPIConfiguration.h"
+#import "SCSoundCloudAPIDelegate.h"
+#import "SCSoundCloudAPIAuthenticationDelegate.h"
 
+#if TARGET_OS_IPHONE
+#import "SCLoginViewController.h"
+#endif
 
-@interface SCParameterTableDataSource : NSObject <NSTableViewDataSource> {
-	NSMutableDictionary *parameterDictionary;
-}
-
-@property (copy,nonatomic) NSDictionary *parameterDictionary;
-
-- (void)addParameterWithKey:(NSString *)inKey value:(NSString *)inValue;
-- (void)removeParametersAtIndexes:(NSIndexSet *)indexes;
-
-@end
+#import "SCAudioStream.h"

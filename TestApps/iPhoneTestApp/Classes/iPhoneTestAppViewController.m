@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
+ * Copyright 2010 Ullrich Schäfer, Gernot Poetsch for SoundCloud Ltd.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,93 +21,57 @@
 #import "iPhoneTestAppViewController.h"
 #import "iPhoneTestAppAppDelegate.h"
 
-#import "JSON.h"
+#import "SCSoundCloudAPI+TestApp.h"
+
+#import "JSON/JSON.h"
+
 
 @interface iPhoneTestAppViewController(private)
 -(void)commonAwake;
--(void)requestUserInfo;
 -(void)updateUserInfoFromData:(NSData *)data;
 @end
+
 
 @implementation iPhoneTestAppViewController
 
 #pragma mark Lifecycle
 
--(id)init;
-{
-	if (self = [super init]) {
-		[self commonAwake];
-	}	
-	return self;
-}
-
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-		[self commonAwake];
-	}
-	return self;
-}
-
 - (void)awakeFromNib;
 {
-	[super awakeFromNib];
-	[self commonAwake];
+	scAPI = [appDelegate.soundCloudAPIMaster copyWithAPIDelegate:self];
 }
 
--(void)commonAwake;
-{
-	if (self.scAPI.status == SCAuthenticationStatusAuthenticated)
-		[self requestUserInfo];
-}
 
--(void)dealloc;
-{
-	[scAPI dealloc];
-	[postButton release];
-	[trackNameField release];
+- (void)dealloc;
+{ 
+	[uploadConnectionId release];
+	[scAPI release];
 	[super dealloc];
 }
 
+
 #pragma mark Accessors
+
 @synthesize postButton, trackNameField;
 
-@dynamic scAPI;
 
-- (SCSoundCloudAPI *)scAPI; // lazy loaded
-{
-	if (!scAPI) {
-		iPhoneTestAppAppDelegate *appDelegate = (iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate];
-		scAPI = [[SCSoundCloudAPI alloc] initWithAuthenticationDelegate:appDelegate tokenVerifier:appDelegate.oauthVerifier];
-		[scAPI setResponseFormat:SCResponseFormatJSON];
-		[scAPI setDelegate:self];
-		//	[scAPI resetAuthentication];  // uncomment to remove tokens from keychain
-	}
-	return scAPI;
-}
-	
 #pragma mark Private
-- (IBAction)requestUserInfo;
+
+- (void)requestUserInfo;
 {
-	[self.scAPI performMethod:@"GET" onResource:@"me" withParameters:nil context:@"userInfo"];
+	[scAPI meWithContext:@"userInfo"];
 }
 
--(void)updateUserInfoFromData:(NSData *)data;
+- (void)updateUserInfoFromData:(NSData *)data;
 {
 	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	
-	SBJSON *json = [[SBJSON alloc] init];
-	NSError *error;
-	id object = [json objectWithString:dataString error:&error];
+	id object = [dataString JSONValue];
 	[dataString release];
-	[json release];
-	if(object) {
-		if([object isKindOfClass:[NSDictionary class]]) {
-			NSDictionary *userInfoDictionary = (NSDictionary *)object;
-			[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
-			[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"track_count"] integerValue]]];
-		}
-	} else {
-		NSLog(@"Error: %@", [error localizedDescription]);
+	if([object isKindOfClass:[NSDictionary class]]) {
+		NSDictionary *userInfoDictionary = (NSDictionary *)object;
+		[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
+		[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"private_tracks_count"] integerValue]]];
 	}
 }
 
@@ -116,17 +80,19 @@
 
 -(IBAction)sendRequest:(id)sender;
 {
-	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-	[parameters setObject:[trackNameField text] forKey:@"track[title]"];
-	[parameters setObject:@"private" forKey:@"track[sharing]"];
-	
 	// sample from http://www.freesound.org/samplesViewSingle.php?id=1375
 	NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"wav"];
 	NSURL *dataURL = [NSURL fileURLWithPath:dataPath];
-	[parameters setObject:dataURL forKey:@"track[asset_data]"];
 	
 	[progresBar setProgress:0];
-	[self.scAPI performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:@"upload"];
+	if (uploadConnectionId) {
+		[scAPI cancelConnection:uploadConnectionId];
+		[uploadConnectionId release]; uploadConnectionId = nil;
+	}
+	uploadConnectionId = [[scAPI postTrackWithTitle:[trackNameField text]
+											fileURL:dataURL
+										   isPublic:NO
+											context:@"upload"] retain];
 }
 
 -(void)didReceiveMemoryWarning;
@@ -137,18 +103,41 @@
 
 
 #pragma mark SCSoundCloudAPIDelegate
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didFinishWithData:(NSData *)data context:(id)context;
+
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {
+	NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 	if([context isEqualToString:@"userInfo"]) {
 		[self updateUserInfoFromData:data];
 	}
 	if([context isEqualToString:@"upload"]) {
+		[uploadConnectionId release]; uploadConnectionId = nil;
 		[self requestUserInfo];
+		
+		return; // comment this line to add the track to the field recordings group http://sandbox-soundcloud.com/groups/field-recordings
+		
+		NSDictionary *newTrack = [dataString JSONValue];
+		
+		NSNumber *groupId = [NSNumber numberWithInt:8];	// check group id for production
+		NSNumber *trackId = [newTrack objectForKey:@"id"];
+
+		[scAPI postTrackWithId:trackId toGroupWithId:groupId context:@"addToGroup"];
+	}
+	if ([context isEqualToString:@"addToGroup"]) {
+		NSLog(@"%@", [dataString JSONValue]);
 	}
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didFailWithError:(NSError *)error context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;
 {
+	if ([error.domain isEqualToString:NSURLErrorDomain]) {
+		if (error.code == 401) {
+			NSLog(@"401 - not authenticated");
+		}
+	}
+	if ([context isEqualToString:@"upload"]) {
+		[uploadConnectionId release]; uploadConnectionId = nil;
+	}
 	// check error code. if it's a http error get it from the userdict (see SCAPIErrors.h)
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
 													message:[error localizedDescription]
@@ -159,13 +148,13 @@
 	[alert release];
 }
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveData:(NSData *)data context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {}
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
 {}
 
--(void)soundCloudAPI:(SCSoundCloudAPI *)api didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context;
+- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
 {
 	if([context isEqual:@"upload"]) {
 		[progresBar setProgress: ((float)sendBytes) / totalBytes];
