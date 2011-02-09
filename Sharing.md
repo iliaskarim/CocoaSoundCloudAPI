@@ -38,7 +38,7 @@ What this returns is a JSON array of connections which looks like this:
 		"display_name":"Joe Test",
 		"post_publish":true,
 		"post_favorite":false,
-		"type":"twitter",
+		"service":"twitter",
 		"uri":"https://api.soundcloud.com/connections/12345"
 	}, …]
 
@@ -99,19 +99,19 @@ Bonus: Making new connections
 
 So what about users that have not yet connected their favorite services to SoundCloud? Can they do it from within your app? Yes, they can, and it's quite easy.
 
-You just need to send a `POST` with the type of the connection and you get back an URL:
+You just need to send a `POST` with the service type of the connection and you get back an URL:
 
 	 [api performMethod:@"POST"
 	         onResource:@"connections"
 	     withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-	                                                 type, @"type",
+	                                                 service, @"service",
 	                                                 @"x-myapplicationsurlscheme://connection", @"redirect_uri",
-	                                                 @"touch", @"display",
+	                                                 @"touch", @"display", //optional, forces services to use the mobile auth page if available
 	                                                 nil]
 	            context:nil
 	           userInfo:nil];
 
-The types that are currently supported are:
+The services that are currently supported are:
 
 - `twitter`
 - `facebook_profile` (this will also connect Facebook pages!)
