@@ -98,7 +98,7 @@ When sharing **private**, you don't want to supply sharing connections, share to
 
 	[NSDictionary dictionaryWithObjectsAndKeys:
 		…
-		arrayOfStringMailAddresses, @"shared_to[emails][][address]",
+		arrayOfStringMailAddresses, @"track[shared_to][emails][][address]",
 		…
 		nil];
 
