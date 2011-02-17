@@ -64,7 +64,7 @@ One all the metadata is in place, the file can be uploaded. For this, we use the
 
 	[api performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:nil userInfo:nil]
 
-You can get more info about this call and its parameters from the [API documentation for tracks](https://github.com/soundcloud/api/wiki/10.2-Resources%3A-tracks-continued). One parameter is the *sharing note* (the text that get's displayed in a tweet, for example), so you should read it.
+You can get more info about this call and its parameters from the [API documentation for tracks](https://github.com/soundcloud/api/wiki/10.2-Resources%3A-tracks). One parameter is the *sharing note* (the text that get's displayed in a tweet, for example), so you should read it.
 
 The parameters dictionary can look something like this:
 
