@@ -64,7 +64,7 @@ One all the metadata is in place, the file can be uploaded. For this, we use the
 
 	[api performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:nil userInfo:nil]
 
-You can get more info about this call and its parameters from the [API documentation for tracks](https://github.com/soundcloud/api/wiki/10.2-Resources%3A-tracks-continued).
+You can get more info about this call and its parameters from the [API documentation for tracks](https://github.com/soundcloud/api/wiki/10.2-Resources%3A-tracks-continued). One parameter is the *sharing note* (the text that get's displayed in a tweet, for example), so you should read it.
 
 The parameters dictionary can look something like this:
 
@@ -93,6 +93,14 @@ But how to supply geo coordinates and how to set the Foursquare venue ID? For th
 - `foursquare:venue=1234567`
 
 As with any upload you should put them somewhere in your app where the user can see them, cancel them, they should continue when the app is sent to the background, etc.
+
+When sharing **private**, you don't want to supply sharing connections, share to mail instead:
+
+	[NSDictionary dictionaryWithObjectsAndKeys:
+		…
+		arrayOfStringMailAddresses, @"shared_to[emails][][address]",
+		…
+		nil];
 
 Bonus: Making new connections
 -----------------------------
