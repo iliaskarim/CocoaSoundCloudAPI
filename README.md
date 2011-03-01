@@ -19,7 +19,6 @@ In your terminal:
 
 - git clone git://github.com/soundcloud/cocoa-api-wrapper.git
 - cd cocoa-api-wrapper
-- git checkout oauth2
 - git submodule update --recursive --init
 
 In your Xcode project:
