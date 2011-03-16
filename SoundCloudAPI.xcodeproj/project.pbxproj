@@ -483,7 +483,7 @@
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
+				USER_HEADER_SEARCH_PATHS = "Outsourced/**";
 			};
 			name = Debug;
 		};
@@ -502,7 +502,7 @@
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
+				USER_HEADER_SEARCH_PATHS = "Outsourced/**";
 			};
 			name = Release;
 		};
@@ -543,7 +543,7 @@
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "Outsourced/OAuth2Client/build/$(CONFIGURATION)/";
+				FRAMEWORK_SEARCH_PATHS = "Outsourced/**";
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -571,7 +571,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "Outsourced/OAuth2Client/build/$(CONFIGURATION)/";
+				FRAMEWORK_SEARCH_PATHS = "Outsourced/**";
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;

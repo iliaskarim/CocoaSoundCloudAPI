@@ -17,16 +17,17 @@ If you're looking for additional documentation on this wrapper have a look at th
 
 In your terminal:
 
-- git clone git://github.com/soundcloud/cocoa-api-wrapper.git
-- cd cocoa-api-wrapper
+- git clone git://github.com/soundcloud/cocoa-api-wrapper.git SoundCloudAPI
+- cd SoundCloudAPI
 - git submodule update --recursive --init
 
 In your Xcode project:
 
 - drag SoundCloudAPI.xcodeproj into your project
 - add it as a build dependency
-- add "/tmp/SoundCloudAPI.dst/usr/local/include" to your user header search path in the build settings
-- you can also include the [OAuth2Client](http://github.com/nxtbgthng/OAuth2Client) headers by adding "/tmp/OAuth2Client.dst/usr/local/include" too (although you might not need them)
+- add the static library as a liked target
+- add "[relative path to SoundCloudAPI]/Sources/SoundCloudAPI" to your header search path in the build settings
+- you can also include the [OAuth2Client](http://github.com/nxtbgthng/OAuth2Client) headers by adding "[relative path to SoundCloudAPI]/Outsourced/OAuth2Client/Sources/OAuth2Client" too (although you might not need them)
 
 ## Using the Wrapper in your code
 
