@@ -554,6 +554,7 @@
 				INFOPLIST_FILE = "SoundCloudAPI.framework-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_CFLAGS = "-DNX_BLOCKS_AVAILABLE=1";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -580,6 +581,10 @@
 				INFOPLIST_FILE = "SoundCloudAPI.framework-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DNX_BLOCKS_AVAILABLE=1",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
