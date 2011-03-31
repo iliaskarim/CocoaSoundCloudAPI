@@ -34,7 +34,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
-	[window addSubview:viewController.view];
+	[window setRootViewController:viewController];
     [window makeKeyAndVisible];
 	
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
@@ -55,8 +55,6 @@
     [viewController release];
 	[soundCloudAPIMaster release];
     [window release];
-	[authURL release];
-	[safariAlertView release];
     [super dealloc];
 }
 
@@ -96,17 +94,6 @@
 
 #pragma mark SCSoundCloudAPIAuthenticationDelegate
 
-- (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
-{
-	authURL = [authorizationURL retain];
-	safariAlertView = [[UIAlertView alloc] initWithTitle:@"OAuth Authentication"
-												 message:@"The application will launch the SoundCloud website in Safari to allow you to authorize it."
-												delegate:self
-									   cancelButtonTitle:@"Launch Safari"
-									   otherButtonTitles:nil];
-	[safariAlertView show];
-}
-
 - (void)soundCloudAPIDidAuthenticate;
 {
 	viewController.postButton.enabled = YES;
@@ -138,21 +125,6 @@
 		}
 		
 	}
-}
-
-#pragma mark -
-
-- (void)modalViewCancel:(UIAlertView *)alertView
-{
-    [alertView release];
-}
-
-- (void)modalView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != -1 && authURL) {
-       	[[UIApplication sharedApplication] openURL:authURL];
-    }
-    [alertView release];
 }
 
 

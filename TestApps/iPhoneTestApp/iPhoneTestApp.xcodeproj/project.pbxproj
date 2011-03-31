@@ -384,6 +384,7 @@
 				GCC_PREFIX_HEADER = iPhoneTestApp_Prefix.pch;
 				HEADER_SEARCH_PATHS = ../../Sources/SoundCloudAPI;
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -401,6 +402,7 @@
 				GCC_PREFIX_HEADER = iPhoneTestApp_Prefix.pch;
 				HEADER_SEARCH_PATHS = ../../Sources/SoundCloudAPI;
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
