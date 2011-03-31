@@ -20,6 +20,15 @@
 
 #import "SCSoundCloudAPIConfiguration.h"
 
+#import <sys/types.h>
+#import <sys/sysctl.h>
+#import <sys/utsname.h>
+
+@interface SCSoundCloudAPIConfiguration ()
+
++ (NSString *)sysctlValueForName:(NSString *)name;
+
+@end
 
 @implementation SCSoundCloudAPIConfiguration
 
@@ -116,5 +125,70 @@
 @synthesize consumerKey, consumerSecret;
 @synthesize callbackURL;
 
+#pragma mark User Agent String
+
++ (NSString *)userAgentString;
+{
+	NSMutableString *userAgentString = [NSMutableString string];
+	NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+	NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+	[userAgentString appendFormat:@"%@/%@;", appName, appVersion];
+	
+	NSString *apiWrapperName = @"SCSoundCloudAPI";
+	NSString *apiWrapperVersion = SCAPI_VERSION;
+	[userAgentString appendFormat:@" %@/%@;", apiWrapperName, apiWrapperVersion];
+	
+	NSString *hwModel = nil;
+	NSString *hwMachine = [self sysctlValueForName:@"hw.machine"];
+#if TARGET_OS_IPHONE
+	UIDevice *device = [UIDevice currentDevice];
+	hwModel = [device model]; // we take model for device
+#else
+	hwModel = @"Mac";
+#endif
+	if (hwModel && hwMachine) {
+		[userAgentString appendFormat:@" %@/%@;", hwModel, hwMachine];
+	}
+	
+	NSString *osType = nil;
+	NSString *osRelease = nil;
+#if TARGET_OS_IPHONE
+	osType = [device systemName];
+	osRelease = [device systemVersion];
+#else
+	osType = @"Mac OS X";
+	SInt32 versMajor, versMinor, versBugFix;
+	Gestalt(gestaltSystemVersionMajor, &versMajor);
+	Gestalt(gestaltSystemVersionMinor, &versMinor);
+	Gestalt(gestaltSystemVersionBugFix, &versBugFix);
+	osRelease = [NSString stringWithFormat:@"%d.%d.%d", versMajor, versMinor, versBugFix];
+#endif
+	if (osType && osRelease) {
+		[userAgentString appendFormat:@" %@/%@;", osType, osRelease];
+	}
+	
+	NSString *darwinType = [self sysctlValueForName:@"kern.ostype"];
+	NSString *darwinRelease = [self sysctlValueForName:@"kern.osrelease"];
+	if (darwinType && darwinRelease) {
+		[userAgentString appendFormat:@" %@/%@", darwinType, darwinRelease];
+	}
+	
+	return userAgentString;
+}
+
++ (NSString *)sysctlValueForName:(NSString *)name;
+{
+	size_t size;
+	const char* cName = [name UTF8String];
+	if (sysctlbyname(cName, NULL, &size, NULL, 0) != noErr) return nil;
+	
+	NSString *value = nil;
+	char *cValue = malloc(size);
+	if (sysctlbyname(cName, cValue, &size, NULL, 0) == noErr) {
+		value = [NSString stringWithCString:cValue encoding:NSUTF8StringEncoding];
+	}
+	free(cValue);
+	return value;
+}
 
 @end
