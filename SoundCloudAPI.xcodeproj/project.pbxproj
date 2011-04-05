@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8283469B12437EA1000EA6DD /* SCLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8283469912437EA1000EA6DD /* SCLoginViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8283469B12437EA1000EA6DD /* SCLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8283469912437EA1000EA6DD /* SCLoginViewController.h */; settings = {ATTRIBUTES = (); }; };
 		8283469C12437EA1000EA6DD /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8283469A12437EA1000EA6DD /* SCLoginViewController.m */; };
 		82CC4EAF1247C361000F468E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CC4EAE1247C361000F468E /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (); }; };
+		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (); }; };
+		9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (); }; };
 		9429A5E5122659D500D31807 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */; };
-		9429A5E6122659D500D31807 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9429A5E6122659D500D31807 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */; settings = {ATTRIBUTES = (); }; };
 		9429A5E7122659D500D31807 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */; };
 		9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; };
 		9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */; };
@@ -36,8 +36,8 @@
 		9454819A1248D95E00E6BD3D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945481851248D94900E6BD3D /* AudioToolbox.framework */; };
 		9454819B1248D95E00E6BD3D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		94E5ADA9122C193D00C7021A /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E5ADA4122C192900C7021A /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Weak, ); }; };
-		94EE4A6E1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		94EE4B4D12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		94EE4A6E1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */; settings = {ATTRIBUTES = (); }; };
+		94EE4B4D12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */; settings = {ATTRIBUTES = (); }; };
 		94EE4B5012390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */; };
 		94EE4B5112390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 94EE4B4F12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m */; };
 		94F5B56E1282FD16000D7CD1 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F5B56D1282FD16000D7CD1 /* CoreServices.framework */; };
@@ -262,14 +262,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA747D9F0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch in Headers */,
+				9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */,
+				94EE4B5012390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h in Headers */,
 				9429A5E0122659D500D31807 /* SCAPI.h in Headers */,
 				9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */,
 				9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */,
 				9429A5E6122659D500D31807 /* SCSoundCloudAPIConfiguration.h in Headers */,
-				9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */,
 				94EE4A6E1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h in Headers */,
 				94EE4B4D12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */,
-				94EE4B5012390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h in Headers */,
 				8283469B12437EA1000EA6DD /* SCLoginViewController.h in Headers */,
 				94FA031E12D4C044001E9226 /* SCSoundCloudAPI-Private.h in Headers */,
 			);
@@ -430,10 +430,10 @@
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "Outsourced/**";
 			};
 			name = Debug;
 		};
@@ -449,10 +449,10 @@
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos;
-				USER_HEADER_SEARCH_PATHS = /tmp/OAuth2Client.dst/usr/local/include;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "Outsourced/**";
 			};
 			name = Release;
 		};
@@ -493,7 +493,7 @@
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "Outsourced/OAuth2Client/build/$(CONFIGURATION)/";
+				FRAMEWORK_SEARCH_PATHS = "Outsourced/**";
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -521,7 +521,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_SEARCH_PATHS = "Outsourced/OAuth2Client/build/$(CONFIGURATION)/";
+				FRAMEWORK_SEARCH_PATHS = "Outsourced/**";
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;

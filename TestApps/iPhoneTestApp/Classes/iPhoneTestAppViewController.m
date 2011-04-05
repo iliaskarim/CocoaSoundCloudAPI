@@ -18,12 +18,12 @@
  * 
  */
 
+#import "JSONKit.h"
+
 #import "iPhoneTestAppViewController.h"
 #import "iPhoneTestAppAppDelegate.h"
 
 #import "SCSoundCloudAPI+TestApp.h"
-
-#import "JSON/JSON.h"
 
 
 @interface iPhoneTestAppViewController(private)
@@ -64,10 +64,8 @@
 
 - (void)updateUserInfoFromData:(NSData *)data;
 {
-	NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	id object = [data objectFromJSONData];
 	
-	id object = [dataString JSONValue];
-	[dataString release];
 	if([object isKindOfClass:[NSDictionary class]]) {
 		NSDictionary *userInfoDictionary = (NSDictionary *)object;
 		[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
@@ -106,7 +104,6 @@
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context userInfo:(id)userInfo;
 {
-	NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 	if([context isEqualToString:@"userInfo"]) {
 		[self updateUserInfoFromData:data];
 	}
@@ -116,7 +113,7 @@
 		
 		return; // comment this line to add the track to the field recordings group http://sandbox-soundcloud.com/groups/field-recordings
 		
-		NSDictionary *newTrack = [dataString JSONValue];
+		NSDictionary *newTrack = [data objectFromJSONData];
 		
 		NSNumber *groupId = [NSNumber numberWithInt:8];	// check group id for production
 		NSNumber *trackId = [newTrack objectForKey:@"id"];
@@ -124,7 +121,7 @@
 		[scAPI postTrackWithId:trackId toGroupWithId:groupId context:@"addToGroup"];
 	}
 	if ([context isEqualToString:@"addToGroup"]) {
-		NSLog(@"%@", [dataString JSONValue]);
+		NSLog(@"%@", [data objectFromJSONData]);
 	}
 }
 
