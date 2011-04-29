@@ -447,10 +447,14 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	}
 }
 
-- (void)oauthConnection:(NXOAuth2Connection *)connection didReceiveRedirectToURL:(NSURL *)aRedirectURL;
+- (void)oauthConnection:(NXOAuth2Connection *)fetcher didReceiveRedirectToURL:(NSURL *)aRedirectURL;
 {
-	[redirectURL release];
-	redirectURL = [aRedirectURL retain];
+    [redirectURL release]; redirectURL = nil;
+    
+    id context = [[fetcher.context retain] autorelease];
+    if ([context isEqualToString:SCAudioStream_HTTPStreamContext]) {
+        redirectURL = [aRedirectURL retain];
+    }
 }
 
 
