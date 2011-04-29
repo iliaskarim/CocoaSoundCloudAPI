@@ -128,7 +128,11 @@
         [delegate soundCloudAPIPreparedAuthorizationURL:authorizationURL];
     }
 #if TARGET_OS_IPHONE
-    [self displayLoginViewControllerWithURL:authorizationURL];
+    BOOL shouldShowLogin = YES;
+    if ([delegate respondsToSelector:@selector(soundCloudAPIShouldDisplayLoginViewController)]) {
+        shouldShowLogin = [delegate soundCloudAPIShouldDisplayLoginViewController];
+    }
+    if (shouldShowLogin) [self displayLoginViewControllerWithURL:authorizationURL];
 #endif
          
 }
@@ -161,7 +165,7 @@
 #pragma mark Login ViewController
 
 - (void)displayLoginViewControllerWithURL:(NSURL *)URL;
-{    
+{
     SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:URL authentication:self] autorelease];
     
     /*
