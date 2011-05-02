@@ -33,10 +33,10 @@
 - (void)soundCloudAPIDidResetAuthentication;
 - (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 
+//If this is implemented, the default LoginViewController will not show. Build your own.
 - (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 
 #if TARGET_OS_IPHONE
-- (BOOL)soundCloudAPIShouldDisplayLoginViewController;
 - (void)soundCloudAPIWillDisplayLoginViewController:(SCLoginViewController *)soundCloudViewController;
 - (void)soundCloudAPIDisplayViewController:(UIViewController *)soundCloudViewController;
 - (void)soundCloudAPIDismissViewController:(UIViewController *)soundCloudViewController;
