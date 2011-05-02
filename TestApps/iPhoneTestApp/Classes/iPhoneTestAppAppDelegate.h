@@ -45,9 +45,6 @@
     iPhoneTestAppViewController *viewController;
 
 	SCSoundCloudAPI *soundCloudAPIMaster;
-	
-	UIAlertView *safariAlertView;
-	NSURL *authURL;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

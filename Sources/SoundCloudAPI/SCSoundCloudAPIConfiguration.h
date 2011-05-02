@@ -53,6 +53,7 @@
 		   accessTokenURL:(NSURL *)accessTokenURL
 				  authURL:(NSURL *)authURL;
 
++ (NSString *)userAgentString;
 
 @property (nonatomic, retain) NSURL *apiBaseURL;
 @property (nonatomic, retain) NSURL *accessTokenURL;
