@@ -94,6 +94,15 @@
 - (void)resetAuthentication;
 {
 	oauthClient.accessToken = nil;
+	
+#if TARGET_OS_IPHONE
+	NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+	NSURL *authURL = self.configuration.authURL;
+	NSArray *cookies = [cookieStorage cookiesForURL:authURL];
+	for (NSHTTPCookie *cookie in cookies) {
+		[cookieStorage deleteCookie:cookie];
+	}
+#endif
 }
 
 - (BOOL)handleRedirectURL:(NSURL *)redirectURL;
