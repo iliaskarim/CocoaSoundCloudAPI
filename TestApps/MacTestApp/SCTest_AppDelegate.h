@@ -31,8 +31,8 @@
 	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
 #else
 	//Sandbox key & secret
-	#define kTestAppConsumerKey		@"18a7l4oj7YA3L994boCw"
-	#define kTestAppConsumerSecret	@"GZcAcJzMCRybR1GBuOjG5wEGITnG9cIHBHMkWR4oFk"
+	#define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"
+	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
 #endif
 
 #define kCallbackURL	@"x-wrapper-test://oauth"	//remember that the myapp protocol also is set in the info.plist

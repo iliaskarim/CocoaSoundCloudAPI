@@ -20,9 +20,8 @@
 		945360C4123FBBCA00BD668A /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D35526210F4D7C450074030D /* NOTICE */; };
 		94536119123FBC6A00BD668A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3E572B50F2F28B800DE180F /* Security.framework */; };
 		9453611A123FBC6A00BD668A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		9453612C123FBD8800BD668A /* JSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945A515E123FAECE00A6F2EB /* JSON.framework */; };
-		9453612D123FBD8A00BD668A /* JSON.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 945A515E123FAECE00A6F2EB /* JSON.framework */; };
 		94F5B68912830466000D7CD1 /* SoundCloudAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 941040741282F51700E9E6CE /* SoundCloudAPI.framework */; };
+		99D8A8BE1385388F00E3073C /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D8A8A41385388F00E3073C /* JSONKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,48 +67,6 @@
 			remoteGlobalIDString = 942FFCD512315E0A00E6C65E;
 			remoteInfo = OAuth2Client.framework;
 		};
-		9453612A123FBD8200BD668A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 53D229800C96121600276605;
-			remoteInfo = JSON;
-		};
-		945A515D123FAECE00A6F2EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 53D229810C96121600276605;
-			remoteInfo = JSON;
-		};
-		945A515F123FAECE00A6F2EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 53D2298D0C96122A00276605;
-			remoteInfo = Tests;
-		};
-		945A5161123FAECE00A6F2EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FE2BBD800D8B0D3900184787;
-			remoteInfo = libjson;
-		};
-		945A5163123FAECE00A6F2EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FE2BBDAB0D8B0EE000184787;
-			remoteInfo = libjsontests;
-		};
-		945A5165123FAECE00A6F2EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 53EF4D400DC247B3005F5E6D;
-			remoteInfo = bench;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -121,7 +78,6 @@
 			files = (
 				941040831282F54C00E9E6CE /* OAuth2Client.framework in Copy Frameworks */,
 				941040841282F54C00E9E6CE /* SoundCloudAPI.framework in Copy Frameworks */,
-				9453612D123FBD8A00BD668A /* JSON.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,9 +96,10 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94536073123FBA2900BD668A /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../../Outsourced/OAuth2Client/OAuth2Client.xcodeproj; sourceTree = SOURCE_ROOT; };
 		945360A8123FBB6F00BD668A /* MacTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		945A5153123FAECE00A6F2EB /* JSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSON.xcodeproj; path = ../Support/JSON/JSON.xcodeproj; sourceTree = SOURCE_ROOT; };
 		945A5185123FAF5A00A6F2EB /* SoundCloudAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundCloudAPI.xcodeproj; path = ../../SoundCloudAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
 		94DA528B1240BD0F00F7AC3B /* SoundCloudAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SoundCloudAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99D8A8A31385388F00E3073C /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		99D8A8A41385388F00E3073C /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		D32351680F2A0F4400BE4212 /* SCTest_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTest_AppDelegate.m; sourceTree = "<group>"; };
 		D32351690F2A0F4400BE4212 /* SCTest_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTest_AppDelegate.h; sourceTree = "<group>"; };
 		D32352C60F2A193200BE4212 /* SCParameterTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCParameterTableDataSource.h; sourceTree = "<group>"; };
@@ -160,7 +117,6 @@
 			files = (
 				9410407F1282F53A00E9E6CE /* OAuth2Client.framework in Frameworks */,
 				94F5B68912830466000D7CD1 /* SoundCloudAPI.framework in Frameworks */,
-				9453612C123FBD8800BD668A /* JSON.framework in Frameworks */,
 				94536119123FBC6A00BD668A /* Security.framework in Frameworks */,
 				9453611A123FBC6A00BD668A /* Cocoa.framework in Frameworks */,
 			);
@@ -270,24 +226,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		945A5154123FAECE00A6F2EB /* Products */ = {
+		99D8A87B1385388F00E3073C /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
-				945A515E123FAECE00A6F2EB /* JSON.framework */,
-				945A5160123FAECE00A6F2EB /* Tests.octest */,
-				945A5162123FAECE00A6F2EB /* libjson.a */,
-				945A5164123FAECE00A6F2EB /* libjsontests.octest */,
-				945A5166123FAECE00A6F2EB /* bench */,
+				99D8A8A31385388F00E3073C /* JSONKit.h */,
+				99D8A8A41385388F00E3073C /* JSONKit.m */,
 			);
-			name = Products;
+			name = JSONKit;
+			path = ../Support/JSONKit;
 			sourceTree = "<group>";
 		};
 		D32353D40F2A353A00BE4212 /* Outsourced */ = {
 			isa = PBXGroup;
 			children = (
+				99D8A87B1385388F00E3073C /* JSONKit */,
 				94536073123FBA2900BD668A /* OAuth2Client.xcodeproj */,
 				945A5185123FAF5A00A6F2EB /* SoundCloudAPI.xcodeproj */,
-				945A5153123FAECE00A6F2EB /* JSON.xcodeproj */,
 			);
 			name = Outsourced;
 			sourceTree = "<group>";
@@ -307,7 +261,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9453612B123FBD8200BD668A /* PBXTargetDependency */,
 				9410407C1282F52B00E9E6CE /* PBXTargetDependency */,
 				9410407E1282F52E00E9E6CE /* PBXTargetDependency */,
 			);
@@ -334,10 +287,6 @@
 			mainGroup = 29B97314FDCFA39411CA2CEA /* MacTestApp */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 945A5154123FAECE00A6F2EB /* Products */;
-					ProjectRef = 945A5153123FAECE00A6F2EB /* JSON.xcodeproj */;
-				},
 				{
 					ProductGroup = 941040641282F50A00E9E6CE /* Products */;
 					ProjectRef = 94536073123FBA2900BD668A /* OAuth2Client.xcodeproj */;
@@ -383,41 +332,6 @@
 			remoteRef = 941040731282F51700E9E6CE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		945A515E123FAECE00A6F2EB /* JSON.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = JSON.framework;
-			remoteRef = 945A515D123FAECE00A6F2EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		945A5160123FAECE00A6F2EB /* Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Tests.octest;
-			remoteRef = 945A515F123FAECE00A6F2EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		945A5162123FAECE00A6F2EB /* libjson.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjson.a;
-			remoteRef = 945A5161123FAECE00A6F2EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		945A5164123FAECE00A6F2EB /* libjsontests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = libjsontests.octest;
-			remoteRef = 945A5163123FAECE00A6F2EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		945A5166123FAECE00A6F2EB /* bench */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = bench;
-			remoteRef = 945A5165123FAECE00A6F2EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -443,6 +357,7 @@
 				945360BD123FBBB900BD668A /* main.m in Sources */,
 				945360BE123FBBB900BD668A /* SCTest_AppDelegate.m in Sources */,
 				945360BF123FBBB900BD668A /* SCParameterTableDataSource.m in Sources */,
+				99D8A8BE1385388F00E3073C /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,11 +373,6 @@
 			isa = PBXTargetDependency;
 			name = OAuth2Client.framework;
 			targetProxy = 9410407D1282F52E00E9E6CE /* PBXContainerItemProxy */;
-		};
-		9453612B123FBD8200BD668A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSON;
-			targetProxy = 9453612A123FBD8200BD668A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -498,6 +408,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MacTestApp_Prefix.pch;
+				HEADER_SEARCH_PATHS = ../../Sources/SoundCloudAPI;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -522,6 +433,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MacTestApp_Prefix.pch;
+				HEADER_SEARCH_PATHS = ../../Sources/SoundCloudAPI;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
