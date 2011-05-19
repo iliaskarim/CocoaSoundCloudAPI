@@ -46,4 +46,7 @@
 - (BOOL)handleRedirectURL:(NSURL *)redirectURL;
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
+- (NSInteger)trustModeForHostname:(NSString *)hostname;
+- (NSData *)trustedCertificateDERDataForHostname:(NSString *)hostname;
+
 @end

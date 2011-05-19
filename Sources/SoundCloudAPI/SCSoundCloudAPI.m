@@ -37,7 +37,9 @@
 #import "SCSoundCloudAPI.h"
 
 
+
 @interface SCSoundCloudAPI () <NXOAuth2ConnectionDelegate>
+
 - (NSString *)_responseTypeFromEnum:(SCResponseFormat)responseFormat;
 - (NSMutableURLRequest *)_requestForMethod:(NSString *)httpMethod
 								onResource:(NSString *)resource;
@@ -93,7 +95,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 {
 	return authentication.authenticated;
 }
-
 
 #pragma mark Public methods
 
@@ -254,6 +255,16 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didSendBytes:total:context:userInfo:)]) {
 		[delegate soundCloudAPI:self didSendBytes:bytesSend total:bytesTotal context:connection.context userInfo:connection.userInfo];
 	}
+}
+
+- (NXOAuth2TrustMode)oauthConnection:(NXOAuth2Connection *)connection trustModeForHostname:(NSString *)hostname;
+{
+	return (NXOAuth2TrustMode)[authentication trustModeForHostname:hostname];
+}
+
+- (NSData *)oauthConnection:(NXOAuth2Connection *)connection trustedCertificateDERDataForHostname:(NSString *)hostname;
+{
+	return [authentication trustedCertificateDERDataForHostname:hostname];
 }
 
 
