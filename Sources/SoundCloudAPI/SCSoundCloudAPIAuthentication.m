@@ -145,7 +145,7 @@
 	return nil;
 }
 
-#pragma mark NXOAuth2ClientAuthDelegate
+#pragma mark NXOAuth2ClientDelegate
 
 //TODO: Error handling if using the LoginViewController
 
@@ -186,6 +186,17 @@
         [delegate soundCloudAPIDidFailToGetAccessTokenWithError:error];
     }
 }
+
+- (NXOAuth2TrustMode)oauthClient:(NXOAuth2Client *)client trustModeForTokenRequestOnHostname:(NSString *)hostname;
+{
+    return [self trustModeForHostname:hostname];
+}
+
+- (NSData *)oauthClient:(NXOAuth2Client *)client trustedCertificateDERDataForTokenRequestOnHostname:(NSString *)hostname;
+{
+    return [self trustedCertificateDERDataForHostname:hostname];
+}
+
 
 #if TARGET_OS_IPHONE
 
