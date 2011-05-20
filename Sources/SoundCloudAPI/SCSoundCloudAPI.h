@@ -23,6 +23,9 @@
 #import "SCSoundCloudAPIDelegate.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
 
+extern NSString * const SCSoundCloudAPIErrorDomain;
+extern NSString * const SCSoundCloudAPIErrorBodyDataKey;
+
 @class NXOAuth2Client;
 @class SCSoundCloudAPIConfiguration;
 @class SCSoundCloudConnection;
