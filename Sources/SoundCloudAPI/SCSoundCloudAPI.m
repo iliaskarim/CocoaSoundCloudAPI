@@ -265,9 +265,9 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	return (NXOAuth2TrustMode)[authentication trustModeForHostname:hostname];
 }
 
-- (NSData *)oauthConnection:(NXOAuth2Connection *)connection trustedCertificateDERDataForHostname:(NSString *)hostname;
+- (NSArray *)oauthConnection:(NXOAuth2Connection *)connection trustedCertificatesDERDataForHostname:(NSString *)hostname;
 {
-	return [authentication trustedCertificateDERDataForHostname:hostname];
+	return [authentication trustedCertificatesDERDataForHostname:hostname];
 }
 
 

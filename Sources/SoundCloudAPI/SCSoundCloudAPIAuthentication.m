@@ -41,7 +41,7 @@
 @protocol SCSoundCloudAPIPrivateAuthenticationDelegate <NSObject, SCSoundCloudAPIAuthenticationDelegate>
 
 - (NXOAuth2TrustMode)soundCloudAPITrustModeForHostname:(NSString *)hostname;
-- (NSData *)soundCloudAPITrustedCertificateDERDataForHostname:(NSString *)hostname;
+- (NSArray *)soundCloudAPITrustedCertificatesDERDataForHostname:(NSString *)hostname;
 
 @end
 
@@ -137,12 +137,12 @@
 	return NXOAuth2TrustModeSystem;
 }
 
-- (NSData *)trustedCertificateDERDataForHostname:(NSString *)hostname;
+- (NSArray *)trustedCertificatesDERDataForHostname:(NSString *)hostname;
 {
-	if ([self.privateDelegate respondsToSelector:@selector(soundCloudAPITrustedCertificateDERDataForHostname:)]) {
-		return [self.privateDelegate soundCloudAPITrustedCertificateDERDataForHostname:hostname];
+	if ([self.privateDelegate respondsToSelector:@selector(soundCloudAPITrustedCertificatesDERDataForHostname:)]) {
+		return [self.privateDelegate soundCloudAPITrustedCertificatesDERDataForHostname:hostname];
 	}
-	NSAssert(NO, @"You need to implement soundCloudAPITrustedCertificateDERDataForHostname: in the delegate if you specify NXOAuth2TrustModeSpecificCertificate");
+	NSAssert(NO, @"You need to implement soundCloudAPITrustedCertificatesDERDataForHostname: in the delegate if you specify NXOAuth2TrustModeSpecificCertificate");
 	return nil;
 }
 
@@ -193,9 +193,9 @@
     return [self trustModeForHostname:hostname];
 }
 
-- (NSData *)oauthClient:(NXOAuth2Client *)client trustedCertificateDERDataForTokenRequestOnHostname:(NSString *)hostname;
+- (NSArray *)oauthClient:(NXOAuth2Client *)client trustedCertificatesDERDataForTokenRequestOnHostname:(NSString *)hostname;
 {
-    return [self trustedCertificateDERDataForHostname:hostname];
+    return [self trustedCertificatesDERDataForHostname:hostname];
 }
 
 
