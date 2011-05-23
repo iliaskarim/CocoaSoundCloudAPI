@@ -47,6 +47,6 @@
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
 - (NSInteger)trustModeForHostname:(NSString *)hostname;
-- (NSData *)trustedCertificateDERDataForHostname:(NSString *)hostname;
+- (NSArray *)trustedCertificatesDERDataForHostname:(NSString *)hostname;
 
 @end
