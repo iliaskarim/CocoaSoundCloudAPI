@@ -20,7 +20,7 @@
 
 #import "SCTest_AppDelegate.h"
 
-#import <JSON/JSON.h>
+#import "JSONKit.h"
 
 #import "SCParameterTableDataSource.h"
 
@@ -182,13 +182,12 @@
 	[fetchProgressIndicator stopAnimation:nil];
 	[postProgress setDoubleValue:0];
 	
-	NSString *dataStr = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];	
 	if([context isEqualToString:@"deleteMyTracks"]) {
-		[self deleteTracks:[dataStr JSONValue]];
+		[self deleteTracks:[data objectFromJSONData]];
 		return;
 	}
 	
-	[responseField setString:[[dataStr JSONValue] description]];
+	[responseField setString:[[data objectFromJSONData] description]];
 }
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;

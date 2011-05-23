@@ -38,8 +38,17 @@
 #import "SCSoundCloudAPIAuthentication.h"
 
 
+@protocol SCSoundCloudAPIPrivateAuthenticationDelegate <NSObject, SCSoundCloudAPIAuthenticationDelegate>
+
+- (NXOAuth2TrustMode)soundCloudAPITrustModeForHostname:(NSString *)hostname;
+- (NSData *)soundCloudAPITrustedCertificateDERDataForHostname:(NSString *)hostname;
+
+@end
+
+
 @interface SCSoundCloudAPIAuthentication () <NXOAuth2ClientDelegate>
 @property (assign, getter=isAuthenticated) BOOL authenticated;
+@property (retain, readonly) id<SCSoundCloudAPIPrivateAuthenticationDelegate> privateDelegate;
 #if TARGET_OS_IPHONE
 - (void)displayLoginViewControllerWithURL:(NSURL *)URL;
 - (void)dismissLoginViewController:(UIViewController *)viewController;
@@ -84,6 +93,10 @@
 @synthesize configuration;
 @synthesize authenticated;
 
+- (id<SCSoundCloudAPIPrivateAuthenticationDelegate>)privateDelegate;
+{
+	return (id<SCSoundCloudAPIPrivateAuthenticationDelegate>)delegate;
+}
 
 #pragma mark Public
 
@@ -95,6 +108,15 @@
 - (void)resetAuthentication;
 {
 	oauthClient.accessToken = nil;
+	
+#if TARGET_OS_IPHONE
+	NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+	NSURL *authURL = self.configuration.authURL;
+	NSArray *cookies = [cookieStorage cookiesForURL:authURL];
+	for (NSHTTPCookie *cookie in cookies) {
+		[cookieStorage deleteCookie:cookie];
+	}
+#endif
 }
 
 - (BOOL)handleRedirectURL:(NSURL *)redirectURL;
@@ -107,8 +129,24 @@
 	[oauthClient authenticateWithUsername:username password:password];
 }
 
+- (NSInteger)trustModeForHostname:(NSString *)hostname;
+{
+	if ([self.privateDelegate respondsToSelector:@selector(soundCloudAPITrustModeForHostname:)]) {
+		return [self.privateDelegate soundCloudAPITrustModeForHostname:hostname];
+	}
+	return NXOAuth2TrustModeSystem;
+}
 
-#pragma mark NXOAuth2ClientAuthDelegate
+- (NSData *)trustedCertificateDERDataForHostname:(NSString *)hostname;
+{
+	if ([self.privateDelegate respondsToSelector:@selector(soundCloudAPITrustedCertificateDERDataForHostname:)]) {
+		return [self.privateDelegate soundCloudAPITrustedCertificateDERDataForHostname:hostname];
+	}
+	NSAssert(NO, @"You need to implement soundCloudAPITrustedCertificateDERDataForHostname: in the delegate if you specify NXOAuth2TrustModeSpecificCertificate");
+	return nil;
+}
+
+#pragma mark NXOAuth2ClientDelegate
 
 //TODO: Error handling if using the LoginViewController
 
@@ -149,6 +187,17 @@
         [delegate soundCloudAPIDidFailToGetAccessTokenWithError:error];
     }
 }
+
+- (NXOAuth2TrustMode)oauthClient:(NXOAuth2Client *)client trustModeForTokenRequestOnHostname:(NSString *)hostname;
+{
+    return [self trustModeForHostname:hostname];
+}
+
+- (NSData *)oauthClient:(NXOAuth2Client *)client trustedCertificateDERDataForTokenRequestOnHostname:(NSString *)hostname;
+{
+    return [self trustedCertificateDERDataForHostname:hostname];
+}
+
 
 #if TARGET_OS_IPHONE
 
