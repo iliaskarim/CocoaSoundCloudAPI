@@ -188,12 +188,12 @@
     }
 }
 
-- (NXOAuth2TrustMode)oauthClient:(NXOAuth2Client *)client trustModeForTokenRequestOnHostname:(NSString *)hostname;
+- (NXOAuth2TrustMode)connection:(NXOAuth2Connection *)connection trustModeForHostname:(NSString *)hostname;
 {
     return [self trustModeForHostname:hostname];
 }
 
-- (NSArray *)oauthClient:(NXOAuth2Client *)client trustedCertificatesDERDataForTokenRequestOnHostname:(NSString *)hostname;
+- (NSArray *)connection:(NXOAuth2Connection *)connection trustedCertificatesForHostname:(NSString *)hostname;
 {
     return [self trustedCertificatesDERDataForHostname:hostname];
 }

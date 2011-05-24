@@ -260,17 +260,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	}
 }
 
-- (NXOAuth2TrustMode)oauthConnection:(NXOAuth2Connection *)connection trustModeForHostname:(NSString *)hostname;
-{
-	return (NXOAuth2TrustMode)[authentication trustModeForHostname:hostname];
-}
-
-- (NSArray *)oauthConnection:(NXOAuth2Connection *)connection trustedCertificatesDERDataForHostname:(NSString *)hostname;
-{
-	return [authentication trustedCertificatesDERDataForHostname:hostname];
-}
-
-
 #pragma mark NSCopying
 
 - (id)copy;

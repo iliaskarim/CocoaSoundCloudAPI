@@ -20,12 +20,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "NXOAuth2TrustDelegate.h"
 
 @protocol SCSoundCloudAPIAuthenticationDelegate;
 @class SCSoundCloudAPIConfiguration;
 @class NXOAuth2Client;
 
-@interface SCSoundCloudAPIAuthentication : NSObject {
+@interface SCSoundCloudAPIAuthentication : NSObject <NXOAuth2TrustDelegate> {
 	SCSoundCloudAPIConfiguration *configuration;
 	
 	NXOAuth2Client *oauthClient;
