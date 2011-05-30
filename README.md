@@ -1,6 +1,6 @@
-# Your Guide to the SoundCloud API Wrapper
+# The SoundCloud API Wrapper for Cocoa
 
-So you want to use SoundCloud in your iOS or OSX Desktop Application? Awesome. This little guide will help you do it.
+So you want to use SoundCloud in your iOS or OSX Desktop Application? Awesome. This little project will help you do it.
 
 The SoundCloud API Wrapper supports iOS from Version 3.0 and MacOS X from Leopard (10.5). It uses SoundClouds [OAuth2](http://oauth.net/2) API and henceforth includes the [NXOAuth2CLient](http://github.com/nxtbgthng/OAuth2Client) project.
 
