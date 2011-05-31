@@ -35,8 +35,15 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
 	* `libOAuth2Client.a` (or `OAuth2Client.framework` on Desktop)
 	* `Security.framework`
 	* `AudioToolbox.framework` (if you want streaming)
-	
-Congrats! Everything is set up, and you can start using it. [Here's how](Usage.md).
+
+
+4. Next step is to make sure that the Linker finds everything it needs: So go to the Build settings of the project and add the following to `Other Linker Flags`
+
+		-all_load -ObjC
+
+5. We need a few graphics for the Login Screen: Please move the `SoundCloud.bundle` from the SoundCloudAPIWrapper Directory to your Resources.
+
+Yay, done! Congrats! Everything is set up, and you can start using it. [Here's how](Usage.md).
 
 ## Updating
 

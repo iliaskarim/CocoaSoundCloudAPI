@@ -6,7 +6,7 @@ The SoundCloud API Wrapper supports iOS from Version 3.0 and MacOS X from Leopar
 
 There's three parts to this Guide:
 
-* How to [integrate the SoundCLoud API Wrapper into your Project](https://github.com/soundcloud/cocoa-api-wrapper/blob/master/Setup.md).
+* How to [integrate the SoundCloud API Wrapper into your Project](https://github.com/soundcloud/cocoa-api-wrapper/blob/master/Setup.md).
 * How to [use the SoundCloud API Wrapper](https://github.com/soundcloud/cocoa-api-wrapper/blob/master/Usage.md).
 * How to [share your Audio using SoundCloud](https://github.com/soundcloud/cocoa-api-wrapper/blob/master/Sharing.md).
 
@@ -18,7 +18,8 @@ Afraid of doing the journey alone? Don't be, there's a lot of places where you c
 
 Please keep in mind that all of this is under heavy development, and things might change from time to time. Please update your frameworks often, and keep this space in mind.
 
-We document the [changes to the different versions](Changes.md). When you've used a previous version, please read it.
+We document the [changes to the different versions](Changes.md). If you've used a previous version, please read it.
 
 But most important: Have fun building great apps!
+
 Your friends at SoundCloud.
