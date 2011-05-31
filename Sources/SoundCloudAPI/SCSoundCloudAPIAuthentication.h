@@ -20,7 +20,11 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE
 #import "NXOAuth2TrustDelegate.h"
+#else
+#import <OAuth2Client/NXOAuth2TrustDelegate.h>
+#endif
 
 @protocol SCSoundCloudAPIAuthenticationDelegate;
 @class SCSoundCloudAPIConfiguration;
