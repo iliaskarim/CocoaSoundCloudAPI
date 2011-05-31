@@ -130,12 +130,14 @@
 	activityIndicator.hidesWhenStopped = YES;
 	[self.view addSubview:activityIndicator];
     
+    NSURL *URLToOpen = [NSURL URLWithString:[[URL absoluteString] stringByAppendingString:@"&display_bar=false"]];
+    
     webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     webView.backgroundColor = nil;
     webView.opaque = NO;
     webView.delegate = self;
-    [webView loadRequest:[NSURLRequest requestWithURL:URL]];
+    [webView loadRequest:[NSURLRequest requestWithURL:URLToOpen]];
     [self.view addSubview:webView];
     	
     [self updateInterface];
