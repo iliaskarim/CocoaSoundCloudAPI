@@ -337,7 +337,6 @@
 				94535F82123FAFDF00BD668A /* Resources */,
 				94535F83123FAFDF00BD668A /* Sources */,
 				94535F84123FAFDF00BD668A /* Frameworks */,
-				99F799A613A1431F002555F0 /* Change Framework Install Names (Script) */,
 			);
 			buildRules = (
 			);
@@ -424,23 +423,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		99F799A613A1431F002555F0 /* Change Framework Install Names (Script) */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Change Framework Install Names (Script)";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "for frameworkName in OAuth2Client\ndo\necho \"install_name_tool -change @executable_path/../Frameworks/${frameworkName}.framework/Versions/A/${frameworkName} @executable_path/../Frameworks/SoundCloudAPI/Frameworks/${frameworkName}.framework/Versions/A/${frameworkName} $TARGET_BUILD_DIR/SoundCloudAPI.framework/SoundCloudAPI\"\n\ninstall_name_tool -change \"@executable_path/../Frameworks/${frameworkName}.framework/Versions/A/${frameworkName}\" \"@executable_path/../Frameworks/SoundCloudAPI/Frameworks/${frameworkName}.framework/Versions/A/${frameworkName}\" \"$TARGET_BUILD_DIR/SoundCloudAPI.framework/SoundCloudAPI\"\ndone";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		94535F83123FAFDF00BD668A /* Sources */ = {
@@ -573,7 +555,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
 				INFOPLIST_FILE = "SoundCloudAPI.framework-Info.plist";
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				LD_DYLIB_INSTALL_NAME = "@rpath/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "-DNX_BLOCKS_AVAILABLE=1";
 				OTHER_LDFLAGS = (
@@ -601,7 +583,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
 				INFOPLIST_FILE = "SoundCloudAPI.framework-Info.plist";
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
+				LD_DYLIB_INSTALL_NAME = "@rpath/$(EXECUTABLE_PATH)";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
