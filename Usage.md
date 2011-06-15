@@ -38,17 +38,17 @@ Here's some sample code for using all the other neat things the `SCAuthenticatio
 
     #pragma mark SCSoundCloudAPIAuthenticationDelegate
     	
-    - (void)soundCloudAPIDidAuthenticate:(SCSoundCloudAPI *)scAPI;
+    - (void)soundCloudAPIDidAuthenticate;
     {
         // big cheers!! the user sucesfully signed in
     }
 	
-    - (void)soundCloudAPIDidResetAuthentication:(SCSoundCloudAPI *)scAPI;
+    - (void)soundCloudAPIDidResetAuthentication;
 	{
 		// the user did signed off
 	}
 	
-    - (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI didFailToGetAccessTokenWithError:(NSError *)error;
+    - (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
 	{
 		// inform your user and let him retry the authentication
 	}
@@ -65,7 +65,7 @@ There are however some situations where you might want to implement more stuff i
 
 This method is invoked when `[scAPI requestAuthentication]` is called on `SCSoundCloudAPI` object which is not yet authorized. If you passed an redirect URL with your API configuration while instantiating the API object you'll receive an authorization URL. Open this in an external browser or a web view inside your app. It's important to understand the idea behind OAuth: The user leaves his credentials in a known environment. Ideally in a browser of his trust.
 
-	- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
+	- (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 	{
 		// example for iOS
 		// One could also open a UIWebView and load the URL inside the app.
@@ -87,9 +87,9 @@ The user will be able to log in at SoundCloud and give your application access. 
 		return [scAPI handleOpenRedirectURL:launchURL];
 	}
 
-As an alternative to authenticating using a browser you can also implement `-soundCloudAPI:preparedAuthorizationURL:` as follows to use the *user credentials flow*:
+As an alternative to authenticating using a browser you can also implement `-soundCloudAPIPreparedAuthorizationURL:` as follows to use the *user credentials flow*:
 
-	- (void)soundCloudAPI:(SCSoundCloudAPI *)scAPI preparedAuthorizationURL:(NSURL *)authorizationURL;
+	- (void)soundCloudAPIPreparedAuthorizationURL:(NSURL *)authorizationURL;
 	{
 		// open a view which asks the user for username & password
 		// example for iOS
