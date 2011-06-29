@@ -83,20 +83,14 @@
 			remoteGlobalIDString = 942FFCD612315E0A00E6C65E;
 			remoteInfo = "OAuth2Client Framework";
 		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		942BFBBD13A0307100129575 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
+		99EF0E7C13BB1B29000D7FEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 942FFCD512315E0A00E6C65E;
+			remoteInfo = OAuth2Client.framework;
 		};
-/* End PBXCopyFilesBuildPhase section */
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		82249A9E1248BA100003F0BB /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SoundCloud.bundle; sourceTree = "<group>"; };
@@ -332,7 +326,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94535F8A123FAFE000BD668A /* Build configuration list for PBXNativeTarget "SoundCloudAPI.framework" */;
 			buildPhases = (
-				942BFBBD13A0307100129575 /* Copy Frameworks */,
 				94535F81123FAFDF00BD668A /* Headers */,
 				94535F82123FAFDF00BD668A /* Resources */,
 				94535F83123FAFDF00BD668A /* Sources */,
@@ -341,6 +334,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				99EF0E7D13BB1B29000D7FEA /* PBXTargetDependency */,
 			);
 			name = SoundCloudAPI.framework;
 			productName = SoundCloudAPI.framework;
@@ -463,6 +457,11 @@
 			isa = PBXTargetDependency;
 			name = OAuth2Client;
 			targetProxy = 94E5ADA7122C193000C7021A /* PBXContainerItemProxy */;
+		};
+		99EF0E7D13BB1B29000D7FEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuth2Client.framework;
+			targetProxy = 99EF0E7C13BB1B29000D7FEA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
