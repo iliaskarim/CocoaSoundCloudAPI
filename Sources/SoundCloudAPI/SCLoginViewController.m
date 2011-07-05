@@ -13,19 +13,11 @@
 
 #import "SCLoginViewController.h"
 
+
 @interface SCLoginTitleBar: UIView {
 }
 @end
 
-@interface SCLoginSectionBar : UIControl {
-}
-@end
-
-
-@interface SCLoginViewController ()
-- (void)sectionAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
-- (IBAction)didSelectSectionbar:(SCLoginSectionBar *)sectionBar;
-@end
 
 #pragma mark -
 
@@ -38,11 +30,9 @@
 {
     if (!anURL) return nil;
     
-    if (self = [super init]) {
+    self = [super init];
+    if (self) {
         
-        numberOfSections = 1;
-        currentSection = 0;
-		
 		showReloadButton = NO;
         
         if ([self respondsToSelector:@selector(setModalPresentationStyle:)]){
@@ -70,8 +60,7 @@
     [authentication release];
     [activityIndicator release];
     [URL release];
-    [webViews release];
-    [sectionBars release];
+    [webView release];
     [super dealloc];
 }
 
@@ -83,7 +72,7 @@
 - (void)setShowReloadButton:(BOOL)value;
 {
 	showReloadButton = value;
-	[self updateInterface:NO];
+	[self updateInterface];
 }
 
 
@@ -140,111 +129,36 @@
 	activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin);
 	activityIndicator.hidesWhenStopped = YES;
 	[self.view addSubview:activityIndicator];
-	
-    NSMutableArray *mutableWebViews = [NSMutableArray arrayWithCapacity:numberOfSections];
-    NSMutableArray *mutableSectionBars = [NSMutableArray arrayWithCapacity:numberOfSections];
-    for (int section = 0; section < numberOfSections; section++) {
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-        webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        webView.backgroundColor = nil;
-        webView.opaque = NO;
-        webView.delegate = self;
-        [mutableWebViews addObject:webView];
-        if (section == 0) {
-            [webView loadRequest:[NSURLRequest requestWithURL:URL]];
-        } else {
-            [webView loadHTMLString:@"<body height=100%><h1>Test</h1>This is just some test content</body>" baseURL:nil];
-        }
-
-        [webView release];
-        
-        SCLoginSectionBar *bar = [[SCLoginSectionBar alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)];
-        [bar addTarget:self action:@selector(didSelectSectionbar:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:bar];
-        [mutableSectionBars addObject:bar];
-        [bar release];
-    }
-    [webViews release]; webViews = [mutableWebViews retain];
-    [sectionBars release]; sectionBars = [mutableSectionBars retain];
     
-    [self updateInterface:NO];
+    NSURL *URLToOpen = [NSURL URLWithString:[[URL absoluteString] stringByAppendingString:@"&display_bar=false"]];
+    
+    webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    webView.backgroundColor = nil;
+    webView.opaque = NO;
+    webView.delegate = self;
+    [webView loadRequest:[NSURLRequest requestWithURL:URLToOpen]];
+    [self.view addSubview:webView];
+    	
+    [self updateInterface];
 }
 
 - (void)viewDidUnload;
 {
     [titleBarView release]; titleBarView = nil;
     [activityIndicator release]; activityIndicator = nil;
-    [webViews release]; webViews = nil;
-    [sectionBars release]; sectionBars = nil;
+    [webView release]; webView = nil;
 }
 
-- (void)updateInterface:(BOOL)animated;
-{
-    CGFloat barHeight = 28.0;
-    
+- (void)updateInterface;
+{    
     CGRect contentRect;
     
     CGRect titleBarRect;
     CGRectDivide(self.view.bounds, &titleBarRect, &contentRect, 27.0, CGRectMinYEdge);
     titleBarView.frame = titleBarRect;
-    
-    if (animated) {
-        [UIView beginAnimations:@"sectionAnimation" context:nil];
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(sectionAnimationDidStop:finished:context:)];
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-        [UIView setAnimationDuration:0.4];
-    }
-        
-    for (int section = 0; section < numberOfSections; section++) {
-        SCLoginSectionBar *bar = [sectionBars objectAtIndex:section];
-        UIWebView *webView = [webViews objectAtIndex:section];
-        
-        if (section == currentSection) {
-            bar.frame = CGRectMake(contentRect.origin.x,
-                                 contentRect.origin.y + section * barHeight,
-                                 contentRect.size.width,
-                                 barHeight);
-            bar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
-            webView.frame = CGRectMake(contentRect.origin.x,
-                                       contentRect.origin.y + section * barHeight,
-                                       contentRect.size.width,
-                                       contentRect.size.height - (numberOfSections-1) * barHeight);
-            webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-            [self.view insertSubview:webView belowSubview:bar];
-            //activityIndicator.center = CGPointMake(CGRectGetMidX(webView.bounds), CGRectGetMidY(webView.bounds));
-            if (webView.loading) {
-                [activityIndicator startAnimating];
-            } else {
-                [activityIndicator stopAnimating];
-            }
-            //[webView addSubview:activityIndicator];
-            
-            if (!animated)[bar removeFromSuperview];
-            bar.alpha = 0.0;
-        } else {
-            if (section < currentSection) {
-                bar.frame = CGRectMake(contentRect.origin.x,
-                                       contentRect.origin.y + section * barHeight,
-                                       contentRect.size.width,
-                                       barHeight);
-                bar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
-            } else {
-                bar.frame = CGRectMake(contentRect.origin.x,
-                                       CGRectGetMaxY(contentRect) - (numberOfSections-section)*barHeight,
-                                       contentRect.size.width,
-                                       barHeight);
-                bar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
-            }
-            webView.frame = bar.frame;
-            webView.autoresizingMask = bar.autoresizingMask;
-            [self.view insertSubview:bar aboveSubview:webView];
-            bar.alpha = 1.0;
-            if (!animated)[webView removeFromSuperview];
-        }
-        bar.userInteractionEnabled = !animated; //We don't want no userInteraction during the animation
-    }
-	
+    webView.frame = contentRect;
+    	
 	[titleBarButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
 	if (!showReloadButton) {
 		[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
@@ -255,40 +169,19 @@
 		UIImage *reloadImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"reload" ofType:@"png"]];
 		[titleBarButton setImage:reloadImage forState:UIControlStateNormal];
 	}
-    if (animated) {
-        [UIView commitAnimations];
-    }
-}
-
-- (void)sectionAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    for (int section = 0; section < numberOfSections; section++) {
-        SCLoginSectionBar *bar = [sectionBars objectAtIndex:section];
-        UIWebView *webView = [webViews objectAtIndex:section];
-        
-        if (section == currentSection) {
-            [bar removeFromSuperview];
-        } else {
-            [webView removeFromSuperview];
-        }
-        bar.userInteractionEnabled = YES;
-    }
+    
 }
 
 #pragma mark WebView Delegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView;
 {
-    if (webView == [webViews objectAtIndex:currentSection]) {
-        [activityIndicator startAnimating];
-    }
+    [activityIndicator startAnimating];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 {
-    if (webView == [webViews objectAtIndex:currentSection]) {
-        [activityIndicator stopAnimating];
-    }
+    [activityIndicator stopAnimating];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
@@ -323,15 +216,7 @@
 
 - (IBAction)reload;
 {
-	for (UIWebView *webView in webViews) {
-		[webView reload];
-	}
-}
-
-- (IBAction)didSelectSectionbar:(SCLoginSectionBar *)sectionBar;
-{
-    currentSection = [sectionBars indexOfObject:sectionBar];
-    [self updateInterface:YES];
+    [webView reload];
 }
 
 @end
@@ -368,39 +253,5 @@
 }
 
 @end
-
-
-#pragma mark -
-
-@implementation SCLoginSectionBar
-
-- (void)drawRect:(CGRect)rect;
-{
-    CGRect topLineRect;
-    CGRect gradientRect;
-    CGRect bottomLineRect;
-    CGRectDivide(self.bounds, &topLineRect, &gradientRect, 0.0, CGRectMinYEdge);
-    CGRectDivide(gradientRect, &bottomLineRect, &gradientRect, 1.0, CGRectMaxYEdge);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace,
-                                                                 (CGFloat[]){0.40,0.40,0.40,1.0,  0.33,0.33,0.33,1.0},
-                                                                 (CGFloat[]){0.0, 1.0},
-                                                                 2);
-    CGContextDrawLinearGradient(context, gradient, gradientRect.origin, CGPointMake(gradientRect.origin.x, CGRectGetMaxY(gradientRect)), 0);
-    CGGradientRelease(gradient);
-    CGColorSpaceRelease(colorSpace);
-    
-    CGContextSetFillColor(context, (CGFloat[]){0.20,0.20,0.20,1.0});
-    CGContextFillRect(context, topLineRect);
-    
-    CGContextSetFillColor(context, (CGFloat[]){0.20,0.20,0.20,1.0});
-    CGContextFillRect(context, bottomLineRect);
-}
-
-@end
-
 
 #endif

@@ -16,14 +16,10 @@
 @interface SCLoginViewController : UIViewController <UIWebViewDelegate> {
     SCSoundCloudAPIAuthentication *authentication;
     NSURL *URL;
-    NSArray *webViews;
-    NSArray *sectionBars;
+    UIWebView *webView;
     UIActivityIndicatorView *activityIndicator;
     UIView *titleBarView;
     NSBundle *resourceBundle;
-    
-    NSInteger numberOfSections;
-    NSInteger currentSection;
 	
 	UIButton *titleBarButton;
 	BOOL showReloadButton;
@@ -37,7 +33,7 @@
  */
 @property (nonatomic,assign) BOOL showReloadButton;
 
-- (void)updateInterface:(BOOL)animated;
+- (void)updateInterface;
 
 - (IBAction)close;
 - (IBAction)reload;

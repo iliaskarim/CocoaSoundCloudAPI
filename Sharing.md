@@ -1,5 +1,4 @@
-SoundCloud Upload & Share Guide for iOS and OSX
-===============================================
+# SoundCloud Upload & Share Guide for iOS and OSX
 
 So you are familiar with the [SoundCloud API Wrapper](https://github.com/soundcloud/cocoa-api-wrapper) and want to use it to share the sounds you upload? And you want to use the [existing connections on SoundCloud](http://soundcloud.com/settings/connections) or make new ones? Awesome. Here's how to do it.
 
@@ -12,6 +11,7 @@ Currently the following Services are supported:
 - Twitter
 - Facebook (Profiles and Pages)
 - Foursquare
+- Tumblr
 - Myspace
 
 Here's what you need to do for sharing:
@@ -23,8 +23,7 @@ Here's what you need to do for sharing:
 
 Depending on the privacy settings of your upload, the task is a little bit different: You want to share public tracks on social networks, and private uploads via mail.
 
-Getting the users connections
------------------------------
+## Getting the users connections
 
 For getting the user's connections, use the connections resource at [`/me/connections.json`](https://github.com/soundcloud/api/wiki/10.7-Resources%3A-connections). With the API Wrapper, it looks like this:
 
@@ -44,8 +43,7 @@ What this returns is a JSON array of connections which looks like this:
 
 Use a [JSON library](http://code.google.com/p/json-framework/) to transform this into Ojbective-C structures. We recommend to do this as soon as possible, preferrably directly after the start of the App, so the user does not have to wait for connections to load. You might even want to store this info, but make sure to update it it on use, because not only your app might change it!
 
-Provide a UI for the User's connections
----------------------------------------
+## Provide a UI for the User's connections
 
 In your upload screen for *public* files, we recommend using a table to display the connections. You can use `UISwitch` controls as AccessoryViews of your `UITableCell`s.
 
@@ -102,8 +100,7 @@ When sharing **private**, you don't want to supply sharing connections, share to
 		…
 		nil];
 
-Bonus: Making new connections
------------------------------
+## Bonus: Making new connections
 
 So what about users that have not yet connected their favorite services to SoundCloud? Can they do it from within your app? Yes, they can, and it's quite easy.
 
@@ -124,6 +121,7 @@ The services that are currently supported are:
 - `twitter`
 - `facebook_profile` (this will also connect Facebook pages!)
 - `foursquare`
+- `tumblr`
 - `myspace`
 
 The URL you get back in the JSON should be opened in a WebView. Listen for your callback URL in `-webView:shouldStartLoadWithRequest:navigationType:`. If you get it, close the webView and reload the connections. Voilà, your new connections are there and ready to use!
