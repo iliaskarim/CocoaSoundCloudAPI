@@ -15,15 +15,15 @@ It is recommended that you have one central instance of the `SCSoundCloudAPI` ob
 
 To create an instance of `SCSoundCloudAPI` you can use the following code.
 
-	SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:CLIENT_KEY
-																		                                 consumerSecret:CLIENT_SECRET
-																			                                callbackURL:[NSURL URLWithString:CALLBACK_URL]];
+	SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithClientID:CLIENT_KEY
+																	                                    clientSecret:CLIENT_SECRET
+																		                                 redirectURL:[NSURL URLWithString:REDIRECT_URL]];
 	// scAPI is a instance variable
 	scAPI = [[SCSoundCloudAPI alloc] initWithDelegate:self
 							   authenticationDelegate:authDelegate
 									 apiConfiguration:scAPIConfig];
 
-You will get your App's _Client Key_, it's _Client Secret_ and the _Callback URL_ from [the SoundCloud page where you registered your App](http://soundcloud.com/you/apps). 
+You will get your App's _Client Key_, it's _Client Secret_ from [the SoundCloud page where you registered your App](http://soundcloud.com/you/apps). There you should register your App with it's name and a _Redirect URL_. That _Redirect URL_ should comply to a protocol that is handled by your app. See [this page](http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html) on how to set up the protocol in your App. For the curious: in the wrapper we're using _Redirect URL_ instead of _Redirect URI_ because the underlying type is of `NSURL`.
 
 You may now ask the `scAPI` variable for the authentication status with `scAPI.isAuthenticated`. If you want to start the authentication flow you need to do a call to `[scAPI requestAuthentication]`. If it's not already authenticated, it will start the authentication flow with your *authentication delegate*.
 

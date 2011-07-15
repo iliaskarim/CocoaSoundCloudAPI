@@ -189,8 +189,8 @@
     if (![request.URL isEqual:URL]) {
 		BOOL hasBeenHandled = NO;
 		
-		NSURL *callbackURL = authentication.configuration.callbackURL;
-		if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+		NSURL *redirectURL = authentication.configuration.redirectURL;
+		if ([[request.URL absoluteString] hasPrefix:[redirectURL absoluteString]]) {
 	        hasBeenHandled = [authentication handleRedirectURL:request.URL];
 			if (hasBeenHandled) {
 				[self close];

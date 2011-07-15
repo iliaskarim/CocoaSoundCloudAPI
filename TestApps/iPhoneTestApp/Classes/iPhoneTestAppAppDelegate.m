@@ -68,13 +68,13 @@
 {
 	if (!soundCloudAPIMaster) {
 #ifdef kUseProduction
-		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:kTestAppConsumerKey
-																											 consumerSecret:kTestAppConsumerSecret
-																												callbackURL:[NSURL URLWithString:kCallbackURL]];
+		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithClientID:kTestAppClientID
+                                                                                                            clientSecret:kTestAppClientSecret
+                                                                                                             redirectURL:[NSURL URLWithString:kRedirectURL]];
 #else
-		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithConsumerKey:kTestAppConsumerKey
-																										  consumerSecret:kTestAppConsumerSecret
-																											 callbackURL:[NSURL URLWithString:kCallbackURL]];
+		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithClientID:kTestAppClientID
+                                                                                                         clientSecret:kTestAppClientSecret
+                                                                                                          redirectURL:[NSURL URLWithString:kRedirectURL]];
 #endif
 		
 		soundCloudAPIMaster = [[SCSoundCloudAPI alloc] initWithDelegate:nil authenticationDelegate:self apiConfiguration:scAPIConfig];

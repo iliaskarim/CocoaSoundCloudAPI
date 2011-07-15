@@ -52,13 +52,13 @@
 {
 	SCSoundCloudAPIConfiguration *scAPIConfig = nil;
 #ifdef kUseProduction
-	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:kTestAppConsumerKey
-																		   consumerSecret:kTestAppConsumerSecret
-																			  callbackURL:[NSURL URLWithString:kCallbackURL]];
+	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithClientID:kTestAppClientID
+                                                                          clientSecret:kTestAppClientSecret
+                                                                           redirectURL:[NSURL URLWithString:kRedirectURL]];
 #else
-	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithConsumerKey:kTestAppConsumerKey
-																		consumerSecret:kTestAppConsumerSecret
-																		   callbackURL:[NSURL URLWithString:kCallbackURL]];
+	scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithClientID:kTestAppClientID
+                                                                       clientSecret:kTestAppClientSecret
+                                                                        redirectURL:[NSURL URLWithString:kRedirectURL]];
 #endif
 	
 	scAPI = [[SCSoundCloudAPI alloc] initWithDelegate:self
@@ -104,7 +104,7 @@
 	NSString *urlStr = [[event paramDescriptorForKeyword:keyDirectObject] 
 						stringValue];
 	
-	if([urlStr hasPrefix:kCallbackURL]) {
+	if([urlStr hasPrefix:kRedirectURL]) {
 		NSLog(@"handling oauth callback");
 		NSURL *url = [NSURL URLWithString:urlStr];
 		[scAPI handleRedirectURL:url];

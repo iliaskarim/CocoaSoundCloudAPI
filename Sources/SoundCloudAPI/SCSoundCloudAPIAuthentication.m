@@ -68,10 +68,10 @@
         
 		configuration = [aConfiguration retain];
 		
-		oauthClient = [[NXOAuth2Client alloc] initWithClientID:[configuration consumerKey]
-												  clientSecret:[configuration consumerSecret]
-												  authorizeURL:[configuration authURL]
-													  tokenURL:[configuration accessTokenURL]
+		oauthClient = [[NXOAuth2Client alloc] initWithClientID:configuration.clientID
+												  clientSecret:configuration.clientSecret
+												  authorizeURL:configuration.authURL
+													  tokenURL:configuration.accessTokenURL
 													  delegate:self];
 		oauthClient.userAgent = [SCSoundCloudAPIConfiguration userAgentString];
 	}
@@ -152,8 +152,8 @@
 - (void)oauthClientNeedsAuthentication:(NXOAuth2Client *)client;
 {
 	NSURL *authorizationURL = nil;
-	if ([configuration callbackURL]) {
-		authorizationURL = [client authorizationURLWithRedirectURL:[configuration callbackURL]];
+	if (configuration.redirectURL) {
+		authorizationURL = [client authorizationURLWithRedirectURL:configuration.redirectURL];
 	}
     if ([delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]) {
         [delegate soundCloudAPIPreparedAuthorizationURL:authorizationURL];
