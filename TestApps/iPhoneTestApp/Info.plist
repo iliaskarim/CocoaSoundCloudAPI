@@ -7,7 +7,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>x-wrapper-test</string>
+				<string>x-oauth2-test</string>
 			</array>
 			<key>CFBundleURLName</key>
 			<string>com.yourcompany.myapp</string>

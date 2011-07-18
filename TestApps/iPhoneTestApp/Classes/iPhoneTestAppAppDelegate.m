@@ -24,36 +24,57 @@
  * 
  */
 
+#import "SCAPI.h"
+
 #import "iPhoneTestAppAppDelegate.h"
 #import "iPhoneTestAppViewController.h"
 
 
 @implementation iPhoneTestAppAppDelegate
 
++ (void)initialize;
+{
+    // Configure NXOAuth2AccountStore for 'com.soundcloud.api'
+    // -------------------------------------------------------
+
+#if SANDBOX
+    [[SCSoundCloud shared] setConfiguration:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             @"3f1259d2066b28f2f01573640617f6aa", kSCConfigurationClientID,
+                                             @"07682dc23ef6b7f2e96ce9b89798fe3a", kSCConfigurationSecret,
+                                             [NSURL URLWithString:@"x-oauth2-test://soundcloud"], kSCConfigurationRedirectURL,
+                                             @"YES", kSCConfigurationSandbox, nil]];
+#else
+    [[SCSoundCloud shared] setConfiguration:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             @"3f1259d2066b28f2f01573640617f6aa", kSCConfigurationClientID,
+                                             @"07682dc23ef6b7f2e96ce9b89798fe3a", kSCConfigurationSecret,
+                                             [NSURL URLWithString:@"x-oauth2-test://soundcloud"], kSCConfigurationRedirectURL, nil]];
+#endif
+    
+}
+
 #pragma mark Lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
-	[window setRootViewController:viewController];
-    [window makeKeyAndVisible];
-	
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	BOOL didHandleURL = NO;
 	if (launchURL) {
-		didHandleURL = [self.soundCloudAPIMaster handleRedirectURL:launchURL];	
+		didHandleURL = [[SCSoundCloud shared] handleRedirectURL:launchURL];	
 	}
 	
-	// do this at the end and seperatly. this way you ensure that your soundCloudController 
-	// already is accessible via the appDelegate & that the launchURL (if there's one) has been handled
-	[self.soundCloudAPIMaster checkAuthentication];
-	
+    if ([[[SCSoundCloud shared] accounts] count] < 1) {
+        [[SCSoundCloud shared] requestAccess];
+    }
+    
+    [window setRootViewController:viewController];
+    [window makeKeyAndVisible];
+    
 	return didHandleURL; 
 }
 
 - (void)dealloc;
 {
     [viewController release];
-	[soundCloudAPIMaster release];
     [window release];
     [super dealloc];
 }
@@ -64,68 +85,11 @@
 @synthesize window;
 @synthesize viewController;
 
-- (SCSoundCloudAPI *)soundCloudAPIMaster;
-{
-	if (!soundCloudAPIMaster) {
-#ifdef kUseProduction
-		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForProductionWithConsumerKey:kTestAppConsumerKey
-																											 consumerSecret:kTestAppConsumerSecret
-																												callbackURL:[NSURL URLWithString:kCallbackURL]];
-#else
-		SCSoundCloudAPIConfiguration *scAPIConfig = [SCSoundCloudAPIConfiguration configurationForSandboxWithConsumerKey:kTestAppConsumerKey
-																										  consumerSecret:kTestAppConsumerSecret
-																											 callbackURL:[NSURL URLWithString:kCallbackURL]];
-#endif
-		
-		soundCloudAPIMaster = [[SCSoundCloudAPI alloc] initWithDelegate:nil authenticationDelegate:self apiConfiguration:scAPIConfig];
-		// make shure to register the myapp url scheme to your app :)
-		
-	}
-	return soundCloudAPIMaster;
-}
-
-
 #pragma mark -
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url;
 {
-	return [soundCloudAPIMaster handleRedirectURL:url];
+	return [[SCSoundCloud shared] handleRedirectURL:url];
 }
-
-#pragma mark SCSoundCloudAPIAuthenticationDelegate
-
-- (void)soundCloudAPIDidAuthenticate;
-{
-	viewController.postButton.enabled = YES;
-	viewController.trackNameField.enabled = YES;
-	// not the most elegant way to enable/disable the ui
-	// but this is up to you (the developer of apps) to prove your cocoa skills :)
-	
-	[viewController requestUserInfo];
-}
-
-- (void)soundCloudAPIDidResetAuthentication;
-{
-	viewController.postButton.enabled = NO;
-	viewController.trackNameField.enabled = NO;
-	
-	// reauthenticate
-	[self.soundCloudAPIMaster checkAuthentication];
-}
-
-- (void)soundCloudAPIDidFailToGetAccessTokenWithError:(NSError *)error;
-{
-	if ([error.domain isEqualToString:SCAPIErrorDomain]) {
-	} else if ([error.domain isEqualToString:NSURLErrorDomain]) {
-		if ([error code] == NSURLErrorNotConnectedToInternet) {
-			[viewController.postButton setTitle:@"No internet connection" forState:UIControlStateDisabled];
-			[viewController.postButton setEnabled:NO];
-		} else {
-			NSLog(@"error: %@", [error localizedDescription]);
-		}
-		
-	}
-}
-
 
 @end

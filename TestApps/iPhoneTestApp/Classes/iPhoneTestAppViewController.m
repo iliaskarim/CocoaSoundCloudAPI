@@ -34,18 +34,49 @@
 
 @implementation iPhoneTestAppViewController
 
+
 #pragma mark Lifecycle
 
 - (void)awakeFromNib;
 {
-	scAPI = [appDelegate.soundCloudAPIMaster copyWithAPIDelegate:self];
+    [super awakeFromNib];
+    if ([[[SCSoundCloud shared] accounts] count] > 0) {
+        SCAccount *account = [[[SCSoundCloud shared] accounts] objectAtIndex:0];
+        
+        [account fetchUserInfoWithComplitionHandler:^(BOOL success, SCAccount *account, NSError *error){
+            NSDictionary *userData = account.userInfo;
+            [self.usernameLabel setText:[userData objectForKey:@"username"]];
+            [self.trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userData objectForKey:@"private_tracks_count"] integerValue]]];
+            
+            self.trackNameField.enabled = YES;
+            self.postButton.enabled = YES;
+        }];
+        
+        [SCRequest requestWithPath:@"/me/tracks.json"
+                       parameters:nil
+                    requestMethod:@"GET"
+                          account:account
+                  progressHandler:nil
+                  responseHandler:^(NSData *data, NSError *error){
+                      if (data) {
+                          NSError *jsonError = nil;
+                          NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                          if (result) {
+                              NSLog(@"tracks: %@", result);
+                          } else {
+                              NSLog(@"tracks: ??? json error: %@", [jsonError localizedDescription]);
+                          }
+                      } else {
+                          NSLog(@"tracks: ??? error: %@", [error localizedDescription]);
+                      }
+                  }];
+    }
 }
 
 
 - (void)dealloc;
 { 
 	[uploadConnectionId release];
-	[scAPI release];
 	[super dealloc];
 }
 
@@ -53,109 +84,44 @@
 #pragma mark Accessors
 
 @synthesize postButton, trackNameField;
+@synthesize progresBar;
 
-
-#pragma mark Private
-
-- (void)requestUserInfo;
-{
-	[scAPI meWithContext:@"userInfo"];
-}
-
-- (void)updateUserInfoFromData:(NSData *)data;
-{
-	id object = [data objectFromJSONData];
-	
-	if([object isKindOfClass:[NSDictionary class]]) {
-		NSDictionary *userInfoDictionary = (NSDictionary *)object;
-		[usernameLabel setText:[userInfoDictionary objectForKey:@"username"]];
-		[trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userInfoDictionary objectForKey:@"private_tracks_count"] integerValue]]];
-	}
-}
+@synthesize usernameLabel;
+@synthesize trackNumberLabel;
 
 
 #pragma mark Actions
 
 -(IBAction)sendRequest:(id)sender;
 {
-	// sample from http://www.freesound.org/samplesViewSingle.php?id=1375
-	NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"wav"];
-	NSURL *dataURL = [NSURL fileURLWithPath:dataPath];
-	
-	[progresBar setProgress:0];
-	if (uploadConnectionId) {
-		[scAPI cancelConnection:uploadConnectionId];
-		[uploadConnectionId release]; uploadConnectionId = nil;
-	}
-	uploadConnectionId = [[scAPI postTrackWithTitle:[trackNameField text]
-											fileURL:dataURL
-										   isPublic:NO
-											context:@"upload"] retain];
-}
-
--(void)didReceiveMemoryWarning;
-{
-    [super didReceiveMemoryWarning];
-    // Release anything that's not essential, such as cached data
-}
-
-
-#pragma mark SCSoundCloudAPIDelegate
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFinishWithData:(NSData *)data context:(id)context userInfo:(id)userInfo;
-{
-	if([context isEqualToString:@"userInfo"]) {
-		[self updateUserInfoFromData:data];
-	}
-	if([context isEqualToString:@"upload"]) {
-		[uploadConnectionId release]; uploadConnectionId = nil;
-		[self requestUserInfo];
-		
-		return; // comment this line to add the track to the field recordings group http://sandbox-soundcloud.com/groups/field-recordings
-		
-		NSDictionary *newTrack = [data objectFromJSONData];
-		
-		NSNumber *groupId = [NSNumber numberWithInt:8];	// check group id for production
-		NSNumber *trackId = [newTrack objectForKey:@"id"];
-
-		[scAPI postTrackWithId:trackId toGroupWithId:groupId context:@"addToGroup"];
-	}
-	if ([context isEqualToString:@"addToGroup"]) {
-		NSLog(@"%@", [data objectFromJSONData]);
-	}
-}
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;
-{
-	if ([error.domain isEqualToString:NSURLErrorDomain]) {
-		if (error.code == 401) {
-			NSLog(@"401 - not authenticated");
-		}
-	}
-	if ([context isEqualToString:@"upload"]) {
-		[uploadConnectionId release]; uploadConnectionId = nil;
-	}
-	// check error code. if it's a http error get it from the userdict (see SCAPIErrors.h)
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-													message:[error localizedDescription]
-												   delegate:nil
-										  cancelButtonTitle:@"Ignore"
-										  otherButtonTitles:@"Retry (dummy)", nil];
-	[alert show];
-	[alert release];
-}
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveData:(NSData *)data context:(id)context userInfo:(id)userInfo;
-{}
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didReceiveBytes:(unsigned long long)loadedBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
-{}
-
-- (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didSendBytes:(unsigned long long)sendBytes total:(unsigned long long)totalBytes context:(id)context userInfo:(id)userInfo;
-{
-	if([context isEqual:@"upload"]) {
-		[progresBar setProgress: ((float)sendBytes) / totalBytes];
-	}
+    NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"wav"];
+    NSURL *dataURL = [NSURL fileURLWithPath:dataPath];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+	[parameters setObject:[trackNameField text] forKey:@"track[title]"];
+	[parameters setObject:@"private" forKey:@"track[sharing]"];
+	[parameters setObject:dataURL forKey:@"track[asset_data]"];
+    
+    self.progresBar.progress = 0.0;
+    
+    SCAccount *account = [[[SCSoundCloud shared] accounts] objectAtIndex:0];
+    [SCRequest requestWithPath:@"/tracks"
+                   parameters:parameters
+                requestMethod:@"POST"
+                      account:account
+              progressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal){self.progresBar.progress = ((float)bytesSend)/bytesTotal;}
+              responseHandler:^(NSData *data, NSError *error){
+                  if (data) {
+                      self.progresBar.progress = 0.0;
+                      [account fetchUserInfoWithComplitionHandler:^(BOOL success, SCAccount *account, NSError *error){
+                          if (success) {
+                              NSDictionary *userData = account.userInfo;
+                              [self.usernameLabel setText:[userData objectForKey:@"username"]];
+                              [self.trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userData objectForKey:@"private_tracks_count"] integerValue]]];
+                          }
+                      }];
+                  }
+              }];
 }
 
 #pragma mark UITextField Delegate
