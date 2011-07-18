@@ -59,6 +59,30 @@
 		99F79A5D13A15371002555F0 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F79A5C13A15371002555F0 /* OAuth2Client.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AA747D9F0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		F60811E313D050180040EC66 /* SCSoundCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811E113D050180040EC66 /* SCSoundCloud.h */; };
+		F60811E413D050180040EC66 /* SCSoundCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811E113D050180040EC66 /* SCSoundCloud.h */; };
+		F60811E513D050180040EC66 /* SCSoundCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811E213D050180040EC66 /* SCSoundCloud.m */; };
+		F60811E613D050180040EC66 /* SCSoundCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811E213D050180040EC66 /* SCSoundCloud.m */; };
+		F60811E913D051420040EC66 /* SCAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811E713D051420040EC66 /* SCAccount.h */; };
+		F60811EA13D051420040EC66 /* SCAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811E713D051420040EC66 /* SCAccount.h */; };
+		F60811EB13D051420040EC66 /* SCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811E813D051420040EC66 /* SCAccount.m */; };
+		F60811EC13D051420040EC66 /* SCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811E813D051420040EC66 /* SCAccount.m */; };
+		F60811EF13D051840040EC66 /* SCRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811ED13D051840040EC66 /* SCRequest.h */; };
+		F60811F013D051840040EC66 /* SCRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811ED13D051840040EC66 /* SCRequest.h */; };
+		F60811F113D051840040EC66 /* SCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811EE13D051840040EC66 /* SCRequest.m */; };
+		F60811F213D051840040EC66 /* SCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811EE13D051840040EC66 /* SCRequest.m */; };
+		F608121A13D08B5B0040EC66 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F608121813D08B5B0040EC66 /* SCShareViewController.h */; };
+		F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F608121813D08B5B0040EC66 /* SCShareViewController.h */; };
+		F608121C13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
+		F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
+		F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
+		F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
+		F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
+		F6E88D2813D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
+		F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */; };
+		F6E88D2D13D43A74008B9CD5 /* SCAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */; };
+		F6E88D3113D43B67008B9CD5 /* SCAccount+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */; };
+		F6E88D3213D43B67008B9CD5 /* SCAccount+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +150,18 @@
 		AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCloudAPI_Prefix.pch; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundCloudAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F60811E113D050180040EC66 /* SCSoundCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloud.h; sourceTree = "<group>"; };
+		F60811E213D050180040EC66 /* SCSoundCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloud.m; sourceTree = "<group>"; };
+		F60811E713D051420040EC66 /* SCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAccount.h; sourceTree = "<group>"; };
+		F60811E813D051420040EC66 /* SCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAccount.m; sourceTree = "<group>"; };
+		F60811ED13D051840040EC66 /* SCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRequest.h; sourceTree = "<group>"; };
+		F60811EE13D051840040EC66 /* SCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRequest.m; sourceTree = "<group>"; };
+		F608121813D08B5B0040EC66 /* SCShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShareViewController.h; sourceTree = "<group>"; };
+		F608121913D08B5B0040EC66 /* SCShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCShareViewController.m; sourceTree = "<group>"; };
+		F6E88D2313D41F8A008B9CD5 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
+		F6E88D2413D41F8A008B9CD5 /* SCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConstants.m; sourceTree = "<group>"; };
+		F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCAccount+Private.h"; sourceTree = "<group>"; };
+		F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCAccount+Private.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +244,7 @@
 		9429A5D1122659D500D31807 /* SoundCloudAPI */ = {
 			isa = PBXGroup;
 			children = (
+				F608121713D08B110040EC66 /* Controller */,
 				9454811C1248C4A900E6BD3D /* Streaming */,
 				9429A5D2122659D500D31807 /* SCAPI.h */,
 				9429A5D3122659D500D31807 /* SCAPIErrors.h */,
@@ -219,8 +256,16 @@
 				94EE4B4F12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m */,
 				9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */,
 				9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */,
-				8283469912437EA1000EA6DD /* SCLoginViewController.h */,
-				8283469A12437EA1000EA6DD /* SCLoginViewController.m */,
+				F60811E113D050180040EC66 /* SCSoundCloud.h */,
+				F60811E213D050180040EC66 /* SCSoundCloud.m */,
+				F60811E713D051420040EC66 /* SCAccount.h */,
+				F60811E813D051420040EC66 /* SCAccount.m */,
+				F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */,
+				F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */,
+				F60811ED13D051840040EC66 /* SCRequest.h */,
+				F60811EE13D051840040EC66 /* SCRequest.m */,
+				F6E88D2313D41F8A008B9CD5 /* SCConstants.h */,
+				F6E88D2413D41F8A008B9CD5 /* SCConstants.m */,
 			);
 			path = SoundCloudAPI;
 			sourceTree = "<group>";
@@ -275,6 +320,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F608121713D08B110040EC66 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8283469912437EA1000EA6DD /* SCLoginViewController.h */,
+				8283469A12437EA1000EA6DD /* SCLoginViewController.m */,
+				F608121813D08B5B0040EC66 /* SCShareViewController.h */,
+				F608121913D08B5B0040EC66 /* SCShareViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -295,6 +351,12 @@
 				945481361248C4C300E6BD3D /* SCAudioBufferQueue.h in Headers */,
 				945481381248C4C300E6BD3D /* SCAudioFileStreamParser.h in Headers */,
 				9454813A1248C4C300E6BD3D /* SCAudioStreamPacketDescriptions.h in Headers */,
+				F60811E313D050180040EC66 /* SCSoundCloud.h in Headers */,
+				F60811E913D051420040EC66 /* SCAccount.h in Headers */,
+				F60811EF13D051840040EC66 /* SCRequest.h in Headers */,
+				F608121A13D08B5B0040EC66 /* SCShareViewController.h in Headers */,
+				F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */,
+				F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +378,12 @@
 				94EE4B4D12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */,
 				8283469B12437EA1000EA6DD /* SCLoginViewController.h in Headers */,
 				9454812A1248C4C300E6BD3D /* SCAudioStream.h in Headers */,
+				F60811E413D050180040EC66 /* SCSoundCloud.h in Headers */,
+				F60811EA13D051420040EC66 /* SCAccount.h in Headers */,
+				F60811F013D051840040EC66 /* SCRequest.h in Headers */,
+				F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */,
+				F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */,
+				F6E88D2D13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +499,12 @@
 				945481371248C4C300E6BD3D /* SCAudioBufferQueue.m in Sources */,
 				945481391248C4C300E6BD3D /* SCAudioFileStreamParser.m in Sources */,
 				9454813B1248C4C300E6BD3D /* SCAudioStreamPacketDescriptions.m in Sources */,
+				F60811E513D050180040EC66 /* SCSoundCloud.m in Sources */,
+				F60811EB13D051420040EC66 /* SCAccount.m in Sources */,
+				F60811F113D051840040EC66 /* SCRequest.m in Sources */,
+				F608121C13D08B5B0040EC66 /* SCShareViewController.m in Sources */,
+				F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */,
+				F6E88D3113D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +521,12 @@
 				9454812D1248C4C300E6BD3D /* SCAudioBufferQueue.m in Sources */,
 				9454812F1248C4C300E6BD3D /* SCAudioFileStreamParser.m in Sources */,
 				945481311248C4C300E6BD3D /* SCAudioStreamPacketDescriptions.m in Sources */,
+				F60811E613D050180040EC66 /* SCSoundCloud.m in Sources */,
+				F60811EC13D051420040EC66 /* SCAccount.m in Sources */,
+				F60811F213D051840040EC66 /* SCRequest.m in Sources */,
+				F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */,
+				F6E88D2813D41F8A008B9CD5 /* SCConstants.m in Sources */,
+				F6E88D3213D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
