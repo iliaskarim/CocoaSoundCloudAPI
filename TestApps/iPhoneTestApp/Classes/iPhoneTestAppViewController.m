@@ -103,25 +103,26 @@
 	[parameters setObject:dataURL forKey:@"track[asset_data]"];
     
     self.progresBar.progress = 0.0;
-    
-    SCAccount *account = [[[SCSoundCloud shared] accounts] objectAtIndex:0];
-    [SCRequest requestWithPath:@"/tracks"
-                   parameters:parameters
-                requestMethod:@"POST"
-                      account:account
-              progressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal){self.progresBar.progress = ((float)bytesSend)/bytesTotal;}
-              responseHandler:^(NSData *data, NSError *error){
-                  if (data) {
-                      self.progresBar.progress = 0.0;
-                      [account fetchUserInfoWithComplitionHandler:^(BOOL success, SCAccount *account, NSError *error){
-                          if (success) {
-                              NSDictionary *userData = account.userInfo;
-                              [self.usernameLabel setText:[userData objectForKey:@"username"]];
-                              [self.trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userData objectForKey:@"private_tracks_count"] integerValue]]];
-                          }
-                      }];
-                  }
-              }];
+    if ([[[SCSoundCloud shared] accounts] count] > 0) {
+        SCAccount *account = [[[SCSoundCloud shared] accounts] objectAtIndex:0];
+        [SCRequest requestWithPath:@"/tracks"
+                        parameters:parameters
+                     requestMethod:@"POST"
+                           account:account
+                   progressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal){self.progresBar.progress = ((float)bytesSend)/bytesTotal;}
+                   responseHandler:^(NSData *data, NSError *error){
+                       if (data) {
+                           self.progresBar.progress = 0.0;
+                           [account fetchUserInfoWithComplitionHandler:^(BOOL success, SCAccount *account, NSError *error){
+                               if (success) {
+                                   NSDictionary *userData = account.userInfo;
+                                   [self.usernameLabel setText:[userData objectForKey:@"username"]];
+                                   [self.trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userData objectForKey:@"private_tracks_count"] integerValue]]];
+                               }
+                           }];
+                       }
+                   }];
+    }
 }
 
 #pragma mark UITextField Delegate

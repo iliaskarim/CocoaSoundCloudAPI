@@ -116,6 +116,11 @@
     [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType];
 }
 
+- (void)requestAccessWithUsername:(NSString *)username password:(NSString *)password;
+{
+    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType username:username password:password];
+}
+
 - (void)removeAccount:(SCAccount *)account;
 {
     [[NXOAuth2AccountStore sharedStore] removeAccount:account.oauthAccount];

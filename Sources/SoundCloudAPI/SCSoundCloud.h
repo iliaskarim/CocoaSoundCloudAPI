@@ -27,6 +27,7 @@
 #pragma mark Manage Accounts
 
 - (void)requestAccess;
+- (void)requestAccessWithUsername:(NSString *)username password:(NSString *)password;
 - (void)removeAccount:(SCAccount *)account;
 
 
