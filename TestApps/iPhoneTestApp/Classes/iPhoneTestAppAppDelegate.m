@@ -56,6 +56,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
+    
+    [window setRootViewController:viewController];
+    [window makeKeyAndVisible];
+    
 	NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	BOOL didHandleURL = NO;
 	if (launchURL) {
@@ -65,9 +69,6 @@
     if ([[[SCSoundCloud shared] accounts] count] < 1) {
         [[SCSoundCloud shared] requestAccess];
     }
-    
-    [window setRootViewController:viewController];
-    [window makeKeyAndVisible];
     
 	return didHandleURL; 
 }

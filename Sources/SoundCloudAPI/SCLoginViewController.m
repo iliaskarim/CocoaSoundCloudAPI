@@ -12,6 +12,8 @@
 #import "SCSoundCloudAPIConfiguration.h"
 
 #import "SCLoginViewController.h"
+#import "SCSoundCloud.h"
+#import "SCConstants.h"
 
 @interface SCLoginTitleBar: UIView {
 }
@@ -296,20 +298,39 @@
     if (![request.URL isEqual:URL]) {
 		BOOL hasBeenHandled = NO;
 		
-		NSURL *callbackURL = authentication.configuration.callbackURL;
-		if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
-	        hasBeenHandled = [authentication handleRedirectURL:request.URL];
-			if (hasBeenHandled) {
-				[self close];
-			}
-			return NO;
-		}
+        if (authentication) {
+            NSURL *callbackURL = authentication.configuration.callbackURL;
+            if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+                hasBeenHandled = [authentication handleRedirectURL:request.URL];
+                if (hasBeenHandled) {
+                    [self close];
+                }
+                return NO;
+            }
+        } else {
+            NSURL *callbackURL = [[[SCSoundCloud shared] configuration] objectForKey:kSCConfigurationRedirectURL];
+            if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+                hasBeenHandled = [[SCSoundCloud shared] handleRedirectURL:request.URL];
+                if (hasBeenHandled) {
+                    [self close];
+                }
+                return NO;
+            }
+        }
 	}
     
-	if (![[request.URL absoluteString] hasPrefix:[authentication.configuration.authURL absoluteString]]) {
-		[[UIApplication sharedApplication] openURL:request.URL];
-		return NO;
-	}
+    if (authentication) {
+    	if (![[request.URL absoluteString] hasPrefix:[authentication.configuration.authURL absoluteString]]) {
+            [[UIApplication sharedApplication] openURL:request.URL];
+            return NO;
+        }
+    } else {
+        NSURL *authURL = [[[SCSoundCloud shared] configuration] objectForKey:kSCConfigurationAuthorizeURL];
+        if (![[request.URL absoluteString] hasPrefix:[authURL absoluteString]]) {
+            [[UIApplication sharedApplication] openURL:request.URL];
+            return NO;
+        }
+    }
 	
 	return YES;
 }
@@ -318,7 +339,11 @@
 
 - (IBAction)close;
 {
-    [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
+    if (authentication) {
+        [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)reload;

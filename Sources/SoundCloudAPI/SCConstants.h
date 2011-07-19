@@ -28,3 +28,4 @@ extern NSString * const kSCConfigurationSecret;
 extern NSString * const kSCConfigurationRedirectURL;
 extern NSString * const kSCConfigurationSandbox;
 extern NSString * const kSCConfigurationAPIURL;
+extern NSString * const kSCConfigurationAuthorizeURL;

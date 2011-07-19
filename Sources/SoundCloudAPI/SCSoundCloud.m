@@ -17,6 +17,12 @@
 #import "SCRequest.h"
 #import "SCConstants.h"
 
+#if TARGET_OS_IPHONE
+#import "SCLoginViewController.h"
+#else
+
+#endif
+
 #import "SCSoundCloud.h"
 
 #define kSoundCloudAPIURL					@"https://api.soundcloud.com/"
@@ -41,6 +47,30 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         shared = [SCSoundCloud new];
+        
+        [[NXOAuth2AccountStore sharedStore] setPreparedAuthorizationURLHandlerForAccountType:kSCAccountType
+                                                                                       block:^(NSURL *preparedURL){
+                                                                                           NSLog(@"Open prepared URL: %@", preparedURL);
+#if TARGET_OS_IPHONE
+                                                                                           
+                                                                                           SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:preparedURL
+                                                                                                                                                                    authentication:nil];
+                                                                                           
+                                                                                           //do the presentation yourself when the delegate really does not respond to any of the callbacks for doing it himself
+                                                                                           NSArray *windows = [[UIApplication sharedApplication] windows];
+                                                                                           UIWindow *window = nil;
+                                                                                           if (windows.count > 0) window = [windows objectAtIndex:0];
+                                                                                           if ([window respondsToSelector:@selector(rootViewController)]) {
+                                                                                               UIViewController *rootViewController = [window rootViewController];
+                                                                                               [rootViewController presentModalViewController: loginViewController animated:YES];
+                                                                                           } else {
+                                                                                               NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
+                                                                                           }
+#else
+                                                                                           [[NSWorkspace sharedWorkspace] openURL:preparedURL];
+#endif
+                                                                                       }];
+        
     });
     return shared;
 }
@@ -133,6 +163,8 @@
     [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationClientID] forKey:kSCConfigurationClientID];
     [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationSecret] forKey:kSCConfigurationSecret];
     [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationRedirectURL] forKey:kSCConfigurationRedirectURL];
+    
+    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL] forKey:kSCConfigurationAuthorizeURL];
     
     if ([[configuration objectForKey:kNXOAuth2AccountStoreConfigurationTokenURL] isEqual:[NSURL URLWithString:kSoundCloudSandboxAPIAccessTokenURL]]) {
         [config setObject:[NSNumber numberWithBool:YES] forKey:kSCConfigurationSandbox];

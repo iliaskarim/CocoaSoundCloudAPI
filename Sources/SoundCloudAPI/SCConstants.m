@@ -28,3 +28,4 @@ NSString * const kSCConfigurationSecret = @"kSCConfigurationSecret";
 NSString * const kSCConfigurationRedirectURL = @"kSCConfigurationRedirectURL";
 NSString * const kSCConfigurationSandbox = @"kSCConfigurationSandbox";
 NSString * const kSCConfigurationAPIURL = @"kSCConfigurationAPIURL";
+NSString * const kSCConfigurationAuthorizeURL = @"kSCConfigurationAuthorizeURL";
