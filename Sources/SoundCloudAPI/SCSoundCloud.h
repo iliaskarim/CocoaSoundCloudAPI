@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
+
+
 @class SCAccount;
 
 @interface SCSoundCloud : NSObject {
@@ -16,7 +19,7 @@
     id accountDidFailToGetAccessTokenObserver;
 }
 
-+ (id)shared;
++ (SCSoundCloud *)shared;
 
 #pragma mark Accessors
 
@@ -33,6 +36,12 @@
 #pragma mark Configuration
 
 @property (nonatomic, copy) NSDictionary *configuration;
+
+
+#pragma mark Prepared Authorization URL Handler
+
+- (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
+- (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
 
 
 #pragma mark OAuth2 Flow

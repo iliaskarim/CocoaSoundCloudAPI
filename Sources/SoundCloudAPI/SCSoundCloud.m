@@ -48,6 +48,8 @@
     dispatch_once(&onceToken, ^{
         shared = [SCSoundCloud new];
         
+        // Set default handler for prepared authorization urls.
+        
         [[NXOAuth2AccountStore sharedStore] setPreparedAuthorizationURLHandlerForAccountType:kSCAccountType
                                                                                        block:^(NSURL *preparedURL){
                                                                                            NSLog(@"Open prepared URL: %@", preparedURL);
@@ -56,7 +58,6 @@
                                                                                            SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:preparedURL
                                                                                                                                                                     authentication:nil];
                                                                                            
-                                                                                           //do the presentation yourself when the delegate really does not respond to any of the callbacks for doing it himself
                                                                                            NSArray *windows = [[UIApplication sharedApplication] windows];
                                                                                            UIWindow *window = nil;
                                                                                            if (windows.count > 0) window = [windows objectAtIndex:0];
@@ -70,7 +71,6 @@
                                                                                            [[NSWorkspace sharedWorkspace] openURL:preparedURL];
 #endif
                                                                                        }];
-        
     });
     return shared;
 }
@@ -196,6 +196,18 @@
     }
     
     [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
+}
+
+#pragma mark Prepared Authorization URL Handler
+
+- (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
+{
+    [[NXOAuth2AccountStore sharedStore] setPreparedAuthorizationURLHandlerForAccountType:kSCAccountType block:handler];
+}
+
+- (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
+{
+    return [[NXOAuth2AccountStore sharedStore] preparedAuthorizationURLHandlerForAccountType:kSCAccountType];
 }
 
 

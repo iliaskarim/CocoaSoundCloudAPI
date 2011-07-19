@@ -295,41 +295,40 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 {
+    // Use either the authentication delegate if present
+    // or the shared sound cloud singleton (SCSoundCLoud).
+    
     if (![request.URL isEqual:URL]) {
 		BOOL hasBeenHandled = NO;
-		
-        if (authentication) {
-            NSURL *callbackURL = authentication.configuration.callbackURL;
-            if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+		        
+        NSURL *callbackURL = authentication.configuration.callbackURL;
+        
+        if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+            
+            if (authentication) {
                 hasBeenHandled = [authentication handleRedirectURL:request.URL];
-                if (hasBeenHandled) {
-                    [self close];
-                }
-                return NO;
-            }
-        } else {
-            NSURL *callbackURL = [[[SCSoundCloud shared] configuration] objectForKey:kSCConfigurationRedirectURL];
-            if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
+            } else {
                 hasBeenHandled = [[SCSoundCloud shared] handleRedirectURL:request.URL];
-                if (hasBeenHandled) {
-                    [self close];
-                }
-                return NO;
             }
+            
+
+            if (hasBeenHandled) {
+                [self close];
+            }
+            return NO;
         }
 	}
     
+    NSURL *authURL = nil;
     if (authentication) {
-    	if (![[request.URL absoluteString] hasPrefix:[authentication.configuration.authURL absoluteString]]) {
-            [[UIApplication sharedApplication] openURL:request.URL];
-            return NO;
-        }
+        authURL = authentication.configuration.authURL;
     } else {
-        NSURL *authURL = [[[SCSoundCloud shared] configuration] objectForKey:kSCConfigurationAuthorizeURL];
-        if (![[request.URL absoluteString] hasPrefix:[authURL absoluteString]]) {
-            [[UIApplication sharedApplication] openURL:request.URL];
-            return NO;
-        }
+        authURL = [[[SCSoundCloud shared] configuration] objectForKey:kSCConfigurationAuthorizeURL];
+    }
+    
+    if (![[request.URL absoluteString] hasPrefix:[authURL absoluteString]]) {
+        [[UIApplication sharedApplication] openURL:request.URL];
+        return NO;
     }
 	
 	return YES;
@@ -339,6 +338,9 @@
 
 - (IBAction)close;
 {
+    // Use either the authentication delegate if present
+    // or the shared sound cloud singleton (SCSoundCLoud).
+    
     if (authentication) {
         [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
     } else {
