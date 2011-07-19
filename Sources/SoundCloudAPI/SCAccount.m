@@ -12,6 +12,7 @@
 #import <OAuth2Client/NXOAuth2.h>
 #endif
 
+#import "SCSoundCloud.h"
 #import "SCRequest.h"
 #import "SCConstants.h"
 
@@ -45,29 +46,32 @@
     self.oauthAccount.userData = userInfo;
 }
 
-- (void)fetchUserInfoWithComplitionHandler:(void(^)(BOOL success, SCAccount *account, NSError * error))handler;
+- (void)fetchUserInfoWithCompletionHandler:(void(^)(BOOL success, SCAccount *account, NSError * error))handler;
 {
     [[handler copy] autorelease];
     
-    [SCRequest requestWithPath:@"/me.json"
-                   parameters:nil
-                requestMethod:@"GET"
-                      account:self
-              responseHandler:^(NSData *data, NSError *error){
-                  if (error) {
-                      handler(NO, self, error);
-                  } else {
-                      NSError *jsonError = nil;
-                      NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-                      if (result) {
-                          self.userInfo = result;
-                          [[NSNotificationCenter defaultCenter] postNotificationName:SCAccountDidChangeUserInfo object:self];
-                          handler(YES, self, nil);
-                      } else {
-                          handler(NO, self, jsonError);
-                      }
-                  }
-              }];
+    NSDictionary *configuration = [[SCSoundCloud shared] configuration];
+    NSURL *apiURL = [configuration objectForKey:kSCConfigurationAPIURL];
+
+    [SCRequest performMethod:@"GET"
+                  onResource:[NSURL URLWithString:@"me.json" relativeToURL:apiURL]
+             usingParameters:nil
+                 withAccount:self
+             responseHandler:^(NSData *data, NSError *error){
+                 if (error) {
+                     handler(NO, self, error);
+                 } else {
+                     NSError *jsonError = nil;
+                     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                     if (result) {
+                         self.userInfo = result;
+                         [[NSNotificationCenter defaultCenter] postNotificationName:SCAccountDidChangeUserInfo object:self];
+                         handler(YES, self, nil);
+                     } else {
+                         handler(NO, self, jsonError);
+                     }
+                 }
+             }];
 }
 
 @end

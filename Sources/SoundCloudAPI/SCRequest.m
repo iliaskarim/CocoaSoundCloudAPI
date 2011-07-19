@@ -20,37 +20,27 @@
 
 @implementation SCRequest
 
-+ (void)requestWithPath:(NSString *)aPath
-            parameters:(NSDictionary *)parameters
-         requestMethod:(NSString *)requestMethod
-               account:(SCAccount *)account
-       responseHandler:(SCRequestResponseHandler)responseHandler;
++ (void)performMethod:(NSString *)aMethod
+           onResource:(NSURL *)aResource
+      usingParameters:(NSDictionary *)someParameters
+          withAccount:(SCAccount *)anAccount
+      responseHandler:(SCRequestResponseHandler)aResponseHandler;
 {
-    NSURL *apiURL = [[[NXOAuth2AccountStore sharedStore] configurationForAccountType:kSCAccountType] objectForKey:kSCConfigurationAPIURL];
-    NSURL *url = [NSURL URLWithString:aPath relativeToURL:apiURL];
-    
-    NXOAuth2Request *r = [NXOAuth2Request requestWithURL:url
-                                              parameters:parameters
-                                           requestMethod:requestMethod];
-    r.account = account.oauthAccount;
-    [r performRequestWithResponseHandler:responseHandler];
+    NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:aMethod usingParameters:someParameters];
+    r.account = anAccount.oauthAccount;
+    [r performRequestWithResponseHandler:aResponseHandler];
 }
 
-+ (void)requestWithPath:(NSString *)aPath
-            parameters:(NSDictionary *)parameters
-         requestMethod:(NSString *)requestMethod
-               account:(SCAccount *)account
-       progressHandler:(SCRequestProgressHandler)aProgressHandler
-       responseHandler:(SCRequestResponseHandler)responseHandler;
++ (void)performMethod:(NSString *)aMethod
+           onResource:(NSURL *)aResource
+      usingParameters:(NSDictionary *)someParameters
+          withAccount:(SCAccount *)anAccount
+  sendProgressHandler:(SCRequestProgressHandler)aProgressHandler
+      responseHandler:(SCRequestResponseHandler)aResponseHandler;
 {
-    NSURL *apiURL = [[[NXOAuth2AccountStore sharedStore] configurationForAccountType:kSCAccountType] objectForKey:kSCConfigurationAPIURL];
-    NSURL *url = [NSURL URLWithString:aPath relativeToURL:apiURL];
-    
-    NXOAuth2Request *r = [NXOAuth2Request requestWithURL:url
-                                              parameters:parameters
-                                           requestMethod:requestMethod];
-    r.account = account.oauthAccount;
-    [r performRequestWithResponseHandler:responseHandler progressHandler:aProgressHandler];
+    NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:aMethod usingParameters:someParameters];
+    r.account = anAccount.oauthAccount;
+    [r performRequestWithResponseHandler:aResponseHandler sendProgressHandler:aProgressHandler];
 }
 
 @end

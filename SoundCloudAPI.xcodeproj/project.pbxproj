@@ -75,6 +75,10 @@
 		F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F608121813D08B5B0040EC66 /* SCShareViewController.h */; };
 		F608121C13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
 		F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
+		F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; };
+		F6525B7E13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; };
+		F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
+		F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
@@ -158,6 +162,8 @@
 		F60811EE13D051840040EC66 /* SCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRequest.m; sourceTree = "<group>"; };
 		F608121813D08B5B0040EC66 /* SCShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShareViewController.h; sourceTree = "<group>"; };
 		F608121913D08B5B0040EC66 /* SCShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCShareViewController.m; sourceTree = "<group>"; };
+		F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloud+Private.h"; sourceTree = "<group>"; };
+		F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloud+Private.m"; sourceTree = "<group>"; };
 		F6E88D2313D41F8A008B9CD5 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
 		F6E88D2413D41F8A008B9CD5 /* SCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConstants.m; sourceTree = "<group>"; };
 		F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCAccount+Private.h"; sourceTree = "<group>"; };
@@ -244,6 +250,7 @@
 		9429A5D1122659D500D31807 /* SoundCloudAPI */ = {
 			isa = PBXGroup;
 			children = (
+				F6525B8213D5B34E00ACAE8F /* Private */,
 				F608121713D08B110040EC66 /* Controller */,
 				9454811C1248C4A900E6BD3D /* Streaming */,
 				9429A5D2122659D500D31807 /* SCAPI.h */,
@@ -260,8 +267,6 @@
 				F60811E213D050180040EC66 /* SCSoundCloud.m */,
 				F60811E713D051420040EC66 /* SCAccount.h */,
 				F60811E813D051420040EC66 /* SCAccount.m */,
-				F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */,
-				F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */,
 				F60811ED13D051840040EC66 /* SCRequest.h */,
 				F60811EE13D051840040EC66 /* SCRequest.m */,
 				F6E88D2313D41F8A008B9CD5 /* SCConstants.h */,
@@ -331,6 +336,17 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		F6525B8213D5B34E00ACAE8F /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */,
+				F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */,
+				F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */,
+				F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -357,6 +373,7 @@
 				F608121A13D08B5B0040EC66 /* SCShareViewController.h in Headers */,
 				F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */,
 				F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
+				F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +401,7 @@
 				F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */,
 				F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */,
 				F6E88D2D13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
+				F6525B7E13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +523,7 @@
 				F608121C13D08B5B0040EC66 /* SCShareViewController.m in Sources */,
 				F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */,
 				F6E88D3113D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
+				F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +546,7 @@
 				F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */,
 				F6E88D2813D41F8A008B9CD5 /* SCConstants.m in Sources */,
 				F6E88D3213D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
+				F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,7 +42,7 @@
                                              @"3f1259d2066b28f2f01573640617f6aa", kSCConfigurationClientID,
                                              @"07682dc23ef6b7f2e96ce9b89798fe3a", kSCConfigurationSecret,
                                              [NSURL URLWithString:@"x-oauth2-test://soundcloud"], kSCConfigurationRedirectURL,
-                                             @"YES", kSCConfigurationSandbox, nil]];
+                                             [NSNumber numberWithBool:YES], kSCConfigurationSandbox, nil]];
 #else
     [[SCSoundCloud shared] setConfiguration:[NSDictionary dictionaryWithObjectsAndKeys:
                                              @"3f1259d2066b28f2f01573640617f6aa", kSCConfigurationClientID,

@@ -20,6 +20,6 @@
 @property (nonatomic, readonly) NSString *identifier;
 @property (nonatomic, copy) NSDictionary *userInfo;
 
-- (void)fetchUserInfoWithComplitionHandler:(void(^)(BOOL success, SCAccount *account, NSError * error))handler;
+- (void)fetchUserInfoWithCompletionHandler:(void(^)(BOOL success, SCAccount *account, NSError * error))handler;
 
 @end
