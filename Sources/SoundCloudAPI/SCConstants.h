@@ -8,16 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark Notifications
-
-extern NSString * const SCAccountCreated;
-extern NSString * const SCAccountRemoved;
-
-extern NSString * const SCSoundCloudDidFailToRequestAccess;
-
-extern NSString * const SCAccountDidChangeUserInfo;
-extern NSString * const SCAccountDidFailToGetAccessToken;
-
 
 #pragma mark OAuth2 Configuration
 

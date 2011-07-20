@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark Notifications
+
+extern NSString * const SCAccountDidFailToGetAccessToken;
+
 @class NXOAuth2Account;
 
 @interface SCAccount : NSObject {
@@ -18,8 +22,5 @@
 #pragma mark Accessors
 
 @property (nonatomic, readonly) NSString *identifier;
-@property (nonatomic, copy) NSDictionary *userInfo;
-
-- (void)fetchUserInfoWithCompletionHandler:(void(^)(BOOL success, SCAccount *account, NSError * error))handler;
 
 @end

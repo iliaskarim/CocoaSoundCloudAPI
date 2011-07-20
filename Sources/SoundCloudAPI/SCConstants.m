@@ -8,16 +8,6 @@
 
 #import "SCConstants.h"
 
-#pragma mark Notifications
-
-NSString * const SCAccountCreated = @"SCAccountCreated";
-NSString * const SCAccountRemoved = @"SCAccountRemoved";
-
-NSString * const SCSoundCloudDidFailToRequestAccess = @"SCSoundCloudDidFailToRequestAccess";
-
-NSString * const SCAccountDidChangeUserInfo = @"SCAccountDidChangeUserInfo";
-NSString * const SCAccountDidChangeAccessToken = @"SCAccountDidChangeAccessToken";
-NSString * const SCAccountDidFailToGetAccessToken = @"SCAccountDidFailToGetAccessToken";
 
 #pragma mark OAuth2 Configuration
 

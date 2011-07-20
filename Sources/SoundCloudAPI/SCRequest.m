@@ -24,17 +24,6 @@
            onResource:(NSURL *)aResource
       usingParameters:(NSDictionary *)someParameters
           withAccount:(SCAccount *)anAccount
-      responseHandler:(SCRequestResponseHandler)aResponseHandler;
-{
-    NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:aMethod usingParameters:someParameters];
-    r.account = anAccount.oauthAccount;
-    [r performRequestWithResponseHandler:aResponseHandler];
-}
-
-+ (void)performMethod:(NSString *)aMethod
-           onResource:(NSURL *)aResource
-      usingParameters:(NSDictionary *)someParameters
-          withAccount:(SCAccount *)anAccount
   sendProgressHandler:(SCRequestProgressHandler)aProgressHandler
       responseHandler:(SCRequestResponseHandler)aResponseHandler;
 {

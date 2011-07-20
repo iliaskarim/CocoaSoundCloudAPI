@@ -8,14 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark Notifications
+
+extern NSString * const SCSoundCloudDidCreateAccountNotification;
+extern NSString * const SCSoundCloudDidRemoveAccountNotification;
+extern NSString * const SCSoundCloudDidFailToRequestAccess;
+
+
+#pragma mark Handler
+
 typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
+
+
+#pragma mark -
 
 
 @class SCAccount;
 
 @interface SCSoundCloud : NSObject {
 @private
-    id accountAccountCreatedObserver;
+    id accountStoreDidCreateAccountObserver;
     id accountDidFailToGetAccessTokenObserver;
 }
 
@@ -35,7 +47,11 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 
 #pragma mark Configuration
 
-@property (nonatomic, copy) NSDictionary *configuration;
+- (void)setClientID:(NSString *)aClientID
+             secret:(NSString *)aSecret
+        redirectURL:(NSURL *)aRedirectURL;
+
+@property (nonatomic, readonly) NSDictionary *configuration;
 
 
 #pragma mark Prepared Authorization URL Handler

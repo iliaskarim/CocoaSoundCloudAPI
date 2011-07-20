@@ -19,12 +19,6 @@ typedef void(^SCRequestProgressHandler)(unsigned long long bytesSend, unsigned l
            onResource:(NSURL *)resource
       usingParameters:(NSDictionary *)parameters
           withAccount:(SCAccount *)account
-      responseHandler:(SCRequestResponseHandler)responseHandler;
-
-+ (void)performMethod:(NSString *)method
-           onResource:(NSURL *)resource
-      usingParameters:(NSDictionary *)parameters
-          withAccount:(SCAccount *)account
   sendProgressHandler:(SCRequestProgressHandler)progressHandler
       responseHandler:(SCRequestResponseHandler)responseHandler;
 

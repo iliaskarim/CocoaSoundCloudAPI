@@ -40,36 +40,6 @@
 - (void)awakeFromNib;
 {
     [super awakeFromNib];
-    if ([[[SCSoundCloud shared] accounts] count] > 0) {
-        
-        
-        SCAccount *account = [[[SCSoundCloud shared] accounts] objectAtIndex:0];
-        
-        
-        
-        [account fetchUserInfoWithCompletionHandler:^(BOOL success, SCAccount *account, NSError *error){
-            NSDictionary *userData = account.userInfo;
-            [self.usernameLabel setText:[userData objectForKey:@"username"]];
-            [self.trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userData objectForKey:@"private_tracks_count"] integerValue]]];
-            
-            self.trackNameField.enabled = YES;
-            self.postButton.enabled = YES;
-        }];
-        
-        [SCRequest performMethod:@"GET" onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/tracks.json"] usingParameters:nil withAccount:account responseHandler:^(NSData *data, NSError *error){
-            if (data) {
-                NSError *jsonError = nil;
-                NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-                if (result) {
-                    NSLog(@"tracks: %@", result);
-                } else {
-                    NSLog(@"tracks: ??? json error: %@", [jsonError localizedDescription]);
-                }
-            } else {
-                NSLog(@"tracks: ??? error: %@", [error localizedDescription]);
-            }
-        }];
-    }
 }
 
 
@@ -79,6 +49,53 @@
 	[super dealloc];
 }
 
+- (void)viewWillAppear:(BOOL)animated;
+{
+    if ([[[SCSoundCloud shared] accounts] count] > 0) {
+        
+        SCAccount *account = [[[SCSoundCloud shared] accounts] objectAtIndex:0];
+        
+        [SCRequest performMethod:@"GET"
+                      onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/tracks.json"]
+                 usingParameters:nil
+                     withAccount:account
+             sendProgressHandler:nil
+                 responseHandler:^(NSData *data, NSError *error){
+                     if (data) {
+                         NSError *jsonError = nil;
+                         NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                         if (result) {
+                             self.trackNumberLabel.text = [NSString stringWithFormat:@"%d", [result count]];
+                         } else {
+                             NSLog(@"tracks: ??? json error: %@", [jsonError localizedDescription]);
+                         }
+                     } else {
+                         NSLog(@"tracks: ??? error: %@", [error localizedDescription]);
+                     }
+                 }];
+        
+        [SCRequest performMethod:@"GET"
+                      onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me.json"]
+                 usingParameters:nil
+                     withAccount:account
+             sendProgressHandler:nil
+                 responseHandler:^(NSData *data, NSError *error){
+                     if (data) {
+                         NSError *jsonError = nil;
+                         NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                         if (result) {
+                             self.usernameLabel.text = [result objectForKey:@"username"];
+                         } else {
+                             NSLog(@"me: ??? json error: %@", [jsonError localizedDescription]);
+                         }
+                     } else {
+                         NSLog(@"me: ??? error: %@", [error localizedDescription]);
+                     }
+                 }];
+        
+        self.postButton.enabled = YES;
+    }
+}
 
 #pragma mark Accessors
 
@@ -112,13 +129,25 @@
                  responseHandler:^(NSData *data, NSError *error){
                      if (data) {
                          self.progresBar.progress = 0.0;
-                         [account fetchUserInfoWithCompletionHandler:^(BOOL success, SCAccount *account, NSError *error){
-                             if (success) {
-                                 NSDictionary *userData = account.userInfo;
-                                 [self.usernameLabel setText:[userData objectForKey:@"username"]];
-                                 [self.trackNumberLabel setText:[NSString stringWithFormat:@"%d", [[userData objectForKey:@"private_tracks_count"] integerValue]]];
-                             }
-                         }];
+                         
+                         [SCRequest performMethod:@"GET"
+                                       onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/tracks.json"]
+                                  usingParameters:nil
+                                      withAccount:account
+                              sendProgressHandler:nil
+                                  responseHandler:^(NSData *data, NSError *error){
+                                      if (data) {
+                                          NSError *jsonError = nil;
+                                          NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                                          if (result) {
+                                              self.trackNumberLabel.text = [NSString stringWithFormat:@"%d", [result count]];
+                                          } else {
+                                              NSLog(@"tracks: ??? json error: %@", [jsonError localizedDescription]);
+                                          }
+                                      } else {
+                                          NSLog(@"tracks: ??? error: %@", [error localizedDescription]);
+                                      }
+                                  }];                         
                      }
                  }];
     }

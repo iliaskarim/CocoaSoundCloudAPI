@@ -37,19 +37,10 @@
     // Configure NXOAuth2AccountStore for 'com.soundcloud.api'
     // -------------------------------------------------------
 
-#if SANDBOX
-    [[SCSoundCloud shared] setConfiguration:[NSDictionary dictionaryWithObjectsAndKeys:
-                                             @"3f1259d2066b28f2f01573640617f6aa", kSCConfigurationClientID,
-                                             @"07682dc23ef6b7f2e96ce9b89798fe3a", kSCConfigurationSecret,
-                                             [NSURL URLWithString:@"x-oauth2-test://soundcloud"], kSCConfigurationRedirectURL,
-                                             [NSNumber numberWithBool:YES], kSCConfigurationSandbox, nil]];
-#else
-    [[SCSoundCloud shared] setConfiguration:[NSDictionary dictionaryWithObjectsAndKeys:
-                                             @"3f1259d2066b28f2f01573640617f6aa", kSCConfigurationClientID,
-                                             @"07682dc23ef6b7f2e96ce9b89798fe3a", kSCConfigurationSecret,
-                                             [NSURL URLWithString:@"x-oauth2-test://soundcloud"], kSCConfigurationRedirectURL, nil]];
-#endif
-    
+    [[SCSoundCloud shared] setClientID: @"3f1259d2066b28f2f01573640617f6aa"
+                                secret:@"07682dc23ef6b7f2e96ce9b89798fe3a"
+                           redirectURL:[NSURL URLWithString:@"x-oauth2-test://soundcloud"]];
+
 }
 
 #pragma mark Lifecycle
@@ -66,7 +57,7 @@
 		didHandleURL = [[SCSoundCloud shared] handleRedirectURL:launchURL];	
 	}
 	
-    if ([[[SCSoundCloud shared] accounts] count] < 1) {
+    if ([[[SCSoundCloud shared] accounts] count] == 0) {
         [[SCSoundCloud shared] requestAccess];
     }
     

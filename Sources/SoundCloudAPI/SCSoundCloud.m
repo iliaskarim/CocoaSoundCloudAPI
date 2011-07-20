@@ -34,8 +34,18 @@
 #define kSoundCloudSandboxAuthURL			@"https://sandbox-soundcloud.com/connect"
 
 
+#pragma mark Notifications
+
+NSString * const SCSoundCloudDidCreateAccountNotification = @"SCSoundCloudDidCreateAccountNotification";
+NSString * const SCSoundCloudDidRemoveAccountNotification = @"SCSoundCloudDidRemoveAccountNotification";
+
+NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloudDidFailToRequestAccessNotification";
+
+#pragma mark -
+
+
 @interface SCSoundCloud ()
-@property (nonatomic, assign) id accountAccountCreatedObserver;
+@property (nonatomic, assign) id accountStoreDidCreateAccountObserver;
 @property (nonatomic, assign) id accountDidFailToGetAccessTokenObserver;
 @end
 
@@ -79,24 +89,20 @@
 {
     self = [super init];
     if (self) {
-        self.accountAccountCreatedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountCreated
-                                                                                        object:nil
-                                                                                         queue:nil
-                                                                                    usingBlock:^(NSNotification *notification){
-                                                                                        NXOAuth2Account *oauthAccount = [notification object];
-                                                                                        if ([oauthAccount.accountType isEqualToString:kSCAccountType]) {
-                                                                                            SCAccount *scAccount = [[SCAccount alloc] initWithOAuthAccount:oauthAccount];
-                                                                                            [[NSNotificationCenter defaultCenter] postNotificationName:SCAccountCreated object:scAccount];
-                                                                                            [scAccount fetchUserInfoWithCompletionHandler:^(BOOL success, SCAccount *account, NSError *error){
-                                                                                                if (!success) {
-                                                                                                    NSLog(@"Could not fetch user info with account '%@': %@", oauthAccount, [error localizedDescription]);
-                                                                                                }
-                                                                                            }];
-                                                                                            [scAccount release];
-                                                                                        }
-                                                                                    }];
+        self.accountStoreDidCreateAccountObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidCreateAccountNotification
+                                                                                                      object:nil
+                                                                                                       queue:nil
+                                                                                                  usingBlock:^(NSNotification *notification){
+                                                                                                      NXOAuth2Account *oauthAccount = [notification object];
+                                                                                                      if ([oauthAccount.accountType isEqualToString:kSCAccountType]) {
+                                                                                                          
+                                                                                                          SCAccount *scAccount = [[SCAccount alloc] initWithOAuthAccount:oauthAccount];
+                                                                                                          [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudDidCreateAccountNotification object:scAccount];
+                                                                                                          
+                                                                                                      }
+                                                                                                  }];
         
-        self.accountDidFailToGetAccessTokenObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountDidFailToGetAccessToken
+        self.accountDidFailToGetAccessTokenObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountDidFailToGetAccessTokenNotification
                                                                                                         object:nil
                                                                                                          queue:nil
                                                                                                     usingBlock:^(NSNotification *notification){
@@ -109,14 +115,14 @@
 
 - (void)dealloc;
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self.accountAccountCreatedObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.accountStoreDidCreateAccountObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.accountDidFailToGetAccessTokenObserver];
     [super dealloc];
 }
 
 #pragma mark Accessors
 
-@synthesize accountAccountCreatedObserver;
+@synthesize accountStoreDidCreateAccountObserver;
 @synthesize accountDidFailToGetAccessTokenObserver;
 
 - (NSArray *)accounts;
@@ -149,10 +155,27 @@
 - (void)removeAccount:(SCAccount *)account;
 {
     [[NXOAuth2AccountStore sharedStore] removeAccount:account.oauthAccount];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SCAccountRemoved object:account];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudDidRemoveAccountNotification object:account];
 }
 
 #pragma mark Configuration
+
+- (void)setClientID:(NSString *)aClientID
+             secret:(NSString *)aSecret
+        redirectURL:(NSURL *)aRedirectURL;
+{
+    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    
+    [config setObject:aClientID forKey:kNXOAuth2AccountStoreConfigurationClientID];
+    [config setObject:aSecret forKey:kNXOAuth2AccountStoreConfigurationSecret];
+    [config setObject:aRedirectURL forKey:kNXOAuth2AccountStoreConfigurationRedirectURL];
+
+    [config setObject:[NSURL URLWithString:kSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
+    [config setObject:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
+    [config setObject:[NSURL URLWithString:kSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
+    
+    [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
+}
 
 - (NSDictionary *)configuration;
 {
@@ -175,27 +198,6 @@
     [config setObject:[configuration objectForKey:kSCConfigurationAPIURL] forKey:kSCConfigurationAPIURL];
     
     return config;
-}
-
-- (void)setConfiguration:(NSDictionary *)configuration;
-{
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
-    
-    [config setObject:[configuration objectForKey:kSCConfigurationClientID] forKey:kNXOAuth2AccountStoreConfigurationClientID];
-    [config setObject:[configuration objectForKey:kSCConfigurationSecret] forKey:kNXOAuth2AccountStoreConfigurationSecret];
-    [config setObject:[configuration objectForKey:kSCConfigurationRedirectURL] forKey:kNXOAuth2AccountStoreConfigurationRedirectURL];
-    
-    if ([[configuration objectForKey:kSCConfigurationSandbox] boolValue]) {
-        [config setObject:[NSURL URLWithString:kSoundCloudSandboxAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
-        [config setObject:[NSURL URLWithString:kSoundCloudSandboxAPIAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
-        [config setObject:[NSURL URLWithString:kSoundCloudSandboxAPIURL] forKey:kSCConfigurationAPIURL];
-    } else {
-        [config setObject:[NSURL URLWithString:kSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
-        [config setObject:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
-        [config setObject:[NSURL URLWithString:kSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
-    }
-    
-    [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
 }
 
 #pragma mark Prepared Authorization URL Handler

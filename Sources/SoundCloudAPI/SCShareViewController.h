@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SCShareViewController : UIViewController
+@class SCSoundCloudAPIAuthentication;
 
-@property (nonatomic, retain) NSData *sound;
-@property (nonatomic, assign) BOOL isPrivate;
-@property (nonatomic, copy) NSString *comment;
-@property (nonatomic, retain) UIImage *image;
+@interface SCShareViewController : UIViewController {
+@private
+    NSData *sound;
+    
+}
+
+- (id)initWithSound:(NSData *)sound authentication:(SCSoundCloudAPIAuthentication *)authentication;
 
 @end

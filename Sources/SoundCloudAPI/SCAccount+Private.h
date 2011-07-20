@@ -10,9 +10,16 @@
 
 #import "SCAccount.h"
 
+#pragma mark Notifications
+
+extern NSString * const SCAccountDidChangeUserInfoNotification;
+
+#pragma mark -
+
 @interface SCAccount (Private)
 
 @property (nonatomic, readonly) NXOAuth2Account *oauthAccount;
+@property (nonatomic, copy) NSDictionary *userInfo;
 - (id)initWithOAuthAccount:(NXOAuth2Account *)account;
 
 @end
