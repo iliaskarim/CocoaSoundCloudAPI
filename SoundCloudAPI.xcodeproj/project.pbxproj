@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8283469B12437EA1000EA6DD /* SCLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8283469912437EA1000EA6DD /* SCLoginViewController.h */; settings = {ATTRIBUTES = (); }; };
 		8283469C12437EA1000EA6DD /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8283469A12437EA1000EA6DD /* SCLoginViewController.m */; };
-		82CC4EAF1247C361000F468E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CC4EAE1247C361000F468E /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (); }; };
 		9429A5E1122659D500D31807 /* SCAPIErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D3122659D500D31807 /* SCAPIErrors.h */; settings = {ATTRIBUTES = (); }; };
 		9429A5E4122659D500D31807 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */; settings = {ATTRIBUTES = (); }; };
@@ -71,13 +70,34 @@
 		F60811F013D051840040EC66 /* SCRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811ED13D051840040EC66 /* SCRequest.h */; };
 		F60811F113D051840040EC66 /* SCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811EE13D051840040EC66 /* SCRequest.m */; };
 		F60811F213D051840040EC66 /* SCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811EE13D051840040EC66 /* SCRequest.m */; };
-		F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F608121813D08B5B0040EC66 /* SCShareViewController.h */; };
-		F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
+		F64109B113D87F9500561D0B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F64109B013D87F9500561D0B /* UIKit.framework */; };
+		F64109B313D87F9F00561D0B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F64109B213D87F9F00561D0B /* CoreGraphics.framework */; };
+		F64109FC13D885B300561D0B /* QuartzCore_GPKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F64109FA13D885B300561D0B /* QuartzCore_GPKit.h */; };
+		F64109FD13D885B300561D0B /* QuartzCore_GPKit.c in Sources */ = {isa = PBXBuildFile; fileRef = F64109FB13D885B300561D0B /* QuartzCore_GPKit.c */; };
+		F6410A0013D885C300561D0B /* GPTableCellBackgroundView.h in Headers */ = {isa = PBXBuildFile; fileRef = F64109FE13D885C300561D0B /* GPTableCellBackgroundView.h */; };
+		F6410A0113D885C300561D0B /* GPTableCellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = F64109FF13D885C300561D0B /* GPTableCellBackgroundView.m */; };
+		F6410A0413D885CB00561D0B /* GPURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A0213D885CB00561D0B /* GPURLConnection.h */; };
+		F6410A0513D885CB00561D0B /* GPURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A0313D885CB00561D0B /* GPURLConnection.m */; };
+		F6410A0813D885D900561D0B /* UIImage_GPKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A0613D885D900561D0B /* UIImage_GPKit.h */; };
+		F6410A0913D885D900561D0B /* UIImage_GPKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A0713D885D900561D0B /* UIImage_GPKit.m */; };
+		F6410A0D13D885FF00561D0B /* SCSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A0B13D885FF00561D0B /* SCSwitch.h */; };
+		F6410A0E13D885FF00561D0B /* SCSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A0C13D885FF00561D0B /* SCSwitch.m */; };
+		F6410A1313D8860D00561D0B /* GPSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A0F13D8860D00561D0B /* GPSwitch.h */; };
+		F6410A1413D8860D00561D0B /* GPSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A1013D8860D00561D0B /* GPSwitch.m */; };
+		F6410A1513D8860D00561D0B /* GPSwitchLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A1113D8860D00561D0B /* GPSwitchLabel.h */; };
+		F6410A1613D8860D00561D0B /* GPSwitchLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A1213D8860D00561D0B /* GPSwitchLabel.m */; };
+		F6410A1913D887AE00561D0B /* GPNetworkActivityController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A1713D887AE00561D0B /* GPNetworkActivityController.h */; };
+		F6410A1A13D887AE00561D0B /* GPNetworkActivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A1813D887AE00561D0B /* GPNetworkActivityController.m */; };
+		F6410A1D13D887C300561D0B /* UIView_GPKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F6410A1B13D887C300561D0B /* UIView_GPKit.h */; };
+		F6410A1E13D887C300561D0B /* UIView_GPKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F6410A1C13D887C300561D0B /* UIView_GPKit.m */; };
 		F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6525B7E13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; };
 		F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6622B6613D84A2B0057ADD0 /* Cocoa.framework */; };
+		F6BA73C713D86D8D002A5655 /* SCRecordingSaveViewControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F6BA73BB13D86D8D002A5655 /* SCRecordingSaveViewControllerDelegate.h */; };
+		F6BA73C813D86D8D002A5655 /* SCRecordingSaveViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F6BA73BC13D86D8D002A5655 /* SCRecordingSaveViewController.h */; };
+		F6BA73C913D86D8D002A5655 /* SCRecordingSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6BA73BD13D86D8D002A5655 /* SCRecordingSaveViewController.m */; };
 		F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
@@ -159,11 +179,32 @@
 		F60811E813D051420040EC66 /* SCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAccount.m; sourceTree = "<group>"; };
 		F60811ED13D051840040EC66 /* SCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRequest.h; sourceTree = "<group>"; };
 		F60811EE13D051840040EC66 /* SCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRequest.m; sourceTree = "<group>"; };
-		F608121813D08B5B0040EC66 /* SCShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCShareViewController.h; sourceTree = "<group>"; };
-		F608121913D08B5B0040EC66 /* SCShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCShareViewController.m; sourceTree = "<group>"; };
+		F64109B013D87F9500561D0B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		F64109B213D87F9F00561D0B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		F64109FA13D885B300561D0B /* QuartzCore_GPKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuartzCore_GPKit.h; sourceTree = "<group>"; };
+		F64109FB13D885B300561D0B /* QuartzCore_GPKit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = QuartzCore_GPKit.c; sourceTree = "<group>"; };
+		F64109FE13D885C300561D0B /* GPTableCellBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPTableCellBackgroundView.h; sourceTree = "<group>"; };
+		F64109FF13D885C300561D0B /* GPTableCellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPTableCellBackgroundView.m; sourceTree = "<group>"; };
+		F6410A0213D885CB00561D0B /* GPURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPURLConnection.h; sourceTree = "<group>"; };
+		F6410A0313D885CB00561D0B /* GPURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPURLConnection.m; sourceTree = "<group>"; };
+		F6410A0613D885D900561D0B /* UIImage_GPKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImage_GPKit.h; sourceTree = "<group>"; };
+		F6410A0713D885D900561D0B /* UIImage_GPKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImage_GPKit.m; sourceTree = "<group>"; };
+		F6410A0B13D885FF00561D0B /* SCSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSwitch.h; sourceTree = "<group>"; };
+		F6410A0C13D885FF00561D0B /* SCSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSwitch.m; sourceTree = "<group>"; };
+		F6410A0F13D8860D00561D0B /* GPSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSwitch.h; sourceTree = "<group>"; };
+		F6410A1013D8860D00561D0B /* GPSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSwitch.m; sourceTree = "<group>"; };
+		F6410A1113D8860D00561D0B /* GPSwitchLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSwitchLabel.h; sourceTree = "<group>"; };
+		F6410A1213D8860D00561D0B /* GPSwitchLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSwitchLabel.m; sourceTree = "<group>"; };
+		F6410A1713D887AE00561D0B /* GPNetworkActivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPNetworkActivityController.h; sourceTree = "<group>"; };
+		F6410A1813D887AE00561D0B /* GPNetworkActivityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPNetworkActivityController.m; sourceTree = "<group>"; };
+		F6410A1B13D887C300561D0B /* UIView_GPKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_GPKit.h; sourceTree = "<group>"; };
+		F6410A1C13D887C300561D0B /* UIView_GPKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_GPKit.m; sourceTree = "<group>"; };
 		F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloud+Private.h"; sourceTree = "<group>"; };
 		F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloud+Private.m"; sourceTree = "<group>"; };
-		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		F6BA73BB13D86D8D002A5655 /* SCRecordingSaveViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRecordingSaveViewControllerDelegate.h; sourceTree = "<group>"; };
+		F6BA73BC13D86D8D002A5655 /* SCRecordingSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRecordingSaveViewController.h; sourceTree = "<group>"; };
+		F6BA73BD13D86D8D002A5655 /* SCRecordingSaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRecordingSaveViewController.m; sourceTree = "<group>"; };
 		F6E88D2313D41F8A008B9CD5 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
 		F6E88D2413D41F8A008B9CD5 /* SCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConstants.m; sourceTree = "<group>"; };
 		F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCAccount+Private.h"; sourceTree = "<group>"; };
@@ -187,10 +228,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F64109B313D87F9F00561D0B /* CoreGraphics.framework in Frameworks */,
+				F64109B113D87F9500561D0B /* UIKit.framework in Frameworks */,
 				94E5ADA9122C193D00C7021A /* libOAuth2Client.a in Frameworks */,
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
 				945481861248D94900E6BD3D /* AudioToolbox.framework in Frameworks */,
-				82CC4EAF1247C361000F468E /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +251,8 @@
 		0867D691FE84028FC02AAC07 /* SoundCloudAPI */ = {
 			isa = PBXGroup;
 			children = (
+				F64109B213D87F9F00561D0B /* CoreGraphics.framework */,
+				F64109B013D87F9500561D0B /* UIKit.framework */,
 				9429A5CF1226591400D31807 /* Outsourced */,
 				08FB77AEFE84172EC02AAC07 /* Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
@@ -261,8 +305,8 @@
 				F60811E813D051420040EC66 /* SCAccount.m */,
 				F60811ED13D051840040EC66 /* SCRequest.h */,
 				F60811EE13D051840040EC66 /* SCRequest.m */,
+				F608121713D08B110040EC66 /* Sharing */,
 				F6E1A12C13D723BA00B6DAC3 /* Legacy API */,
-				F608121713D08B110040EC66 /* Controller */,
 				9454811C1248C4A900E6BD3D /* Streaming */,
 				F6525B8213D5B34E00ACAE8F /* Private */,
 			);
@@ -319,20 +363,55 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F608121713D08B110040EC66 /* Controller */ = {
+		F608121713D08B110040EC66 /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
-				8283469912437EA1000EA6DD /* SCLoginViewController.h */,
-				8283469A12437EA1000EA6DD /* SCLoginViewController.m */,
-				F608121813D08B5B0040EC66 /* SCShareViewController.h */,
-				F608121913D08B5B0040EC66 /* SCShareViewController.m */,
+				F6410A0A13D885DF00561D0B /* SC */,
+				F64109F913D885A300561D0B /* GPKit */,
+				F6BA73BB13D86D8D002A5655 /* SCRecordingSaveViewControllerDelegate.h */,
+				F6BA73BC13D86D8D002A5655 /* SCRecordingSaveViewController.h */,
+				F6BA73BD13D86D8D002A5655 /* SCRecordingSaveViewController.m */,
 			);
-			name = Controller;
+			name = Sharing;
+			sourceTree = "<group>";
+		};
+		F64109F913D885A300561D0B /* GPKit */ = {
+			isa = PBXGroup;
+			children = (
+				F64109FA13D885B300561D0B /* QuartzCore_GPKit.h */,
+				F64109FB13D885B300561D0B /* QuartzCore_GPKit.c */,
+				F6410A0613D885D900561D0B /* UIImage_GPKit.h */,
+				F6410A0713D885D900561D0B /* UIImage_GPKit.m */,
+				F6410A1B13D887C300561D0B /* UIView_GPKit.h */,
+				F6410A1C13D887C300561D0B /* UIView_GPKit.m */,
+				F6410A1713D887AE00561D0B /* GPNetworkActivityController.h */,
+				F6410A1813D887AE00561D0B /* GPNetworkActivityController.m */,
+				F6410A0F13D8860D00561D0B /* GPSwitch.h */,
+				F6410A1013D8860D00561D0B /* GPSwitch.m */,
+				F6410A1113D8860D00561D0B /* GPSwitchLabel.h */,
+				F6410A1213D8860D00561D0B /* GPSwitchLabel.m */,
+				F64109FE13D885C300561D0B /* GPTableCellBackgroundView.h */,
+				F64109FF13D885C300561D0B /* GPTableCellBackgroundView.m */,
+				F6410A0213D885CB00561D0B /* GPURLConnection.h */,
+				F6410A0313D885CB00561D0B /* GPURLConnection.m */,
+			);
+			name = GPKit;
+			sourceTree = "<group>";
+		};
+		F6410A0A13D885DF00561D0B /* SC */ = {
+			isa = PBXGroup;
+			children = (
+				F6410A0B13D885FF00561D0B /* SCSwitch.h */,
+				F6410A0C13D885FF00561D0B /* SCSwitch.m */,
+			);
+			name = SC;
 			sourceTree = "<group>";
 		};
 		F6525B8213D5B34E00ACAE8F /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				8283469912437EA1000EA6DD /* SCLoginViewController.h */,
+				8283469A12437EA1000EA6DD /* SCLoginViewController.m */,
 				F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */,
 				F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */,
 				F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */,
@@ -408,10 +487,20 @@
 				F60811E413D050180040EC66 /* SCSoundCloud.h in Headers */,
 				F60811EA13D051420040EC66 /* SCAccount.h in Headers */,
 				F60811F013D051840040EC66 /* SCRequest.h in Headers */,
-				F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */,
 				F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */,
 				F6E88D2D13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
 				F6525B7E13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */,
+				F6BA73C713D86D8D002A5655 /* SCRecordingSaveViewControllerDelegate.h in Headers */,
+				F6BA73C813D86D8D002A5655 /* SCRecordingSaveViewController.h in Headers */,
+				F64109FC13D885B300561D0B /* QuartzCore_GPKit.h in Headers */,
+				F6410A0013D885C300561D0B /* GPTableCellBackgroundView.h in Headers */,
+				F6410A0413D885CB00561D0B /* GPURLConnection.h in Headers */,
+				F6410A0813D885D900561D0B /* UIImage_GPKit.h in Headers */,
+				F6410A0D13D885FF00561D0B /* SCSwitch.h in Headers */,
+				F6410A1313D8860D00561D0B /* GPSwitch.h in Headers */,
+				F6410A1513D8860D00561D0B /* GPSwitchLabel.h in Headers */,
+				F6410A1913D887AE00561D0B /* GPNetworkActivityController.h in Headers */,
+				F6410A1D13D887C300561D0B /* UIView_GPKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,10 +644,19 @@
 				F60811E613D050180040EC66 /* SCSoundCloud.m in Sources */,
 				F60811EC13D051420040EC66 /* SCAccount.m in Sources */,
 				F60811F213D051840040EC66 /* SCRequest.m in Sources */,
-				F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */,
 				F6E88D2813D41F8A008B9CD5 /* SCConstants.m in Sources */,
 				F6E88D3213D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
 				F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */,
+				F6BA73C913D86D8D002A5655 /* SCRecordingSaveViewController.m in Sources */,
+				F64109FD13D885B300561D0B /* QuartzCore_GPKit.c in Sources */,
+				F6410A0113D885C300561D0B /* GPTableCellBackgroundView.m in Sources */,
+				F6410A0513D885CB00561D0B /* GPURLConnection.m in Sources */,
+				F6410A0913D885D900561D0B /* UIImage_GPKit.m in Sources */,
+				F6410A0E13D885FF00561D0B /* SCSwitch.m in Sources */,
+				F6410A1413D8860D00561D0B /* GPSwitch.m in Sources */,
+				F6410A1613D8860D00561D0B /* GPSwitchLabel.m in Sources */,
+				F6410A1A13D887AE00561D0B /* GPNetworkActivityController.m in Sources */,
+				F6410A1E13D887C300561D0B /* UIView_GPKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

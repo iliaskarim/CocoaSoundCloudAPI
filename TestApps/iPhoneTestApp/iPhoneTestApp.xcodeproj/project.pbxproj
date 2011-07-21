@@ -26,6 +26,7 @@
 		D355263B0F4D7C650074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35526390F4D7C650074030D /* LICENSE */; };
 		D355263C0F4D7C650074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D355263A0F4D7C650074030D /* NOTICE */; };
 		D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */ = {isa = PBXBuildFile; fileRef = D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */; };
+		F6410A2013D8884E00561D0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6410A1F13D8884E00561D0B /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		D35526390F4D7C650074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D355263A0F4D7C650074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1375_sleep_90_bpm_nylon2.wav; sourceTree = "<group>"; };
+		F6410A1F13D8884E00561D0B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6410A2013D8884E00561D0B /* QuartzCore.framework in Frameworks */,
 				948711A8124CDF9B002557D1 /* libOAuth2Client.a in Frameworks */,
 				948711A9124CDF9B002557D1 /* libSoundCloudAPI.a in Frameworks */,
 				949C17511061052B00C4044D /* Foundation.framework in Frameworks */,
@@ -141,6 +144,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F6410A1F13D8884E00561D0B /* QuartzCore.framework */,
 				D3A305890F336D9800408EA8 /* Outsourced */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
