@@ -13,6 +13,7 @@
 
 #import "SCLoginViewController.h"
 #import "SCSoundCloud.h"
+#import "SCSoundCloud+Private.h"
 #import "SCConstants.h"
 
 @interface SCLoginTitleBar: UIView {
@@ -300,15 +301,22 @@
     
     if (![request.URL isEqual:URL]) {
 		BOOL hasBeenHandled = NO;
-		        
-        NSURL *callbackURL = authentication.configuration.callbackURL;
+        
+        
+        
+        NSURL *callbackURL = nil;
+        if (authentication) {
+            callbackURL = authentication.configuration.callbackURL;
+        } else {
+            callbackURL = [[SCSoundCloud configuration] objectForKey:kSCConfigurationRedirectURL];
+        }
         
         if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
             
             if (authentication) {
                 hasBeenHandled = [authentication handleRedirectURL:request.URL];
             } else {
-                hasBeenHandled = [[SCSoundCloud shared] handleRedirectURL:request.URL];
+                hasBeenHandled = [SCSoundCloud handleRedirectURL:request.URL];
             }
             
 
@@ -323,7 +331,7 @@
     if (authentication) {
         authURL = authentication.configuration.authURL;
     } else {
-        authURL = [[[SCSoundCloud shared] configuration] objectForKey:kSCConfigurationAuthorizeURL];
+        authURL = [[SCSoundCloud configuration] objectForKey:kSCConfigurationAuthorizeURL];
     }
     
     if (![[request.URL absoluteString] hasPrefix:[authURL absoluteString]]) {

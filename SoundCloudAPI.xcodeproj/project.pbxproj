@@ -125,7 +125,7 @@
 		8283469912437EA1000EA6DD /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
 		8283469A12437EA1000EA6DD /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
 		82CC4EAE1247C361000F468E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		9429A5D2122659D500D31807 /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAPI.h; path = Sources/SoundCloudAPI/SCAPI.h; sourceTree = "<group>"; };
+		9429A5D2122659D500D31807 /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPI.h; sourceTree = "<group>"; };
 		9429A5D3122659D500D31807 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAPIErrors.h; path = Sources/SoundCloudAPI/SCAPIErrors.h; sourceTree = "<group>"; };
 		9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSoundCloudAPI.h; path = Sources/SoundCloudAPI/SCSoundCloudAPI.h; sourceTree = "<group>"; };
 		9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSoundCloudAPI.m; path = Sources/SoundCloudAPI/SCSoundCloudAPI.m; sourceTree = "<group>"; };
@@ -250,6 +250,7 @@
 		9429A5D1122659D500D31807 /* SoundCloudAPI */ = {
 			isa = PBXGroup;
 			children = (
+				9429A5D2122659D500D31807 /* SCAPI.h */,
 				F6E88D2313D41F8A008B9CD5 /* SCConstants.h */,
 				F6E88D2413D41F8A008B9CD5 /* SCConstants.m */,
 				F60811E113D050180040EC66 /* SCSoundCloud.h */,
@@ -258,7 +259,7 @@
 				F60811E813D051420040EC66 /* SCAccount.m */,
 				F60811ED13D051840040EC66 /* SCRequest.h */,
 				F60811EE13D051840040EC66 /* SCRequest.m */,
-				F6E1A12C13D723BA00B6DAC3 /* Pro API */,
+				F6E1A12C13D723BA00B6DAC3 /* Legacy API */,
 				F608121713D08B110040EC66 /* Controller */,
 				9454811C1248C4A900E6BD3D /* Streaming */,
 				F6525B8213D5B34E00ACAE8F /* Private */,
@@ -338,10 +339,9 @@
 			name = Private;
 			sourceTree = "<group>";
 		};
-		F6E1A12C13D723BA00B6DAC3 /* Pro API */ = {
+		F6E1A12C13D723BA00B6DAC3 /* Legacy API */ = {
 			isa = PBXGroup;
 			children = (
-				9429A5D2122659D500D31807 /* SCAPI.h */,
 				9429A5D3122659D500D31807 /* SCAPIErrors.h */,
 				94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */,
 				9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */,
@@ -352,7 +352,7 @@
 				9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */,
 				9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */,
 			);
-			name = "Pro API";
+			name = "Legacy API";
 			path = ../..;
 			sourceTree = "<group>";
 		};

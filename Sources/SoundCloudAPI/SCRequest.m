@@ -20,16 +20,24 @@
 
 @implementation SCRequest
 
-+ (void)performMethod:(NSString *)aMethod
-           onResource:(NSURL *)aResource
-      usingParameters:(NSDictionary *)someParameters
-          withAccount:(SCAccount *)anAccount
-  sendProgressHandler:(SCRequestProgressHandler)aProgressHandler
-      responseHandler:(SCRequestResponseHandler)aResponseHandler;
++ (id)   performMethod:(NSString *)aMethod
+            onResource:(NSURL *)aResource
+       usingParameters:(NSDictionary *)someParameters
+           withAccount:(SCAccount *)anAccount
+sendingProgressHandler:(SCRequestProgressHandler)aProgressHandler
+       responseHandler:(SCRequestResponseHandler)aResponseHandler;
 {
     NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:aMethod usingParameters:someParameters];
     r.account = anAccount.oauthAccount;
     [r performRequestWithResponseHandler:aResponseHandler sendProgressHandler:aProgressHandler];
+    return r;
+}
+
++ (void)cancelRequest:(id)request;
+{
+    if ([request isKindOfClass:[NXOAuth2Request class]]) {
+        [request cancel];
+    }
 }
 
 @end

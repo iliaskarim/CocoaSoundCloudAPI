@@ -15,11 +15,13 @@ typedef void(^SCRequestProgressHandler)(unsigned long long bytesSend, unsigned l
 
 @interface SCRequest : NSObject
 
-+ (void)performMethod:(NSString *)method
-           onResource:(NSURL *)resource
-      usingParameters:(NSDictionary *)parameters
-          withAccount:(SCAccount *)account
-  sendProgressHandler:(SCRequestProgressHandler)progressHandler
-      responseHandler:(SCRequestResponseHandler)responseHandler;
++ (id)   performMethod:(NSString *)method
+            onResource:(NSURL *)resource
+       usingParameters:(NSDictionary *)parameters
+           withAccount:(SCAccount *)account
+sendingProgressHandler:(SCRequestProgressHandler)progressHandler
+       responseHandler:(SCRequestResponseHandler)responseHandler;
+
++ (void)cancelRequest:(id)request;
 
 @end

@@ -19,3 +19,13 @@ extern NSString * const kSCConfigurationRedirectURL;
 extern NSString * const kSCConfigurationSandbox;
 extern NSString * const kSCConfigurationAPIURL;
 extern NSString * const kSCConfigurationAuthorizeURL;
+
+
+extern NSString * const kSCSoundCloudAPIURL;
+extern NSString * const kSCSoundCloudAccessTokenURL;
+extern NSString * const kSCSoundCloudAuthURL;
+
+
+extern NSString * const kSCSoundCloudSandboxAPIURL;
+extern NSString * const kSCSoundCloudSandboxAccessTokenURL;
+extern NSString * const kSCSoundCloudSandboxAuthURL;

@@ -19,34 +19,23 @@
  */
 
 
-
-//// define to use production. else use sandbox
-//#define kUseProduction
-//
-//#ifdef kUseProduction
-//	//Production key & secret
-//	#define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"
-//	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
-//#else
-//	//Sandbox key & secret
-//	#define kTestAppConsumerKey		@"INHqfaDE8vt4Xr1mRzOmQ"
-//	#define kTestAppConsumerSecret	@"MSAO1CJTAMkF2UkfhqKfTIAA0KFyiHFgQpELe5CTs"
-//#endif
-//
-//#define kCallbackURL	@"x-wrapper-test://oauth"	//remember that the myapp protocol also is set in the info.plist
-
-
-#define appDelegate ((iPhoneTestAppAppDelegate *)[[UIApplication sharedApplication] delegate])
+#define appDelegate ((iPhoneTestAppDelegate *)[[UIApplication sharedApplication] delegate])
 
 @class iPhoneTestAppViewController;
+@class SCAccount;
 
-@interface iPhoneTestAppAppDelegate : NSObject <UIApplicationDelegate, SCSoundCloudAPIAuthenticationDelegate> {
+@interface iPhoneTestAppDelegate : NSObject <UIApplicationDelegate, SCSoundCloudAPIAuthenticationDelegate> {
     UIWindow *window;
     iPhoneTestAppViewController *viewController;
+    SCAccount *scAccount;
+    
+    id scDidCreateAccountNotificationObserver;
+    id scDidRemoveAccountNotificationObserver;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet iPhoneTestAppViewController *viewController;
+@property (nonatomic, readonly) SCAccount *scAccount;
 
 @end
 

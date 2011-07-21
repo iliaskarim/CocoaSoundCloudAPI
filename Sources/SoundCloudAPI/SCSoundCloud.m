@@ -23,15 +23,8 @@
 
 #endif
 
+#import "SCSoundCloud+Private.h"
 #import "SCSoundCloud.h"
-
-#define kSoundCloudAPIURL					@"https://api.soundcloud.com/"
-#define kSoundCloudAPIAccessTokenURL		@"https://api.soundcloud.com/oauth2/token"
-#define kSoundCloudAuthURL					@"https://soundcloud.com/connect"
-
-#define kSoundCloudSandboxAPIURL			@"https://api.sandbox-soundcloud.com/"
-#define kSoundCloudSandboxAPIAccessTokenURL	@"https://api.sandbox-soundcloud.com/oauth2/token"
-#define kSoundCloudSandboxAuthURL			@"https://sandbox-soundcloud.com/connect"
 
 
 #pragma mark Notifications
@@ -51,38 +44,9 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 @implementation SCSoundCloud
 
-+ (id)shared;
++ (void)initialize;
 {
-    static SCSoundCloud *shared;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        shared = [SCSoundCloud new];
-        
-        // Set default handler for prepared authorization urls.
-        
-        [[NXOAuth2AccountStore sharedStore] setPreparedAuthorizationURLHandlerForAccountType:kSCAccountType
-                                                                                       block:^(NSURL *preparedURL){
-                                                                                           NSLog(@"Open prepared URL: %@", preparedURL);
-#if TARGET_OS_IPHONE
-                                                                                           
-                                                                                           SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:preparedURL
-                                                                                                                                                                    authentication:nil];
-                                                                                           
-                                                                                           NSArray *windows = [[UIApplication sharedApplication] windows];
-                                                                                           UIWindow *window = nil;
-                                                                                           if (windows.count > 0) window = [windows objectAtIndex:0];
-                                                                                           if ([window respondsToSelector:@selector(rootViewController)]) {
-                                                                                               UIViewController *rootViewController = [window rootViewController];
-                                                                                               [rootViewController presentModalViewController: loginViewController animated:YES];
-                                                                                           } else {
-                                                                                               NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
-                                                                                           }
-#else
-                                                                                           [[NSWorkspace sharedWorkspace] openURL:preparedURL];
-#endif
-                                                                                       }];
-    });
-    return shared;
+    [SCSoundCloud shared];
 }
 
 - (id)init;
@@ -125,7 +89,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 @synthesize accountStoreDidCreateAccountObserver;
 @synthesize accountDidFailToGetAccessTokenObserver;
 
-- (NSArray *)accounts;
++ (NSArray *)accounts;
 {
     NSMutableArray *result = [NSMutableArray array];
     NSArray *oauthAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAccountType];
@@ -137,7 +101,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
     return result;
 }
 
-- (SCAccount *)accountWithIdentifier:(NSString *)identifier;
++ (SCAccount *)accountWithIdentifier:(NSString *)identifier;
 {
     NXOAuth2Account *oauthAccount = [[NXOAuth2AccountStore sharedStore] accountWithIdentifier:identifier];
     SCAccount *account = [[SCAccount alloc] initWithOAuthAccount:oauthAccount];
@@ -147,12 +111,12 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 #pragma mark Manage Accounts
 
-- (void)requestAccess;
++ (void)requestAccess;
 {
     [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType];
 }
 
-- (void)removeAccount:(SCAccount *)account;
++ (void)removeAccount:(SCAccount *)account;
 {
     [[NXOAuth2AccountStore sharedStore] removeAccount:account.oauthAccount];
     [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudDidRemoveAccountNotification object:account];
@@ -160,7 +124,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 #pragma mark Configuration
 
-- (void)setClientID:(NSString *)aClientID
++ (void)setClientID:(NSString *)aClientID
              secret:(NSString *)aSecret
         redirectURL:(NSURL *)aRedirectURL;
 {
@@ -170,44 +134,22 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
     [config setObject:aSecret forKey:kNXOAuth2AccountStoreConfigurationSecret];
     [config setObject:aRedirectURL forKey:kNXOAuth2AccountStoreConfigurationRedirectURL];
 
-    [config setObject:[NSURL URLWithString:kSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
-    [config setObject:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
-    [config setObject:[NSURL URLWithString:kSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
+    [config setObject:[NSURL URLWithString:kSCSoundCloudAuthURL] forKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL];
+    [config setObject:[NSURL URLWithString:kSCSoundCloudAccessTokenURL] forKey:kNXOAuth2AccountStoreConfigurationTokenURL];
+    [config setObject:[NSURL URLWithString:kSCSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
     
     [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
 }
 
-- (NSDictionary *)configuration;
-{
-    NSDictionary *configuration = [[NXOAuth2AccountStore sharedStore] configurationForAccountType:kSCAccountType];
-    
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
-    
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationClientID] forKey:kSCConfigurationClientID];
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationSecret] forKey:kSCConfigurationSecret];
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationRedirectURL] forKey:kSCConfigurationRedirectURL];
-    
-    [config setObject:[configuration objectForKey:kNXOAuth2AccountStoreConfigurationAuthorizeURL] forKey:kSCConfigurationAuthorizeURL];
-    
-    if ([[configuration objectForKey:kNXOAuth2AccountStoreConfigurationTokenURL] isEqual:[NSURL URLWithString:kSoundCloudSandboxAPIAccessTokenURL]]) {
-        [config setObject:[NSNumber numberWithBool:YES] forKey:kSCConfigurationSandbox];
-    } else {
-        [config setObject:[NSNumber numberWithBool:NO] forKey:kSCConfigurationSandbox];
-    }
-    
-    [config setObject:[configuration objectForKey:kSCConfigurationAPIURL] forKey:kSCConfigurationAPIURL];
-    
-    return config;
-}
 
 #pragma mark Prepared Authorization URL Handler
 
-- (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
++ (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
 {
     [[NXOAuth2AccountStore sharedStore] setPreparedAuthorizationURLHandlerForAccountType:kSCAccountType block:handler];
 }
 
-- (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
++ (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
 {
     return [[NXOAuth2AccountStore sharedStore] preparedAuthorizationURLHandlerForAccountType:kSCAccountType];
 }
@@ -215,7 +157,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 #pragma mark OAuth2 Flow
 
-- (BOOL)handleRedirectURL:(NSURL *)URL;
++ (BOOL)handleRedirectURL:(NSURL *)URL;
 {
     return [[NXOAuth2AccountStore sharedStore] handleRedirectURL:URL];
 }

@@ -22,7 +22,6 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 
 #pragma mark -
 
-
 @class SCAccount;
 
 @interface SCSoundCloud : NSObject {
@@ -31,37 +30,33 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
     id accountDidFailToGetAccessTokenObserver;
 }
 
-+ (SCSoundCloud *)shared;
-
 #pragma mark Accessors
 
-@property(nonatomic, readonly) NSArray *accounts;
-- (SCAccount *)accountWithIdentifier:(NSString *)identifier;
++ (NSArray *)accounts;
++ (SCAccount *)accountWithIdentifier:(NSString *)identifier;
 
 
 #pragma mark Manage Accounts
 
-- (void)requestAccess;
-- (void)removeAccount:(SCAccount *)account;
++ (void)requestAccess;
++ (void)removeAccount:(SCAccount *)account;
 
 
 #pragma mark Configuration
 
-- (void)setClientID:(NSString *)aClientID
++ (void)setClientID:(NSString *)aClientID
              secret:(NSString *)aSecret
         redirectURL:(NSURL *)aRedirectURL;
-
-@property (nonatomic, readonly) NSDictionary *configuration;
 
 
 #pragma mark Prepared Authorization URL Handler
 
-- (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
-- (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
++ (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
++ (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
 
 
 #pragma mark OAuth2 Flow
 
-- (BOOL)handleRedirectURL:(NSURL *)URL;
++ (BOOL)handleRedirectURL:(NSURL *)URL;
 
 @end
