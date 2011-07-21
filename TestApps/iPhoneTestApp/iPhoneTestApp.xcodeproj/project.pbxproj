@@ -12,7 +12,6 @@
 		2899E5220DE3E06400AC0155 /* iPhoneTestAppViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* iPhoneTestAppViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* iPhoneTestAppViewController.m */; };
-		9431457C12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9431457B12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m */; };
 		9469478F128319C1006181DF /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9469478E128319C1006181DF /* SoundCloud.bundle */; };
 		948711A8124CDF9B002557D1 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487119D124CDF8E002557D1 /* libOAuth2Client.a */; };
 		948711A9124CDF9B002557D1 /* libSoundCloudAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94871194124CDF83002557D1 /* libSoundCloudAPI.a */; };
@@ -75,7 +74,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D3623240D0F684500981E51 /* iPhoneTestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; path = iPhoneTestAppDelegate.h; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* iPhoneTestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTestAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* iPhoneTestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneTestAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* iPhoneTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhoneTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2899E5210DE3E06400AC0155 /* iPhoneTestAppViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = iPhoneTestAppViewController.xib; sourceTree = "<group>"; };
@@ -85,8 +84,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPhoneTestApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTestApp_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9431457A12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloudAPI+TestApp.h"; sourceTree = "<group>"; };
-		9431457B12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloudAPI+TestApp.m"; sourceTree = "<group>"; };
 		9469478E128319C1006181DF /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../../SoundCloud.bundle; sourceTree = "<group>"; };
 		948711F3124CE0E6002557D1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		94871286124CE1FC002557D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -125,7 +122,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				9431457912393B2200CF41D6 /* Additions */,
 				1D3623240D0F684500981E51 /* iPhoneTestAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iPhoneTestAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* iPhoneTestAppViewController.h */,
@@ -187,15 +183,6 @@
 				949C17501061052B00C4044D /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9431457912393B2200CF41D6 /* Additions */ = {
-			isa = PBXGroup;
-			children = (
-				9431457A12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.h */,
-				9431457B12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m */,
-			);
-			name = Additions;
 			sourceTree = "<group>";
 		};
 		9487118F124CDF83002557D1 /* Products */ = {
@@ -355,7 +342,6 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* iPhoneTestAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */,
-				9431457C12393B3A00CF41D6 /* SCSoundCloudAPI+TestApp.m in Sources */,
 				94FE06391330F7EB00AB45E2 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

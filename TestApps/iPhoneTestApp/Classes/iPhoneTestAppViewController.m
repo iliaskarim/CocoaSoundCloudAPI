@@ -23,8 +23,6 @@
 #import "iPhoneTestAppViewController.h"
 #import "iPhoneTestAppDelegate.h"
 
-#import "SCSoundCloudAPI+TestApp.h"
-
 
 @interface iPhoneTestAppViewController(private)
 -(void)commonAwake;
