@@ -35,74 +35,56 @@
 
 #pragma mark Class Methods
 
-+ (id)configurationForProductionWithConsumerKey:(NSString *)inConsumerKey
-								 consumerSecret:(NSString *)inConsumerSecret
-									callbackURL:(NSURL *)inCallbackURL;
++ (id)configurationForProductionWithClientID:(NSString *)clientID
+                                clientSecret:(NSString *)clientSecret
+                                 redirectURL:(NSURL *)redirectURL;
 {
-	return [[[self alloc] initWithConsumerKey:inConsumerKey
-                               consumerSecret:inConsumerSecret
-                                  callbackURL:inCallbackURL
-                                   apiBaseURL:[NSURL URLWithString:kSoundCloudAPIURL]
-                               accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL]
-                                      authURL:[NSURL URLWithString:kSoundCloudAuthURL]] autorelease];
+	return [[[self alloc] initWithClientID:clientID
+                              clientSecret:clientSecret
+                               redirectURL:redirectURL
+                                apiBaseURL:[NSURL URLWithString:kSoundCloudAPIBaseURL]
+                            accessTokenURL:[NSURL URLWithString:kSoundCloudAPIAccessTokenURL]
+                                   authURL:[NSURL URLWithString:kSoundCloudAuthURL]] autorelease];
 }
 
-+ (id)configurationForSandboxWithConsumerKey:(NSString *)inConsumerKey
-							  consumerSecret:(NSString *)inConsumerSecret
-								 callbackURL:(NSURL *)inCallbackURL;
+
++ (id)configurationForSandboxWithClientID:(NSString *)clientID
+                             clientSecret:(NSString *)clientSecret
+                              redirectURL:(NSURL *)redirectURL;
 {
-	return [[[self alloc] initWithConsumerKey:inConsumerKey
-                               consumerSecret:inConsumerSecret
-                                  callbackURL:inCallbackURL
-                                   apiBaseURL:[NSURL URLWithString:kSoundCloudSandboxAPIURL]
-                               accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccessTokenURL]
-                                      authURL:[NSURL URLWithString:kSoundCloudSandboxAuthURL]] autorelease];
+	return [[[self alloc] initWithClientID:clientID
+                              clientSecret:clientSecret
+                               redirectURL:redirectURL
+                                apiBaseURL:[NSURL URLWithString:kSoundCloudSandboxAPIBaseURL]
+                            accessTokenURL:[NSURL URLWithString:kSoundCloudSandboxAPIAccessTokenURL]
+                                   authURL:[NSURL URLWithString:kSoundCloudSandboxAuthURL]] autorelease];
 }
 
 
 #pragma mark Lifecycle
 
-- (id)initWithConsumerKey:(NSString *)inConsumerKey
-		   consumerSecret:(NSString *)inConsumerSecret
-			  callbackURL:(NSURL *)inCallbackURL
-			   apiBaseURL:(NSURL *)inApiBaseURL
-		   accessTokenURL:(NSURL *)inAccessTokenURL
-				  authURL:(NSURL *)inAuthURL;
+- (id)initWithClientID:(NSString *)inClientID
+          clientSecret:(NSString *)inClientSecret
+           redirectURL:(NSURL *)inRedirectURL
+            apiBaseURL:(NSURL *)inApiBaseURL
+        accessTokenURL:(NSURL *)inAccessTokenURL
+               authURL:(NSURL *)inAuthURL;
 {
-	// TODO: use assert
-	if (!inConsumerKey){
-		NSLog(@"No ConsumerKey supplied");
-		return nil;
-	}
-	if (!inConsumerSecret){
-		NSLog(@"No ConsumerSecret supplied");
-		return nil;
-	}	
-/*	if (!inCallbackURL){
-		NSLog(@"No CallbackURL supplied");
-		return nil;
-	}*/
-	if (!inApiBaseURL){
-		NSLog(@"No ApiBaseURL supplied");
-		return nil;
-	}
-	if (!inAccessTokenURL){
-		NSLog(@"No AccessTokenURL supplied");
-		return nil;
-	}
-	if (!inAuthURL){
-		NSLog(@"No AuthURL supplied");
-		return nil;
-	}
+	NSAssert(inClientID, @"No Client ID supplied");
+	NSAssert(inClientSecret, @"No Client Secret supplied");
+    //NSAssert(inRedirectURL, @"No Redirect URL supplied"); // no redirectURL required when doing user credentials flow
+    NSAssert(inApiBaseURL, @"No Api Base URL supplied");
+    NSAssert(inAccessTokenURL, @"No Access Token URL supplied");
+    NSAssert(inAuthURL, @"No Auth URL supplied");
 	
 	if (self = [super init]) {
 		apiBaseURL = [inApiBaseURL retain];
 		accessTokenURL = [inAccessTokenURL retain];
 		authURL = [inAuthURL retain];
 		
-		consumerKey = [inConsumerKey retain];
-		consumerSecret = [inConsumerSecret retain];
-		callbackURL = [inCallbackURL retain];
+		clientID = [inClientID retain];
+		clientSecret = [inClientSecret retain];
+		redirectURL = [inRedirectURL retain];
 	}
 	return self;	
 }
@@ -113,17 +95,17 @@
 	[accessTokenURL release]; accessTokenURL = nil;
 	[authURL release]; authURL = nil;
 	
-	[consumerKey release]; consumerKey = nil;
-	[consumerSecret release]; consumerSecret = nil;
-	[callbackURL release]; callbackURL = nil;
+	[clientID release]; clientID = nil;
+	[clientSecret release]; clientSecret = nil;
+	[redirectURL release]; redirectURL = nil;
 	[super dealloc];
 }
 
 #pragma mark Accessors
 
 @synthesize apiBaseURL, accessTokenURL, authURL;
-@synthesize consumerKey, consumerSecret;
-@synthesize callbackURL;
+@synthesize clientID, clientSecret;
+@synthesize redirectURL;
 
 #pragma mark User Agent String
 
@@ -189,6 +171,67 @@
 	}
 	free(cValue);
 	return value;
+}
+
+@end
+
+
+// this will go away soon
+@implementation SCSoundCloudAPIConfiguration (Deprecation)
+
++ (id)configurationForProductionWithConsumerKey:(NSString *)consumerKey
+                                 consumerSecret:(NSString *)consumerSecret
+                                    callbackURL:(NSURL *)callbackURL;
+{
+    return [self configurationForProductionWithClientID:consumerKey clientSecret:consumerSecret redirectURL:callbackURL];
+}
+
++ (id)configurationForSandboxWithConsumerKey:(NSString *)consumerKey
+                              consumerSecret:(NSString *)consumerSecret
+                                 callbackURL:(NSURL *)callbackURL;
+{
+    return [self configurationForSandboxWithClientID:consumerKey clientSecret:consumerSecret redirectURL:callbackURL];
+}
+
+
+- (id)initWithConsumerKey:(NSString *)inConsumerKey
+           consumerSecret:(NSString *)inConsumerSecret
+              callbackURL:(NSURL *)inCallbackURL
+               apiBaseURL:(NSURL *)inApiBaseURL
+           accessTokenURL:(NSURL *)inAccessTokenURL
+                  authURL:(NSURL *)inAuthURL;
+{
+    return [self initWithClientID:inConsumerKey clientSecret:inConsumerSecret redirectURL:inCallbackURL apiBaseURL:inApiBaseURL accessTokenURL:inAccessTokenURL authURL:inAuthURL];
+}
+
+- (NSString *)consumerKey;
+{
+    return self.clientID;
+}
+
+- (void)setConsumerKey:(NSString *)consumerKey;
+{
+    self.clientID = consumerKey;
+}
+
+- (NSString *)consumerSecret;
+{
+    return self.clientSecret;
+}
+
+- (void)setConsumerSecret:(NSString *)consumerSecret;
+{
+    self.clientSecret = consumerSecret;
+}
+
+- (NSURL *)callbackURL;
+{
+    return self.redirectURL;
+}
+
+- (void)setCallbackURL:(NSURL *)callbackURL;
+{
+    self.redirectURL = callbackURL;
 }
 
 @end
