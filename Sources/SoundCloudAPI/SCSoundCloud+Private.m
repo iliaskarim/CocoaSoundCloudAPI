@@ -11,6 +11,7 @@
 #import "SCLoginViewController.h"
 #else
 #import <OAuth2Client/NXOAuth2.h>
+#import <Cocoa/Cocoa.h>
 #endif
 
 #import "SCConstants.h"

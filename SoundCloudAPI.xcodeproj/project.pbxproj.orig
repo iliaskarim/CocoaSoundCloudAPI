@@ -71,18 +71,19 @@
 		F60811F013D051840040EC66 /* SCRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811ED13D051840040EC66 /* SCRequest.h */; };
 		F60811F113D051840040EC66 /* SCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811EE13D051840040EC66 /* SCRequest.m */; };
 		F60811F213D051840040EC66 /* SCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811EE13D051840040EC66 /* SCRequest.m */; };
+		F608121A13D08B5B0040EC66 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F608121813D08B5B0040EC66 /* SCShareViewController.h */; };
 		F608121B13D08B5B0040EC66 /* SCShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F608121813D08B5B0040EC66 /* SCShareViewController.h */; };
+		F608121C13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
 		F608121D13D08B5B0040EC66 /* SCShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F608121913D08B5B0040EC66 /* SCShareViewController.m */; };
-		F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; };
 		F6525B7E13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; };
 		F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
-		F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6622B6613D84A2B0057ADD0 /* Cocoa.framework */; };
 		F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
 		F6E88D2813D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
-		F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */; };
 		F6E88D2D13D43A74008B9CD5 /* SCAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */; };
 		F6E88D3113D43B67008B9CD5 /* SCAccount+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */; };
 		F6E88D3213D43B67008B9CD5 /* SCAccount+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */; };
@@ -163,7 +164,6 @@
 		F608121913D08B5B0040EC66 /* SCShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCShareViewController.m; sourceTree = "<group>"; };
 		F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloud+Private.h"; sourceTree = "<group>"; };
 		F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloud+Private.m"; sourceTree = "<group>"; };
-		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F6E88D2313D41F8A008B9CD5 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
 		F6E88D2413D41F8A008B9CD5 /* SCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConstants.m; sourceTree = "<group>"; };
 		F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCAccount+Private.h"; sourceTree = "<group>"; };
@@ -175,7 +175,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */,
 				9454819A1248D95E00E6BD3D /* AudioToolbox.framework in Frameworks */,
 				99F79A5D13A15371002555F0 /* OAuth2Client.framework in Frameworks */,
 				9454819B1248D95E00E6BD3D /* Foundation.framework in Frameworks */,
@@ -221,7 +220,6 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F6622B6613D84A2B0057ADD0 /* Cocoa.framework */,
 				99F79A5C13A15371002555F0 /* OAuth2Client.framework */,
 				94F5B56D1282FD16000D7CD1 /* CoreServices.framework */,
 				945481851248D94900E6BD3D /* AudioToolbox.framework */,
@@ -381,6 +379,7 @@
 				F60811E313D050180040EC66 /* SCSoundCloud.h in Headers */,
 				F60811E913D051420040EC66 /* SCAccount.h in Headers */,
 				F60811EF13D051840040EC66 /* SCRequest.h in Headers */,
+				F608121A13D08B5B0040EC66 /* SCShareViewController.h in Headers */,
 				F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */,
 				F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
 				F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */,
@@ -461,7 +460,11 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+<<<<<<< HEAD
 				LastUpgradeCheck = 0420;
+=======
+				LastUpgradeCheck = 0410;
+>>>>>>> refs/heads/master
 			};
 			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "SoundCloudAPI" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -533,6 +536,7 @@
 				F60811E513D050180040EC66 /* SCSoundCloud.m in Sources */,
 				F60811EB13D051420040EC66 /* SCAccount.m in Sources */,
 				F60811F113D051840040EC66 /* SCRequest.m in Sources */,
+				F608121C13D08B5B0040EC66 /* SCShareViewController.m in Sources */,
 				F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */,
 				F6E88D3113D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
 				F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */,
@@ -591,6 +595,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = SoundCloudAPI;
@@ -610,6 +615,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Sources/SoundCloudAPI_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = SoundCloudAPI;

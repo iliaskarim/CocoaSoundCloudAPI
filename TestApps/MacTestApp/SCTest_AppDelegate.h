@@ -23,7 +23,7 @@
 #import <OAuth2Client/NXOAuth2.h>
 
 
-//#define kUseProduction
+#define kUseProduction
 
 #ifdef kUseProduction
 	//Production key & secret
