@@ -10,8 +10,7 @@
 
 #pragma mark Notifications
 
-extern NSString * const SCSoundCloudDidCreateAccountNotification;
-extern NSString * const SCSoundCloudDidRemoveAccountNotification;
+extern NSString * const SCSoundCloudAccountsDidChangeNotification;
 extern NSString * const SCSoundCloudDidFailToRequestAccess;
 
 
@@ -26,7 +25,7 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 
 @interface SCSoundCloud : NSObject {
 @private
-    id accountStoreDidCreateAccountObserver;
+    id accountStoreAccountsDidChangeObserver;
     id accountDidFailToGetAccessTokenObserver;
 }
 

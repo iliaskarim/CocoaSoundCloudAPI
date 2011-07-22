@@ -29,8 +29,7 @@
 
 #pragma mark Notifications
 
-NSString * const SCSoundCloudDidCreateAccountNotification = @"SCSoundCloudDidCreateAccountNotification";
-NSString * const SCSoundCloudDidRemoveAccountNotification = @"SCSoundCloudDidRemoveAccountNotification";
+NSString * const SCSoundCloudAccountsDidChangeNotification = @"SCSoundCloudAccountsDidChangeNotification";
 
 NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloudDidFailToRequestAccessNotification";
 
@@ -38,7 +37,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 
 @interface SCSoundCloud ()
-@property (nonatomic, assign) id accountStoreDidCreateAccountObserver;
+@property (nonatomic, assign) id accountStoreAccountsDidChangeObserver;
 @property (nonatomic, assign) id accountDidFailToGetAccessTokenObserver;
 @end
 
@@ -53,17 +52,11 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 {
     self = [super init];
     if (self) {
-        self.accountStoreDidCreateAccountObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidCreateAccountNotification
+        self.accountStoreAccountsDidChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
                                                                                                       object:nil
                                                                                                        queue:nil
                                                                                                   usingBlock:^(NSNotification *notification){
-                                                                                                      NXOAuth2Account *oauthAccount = [notification object];
-                                                                                                      if ([oauthAccount.accountType isEqualToString:kSCAccountType]) {
-                                                                                                          
-                                                                                                          SCAccount *scAccount = [[SCAccount alloc] initWithOAuthAccount:oauthAccount];
-                                                                                                          [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudDidCreateAccountNotification object:scAccount];
-                                                                                                          
-                                                                                                      }
+                                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudAccountsDidChangeNotification object:self];
                                                                                                   }];
         
         self.accountDidFailToGetAccessTokenObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountDidFailToGetAccessTokenNotification
@@ -79,14 +72,14 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 - (void)dealloc;
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self.accountStoreDidCreateAccountObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.accountStoreAccountsDidChangeObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.accountDidFailToGetAccessTokenObserver];
     [super dealloc];
 }
 
 #pragma mark Accessors
 
-@synthesize accountStoreDidCreateAccountObserver;
+@synthesize accountStoreAccountsDidChangeObserver;
 @synthesize accountDidFailToGetAccessTokenObserver;
 
 + (NSArray *)accounts;
@@ -119,7 +112,6 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 + (void)removeAccount:(SCAccount *)account;
 {
     [[NXOAuth2AccountStore sharedStore] removeAccount:account.oauthAccount];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudDidRemoveAccountNotification object:account];
 }
 
 #pragma mark Configuration
