@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef void(^SCLoginViewControllerDismissHandler)(void);
+
 @class SCSoundCloudAPIAuthentication;
 
 @interface SCLoginViewController : UIViewController <UIWebViewDelegate> {
@@ -23,9 +25,12 @@
 	
 	UIButton *titleBarButton;
 	BOOL showReloadButton;
+    
+    SCLoginViewControllerDismissHandler dismissHandler;
 }
 
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;
+- (id)initWithURL:(NSURL *)anURL dismissHandler:(SCLoginViewControllerDismissHandler)aDismissHandler;
 
 /*
  * Replaces the close ('X') button in the top bar with a reload button

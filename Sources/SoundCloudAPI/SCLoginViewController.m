@@ -28,6 +28,15 @@
 
 #pragma mark Lifecycle
 
+- (id)initWithURL:(NSURL *)anURL dismissHandler:(SCLoginViewControllerDismissHandler)aDismissHandler;
+{
+    self = [self initWithURL:anURL authentication:nil];
+    if (self) {
+        dismissHandler = [aDismissHandler copy];
+    }
+    return self;
+}
+
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)anAuthentication;
 {
     if (!anURL) return nil;
@@ -63,6 +72,7 @@
     [activityIndicator release];
     [URL release];
     [webView release];
+    [dismissHandler release];
     [super dealloc];
 }
 
@@ -244,7 +254,7 @@
     if (authentication) {
         [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
     } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        dismissHandler();
     }
 }
 

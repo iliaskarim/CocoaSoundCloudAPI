@@ -77,7 +77,7 @@
              responseHandler:^(NSData *data, NSError *error){
                  if (data) {
                      NSError *jsonError = nil;
-                     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                     NSDictionary *result = [data objectFromJSONData]; //[NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                      if (result) {
                          self.usernameLabel.text = [result objectForKey:@"username"];
                      } else {
@@ -103,7 +103,7 @@
              responseHandler:^(NSData *data, NSError *error){
                  if (data) {
                      NSError *jsonError = nil;
-                     NSArray *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+                     NSArray *result = [data objectFromJSONData]; //[NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                      if (result) {
                          self.trackNumberLabel.text = [NSString stringWithFormat:@"%d", [result count]];
                      } else {
