@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^SCRequestResponseHandler)(NSData *responseData, NSError *error);
+typedef void(^SCRequestResponseHandler)(NSURLResponse *response, NSData *responseData, NSError *error);
 typedef void(^SCRequestProgressHandler)(unsigned long long bytesSend, unsigned long long bytesTotal);
 
 @class SCAccount;

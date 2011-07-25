@@ -76,7 +76,7 @@
              usingParameters:nil
                  withAccount:account
       sendingProgressHandler:nil
-             responseHandler:^(NSData *data, NSError *error){
+             responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                  if (data) {
                      NSError *jsonError = nil;
                      NSDictionary *result = [data objectFromJSONData]; //[NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
@@ -102,7 +102,7 @@
              usingParameters:nil
                  withAccount:account
       sendingProgressHandler:nil
-             responseHandler:^(NSData *data, NSError *error){
+             responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                  if (data) {
                      NSError *jsonError = nil;
                      NSArray *result = [data objectFromJSONData]; //[NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];

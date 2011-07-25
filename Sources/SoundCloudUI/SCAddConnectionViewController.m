@@ -51,7 +51,7 @@
                  usingParameters:parameters
                      withAccount:anAccount
           sendingProgressHandler:nil
-                 responseHandler:^(NSData *data, NSError *error){
+                 responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
                      
                      if (data) {
                          
