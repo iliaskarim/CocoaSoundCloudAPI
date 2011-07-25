@@ -29,13 +29,12 @@
     iPhoneTestAppViewController *viewController;
     SCAccount *scAccount;
     
-    id scDidCreateAccountNotificationObserver;
-    id scDidRemoveAccountNotificationObserver;
+    id accountsChangeObserver;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet iPhoneTestAppViewController *viewController;
-@property (nonatomic, readonly) SCAccount *scAccount;
+@property (nonatomic, retain) SCAccount *scAccount;
 
 @end
 

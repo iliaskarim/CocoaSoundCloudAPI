@@ -63,6 +63,10 @@
 
 #pragma mark Lifecycle
 
+
+
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 {
     [window setRootViewController:viewController];
@@ -71,36 +75,24 @@
     
     // ---8<------8<------8<------8<------8<------8<------8<----
     
-    scDidCreateAccountNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:SCSoundCloudDidCreateAccountNotification
-                                                                                               object:nil
-                                                                                                queue:nil
-                                                                                           usingBlock:^(NSNotification *notification) {
-                                                                                               SCAccount *createdAccount = notification.object;
-                                                                                               if (scAccount != createdAccount) {
-                                                                                                   [self willChangeValueForKey:@"scAccount"];
-                                                                                                   [scAccount release];
-                                                                                                   [createdAccount retain];
-                                                                                                   scAccount = createdAccount;
-                                                                                                   NSLog(@"New SoundCloud account created.");
-                                                                                                   [self didChangeValueForKey:@"scAccount"];
-                                                                                               }
-                                                                                           }];
+    void (^accountSetter)(NSNotification*) = ^(NSNotification *notification) {
+        NSArray *accounts = [SCSoundCloud accounts];
+        if (accounts.count < 1) {
+            [SCSoundCloud requestAccess];
+        } else {
+            SCAccount *newAccount = [accounts objectAtIndex:0];
+            if (![newAccount isEqual:self.scAccount]) {
+                self.scAccount = newAccount;
+            }
+        }
+    };    
     
+    accountsChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:SCSoundCloudAccountsDidChangeNotification
+                                                                               object:nil
+                                                                                queue:nil
+                                                                           usingBlock:accountSetter];
     
-    scDidRemoveAccountNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:SCSoundCloudDidRemoveAccountNotification
-                                                                                               object:nil
-                                                                                                queue:nil
-                                                                                           usingBlock:^(NSNotification *notification) {
-                                                                                               SCAccount *removedAccount = notification.object;
-                                                                                               if (scAccount == removedAccount) {
-                                                                                                   [self willChangeValueForKey:@"scAccount"];
-                                                                                                   [scAccount release];
-                                                                                                   scAccount = nil;
-                                                                                                   NSLog(@"Current SoundCloud account removed.");
-                                                                                                   [self didChangeValueForKey:@"scAccount"];
-                                                                                               }
-                                                                                           }];
-    
+    accountSetter(nil);
     
     NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	BOOL didHandleURL = NO;
@@ -117,8 +109,7 @@
 {
     // ---8<------8<------8<------8<------8<------8<------8<----
     
-    [[NSNotificationCenter defaultCenter] removeObserver:scDidCreateAccountNotificationObserver];
-    [[NSNotificationCenter defaultCenter] removeObserver:scDidRemoveAccountNotificationObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:accountsChangeObserver];
     
     // ---8<------8<------8<------8<------8<------8<------8<----
     
@@ -132,6 +123,7 @@
 
 @synthesize window;
 @synthesize viewController;
+@synthesize scAccount;
 
 #pragma mark -
 
