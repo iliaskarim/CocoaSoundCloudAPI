@@ -29,8 +29,8 @@
 #import "SCAccount.h"
 #import "SCRequest.h"
 
-#if TARGET_OS_IPHONE
-#import "SCLoginViewController.h"
-#endif
-
 #import "SCAudioStream.h"
+
+#if TARGET_OS_IPHONE
+#import "SCUI.h"
+#endif

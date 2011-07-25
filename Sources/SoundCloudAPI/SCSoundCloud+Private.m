@@ -34,9 +34,6 @@
                                                                                        block:^(NSURL *preparedURL){
                                                                                            NSLog(@"Open prepared URL: %@", preparedURL);
 #if TARGET_OS_IPHONE
-                                                                                           
-                                                                                           
-                                                                                           
                                                                                            NSArray *windows = [[UIApplication sharedApplication] windows];
                                                                                            UIWindow *window = nil;
                                                                                            if (windows.count > 0) window = [windows objectAtIndex:0];
@@ -45,7 +42,7 @@
                                                                                                
                                                                                                SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:preparedURL
                                                                                                                                                                         dismissHandler:^{[rootViewController dismissModalViewControllerAnimated:YES];}];
-                                                                                               [rootViewController presentModalViewController: loginViewController animated:YES];
+                                                                                               [rootViewController presentModalViewController:loginViewController animated:YES];
 
                                                                                            } else {
                                                                                                NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");

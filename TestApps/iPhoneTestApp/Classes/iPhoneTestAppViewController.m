@@ -18,6 +18,8 @@
  * 
  */
 
+#import "SCUI.h"
+
 #import "JSONKit.h"
 
 #import "iPhoneTestAppViewController.h"
@@ -131,28 +133,22 @@
     SCAccount *account = appDelegate.scAccount;
     if (!account) return;
     
-        
+    
     NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"wav"];
     NSURL *dataURL = [NSURL fileURLWithPath:dataPath];
     
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:[trackNameField text] forKey:@"track[title]"];
-    [parameters setObject:@"private" forKey:@"track[sharing]"];
-    [parameters setObject:dataURL forKey:@"track[asset_data]"];
-    
-    self.progresBar.progress = 0.0;
-    
-    [SCRequest performMethod:@"POST"
-                  onResource:[NSURL URLWithString:@"https://api.soundcloud.com/tracks"]
-             usingParameters:parameters withAccount:account
-      sendingProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal){self.progresBar.progress = ((float)bytesSend)/bytesTotal;}
-             responseHandler:^(NSData *data, NSError *error){
-                 if (data) {
-                     self.progresBar.progress = 0.0;
-                     [self updateTrackNumber];
-                 }
-             }];
-
+    SCShareViewController *shareView = [SCShareViewController shareViewControllerWithFileURL:dataURL completionHandler:^(BOOL canceled, NSDictionary *trackInfo){
+        if (canceled) {
+            NSLog(@"Sharing sound with Soundcloud canceled.");
+        } else {
+            NSLog(@"Uploaded track: %@", trackInfo);
+        }
+        
+        [self dismissModalViewControllerAnimated:YES];
+    }];
+    [shareView setTitle:@"Foo Bar!"];
+    [shareView setAccount:account];
+    [self presentModalViewController:shareView animated:YES];
 }
 
 #pragma mark UITextField Delegate

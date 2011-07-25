@@ -208,7 +208,7 @@
         
         NSURL *callbackURL = nil;
         if (authentication) {
-            callbackURL = authentication.configuration.callbackURL;
+            callbackURL = authentication.configuration.redirectURL;
         } else {
             callbackURL = [[SCSoundCloud configuration] objectForKey:kSCConfigurationRedirectURL];
         }
