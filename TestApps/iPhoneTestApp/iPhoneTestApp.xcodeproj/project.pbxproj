@@ -209,10 +209,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				F6A9853913D98CD6000AC828 /* AddressBook.framework */,
-				F6A9853A13D98CD6000AC828 /* AddressBookUI.framework */,
-				F66BAD2F13D97FD100996800 /* CoreLocation.framework */,
-				F6410A1F13D8884E00561D0B /* QuartzCore.framework */,
 				D3A305890F336D9800408EA8 /* Outsourced */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -250,6 +246,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6A9853913D98CD6000AC828 /* AddressBook.framework */,
+				F6A9853A13D98CD6000AC828 /* AddressBookUI.framework */,
+				F66BAD2F13D97FD100996800 /* CoreLocation.framework */,
+				F6410A1F13D8884E00561D0B /* QuartzCore.framework */,
 				94871286124CE1FC002557D1 /* CoreGraphics.framework */,
 				948711F3124CE0E6002557D1 /* AudioToolbox.framework */,
 				94BF8FDC11245C01002EF7F8 /* Security.framework */,
