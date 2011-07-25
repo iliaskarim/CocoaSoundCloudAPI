@@ -46,7 +46,7 @@
                                     @"touch", @"display",
                                     nil];
         
-        [SCRequest performMethod:@"POST"
+        [SCRequest performMethod:kSCRequestMethodGET
                       onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
                  usingParameters:parameters
                      withAccount:anAccount

@@ -204,7 +204,7 @@ const NSArray *allServices = nil;
         [anAccount retain];
         account = anAccount;
         
-        [SCRequest performMethod:@"GET"
+        [SCRequest performMethod:kSCRequestMethodGET
                       onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
                  usingParameters:nil
                      withAccount:account
@@ -784,7 +784,7 @@ const NSArray *allServices = nil;
         [parameters setObject:self.fileData forKey:@"track[asset_data]"];
     }
     
-    [SCRequest performMethod:@"POST"
+    [SCRequest performMethod:kSCRequestMethodPOST
                   onResource:[NSURL URLWithString:@"https://api.soundcloud.com/tracks.json"]
              usingParameters:parameters
                  withAccount:self.account

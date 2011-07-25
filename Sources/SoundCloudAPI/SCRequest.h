@@ -11,11 +11,19 @@
 typedef void(^SCRequestResponseHandler)(NSURLResponse *response, NSData *responseData, NSError *error);
 typedef void(^SCRequestProgressHandler)(unsigned long long bytesSend, unsigned long long bytesTotal);
 
+enum SCRequestMethod {
+    kSCRequestMethodGET = 0,
+    kSCRequestMethodPOST,
+    kSCRequestMethodPUT,
+    kSCRequestMethodDELETE
+};
+typedef enum SCRequestMethod SCRequestMethod;
+
 @class SCAccount;
 
 @interface SCRequest : NSObject
 
-+ (id)   performMethod:(NSString *)method
++ (id)   performMethod:(SCRequestMethod)aMethod
             onResource:(NSURL *)resource
        usingParameters:(NSDictionary *)parameters
            withAccount:(SCAccount *)account

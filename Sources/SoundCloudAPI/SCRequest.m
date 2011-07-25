@@ -20,14 +20,33 @@
 
 @implementation SCRequest
 
-+ (id)   performMethod:(NSString *)aMethod
++ (id)   performMethod:(SCRequestMethod)aMethod
             onResource:(NSURL *)aResource
        usingParameters:(NSDictionary *)someParameters
            withAccount:(SCAccount *)anAccount
 sendingProgressHandler:(SCRequestProgressHandler)aProgressHandler
        responseHandler:(SCRequestResponseHandler)aResponseHandler;
 {
-    NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:aMethod usingParameters:someParameters];
+    NSString *theMethod;
+    switch (aMethod) {
+        case kSCRequestMethodPOST:
+            theMethod = @"POST";
+            break;
+            
+        case kSCRequestMethodPUT:
+            theMethod = @"PUT";
+            break;
+            
+        case kSCRequestMethodDELETE:
+            theMethod = @"DELETE";
+            break;
+            
+        default:
+            theMethod = @"GET";
+            break;
+    }
+    
+    NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:theMethod usingParameters:someParameters];
     r.account = anAccount.oauthAccount;
     [r performRequestWithResponseHandler:aResponseHandler sendProgressHandler:aProgressHandler];
     return r;
