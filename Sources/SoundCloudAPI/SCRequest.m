@@ -46,6 +46,8 @@ sendingProgressHandler:(SCRequestProgressHandler)aProgressHandler
             break;
     }
     
+    NSAssert([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
+    
     NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:theMethod usingParameters:someParameters];
     r.account = anAccount.oauthAccount;
     [r performRequestWithResponseHandler:aResponseHandler sendProgressHandler:aProgressHandler];
