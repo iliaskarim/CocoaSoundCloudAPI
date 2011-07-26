@@ -30,13 +30,15 @@
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
 #import "SCSoundCloudAPIDelegate.h"
 
-#import "SCAudioStream.h"
-
 #import "NSString+SoundCloudAPI.h"
+
+#import "SCSoundCloudAPI-Private.h"
 
 #import "SCSoundCloudAPI.h"
 
 
+NSString * const SCSoundCloudAPIErrorDomain = @"SCSoundCloudAPIErrorDomain";
+NSString * const SCSoundCloudAPIErrorBodyDataKey = @"SCSoundCloudAPIErrorBodyDataKey";
 
 @interface SCSoundCloudAPI () <NXOAuth2ConnectionDelegate>
 
@@ -59,8 +61,8 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 	  apiConfiguration:(SCSoundCloudAPIConfiguration *)configuration;
 
 {
-	SCSoundCloudAPIAuthentication *anAuthentication =  [[SCSoundCloudAPIAuthentication alloc] initWithAuthenticationDelegate:authDelegate
-																											apiConfiguration:configuration];
+	SCSoundCloudAPIAuthentication *anAuthentication =  [[[SCSoundCloudAPIAuthentication alloc] initWithAuthenticationDelegate:authDelegate
+                                                                                                             apiConfiguration:configuration] autorelease];
 	return [self initWithDelegate:theDelegate authentication:anAuthentication];
 }
 
@@ -212,14 +214,6 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 }
 
 
-#pragma mark Streaming
-
-- (SCAudioStream *)audioStreamWithURL:(NSURL *)streamURL;
-{
-	return [[[SCAudioStream alloc] initWithURL:streamURL authentication:authentication] autorelease];
-}
-
-
 #pragma mark NXOAuth2ConnectionDelegate
 
 - (void)oauthConnection:(NXOAuth2Connection *)connection didFinishWithData:(NSData *)data;
@@ -235,8 +229,17 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 {
 	[[connection retain] autorelease];
 	[apiConnections removeObjectsForKeys:[apiConnections allKeysForObject:connection]];
+    
 	if ([delegate respondsToSelector:@selector(soundCloudAPI:didFailWithError:context:userInfo:)]) {
-		[delegate soundCloudAPI:self didFailWithError:error context:connection.context userInfo:connection.userInfo];
+        NSDictionary * userInfo = (connection.data) ? [NSDictionary dictionaryWithObject:connection.data forKey:SCSoundCloudAPIErrorBodyDataKey] : nil;
+        if ([error.domain isEqualToString:NXOAuth2HTTPErrorDomain] && error.code == 422) {
+            NSError *apiError = [NSError errorWithDomain:SCSoundCloudAPIErrorDomain
+                                                    code:error.code
+                                                userInfo:userInfo];
+            [delegate soundCloudAPI:self didFailWithError:apiError context:connection.context userInfo:connection.userInfo];
+        } else {
+            [delegate soundCloudAPI:self didFailWithError:error context:connection.context userInfo:connection.userInfo];
+        }
 	}
 }
 
@@ -281,4 +284,18 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 
 @end
+
+
+#pragma mark -
+/****************** PRIVATE *****************/
+
+@implementation SCSoundCloudAPI (Private)
+
+- (SCSoundCloudAPIAuthentication *)authentication;
+{
+	return authentication;
+}
+
+@end
+
 

@@ -63,7 +63,8 @@
 - (id)initWithAuthenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)aDelegate
 					apiConfiguration:(SCSoundCloudAPIConfiguration *)aConfiguration;
 {
-	if (self = [super init]) {
+    self = [super init];
+	if (self) {
 		delegate = aDelegate;
         
 		configuration = [aConfiguration retain];
@@ -203,33 +204,28 @@
 #pragma mark Login ViewController
 
 - (void)displayLoginViewControllerWithURL:(NSURL *)URL;
-{    
-    SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:URL authentication:self] autorelease];
-    
-    /*
-    UINavigationController *navController = [[[UINavigationController alloc] initWithRootViewController:loginViewController] autorelease];
-    navController.navigationBar.tintColor = [UIColor orangeColor];
-    if ([navController respondsToSelector:@selector(setModalPresentationStyle:)]){
-        [navController setModalPresentationStyle:UIModalPresentationFormSheet];
-    } */
-	
-	if ([delegate respondsToSelector:@selector(soundCloudAPIWillDisplayLoginViewController:)]) {
-		[delegate soundCloudAPIWillDisplayLoginViewController:loginViewController];
-	}
-	
-    if ([delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
-        [delegate soundCloudAPIDisplayViewController:loginViewController];
+{
+    //Only Display the LoginViewController if the App does not handle Authorisation itself
+    if (![delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]) {
+        SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:URL authentication:self] autorelease];
         
-    } else if (![delegate respondsToSelector:@selector(soundCloudAPIPreparedAuthorizationURL:)]) {
-        //do the presentation yourself when the delegate really does not respond to any of the callbacks for doing it himself
-        NSArray *windows = [[UIApplication sharedApplication] windows];
-        UIWindow *window = nil;
-        if (windows.count > 0) window = [windows objectAtIndex:0];
-        if ([window respondsToSelector:@selector(rootViewController)]) {
-            UIViewController *rootViewController = [window rootViewController];
-            [rootViewController presentModalViewController: loginViewController animated:YES];
+        if ([delegate respondsToSelector:@selector(soundCloudAPIWillDisplayLoginViewController:)]) {
+            [delegate soundCloudAPIWillDisplayLoginViewController:loginViewController];
+        }
+        
+        if ([delegate respondsToSelector:@selector(soundCloudAPIDisplayViewController:)]) {
+            [delegate soundCloudAPIDisplayViewController:loginViewController];
         } else {
-			NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
+            //do the presentation yourself when the delegate really does not respond to any of the callbacks for doing it himself
+            NSArray *windows = [[UIApplication sharedApplication] windows];
+            UIWindow *window = nil;
+            if (windows.count > 0) window = [windows objectAtIndex:0];
+            if ([window respondsToSelector:@selector(rootViewController)]) {
+                UIViewController *rootViewController = [window rootViewController];
+                [rootViewController presentModalViewController: loginViewController animated:YES];
+            } else {
+                NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
+            }
         }
     }
 }

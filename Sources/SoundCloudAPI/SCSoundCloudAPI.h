@@ -23,11 +23,13 @@
 #import "SCSoundCloudAPIDelegate.h"
 #import "SCSoundCloudAPIAuthenticationDelegate.h"
 
+extern NSString * const SCSoundCloudAPIErrorDomain;
+extern NSString * const SCSoundCloudAPIErrorBodyDataKey;
+
 @class NXOAuth2Client;
 @class SCSoundCloudAPIConfiguration;
 @class SCSoundCloudConnection;
 @class SCSoundCloudAPIAuthentication;
-@class SCAudioStream;
 
 typedef enum {
 	SCResponseFormatXML,
@@ -116,14 +118,5 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
  * Normally, you should use -checkAuthentication
  */
 - (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
-
-
-#pragma mark Streaming
-
-/*!
- * 
- */
-
-- (SCAudioStream *)audioStreamWithURL:(NSURL *)streamURL;
 
 @end
