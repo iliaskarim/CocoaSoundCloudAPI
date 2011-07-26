@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		824CAD0113DF158C00ABB725 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFA13DF158C00ABB725 /* SCSoundCloudAPI.h */; };
+		824CAD0213DF158C00ABB725 /* SCSoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFA13DF158C00ABB725 /* SCSoundCloudAPI.h */; };
+		824CAD0313DF158C00ABB725 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 824CACFB13DF158C00ABB725 /* SCSoundCloudAPI.m */; };
+		824CAD0413DF158C00ABB725 /* SCSoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 824CACFB13DF158C00ABB725 /* SCSoundCloudAPI.m */; };
+		824CAD0513DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFC13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h */; };
+		824CAD0613DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFC13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h */; };
+		824CAD0713DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 824CACFD13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m */; };
+		824CAD0813DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 824CACFD13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m */; };
+		824CAD0913DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFE13DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h */; };
+		824CAD0A13DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFE13DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h */; };
+		824CAD0B13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFF13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h */; };
+		824CAD0C13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 824CACFF13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h */; };
+		824CAD0D13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 824CAD0013DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m */; };
+		824CAD0E13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 824CAD0013DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m */; };
 		9429A5E0122659D500D31807 /* SCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5D2122659D500D31807 /* SCAPI.h */; settings = {ATTRIBUTES = (); }; };
 		9429A5F912265A4A00D31807 /* NSString+SoundCloudAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */; };
 		9429A5FA12265A4A00D31807 /* NSString+SoundCloudAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */; };
@@ -140,22 +154,22 @@
 
 /* Begin PBXFileReference section */
 		82249A9E1248BA100003F0BB /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SoundCloud.bundle; sourceTree = "<group>"; };
+		824CACFA13DF158C00ABB725 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPI.h; sourceTree = "<group>"; };
+		824CACFB13DF158C00ABB725 /* SCSoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPI.m; sourceTree = "<group>"; };
+		824CACFC13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIAuthentication.h; sourceTree = "<group>"; };
+		824CACFD13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIAuthentication.m; sourceTree = "<group>"; };
+		824CACFE13DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIAuthenticationDelegate.h; sourceTree = "<group>"; };
+		824CACFF13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIConfiguration.h; sourceTree = "<group>"; };
+		824CAD0013DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloudAPIConfiguration.m; sourceTree = "<group>"; };
 		9429A5D2122659D500D31807 /* SCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPI.h; sourceTree = "<group>"; };
-		9429A5D3122659D500D31807 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAPIErrors.h; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCAPIErrors.h; sourceTree = "<absolute>"; };
-		9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSoundCloudAPI.h; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPI.h; sourceTree = "<absolute>"; };
-		9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSoundCloudAPI.m; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPI.m; sourceTree = "<absolute>"; };
-		9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSoundCloudAPIConfiguration.h; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPIConfiguration.h; sourceTree = "<absolute>"; };
-		9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSoundCloudAPIConfiguration.m; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPIConfiguration.m; sourceTree = "<absolute>"; };
+		9429A5D3122659D500D31807 /* SCAPIErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAPIErrors.h; sourceTree = "<group>"; };
 		9429A5F512265A4A00D31807 /* NSString+SoundCloudAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SoundCloudAPI.h"; sourceTree = "<group>"; };
 		9429A5F612265A4A00D31807 /* NSString+SoundCloudAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SoundCloudAPI.m"; sourceTree = "<group>"; };
 		94535F86123FAFDF00BD668A /* SoundCloudAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SoundCloudAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94535F87123FAFDF00BD668A /* SoundCloudAPI.framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundCloudAPI.framework-Info.plist"; sourceTree = "<group>"; };
 		945481851248D94900E6BD3D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		94E5AD94122C192900C7021A /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
-		94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSoundCloudAPIDelegate.h; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPIDelegate.h; sourceTree = "<absolute>"; };
-		94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSoundCloudAPIAuthenticationDelegate.h; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPIAuthenticationDelegate.h; sourceTree = "<absolute>"; };
-		94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSoundCloudAPIAuthentication.h; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPIAuthentication.h; sourceTree = "<absolute>"; };
-		94EE4B4F12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSoundCloudAPIAuthentication.m; path = /Users/gernot/Code/Volkswagen/SoundCloudAPI/Sources/SoundCloudAPI/Sources/SoundCloudAPI/SCSoundCloudAPIAuthentication.m; sourceTree = "<absolute>"; };
+		94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloudAPIDelegate.h; sourceTree = "<group>"; };
 		94F5B56D1282FD16000D7CD1 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		94FA031C12D4C044001E9226 /* SCSoundCloudAPI-Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloudAPI-Private.h"; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCloudAPI_Prefix.pch; sourceTree = "<group>"; };
@@ -463,18 +477,17 @@
 		F6E1A12C13D723BA00B6DAC3 /* Legacy API */ = {
 			isa = PBXGroup;
 			children = (
+				824CACFA13DF158C00ABB725 /* SCSoundCloudAPI.h */,
+				824CACFB13DF158C00ABB725 /* SCSoundCloudAPI.m */,
+				824CACFC13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h */,
+				824CACFD13DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m */,
+				824CACFE13DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h */,
+				824CACFF13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h */,
+				824CAD0013DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m */,
 				9429A5D3122659D500D31807 /* SCAPIErrors.h */,
 				94EE4A6D1238E74F00EFDAB1 /* SCSoundCloudAPIDelegate.h */,
-				9429A5D6122659D500D31807 /* SCSoundCloudAPI.h */,
-				9429A5D7122659D500D31807 /* SCSoundCloudAPI.m */,
-				94EE4B4C12390D3800EFDAB1 /* SCSoundCloudAPIAuthenticationDelegate.h */,
-				94EE4B4E12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.h */,
-				94EE4B4F12390D5200EFDAB1 /* SCSoundCloudAPIAuthentication.m */,
-				9429A5D8122659D500D31807 /* SCSoundCloudAPIConfiguration.h */,
-				9429A5D9122659D500D31807 /* SCSoundCloudAPIConfiguration.m */,
 			);
 			name = "Legacy API";
-			path = ../..;
 			sourceTree = "<group>";
 		};
 		F6E60D2E13DD61C800A85727 /* SoundCloudUI */ = {
@@ -526,6 +539,10 @@
 				F6E88D2C13D43A74008B9CD5 /* SCAccount+Private.h in Headers */,
 				F6525B7D13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */,
 				94FA031D12D4C044001E9226 /* SCSoundCloudAPI-Private.h in Headers */,
+				824CAD0113DF158C00ABB725 /* SCSoundCloudAPI.h in Headers */,
+				824CAD0513DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h in Headers */,
+				824CAD0913DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */,
+				824CAD0B13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +588,10 @@
 				F6E60D3813DD9EFD00A85727 /* GPSwitch.h in Headers */,
 				F6E60D3C13DD9F0900A85727 /* SCSwitch.h in Headers */,
 				94FA031E12D4C044001E9226 /* SCSoundCloudAPI-Private.h in Headers */,
+				824CAD0213DF158C00ABB725 /* SCSoundCloudAPI.h in Headers */,
+				824CAD0613DF158C00ABB725 /* SCSoundCloudAPIAuthentication.h in Headers */,
+				824CAD0A13DF158C00ABB725 /* SCSoundCloudAPIAuthenticationDelegate.h in Headers */,
+				824CAD0C13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +709,9 @@
 				F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */,
 				F6E88D3113D43B67008B9CD5 /* SCAccount+Private.m in Sources */,
 				F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */,
+				824CAD0313DF158C00ABB725 /* SCSoundCloudAPI.m in Sources */,
+				824CAD0713DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m in Sources */,
+				824CAD0D13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +752,9 @@
 				F6E60D3913DD9EFD00A85727 /* GPSwitch.m in Sources */,
 				F6E60D3D13DD9F0900A85727 /* SCSwitch.m in Sources */,
 				F6E60D6C13DDABA600A85727 /* SCLoginViewController.m in Sources */,
+				824CAD0413DF158C00ABB725 /* SCSoundCloudAPI.m in Sources */,
+				824CAD0813DF158C00ABB725 /* SCSoundCloudAPIAuthentication.m in Sources */,
+				824CAD0E13DF158C00ABB725 /* SCSoundCloudAPIConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
