@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void(^SCRequestResponseHandler)(NSURLResponse *response, NSData *responseData, NSError *error);
-typedef void(^SCRequestProgressHandler)(unsigned long long bytesSend, unsigned long long bytesTotal);
+typedef void(^SCRequestSendingProgressHandler)(unsigned long long bytesSend, unsigned long long bytesTotal);
 
 enum SCRequestMethod {
     SCRequestMethodGET = 0,
@@ -19,17 +19,49 @@ enum SCRequestMethod {
 };
 typedef enum SCRequestMethod SCRequestMethod;
 
+@class NXOAuth2Request;
 @class SCAccount;
 
-@interface SCRequest : NSObject
+@interface SCRequest : NSObject {
+@private
+    NXOAuth2Request *oauthRequest;
+}
+
+#pragma mark Class Methods
 
 + (id)   performMethod:(SCRequestMethod)aMethod
             onResource:(NSURL *)resource
        usingParameters:(NSDictionary *)parameters
            withAccount:(SCAccount *)account
-sendingProgressHandler:(SCRequestProgressHandler)progressHandler
+sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
        responseHandler:(SCRequestResponseHandler)responseHandler;
 
 + (void)cancelRequest:(id)request;
+
++ (SCRequest *)request;
+
+#pragma mark Accessors
+
+@property (nonatomic, readwrite, retain) SCAccount *account;
+
+@property (nonatomic, assign) SCRequestMethod requestMethod;
+@property (nonatomic, readwrite, retain) NSURL *resource;
+@property (nonatomic, readwrite, retain) NSDictionary *parameters;
+
+@property (nonatomic, copy) SCRequestResponseHandler responseHandler;
+@property (nonatomic, copy) SCRequestSendingProgressHandler sendProgressHandler;
+
+
+#pragma mark Signed NSURLRequest
+
+- (NSURLRequest *)signedRequest;
+
+#pragma mark Perform Request
+
+- (void)performRequest;
+
+#pragma Cancel Request
+
+- (void)cancel;
 
 @end
