@@ -81,4 +81,13 @@
     return (SCRecordingSaveViewController *)self.topViewController;
 }
 
+#pragma mark Foursquare
+
+- (void)setFoursquareClientID:(NSString *)aClientID
+                 clientSecret:(NSString *)aClientSecret;
+{
+    [self.recordSaveController setFoursquareClientID:aClientID
+                                        clientSecret:aClientSecret];
+}
+
 @end

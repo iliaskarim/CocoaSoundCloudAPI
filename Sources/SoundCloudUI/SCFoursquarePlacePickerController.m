@@ -25,13 +25,18 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithDelegate:(id<SCFoursquarePlacePickerControllerDelegate>)aDelegate;
+- (id)initWithDelegate:(id<SCFoursquarePlacePickerControllerDelegate>)aDelegate
+              clientID:(NSString *)aClientID
+          clientSecret:(NSString *)aClientSecret;
 {
     if ((self = [super init])) {
         
         self.title = @"Where?";
         
         delegate = aDelegate;
+        
+        clientID = [aClientID retain];
+        clientSecret = [aClientSecret retain];
         
         api = [[GPWebAPI alloc] initWithHost:@"api.foursquare.com" delegate:self];
         api.scheme = @"https";
@@ -61,6 +66,8 @@
     [api release];
     [venues release];
     [venueRequestIdentifier release];
+    [clientSecret release];
+    [clientID release];
     [super dealloc];
 }
 
@@ -171,12 +178,13 @@
     [api cancelRequest:venueRequestIdentifier];
     [venueRequestIdentifier release];
     
-#warning unauthorized Foursquare request!
     NSDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSString stringWithFormat:@"%f,%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude], @"ll",
                                [NSString stringWithFormat:@"%f", newLocation.horizontalAccuracy], @"llAcc",
                                [NSString stringWithFormat:@"%.0f", newLocation.altitude], @"alt",
                                @"50", @"limit", 
+                               clientID, @"client_id",
+                               clientSecret, @"client_secret",
                                @"20110622", @"v",
                                nil];
     

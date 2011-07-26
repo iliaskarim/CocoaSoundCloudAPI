@@ -27,4 +27,8 @@ typedef void(^SCSharingViewControllerComletionHandler)(BOOL canceled, NSDictiona
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setTitle:(NSString *)aTitle;
 
+#pragma mark Foursquare
+
+- (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
+
 @end

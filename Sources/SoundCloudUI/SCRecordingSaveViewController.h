@@ -49,6 +49,10 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
 - (void)setTitle:(NSString *)aTitle;
 - (void)setCompletionHandler:(SCRecordingSaveViewControllerCompletionHandler)aCompletionHandler;
 
+#pragma mark Foursquare
+
+- (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
+
 #pragma mark Actions
 
 - (IBAction)privacyChanged:(id)sender;
