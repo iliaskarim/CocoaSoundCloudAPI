@@ -29,15 +29,15 @@ sendingProgressHandler:(SCRequestProgressHandler)aProgressHandler
 {
     NSString *theMethod;
     switch (aMethod) {
-        case kSCRequestMethodPOST:
+        case SCRequestMethodPOST:
             theMethod = @"POST";
             break;
             
-        case kSCRequestMethodPUT:
+        case SCRequestMethodPUT:
             theMethod = @"PUT";
             break;
             
-        case kSCRequestMethodDELETE:
+        case SCRequestMethodDELETE:
             theMethod = @"DELETE";
             break;
             

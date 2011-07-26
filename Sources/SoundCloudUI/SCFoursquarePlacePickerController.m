@@ -171,13 +171,12 @@
     [api cancelRequest:venueRequestIdentifier];
     [venueRequestIdentifier release];
     
+#warning unauthorized Foursquare request!
     NSDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSString stringWithFormat:@"%f,%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude], @"ll",
                                [NSString stringWithFormat:@"%f", newLocation.horizontalAccuracy], @"llAcc",
                                [NSString stringWithFormat:@"%.0f", newLocation.altitude], @"alt",
                                @"50", @"limit", 
-                               SCFoursquareKey, @"client_id",
-                               SCFoursquareSecret, @"client_secret",
                                @"20110622", @"v",
                                nil];
     

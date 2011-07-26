@@ -857,7 +857,7 @@
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "/Users/tobias/Documents/Projekte/cocoa-api-wrapper/TestApps/Support/JSONKit/ Outsourced/**";
+				USER_HEADER_SEARCH_PATHS = "../JSONKit/** Outsourced/**";
 			};
 			name = Debug;
 		};
@@ -876,7 +876,7 @@
 				PRODUCT_NAME = SoundCloudAPI;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "/Users/tobias/Documents/Projekte/cocoa-api-wrapper/TestApps/Support/JSONKit/ Outsourced/**";
+				USER_HEADER_SEARCH_PATHS = "../JSONKit/** Outsourced/**";
 			};
 			name = Release;
 		};
