@@ -69,7 +69,7 @@
     if (!account) return;
  
     // Fetch information about this account.
-    [SCRequest performMethod:kSCRequestMethodGET
+    [SCRequest performMethod:SCRequestMethodGET
                   onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me.json"]
              usingParameters:nil
                  withAccount:account
@@ -95,7 +95,7 @@
     if (!account) return;
     
     // Fetch the tack list to get the numer of tracks of this account.
-    [SCRequest performMethod:kSCRequestMethodGET
+    [SCRequest performMethod:SCRequestMethodGET
                   onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/tracks.json"]
              usingParameters:nil
                  withAccount:account

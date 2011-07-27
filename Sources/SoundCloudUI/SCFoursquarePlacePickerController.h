@@ -18,8 +18,10 @@
     NSArray *venues;
     CLLocationManager *locationManager;
     id venueRequestIdentifier;
+    NSString *clientID;
+    NSString *clientSecret;
 }
 
-- (id)initWithDelegate:(id<SCFoursquarePlacePickerControllerDelegate>)aDelegate;
+- (id)initWithDelegate:(id<SCFoursquarePlacePickerControllerDelegate>)aDelegate clientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 
 @end

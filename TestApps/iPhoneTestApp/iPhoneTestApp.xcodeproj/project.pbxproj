@@ -20,9 +20,6 @@
 		949C17511061052B00C4044D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949C17501061052B00C4044D /* Foundation.framework */; };
 		949C17D61061055800C4044D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949C17D51061055800C4044D /* UIKit.framework */; };
 		94BF8FDD11245C01002EF7F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BF8FDC11245C01002EF7F8 /* Security.framework */; };
-		94FE06381330F7EB00AB45E2 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 94FE061E1330F7EB00AB45E2 /* CHANGELOG.md */; };
-		94FE06391330F7EB00AB45E2 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FE06201330F7EB00AB45E2 /* JSONKit.m */; };
-		94FE063A1330F7EB00AB45E2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 94FE06211330F7EB00AB45E2 /* README.md */; };
 		D355263B0F4D7C650074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35526390F4D7C650074030D /* LICENSE */; };
 		D355263C0F4D7C650074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D355263A0F4D7C650074030D /* NOTICE */; };
 		D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */ = {isa = PBXBuildFile; fileRef = D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */; };
@@ -124,10 +121,6 @@
 		949C17D51061055800C4044D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94BF8FDC11245C01002EF7F8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundCloudAPI.xcodeproj; path = ../../SoundCloudAPI.xcodeproj; sourceTree = SOURCE_ROOT; };
-		94FE061E1330F7EB00AB45E2 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
-		94FE061F1330F7EB00AB45E2 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		94FE06201330F7EB00AB45E2 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		94FE06211330F7EB00AB45E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		D35526390F4D7C650074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D355263A0F4D7C650074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1375_sleep_90_bpm_nylon2.wav; sourceTree = "<group>"; };
@@ -277,22 +270,9 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		94FE05F91330F7EB00AB45E2 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				94FE061E1330F7EB00AB45E2 /* CHANGELOG.md */,
-				94FE061F1330F7EB00AB45E2 /* JSONKit.h */,
-				94FE06201330F7EB00AB45E2 /* JSONKit.m */,
-				94FE06211330F7EB00AB45E2 /* README.md */,
-			);
-			name = JSONKit;
-			path = ../Support/JSONKit;
-			sourceTree = "<group>";
-		};
 		D3A305890F336D9800408EA8 /* Outsourced */ = {
 			isa = PBXGroup;
 			children = (
-				94FE05F91330F7EB00AB45E2 /* JSONKit */,
 				9469478E128319C1006181DF /* SoundCloud.bundle */,
 				948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */,
 				94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */,
@@ -443,8 +423,6 @@
 				D355263B0F4D7C650074030D /* LICENSE in Resources */,
 				D355263C0F4D7C650074030D /* NOTICE in Resources */,
 				9469478F128319C1006181DF /* SoundCloud.bundle in Resources */,
-				94FE06381330F7EB00AB45E2 /* CHANGELOG.md in Resources */,
-				94FE063A1330F7EB00AB45E2 /* README.md in Resources */,
 				F66BACDF13D96B9000996800 /* switch_gray.png in Resources */,
 				F66BACE013D96B9000996800 /* switch_blue.png in Resources */,
 				F66BACE113D96B9000996800 /* switch_filter.png in Resources */,
@@ -486,7 +464,6 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* iPhoneTestAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */,
-				94FE06391330F7EB00AB45E2 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

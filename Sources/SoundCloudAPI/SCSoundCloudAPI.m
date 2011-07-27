@@ -62,7 +62,7 @@ authenticationDelegate:(id<SCSoundCloudAPIAuthenticationDelegate>)authDelegate
 
 {
 	SCSoundCloudAPIAuthentication *anAuthentication =  [[[SCSoundCloudAPIAuthentication alloc] initWithAuthenticationDelegate:authDelegate
-                                                                                                             apiConfiguration:configuration] autorelease];
+																											 apiConfiguration:configuration] autorelease];
 	return [self initWithDelegate:theDelegate authentication:anAuthentication];
 }
 

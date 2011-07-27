@@ -130,10 +130,6 @@ const NSArray *allServices = nil;
                                                                                  target:nil
                                                                                  action:nil] autorelease];
         
-        self.foursquareController = [[[SCFoursquarePlacePickerController alloc] initWithDelegate:self] autorelease];
-        self.foursquareController.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                                                    target:self
-                                                                                                                    action:@selector(closePlacePicker)] autorelease];
         [self.navigationController setToolbarHidden:YES];
 
         
@@ -268,6 +264,19 @@ const NSArray *allServices = nil;
     self.unconnectedServices = newUnconnectedServices;
     [newUnconnectedServices release];
     [tableView reloadData];
+}
+
+#pragma mark Foursquare
+
+- (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
+{
+    self.foursquareController = [[[SCFoursquarePlacePickerController alloc] initWithDelegate:self
+                                                                                    clientID:aClientID
+                                                                                clientSecret:aClientSecret] autorelease];
+    
+    self.foursquareController.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                                target:self
+                                                                                                                action:@selector(closePlacePicker)] autorelease];
 }
 
 
@@ -754,10 +763,12 @@ const NSArray *allServices = nil;
 
 - (IBAction)openPlacePicker;
 {
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.foursquareController];
-    navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
-    [self presentModalViewController:navController animated:YES];
-    [navController release];
+    if (self.foursquareController) {
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.foursquareController];
+        navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
+        [self presentModalViewController:navController animated:YES];
+        [navController release];
+    }
 }
 
 - (IBAction)closePlacePicker;
