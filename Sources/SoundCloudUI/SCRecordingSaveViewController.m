@@ -62,6 +62,9 @@
 - (IBAction)resetImage;
 - (IBAction)upload;
 - (IBAction)cancel;
+
+#pragma mark Bundle
+@property (nonatomic, readonly) NSBundle *resourceBundle;
 @end
 
 
@@ -167,6 +170,7 @@ const NSArray *allServices = nil;
     [title release];
     [completionHandler release];
     [foursquareController release];
+    [resourceBundle release];
     
     [super dealloc];
 }
@@ -174,6 +178,16 @@ const NSArray *allServices = nil;
 
 #pragma mark Accessors
 
+- (NSBundle *)resourceBundle;
+{
+    @synchronized (resourceBundle) {
+        if (!resourceBundle) {
+            resourceBundle = [[NSBundle alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"SoundCloud" ofType:@"bundle"]];
+            NSAssert(resourceBundle, @"Please move the SoundCloud.bundle into the Resource Directory of your Application!");
+        }
+    }
+    return resourceBundle;
+}
 
 - (void)setFileURL:(NSURL *)aFileURL;
 {
@@ -286,7 +300,7 @@ const NSArray *allServices = nil;
 {
     [super viewDidLoad];
     
-    tableView.backgroundColor = tableView.tableHeaderView.backgroundColor;
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"darkTexturedBackgroundPattern" ofType:@"png"]]];
     
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
@@ -341,7 +355,8 @@ const NSArray *allServices = nil;
     if (self.coverImage) {
         [coverButton setImage:[self.coverImage imageByResizingTo:coverButton.bounds.size] forState:UIControlStateNormal];
     } else {
-        [coverButton setImage:[UIImage imageNamed:@"add-image.png"] forState:UIControlStateNormal];
+        [coverButton setImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"add-image" ofType:@"png"]]
+                     forState:UIControlStateNormal];
     }
     
 	privateSwitch.on = !isPrivate;
@@ -413,7 +428,7 @@ const NSArray *allServices = nil;
             cell.textLabel.text = [connection objectForKey:@"display_name"];
             
             SCSwitch *accessorySwitch = [[[SCSwitch alloc] init] autorelease];
-            accessorySwitch.offBackgroundImage = [UIImage imageNamed:@"switch_gray.png" leftCapWidth:5 topCapHeight:5];
+            accessorySwitch.offBackgroundImage = [[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"switch_gray" ofType:@"png"]] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
             
             accessorySwitch.on = NO;
             [self.sharingConnections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
@@ -429,7 +444,7 @@ const NSArray *allServices = nil;
             
             cell.accessoryView = accessorySwitch;
             
-            cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"service_%@.png", [connection objectForKey:@"service"]]];
+            cell.imageView.image = [UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:[NSString stringWithFormat:@"service_%@", [connection objectForKey:@"service"]] ofType:@"png"]];
             
             [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             
@@ -446,7 +461,7 @@ const NSArray *allServices = nil;
                 cell.textLabel.backgroundColor = aTableView.backgroundColor;
                 cell.textLabel.font = [UIFont systemFontOfSize:16.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
-                cell.accessoryView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"DisclosureIndicator.png"]]autorelease];
+                cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"DisclosureIndicator" ofType:@"png"]]];
                 cell.detailTextLabel.text = NSLocalizedString(@"configure", @"Configure");
                 cell.detailTextLabel.textColor = [UIColor whiteColor];
                 cell.detailTextLabel.backgroundColor = aTableView.backgroundColor;
@@ -454,7 +469,7 @@ const NSArray *allServices = nil;
             
             NSDictionary *service = [unconnectedServices objectAtIndex:indexPath.row - availableConnections.count];
             cell.textLabel.text = [service objectForKey:@"displayName"];
-            cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"service_%@.png", [service objectForKey:@"service"]]];
+            cell.imageView.image = [UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:[NSString stringWithFormat:@"service_%@", [service objectForKey:@"service"]] ofType:@"png"]];
             
             [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             return cell;
@@ -642,7 +657,8 @@ const NSArray *allServices = nil;
     if (self.coverImage) {
         [coverButton setImage:[self.coverImage imageByResizingTo:coverButton.bounds.size] forState:UIControlStateNormal];
     } else {
-        [coverButton setImage:[UIImage imageNamed:@"add-image.png"] forState:UIControlStateNormal];
+        [coverButton setImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"add-image" ofType:@"png"]]
+                     forState:UIControlStateNormal];
     }
     
     [self dismissModalViewControllerAnimated:YES];

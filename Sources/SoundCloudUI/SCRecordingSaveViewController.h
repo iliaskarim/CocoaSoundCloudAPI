@@ -36,6 +36,9 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
     IBOutlet SCSwitch *privateSwitch;
     IBOutlet UITableView *tableView;
     IBOutlet UIToolbar *toolbar;
+                                
+    NSBundle *resourceBundle;
+
 }
 
 #pragma mark Accessors
