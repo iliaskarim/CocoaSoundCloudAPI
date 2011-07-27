@@ -22,7 +22,7 @@
 #endif
 
 #import "SCSoundCloudAPIAuthentication.h"
-
+#import "SCAccount+Private.h"
 
 #import "SCAudioFileStreamParser.h"
 #import "SCAudioBufferQueue.h"
@@ -40,6 +40,7 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 
 
 @interface SCAudioStream () <SCAudioFileStreamParserDelegate, SCAudioBufferQueueDelegate, NXOAuth2ConnectionDelegate>
+- (id)initWithURL:(NSURL *)aURL;
 - (void)_sendHeadRequest;
 - (void)_fetchNextData;
 - (void)_bufferFromCurrentStreamOffset;
@@ -51,9 +52,10 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 
 @implementation SCAudioStream
 #pragma mark Lifecycle
-- (id)initWithURL:(NSURL *)aURL authentication:(SCSoundCloudAPIAuthentication *)apiAuthentication;
+
+- (id)initWithURL:(NSURL *)aURL;
 {
-	NSAssert(aURL, @"Need an URL to create an audio stream");
+    NSAssert(aURL, @"Need an URL to create an audio stream");
 	if (!aURL)
 		return nil;
 	
@@ -70,7 +72,6 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 		currentConnectionStillToFetch = 0;
 		
 		URL = [aURL retain];
-		authentication = [apiAuthentication retain];
 		
 		playState = SCAudioStreamState_Initialized;
 		bufferState = SCAudioStreamBufferState_Buffering;
@@ -79,8 +80,26 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 		audioFileStreamParser.delegate = self;
 		
 		volume = 1.0f;
+	}
+	return self;
+}
 
-		[self _sendHeadRequest];
+- (id)initWithURL:(NSURL *)aURL account:(SCAccount *)anAccount;
+{
+    self = [self initWithURL:aURL];
+    if (self) {
+		account = [anAccount retain];
+        [self _sendHeadRequest];
+	}
+	return self;
+}
+
+- (id)initWithURL:(NSURL *)aURL authentication:(SCSoundCloudAPIAuthentication *)apiAuthentication;
+{
+    self = [self initWithURL:aURL];
+	if (self) {
+		authentication = [apiAuthentication retain];
+        [self _sendHeadRequest];
 	}
 	return self;
 }
@@ -88,6 +107,7 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 - (void)dealloc;
 {
 	[authentication release];
+    [account release];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[connection cancel];
 	[connection release];
@@ -246,9 +266,17 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 	[headRequest setHTTPMethod:@"HEAD"];
 	//[headRequest addValue:@"head" forHTTPHeaderField:@"X-DEBUG"];
 	[headRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
+    
+    NXOAuth2Client *oauthClient = nil;
+    if (authentication) {
+        oauthClient = authentication.oauthClient;
+    } else {
+        oauthClient = account.oauthAccount.oauthClient;
+    }
+    
 	connection = [[NXOAuth2Connection alloc] initWithRequest:headRequest
 										   requestParameters:nil
-												 oauthClient:authentication.oauthClient
+												 oauthClient:oauthClient
 													delegate:self];
 	connection.context = SCAudioStream_HTTPHeadContext;
 }
@@ -287,9 +315,17 @@ NSString * const SCAudioStreamDidBecomeUnavailableNotification = @"SCAudioStream
 //	[streamRequest addValue:[NSString stringWithFormat:@"bufferingProgress: %f", [self bufferingProgress]]
 //		 forHTTPHeaderField:@"X-DEBUG"];
 	[streamRequest setTimeoutInterval:kHTTPConnectionTimeout];	// needs to be manually set again to have effect
+    
+    NXOAuth2Client *oauthClient = nil;
+    if (authentication) {
+        oauthClient = authentication.oauthClient;
+    } else {
+        oauthClient = account.oauthAccount.oauthClient;
+    }
+    
 	connection = [[NXOAuth2Connection alloc] initWithRequest:streamRequest
 										   requestParameters:nil
-												 oauthClient:(redirectURL) ? nil : authentication.oauthClient
+												 oauthClient:(redirectURL) ? nil : oauthClient
 													delegate:self];
 	connection.context = SCAudioStream_HTTPStreamContext;
 	

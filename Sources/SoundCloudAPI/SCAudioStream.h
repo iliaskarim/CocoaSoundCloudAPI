@@ -36,6 +36,7 @@ extern NSString * const SCAudioStreamDidBecomeUnavailableNotification;
 
 @class SCSoundCloudAPIAuthentication;
 @class SCAudioFileStreamParser, SCAudioBufferQueue, SCAudioStreamDataFetcher;
+@class SCAccount;
 @protocol SCAudioFileStreamParserDelegate, SCAudioBufferQueueDelegate;
 
 @class NXOAuth2Connection;
@@ -55,6 +56,7 @@ typedef enum {
 @interface SCAudioStream : NSObject {
 @protected
 	SCSoundCloudAPIAuthentication	*authentication;
+    SCAccount *account;
 @private
 	NSURL							*URL;
 	NSURL							*redirectURL;
@@ -99,6 +101,7 @@ typedef enum {
 @property (readonly) NSURL *URL;
 
 - (id)initWithURL:(NSURL *)aURL authentication:(SCSoundCloudAPIAuthentication *)apiAuthentication;
+- (id)initWithURL:(NSURL *)aURL account:(SCAccount *)account;
 
 - (void)seekToMillisecond:(NSUInteger)milli startPlaying:(BOOL)play;
 
