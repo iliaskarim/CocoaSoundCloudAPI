@@ -59,6 +59,10 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
             theMethod = @"DELETE";
             break;
             
+        case SCRequestMethodHEAD:
+            theMethod = @"HEAD";
+            break;
+            
         default:
             theMethod = @"GET";
             break;
@@ -66,12 +70,12 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     
     NSAssert([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
     
-    NXOAuth2Request *r = [NXOAuth2Request requestOnResource:aResource withMethod:theMethod usingParameters:someParameters];
-    r.account = anAccount.oauthAccount;
-    r.responseHandler = aResponseHandler;
-    r.sendProgressHandler = aProgressHandler;
-    [r performRequest];
-    return r;
+    NXOAuth2Request *request = [NXOAuth2Request requestOnResource:aResource withMethod:theMethod usingParameters:someParameters];
+    request.account = anAccount.oauthAccount;
+    request.responseHandler = aResponseHandler;
+    request.sendProgressHandler = aProgressHandler;
+    [request performRequest];
+    return request;
 }
 
 + (void)cancelRequest:(id)request;
@@ -82,10 +86,25 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     }
 }
 
-+ (SCRequest *)request;
+
+#pragma mark Lifecycle
+
+- (id)init;
 {
-    return [[self new] autorelease];
+    NSAssert(NO, @"Please use the designated initializer");
+    return nil;
 }
+
+- (id)initWithMethod:(SCRequestMethod)aMethod resource:(NSURL *)aResource;
+{
+    self = [super init];
+    if (self) {
+        self.requestMethod = aMethod;
+        self.resource = [aResource retain];
+    }
+    return self;
+}
+
 
 #pragma mark Accessors
 
@@ -174,12 +193,12 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     self.oauthRequest.responseHandler = responseHandler;
 }
 
-- (SCRequestSendingProgressHandler)sendProgressHandler;
+- (SCRequestSendingProgressHandler)sendingProgressHandler;
 {
     return self.oauthRequest.sendProgressHandler;
 }
 
-- (void)setSendProgressHandler:(SCRequestSendingProgressHandler)sendProgressHandler;
+- (void)setSendingProgressHandler:(SCRequestSendingProgressHandler)sendProgressHandler;
 {
     self.oauthRequest.sendProgressHandler = sendProgressHandler;
 }

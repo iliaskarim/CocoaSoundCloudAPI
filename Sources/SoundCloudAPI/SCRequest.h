@@ -27,7 +27,8 @@ enum SCRequestMethod {
     SCRequestMethodGET = 0,
     SCRequestMethodPOST,
     SCRequestMethodPUT,
-    SCRequestMethodDELETE
+    SCRequestMethodDELETE,
+    SCRequestMethodHEAD
 };
 typedef enum SCRequestMethod SCRequestMethod;
 
@@ -38,6 +39,7 @@ typedef enum SCRequestMethod SCRequestMethod;
 @private
     NXOAuth2Request *oauthRequest;
 }
+
 
 #pragma mark Class Methods
 
@@ -50,7 +52,10 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
 
 + (void)cancelRequest:(id)request;
 
-+ (SCRequest *)request;
+
+#pragma mark Initializer
+
+- (id)initWithMethod:(SCRequestMethod)aMethod resource:(NSURL *)aResource;
 
 #pragma mark Accessors
 
@@ -61,7 +66,7 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
 @property (nonatomic, readwrite, retain) NSDictionary *parameters;
 
 @property (nonatomic, copy) SCRequestResponseHandler responseHandler;
-@property (nonatomic, copy) SCRequestSendingProgressHandler sendProgressHandler;
+@property (nonatomic, copy) SCRequestSendingProgressHandler sendingProgressHandler;
 
 
 #pragma mark Signed NSURLRequest
