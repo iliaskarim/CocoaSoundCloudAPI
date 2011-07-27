@@ -34,7 +34,7 @@
     if (shareViewController) {
         shareViewController.navigationBarHidden = YES;
     }
-    return shareViewController;
+    return [shareViewController autorelease];
 }
 
 + (SCShareViewController *)shareViewControllerWithFileData:(NSData *)someData
@@ -50,7 +50,7 @@
     if (shareViewController) {
         shareViewController.navigationBarHidden = YES;
     }
-    return shareViewController;
+    return [shareViewController autorelease];
 }
 
 
