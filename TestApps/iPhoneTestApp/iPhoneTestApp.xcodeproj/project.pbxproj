@@ -12,7 +12,6 @@
 		2899E5220DE3E06400AC0155 /* iPhoneTestAppViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* iPhoneTestAppViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* iPhoneTestAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* iPhoneTestAppViewController.m */; };
-		9469478F128319C1006181DF /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9469478E128319C1006181DF /* SoundCloud.bundle */; };
 		948711A8124CDF9B002557D1 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9487119D124CDF8E002557D1 /* libOAuth2Client.a */; };
 		948711A9124CDF9B002557D1 /* libSoundCloudAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94871194124CDF83002557D1 /* libSoundCloudAPI.a */; };
 		948711F4124CE0E6002557D1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948711F3124CE0E6002557D1 /* AudioToolbox.framework */; };
@@ -23,6 +22,7 @@
 		D355263B0F4D7C650074030D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D35526390F4D7C650074030D /* LICENSE */; };
 		D355263C0F4D7C650074030D /* NOTICE in Resources */ = {isa = PBXBuildFile; fileRef = D355263A0F4D7C650074030D /* NOTICE */; };
 		D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */ = {isa = PBXBuildFile; fileRef = D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */; };
+		F62697D213E16DFB006BB646 /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F62697D113E16DFB006BB646 /* SoundCloud.bundle */; };
 		F6410A2013D8884E00561D0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6410A1F13D8884E00561D0B /* QuartzCore.framework */; };
 		F66BACF013D96E5400996800 /* RecordingSave.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66BACEF13D96E5400996800 /* RecordingSave.xib */; };
 		F66BAD3013D97FD100996800 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BAD2F13D97FD100996800 /* CoreLocation.framework */; };
@@ -86,7 +86,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPhoneTestApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneTestApp_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9469478E128319C1006181DF /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../../SoundCloud.bundle; sourceTree = "<group>"; };
 		948711F3124CE0E6002557D1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		94871286124CE1FC002557D1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../../Outsourced/OAuth2Client/OAuth2Client.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -97,6 +96,7 @@
 		D35526390F4D7C650074030D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		D355263A0F4D7C650074030D /* NOTICE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTICE; sourceTree = "<group>"; };
 		D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1375_sleep_90_bpm_nylon2.wav; sourceTree = "<group>"; };
+		F62697D113E16DFB006BB646 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../../SoundCloud.bundle; sourceTree = "<group>"; };
 		F6410A1F13D8884E00561D0B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F66BACEF13D96E5400996800 /* RecordingSave.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordingSave.xib; sourceTree = "<group>"; };
 		F66BAD2F13D97FD100996800 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -170,6 +170,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F62697D113E16DFB006BB646 /* SoundCloud.bundle */,
 				D35526390F4D7C650074030D /* LICENSE */,
 				D355263A0F4D7C650074030D /* NOTICE */,
 				D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */,
@@ -218,7 +219,6 @@
 		D3A305890F336D9800408EA8 /* Outsourced */ = {
 			isa = PBXGroup;
 			children = (
-				9469478E128319C1006181DF /* SoundCloud.bundle */,
 				948866EC123A89D70085E52C /* OAuth2Client.xcodeproj */,
 				94E5AE3D122C1E8200C7021A /* SoundCloudAPI.xcodeproj */,
 			);
@@ -320,12 +320,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F62697D213E16DFB006BB646 /* SoundCloud.bundle in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* iPhoneTestAppViewController.xib in Resources */,
 				D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */,
 				D355263B0F4D7C650074030D /* LICENSE in Resources */,
 				D355263C0F4D7C650074030D /* NOTICE in Resources */,
-				9469478F128319C1006181DF /* SoundCloud.bundle in Resources */,
 				F66BACF013D96E5400996800 /* RecordingSave.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

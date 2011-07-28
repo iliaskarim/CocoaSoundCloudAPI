@@ -16,6 +16,8 @@
 #import "SCAccount.h"
 #import "SCRequest.h"
 
+#import "SCBundle.h"
+
 #import "SCAddConnectionViewController.h"
 
 @interface SCAddConnectionViewController ()
@@ -46,7 +48,7 @@
                                     @"touch", @"display",
                                     nil];
         
-        [SCRequest performMethod:SCRequestMethodGET
+        [SCRequest performMethod:SCRequestMethodPOST
                       onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
                  usingParameters:parameters
                      withAccount:anAccount
@@ -167,6 +169,18 @@
     webView.delegate = nil;
     webView = nil;
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated;
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated;
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 

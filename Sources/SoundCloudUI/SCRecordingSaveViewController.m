@@ -21,6 +21,10 @@
 #import "SCAccount.h"
 #import "SCRequest.h"
 
+#import "SCBundle.h"
+#import "SCSCRecordingSaveViewControllerTitleView.h"
+#import "SCRecordingSaveViewControllerHeaderView.h"
+
 #import "SCRecordingSaveViewController.h"
 
 
@@ -50,6 +54,8 @@
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 @property (nonatomic, retain) SCFoursquarePlacePickerController *foursquareController;
 
+@property (nonatomic, assign) SCRecordingSaveViewControllerHeaderView *headerView;
+
 #pragma mark UI
 - (void)updateInterface;
 
@@ -59,12 +65,12 @@
 - (IBAction)openImageLibraryPicker;
 - (IBAction)openPlacePicker;
 - (IBAction)closePlacePicker;
+- (IBAction)privacyChanged:(id)sender;
+- (IBAction)selectImage;
 - (IBAction)resetImage;
 - (IBAction)upload;
 - (IBAction)cancel;
-
-#pragma mark Bundle
-@property (nonatomic, readonly) NSBundle *resourceBundle;
+- (IBAction)logout;
 @end
 
 
@@ -119,6 +125,7 @@ const NSArray *allServices = nil;
 @synthesize title;
 @synthesize completionHandler;
 @synthesize foursquareController;
+@synthesize headerView;
 
 
 #pragma mark Lifecycle
@@ -170,24 +177,12 @@ const NSArray *allServices = nil;
     [title release];
     [completionHandler release];
     [foursquareController release];
-    [resourceBundle release];
     
     [super dealloc];
 }
 
 
 #pragma mark Accessors
-
-- (NSBundle *)resourceBundle;
-{
-    @synchronized (resourceBundle) {
-        if (!resourceBundle) {
-            resourceBundle = [[NSBundle alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"SoundCloud" ofType:@"bundle"]];
-            NSAssert(resourceBundle, @"Please move the SoundCloud.bundle into the Resource Directory of your Application!");
-        }
-    }
-    return resourceBundle;
-}
 
 - (void)setFileURL:(NSURL *)aFileURL;
 {
@@ -232,6 +227,31 @@ const NSArray *allServices = nil;
                          NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
                      }
                  }];
+        
+        [SCRequest performMethod:SCRequestMethodGET
+                      onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me.json"]
+                 usingParameters:nil
+                     withAccount:account
+          sendingProgressHandler:nil
+                 responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                     if (data) {
+                         NSError *jsonError = nil;
+                         id result = [data objectFromJSONData];
+                         if (result) {
+                             NSLog(@"Me: %@", result);
+                             
+                             NSURL *avatarURL = [NSURL URLWithString:[result objectForKey:@"avatar_url"]];
+                             NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
+                             [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
+                             [self.headerView setUserName:[result objectForKey:@"username"]];
+                             
+                         } else {
+                             NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
+                         }
+                     } else {
+                         NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
+                     }
+                 }];
     }
 }
 
@@ -246,6 +266,7 @@ const NSArray *allServices = nil;
         [coverImage release];
         [aCoverImage retain];
         coverImage = aCoverImage;
+        [self.headerView setCoverImage:aCoverImage];
     }
 }
 
@@ -300,7 +321,42 @@ const NSArray *allServices = nil;
 {
     [super viewDidLoad];
     
-    tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"darkTexturedBackgroundPattern" ofType:@"png"]]];
+    // Banner
+    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
+    
+    self.headerView = [[[SCRecordingSaveViewControllerHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 0)] autorelease];
+    
+    self.headerView.whatTextField.delegate = self;
+    self.headerView.whereTextField.delegate = self;
+    
+    [self.headerView.coverImageButton addTarget:self
+                                         action:@selector(selectImage)
+                               forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.headerView.privateSwitch addTarget:self
+                                      action:@selector(privacyChanged:)
+                            forControlEvents:UIControlEventValueChanged];
+    
+    [self.headerView.disclosureButton addTarget:self
+                                         action:@selector(openPlacePicker)
+                               forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.headerView.logoutButton addTarget:self
+                                     action:@selector(logout)
+                           forControlEvents:UIControlEventTouchUpInside];
+    
+    tableView.tableHeaderView = self.headerView;
+    
+    
+    
+    CGRect newTableViewFrame = tableView.frame;
+    newTableViewFrame.origin.y += 28.0;
+    newTableViewFrame.size.height -= newTableViewFrame.origin.y;
+    tableView.frame = newTableViewFrame;
+    
+    NSLog(@"table view frame: %@", NSStringFromCGRect(tableView.frame));
+    
+    tableView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
     
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
@@ -322,17 +378,20 @@ const NSArray *allServices = nil;
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
     [tableView reloadData];
     
-    titleField.text = self.title;
-    locationField.text = self.locationTitle;
+    self.headerView.whatTextField.text = self.title;
+    self.headerView.whereTextField.text = self.locationTitle;
 }
 
 - (void)viewWillDisappear:(BOOL)animated;
 {
     [super viewWillDisappear:animated];
-    self.title = titleField.text;
-    self.locationTitle = locationField.text;
+    self.title = self.headerView.whatTextField.text;
+    self.locationTitle = self.headerView.whereTextField.text;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
@@ -346,22 +405,10 @@ const NSArray *allServices = nil;
 
 - (void)updateInterface;
 {
-    titleField.text = self.title;
-    locationField.text = self.locationTitle;
-    
-    coverButton.layer.masksToBounds = YES;
-    coverButton.layer.cornerRadius = 3.0;
-    
-    if (self.coverImage) {
-        [coverButton setImage:[self.coverImage imageByResizingTo:coverButton.bounds.size] forState:UIControlStateNormal];
-    } else {
-        [coverButton setImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"add-image" ofType:@"png"]]
-                     forState:UIControlStateNormal];
-    }
-    
-	privateSwitch.on = !isPrivate;
-    privateSwitch.onText = NSLocalizedString(@"sc_upload_public", @"Public");
-    privateSwitch.offText = NSLocalizedString(@"sc_upload_private", @"Private");
+    self.headerView.whatTextField.text = self.title;
+    self.headerView.whereTextField.text = self.locationTitle;
+    self.headerView.privateSwitch.on = !isPrivate;
+    [self.headerView setCoverImage:self.coverImage];
 }
 
 
@@ -428,7 +475,7 @@ const NSArray *allServices = nil;
             cell.textLabel.text = [connection objectForKey:@"display_name"];
             
             SCSwitch *accessorySwitch = [[[SCSwitch alloc] init] autorelease];
-            accessorySwitch.offBackgroundImage = [[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"switch_gray" ofType:@"png"]] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            accessorySwitch.offBackgroundImage = [[SCBundle imageFromPNGWithName:@"switch_gray"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
             
             accessorySwitch.on = NO;
             [self.sharingConnections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
@@ -444,7 +491,7 @@ const NSArray *allServices = nil;
             
             cell.accessoryView = accessorySwitch;
             
-            cell.imageView.image = [UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:[NSString stringWithFormat:@"service_%@", [connection objectForKey:@"service"]] ofType:@"png"]];
+            cell.imageView.image = [SCBundle imageFromPNGWithName:[NSString stringWithFormat:@"service_%@", [connection objectForKey:@"service"]]];
             
             [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             
@@ -461,7 +508,7 @@ const NSArray *allServices = nil;
                 cell.textLabel.backgroundColor = aTableView.backgroundColor;
                 cell.textLabel.font = [UIFont systemFontOfSize:16.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
-                cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"DisclosureIndicator" ofType:@"png"]]];
+                cell.accessoryView = [[UIImageView alloc] initWithImage:[SCBundle imageFromPNGWithName:@"DisclosureIndicator"]];
                 cell.detailTextLabel.text = NSLocalizedString(@"configure", @"Configure");
                 cell.detailTextLabel.textColor = [UIColor whiteColor];
                 cell.detailTextLabel.backgroundColor = aTableView.backgroundColor;
@@ -469,7 +516,7 @@ const NSArray *allServices = nil;
             
             NSDictionary *service = [unconnectedServices objectAtIndex:indexPath.row - availableConnections.count];
             cell.textLabel.text = [service objectForKey:@"displayName"];
-            cell.imageView.image = [UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:[NSString stringWithFormat:@"service_%@", [service objectForKey:@"service"]] ofType:@"png"]];
+            cell.imageView.image = [SCBundle imageFromPNGWithName:[NSString stringWithFormat:@"service_%@", [service objectForKey:@"service"]]];
             
             [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             return cell;
@@ -484,17 +531,17 @@ const NSArray *allServices = nil;
 
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section;
 {
-    UIView *headerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)] autorelease];
-    headerView.backgroundColor = aTableView.backgroundColor;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 10.0, 0.0)];
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)] autorelease];
+    sectionHeaderView.backgroundColor = aTableView.backgroundColor;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = aTableView.backgroundColor;
     label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
     label.font = [UIFont systemFontOfSize:15.0];
     label.text = [self tableView:aTableView titleForHeaderInSection:section];
-    [headerView addSubview:label];
+    [sectionHeaderView addSubview:label];
     [label release];
-    return headerView;
+    return sectionHeaderView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
@@ -590,9 +637,9 @@ const NSArray *allServices = nil;
 {    
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
-    if (textField == titleField) {
+    if (textField == self.headerView.whatTextField) {
         self.title = text;
-    } else if (textField == locationField) {
+    } else if (textField == self.headerView.whereTextField) {
         self.locationTitle = text;
     }
     return YES;
@@ -600,9 +647,9 @@ const NSArray *allServices = nil;
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField;
 {
-    if (textField == titleField) {
+    if (textField == self.headerView.whatTextField) {
         self.title = textField.text;
-    } else if (textField == locationField) {
+    } else if (textField == self.headerView.whereTextField) {
         self.locationTitle = textField.text;
     }
     return YES;
@@ -611,8 +658,8 @@ const NSArray *allServices = nil;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;
 {
-    if (textField == locationField) {
-        [titleField resignFirstResponder]; //So we don't get the keyboard when coming back
+    if (textField == self.headerView.whereTextField) {
+        [self.headerView.whatTextField resignFirstResponder]; //So we don't get the keyboard when coming back
         [self openPlacePicker];
         return NO;
     }
@@ -653,14 +700,6 @@ const NSArray *allServices = nil;
     }
     
     self.coverImage = actualImage;
-    
-    if (self.coverImage) {
-        [coverButton setImage:[self.coverImage imageByResizingTo:coverButton.bounds.size] forState:UIControlStateNormal];
-    } else {
-        [coverButton setImage:[UIImage imageWithContentsOfFile:[self.resourceBundle pathForResource:@"add-image" ofType:@"png"]]
-                     forState:UIControlStateNormal];
-    }
-    
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -672,7 +711,7 @@ const NSArray *allServices = nil;
                  foursquareID:(NSString *)aFoursquareID
                      location:(CLLocation *)aLocation;
 {
-    locationField.text = aTitle;
+    self.headerView.whereTextField.text = aTitle;
     self.locationTitle = aTitle;
     self.location = aLocation;
     self.foursquareID = aFoursquareID;
@@ -736,9 +775,9 @@ const NSArray *allServices = nil;
 
 - (IBAction)privacyChanged:(id)sender;
 {
-    if (sender == privateSwitch) {
-		isPrivate = !privateSwitch.on;
-        [[NSUserDefaults standardUserDefaults] setBool:!privateSwitch.on forKey:SCDefaultsKeyRecordingIsPrivate];
+    if (sender == self.headerView.privateSwitch) {
+		isPrivate = !self.headerView.privateSwitch.on;
+        [[NSUserDefaults standardUserDefaults] setBool:!self.headerView.privateSwitch.on forKey:SCDefaultsKeyRecordingIsPrivate];
         [tableView reloadData];
     }
 }
@@ -841,33 +880,16 @@ const NSArray *allServices = nil;
     self.completionHandler(YES, nil);
 }
 
+- (IBAction)logout;
+{
+    NSLog(@"Logging out ...");
+}
+
 @end
 
 
 #pragma mark -
 
-@implementation SCRecordingSaveViewControllerHeaderView
-
-- (void)drawRect:(CGRect)rect;
-{
-    [super drawRect:rect];
-    
-    CGRect textRect = CGRectMake(self.bounds.origin.x + TEXTBOX_LEFT,
-                                 self.bounds.origin.y + TEXTBOX_TOP,
-                                 self.bounds.size.width - TEXTBOX_LEFT - TEXTBOX_RIGHT,
-                                 TEXTBOX_HEIGHT);
-    textRect = CGRectInset(textRect, 0.5, 0.5);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [[UIColor colorWithWhite:0.27 alpha:1.0] set];
-    CGContextSetLineWidth(context, 1.0);
-    GP_CGContextAddRoundedRect(context, textRect, 7.0);
-    CGContextMoveToPoint(context, CGRectGetMinX(textRect), CGRectGetMidY(textRect)+0.5);
-    CGContextAddLineToPoint(context, CGRectGetMaxX(textRect), CGRectGetMidY(textRect)+0.5);
-    CGContextStrokePath(context);
-}
-
-@end
 
 @implementation SCRecordingSaveViewControllerTextField
 

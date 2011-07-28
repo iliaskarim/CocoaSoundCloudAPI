@@ -46,5 +46,22 @@
 	return scaledImage;
 }
 
+- (UIImage *)imageByResizingTo:(CGSize)newSize forRetinaDisplay:(BOOL)forRetinaDisplay;
+{
+    if (forRetinaDisplay && [[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        if ([[UIScreen mainScreen] scale] == 2.0) {
+            UIGraphicsBeginImageContextWithOptions(newSize, YES, 2.0);
+        } else {
+            UIGraphicsBeginImageContext(newSize);
+        }
+    } else {
+        UIGraphicsBeginImageContext(newSize);
+    }
+    [self drawInRect:CGRectMake(0.0f, 0.0f, newSize.width, newSize.height)];
+	UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return scaledImage;
+}
+
 
 @end

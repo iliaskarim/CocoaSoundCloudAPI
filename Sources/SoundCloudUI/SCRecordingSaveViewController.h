@@ -29,16 +29,10 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
                                                              SCFoursquarePlacePickerControllerDelegate,
                                                              SCAddConnectionViewControllerDelegate> {
     
-    // UI
-    IBOutlet UIButton *coverButton;
-    IBOutlet UITextField *titleField;
-    IBOutlet UITextField *locationField;
-    IBOutlet SCSwitch *privateSwitch;
     IBOutlet UITableView *tableView;
     IBOutlet UIToolbar *toolbar;
                                 
     NSBundle *resourceBundle;
-
 }
 
 #pragma mark Accessors
@@ -56,20 +50,10 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
 
 - (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 
-#pragma mark Actions
-
-- (IBAction)privacyChanged:(id)sender;
-- (IBAction)selectImage;
-
 @end
 
 
 #pragma mark -
-
-//We need to expose those for IB
-
-@interface SCRecordingSaveViewControllerHeaderView : UIView {}
-@end
 
 @interface SCRecordingSaveViewControllerTextField : UITextField {}
 @end

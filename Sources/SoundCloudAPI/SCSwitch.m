@@ -7,7 +7,7 @@
 //
 
 #import "UIImage_GPKit.h"
-
+#import "SCBundle.h"
 #import "SCSwitch.h"
 
 @implementation SCSwitch
@@ -17,12 +17,12 @@
 - (void)commonAwake;
 {
 	[super commonAwake];
-	self.onBackgroundImage = [UIImage imageNamed:@"switch_blue.png" leftCapWidth:5 topCapHeight:5];
-	self.offBackgroundImage = [UIImage imageNamed:@"switch_orange.png" leftCapWidth:5 topCapHeight:5];
-	self.handleImage = [UIImage imageNamed:@"switch_slider.png" leftCapWidth:5 topCapHeight:5];
-	self.handleHighlightImage = [UIImage imageNamed:@"switch_slider-down.png" leftCapWidth:5 topCapHeight:5];
-	self.overlayImage = [UIImage imageNamed:@"switch_filter.png" leftCapWidth:5 topCapHeight:5];
-	self.maskImage = [UIImage imageNamed:@"switch_mask.png" leftCapWidth:3 topCapHeight:3];
+	self.onBackgroundImage = [[SCBundle imageFromPNGWithName:@"switch_blue"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+	self.offBackgroundImage = [[SCBundle imageFromPNGWithName:@"switch_orange"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+	self.handleImage = [[SCBundle imageFromPNGWithName:@"switch_slider"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+	self.handleHighlightImage = [[SCBundle imageFromPNGWithName:@"switch_slider-down"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+	self.overlayImage = [[SCBundle imageFromPNGWithName:@"switch_filter"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+	self.maskImage = [[SCBundle imageFromPNGWithName:@"switch_mask"] stretchableImageWithLeftCapWidth:3 topCapHeight:3];
 }
 
 @end

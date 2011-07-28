@@ -56,6 +56,10 @@
 		99F79A5D13A15371002555F0 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F79A5C13A15371002555F0 /* OAuth2Client.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AA747D9F0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		F60627EF13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = F60627ED13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.h */; };
+		F60627F013E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F60627EE13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.m */; };
+		F60627F813E066D3004A7E4E /* SCBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = F60627F613E066D3004A7E4E /* SCBundle.h */; };
+		F60627F913E066D3004A7E4E /* SCBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = F60627F713E066D3004A7E4E /* SCBundle.m */; };
 		F60811E313D050180040EC66 /* SCSoundCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811E113D050180040EC66 /* SCSoundCloud.h */; };
 		F60811E413D050180040EC66 /* SCSoundCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = F60811E113D050180040EC66 /* SCSoundCloud.h */; };
 		F60811E513D050180040EC66 /* SCSoundCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = F60811E213D050180040EC66 /* SCSoundCloud.m */; };
@@ -93,6 +97,8 @@
 		F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6622B6613D84A2B0057ADD0 /* Cocoa.framework */; };
+		F665F1A913E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */; };
+		F665F1AA13E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */; };
 		F66BAD1013D9739600996800 /* SCURLStringValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD0A13D9739400996800 /* SCURLStringValueTransformer.h */; };
 		F66BAD1113D9739600996800 /* SCURLStringValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BAD0B13D9739400996800 /* SCURLStringValueTransformer.m */; };
 		F66BAD1213D9739600996800 /* SCNumberToStringValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD0C13D9739400996800 /* SCNumberToStringValueTransformer.h */; };
@@ -111,6 +117,14 @@
 		F66BAD2B13D97C0C00996800 /* NSString_GPKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD2913D97C0C00996800 /* NSString_GPKit.h */; };
 		F66BAD2C13D97C0C00996800 /* NSString_GPKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BAD2A13D97C0C00996800 /* NSString_GPKit.m */; };
 		F66BAD2E13D97FAB00996800 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BAD2D13D97FAB00996800 /* CoreLocation.framework */; };
+		F6900ED013E18FB900B4720B /* SCHorizontalLineView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900ECE13E18FB900B4720B /* SCHorizontalLineView.h */; };
+		F6900ED113E18FB900B4720B /* SCHorizontalLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900ECF13E18FB900B4720B /* SCHorizontalLineView.m */; };
+		F6900ED513E19A2D00B4720B /* SCHorizontalSeparatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900ED313E19A2D00B4720B /* SCHorizontalSeparatorView.h */; };
+		F6900ED613E19A2D00B4720B /* SCHorizontalSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900ED413E19A2D00B4720B /* SCHorizontalSeparatorView.m */; };
+		F6900ED913E19FB700B4720B /* SCUnderlinedButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900ED713E19FB700B4720B /* SCUnderlinedButton.h */; };
+		F6900EDA13E19FB700B4720B /* SCUnderlinedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */; };
+		F6900EDD13E1B3CB00B4720B /* SCCoverImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */; };
+		F6900EDE13E1B3CB00B4720B /* SCCoverImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900EDC13E1B3CB00B4720B /* SCCoverImageButton.m */; };
 		F6A9853213D98C9B000AC828 /* SCNameAndEmailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A9853013D98C9B000AC828 /* SCNameAndEmailCell.h */; };
 		F6A9853313D98C9B000AC828 /* SCNameAndEmailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A9853113D98C9B000AC828 /* SCNameAndEmailCell.m */; };
 		F6A9853713D98CB3000AC828 /* SCCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A9853513D98CB3000AC828 /* SCCell.h */; };
@@ -205,6 +219,10 @@
 		AA747D9E0F9514B9006C5449 /* SoundCloudAPI_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCloudAPI_Prefix.pch; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundCloudAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F60627ED13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCRecordingSaveViewControllerHeaderView.h; path = Sources/SoundCloudUI/SCRecordingSaveViewControllerHeaderView.h; sourceTree = SOURCE_ROOT; };
+		F60627EE13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCRecordingSaveViewControllerHeaderView.m; path = Sources/SoundCloudUI/SCRecordingSaveViewControllerHeaderView.m; sourceTree = SOURCE_ROOT; };
+		F60627F613E066D3004A7E4E /* SCBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCBundle.h; path = Sources/SoundCloudUI/SCBundle.h; sourceTree = SOURCE_ROOT; };
+		F60627F713E066D3004A7E4E /* SCBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCBundle.m; path = Sources/SoundCloudUI/SCBundle.m; sourceTree = SOURCE_ROOT; };
 		F60811E113D050180040EC66 /* SCSoundCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloud.h; sourceTree = "<group>"; };
 		F60811E213D050180040EC66 /* SCSoundCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloud.m; sourceTree = "<group>"; };
 		F60811E713D051420040EC66 /* SCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAccount.h; sourceTree = "<group>"; };
@@ -234,6 +252,8 @@
 		F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloud+Private.h"; sourceTree = "<group>"; };
 		F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloud+Private.m"; sourceTree = "<group>"; };
 		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSCRecordingSaveViewControllerTitleView.h; path = Sources/SoundCloudUI/SCSCRecordingSaveViewControllerTitleView.h; sourceTree = SOURCE_ROOT; };
+		F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSCRecordingSaveViewControllerTitleView.m; path = Sources/SoundCloudUI/SCSCRecordingSaveViewControllerTitleView.m; sourceTree = SOURCE_ROOT; };
 		F66BAD0A13D9739400996800 /* SCURLStringValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCURLStringValueTransformer.h; path = ../SoundCloudUI/SCURLStringValueTransformer.h; sourceTree = "<group>"; };
 		F66BAD0B13D9739400996800 /* SCURLStringValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCURLStringValueTransformer.m; path = ../SoundCloudUI/SCURLStringValueTransformer.m; sourceTree = "<group>"; };
 		F66BAD0C13D9739400996800 /* SCNumberToStringValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCNumberToStringValueTransformer.h; path = ../SoundCloudUI/SCNumberToStringValueTransformer.h; sourceTree = "<group>"; };
@@ -252,6 +272,14 @@
 		F66BAD2913D97C0C00996800 /* NSString_GPKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSString_GPKit.h; path = ../SoundCloudUI/NSString_GPKit.h; sourceTree = "<group>"; };
 		F66BAD2A13D97C0C00996800 /* NSString_GPKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSString_GPKit.m; path = ../SoundCloudUI/NSString_GPKit.m; sourceTree = "<group>"; };
 		F66BAD2D13D97FAB00996800 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
+		F6900ECE13E18FB900B4720B /* SCHorizontalLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCHorizontalLineView.h; path = Sources/SoundCloudUI/SCHorizontalLineView.h; sourceTree = SOURCE_ROOT; };
+		F6900ECF13E18FB900B4720B /* SCHorizontalLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCHorizontalLineView.m; path = Sources/SoundCloudUI/SCHorizontalLineView.m; sourceTree = SOURCE_ROOT; };
+		F6900ED313E19A2D00B4720B /* SCHorizontalSeparatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCHorizontalSeparatorView.h; path = Sources/SoundCloudUI/SCHorizontalSeparatorView.h; sourceTree = SOURCE_ROOT; };
+		F6900ED413E19A2D00B4720B /* SCHorizontalSeparatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCHorizontalSeparatorView.m; path = Sources/SoundCloudUI/SCHorizontalSeparatorView.m; sourceTree = SOURCE_ROOT; };
+		F6900ED713E19FB700B4720B /* SCUnderlinedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCUnderlinedButton.h; path = Sources/SoundCloudUI/SCUnderlinedButton.h; sourceTree = SOURCE_ROOT; };
+		F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCUnderlinedButton.m; path = Sources/SoundCloudUI/SCUnderlinedButton.m; sourceTree = SOURCE_ROOT; };
+		F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCCoverImageButton.h; path = Sources/SoundCloudUI/SCCoverImageButton.h; sourceTree = SOURCE_ROOT; };
+		F6900EDC13E1B3CB00B4720B /* SCCoverImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCCoverImageButton.m; path = Sources/SoundCloudUI/SCCoverImageButton.m; sourceTree = SOURCE_ROOT; };
 		F6A9853013D98C9B000AC828 /* SCNameAndEmailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCNameAndEmailCell.h; path = ../SoundCloudUI/SCNameAndEmailCell.h; sourceTree = "<group>"; };
 		F6A9853113D98C9B000AC828 /* SCNameAndEmailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCNameAndEmailCell.m; path = ../SoundCloudUI/SCNameAndEmailCell.m; sourceTree = "<group>"; };
 		F6A9853513D98CB3000AC828 /* SCCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCCell.h; path = ../SoundCloudUI/SCCell.h; sourceTree = "<group>"; };
@@ -436,8 +464,22 @@
 		F608121713D08B110040EC66 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				F60627F613E066D3004A7E4E /* SCBundle.h */,
+				F60627F713E066D3004A7E4E /* SCBundle.m */,
 				F6BA73BC13D86D8D002A5655 /* SCRecordingSaveViewController.h */,
 				F6BA73BD13D86D8D002A5655 /* SCRecordingSaveViewController.m */,
+				F60627ED13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.h */,
+				F60627EE13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.m */,
+				F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */,
+				F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */,
+				F6900ECE13E18FB900B4720B /* SCHorizontalLineView.h */,
+				F6900ECF13E18FB900B4720B /* SCHorizontalLineView.m */,
+				F6900ED313E19A2D00B4720B /* SCHorizontalSeparatorView.h */,
+				F6900ED413E19A2D00B4720B /* SCHorizontalSeparatorView.m */,
+				F6900ED713E19FB700B4720B /* SCUnderlinedButton.h */,
+				F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */,
+				F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */,
+				F6900EDC13E1B3CB00B4720B /* SCCoverImageButton.m */,
 				F6CA0FCE13DEED7300F421DD /* JSON */,
 				F6E60D3F13DD9F3100A85727 /* Share Connections */,
 				F6E60D3E13DD9F2300A85727 /* Mail Picker */,
@@ -664,6 +706,13 @@
 				F6E60D3C13DD9F0900A85727 /* SCSwitch.h in Headers */,
 				F6E60D6B13DDABA600A85727 /* SCLoginViewController.h in Headers */,
 				F6CA0FCC13DEED6E00F421DD /* JSONKit.h in Headers */,
+				F60627EF13E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.h in Headers */,
+				F60627F813E066D3004A7E4E /* SCBundle.h in Headers */,
+				F665F1A913E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.h in Headers */,
+				F6900ED013E18FB900B4720B /* SCHorizontalLineView.h in Headers */,
+				F6900ED513E19A2D00B4720B /* SCHorizontalSeparatorView.h in Headers */,
+				F6900ED913E19FB700B4720B /* SCUnderlinedButton.h in Headers */,
+				F6900EDD13E1B3CB00B4720B /* SCCoverImageButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,6 +885,13 @@
 				F6E60D3D13DD9F0900A85727 /* SCSwitch.m in Sources */,
 				F6E60D6C13DDABA600A85727 /* SCLoginViewController.m in Sources */,
 				F6CA0FCD13DEED6E00F421DD /* JSONKit.m in Sources */,
+				F60627F013E05E99004A7E4E /* SCRecordingSaveViewControllerHeaderView.m in Sources */,
+				F60627F913E066D3004A7E4E /* SCBundle.m in Sources */,
+				F665F1AA13E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.m in Sources */,
+				F6900ED113E18FB900B4720B /* SCHorizontalLineView.m in Sources */,
+				F6900ED613E19A2D00B4720B /* SCHorizontalSeparatorView.m in Sources */,
+				F6900EDA13E19FB700B4720B /* SCUnderlinedButton.m in Sources */,
+				F6900EDE13E1B3CB00B4720B /* SCCoverImageButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

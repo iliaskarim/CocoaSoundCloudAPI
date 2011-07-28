@@ -17,5 +17,6 @@
 + (UIImage *)imageWithColor:(UIColor *)color;
 
 - (UIImage *)imageByResizingTo:(CGSize)newSize;
+- (UIImage *)imageByResizingTo:(CGSize)newSize forRetinaDisplay:(BOOL)forRetinaDisplay;
 
 @end

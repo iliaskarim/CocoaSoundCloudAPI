@@ -45,6 +45,7 @@
     SCShareViewController *shareViewController = [[SCShareViewController alloc] initWithRootViewController:recView];
     if (shareViewController) {
         shareViewController.navigationBarHidden = YES;
+        shareViewController.navigationBar.barStyle = UIBarStyleBlack;
     }
     return [shareViewController autorelease];
 }
@@ -61,6 +62,7 @@
     SCShareViewController *shareViewController = [[SCShareViewController alloc] initWithRootViewController:recView];
     if (shareViewController) {
         shareViewController.navigationBarHidden = YES;
+        shareViewController.navigationBar.barStyle = UIBarStyleBlack;
     }
     return [shareViewController autorelease];
 }
