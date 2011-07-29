@@ -65,17 +65,20 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
 @property (nonatomic, readwrite, retain) NSURL *resource;
 @property (nonatomic, readwrite, retain) NSDictionary *parameters;
 
-@property (nonatomic, copy) SCRequestResponseHandler responseHandler;
-@property (nonatomic, copy) SCRequestSendingProgressHandler sendingProgressHandler;
-
 
 #pragma mark Signed NSURLRequest
 
-- (NSURLRequest *)signedRequest;
+- (NSURLRequest *)signedURLRequest;
 
 #pragma mark Perform Request
 
-- (void)performRequest;
+//TODO Consider this
+// - Why not to -performRequestWithSendingHandler:responseHandler: ?
+// - Why Resource instead of URL ?
+// - Need documentation in why there is no –addMultiPartData:withName:type:
+
+- (void)performRequestWithSendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
+                                 responseHandler:(SCRequestResponseHandler)responseHandler;
 
 #pragma Cancel Request
 

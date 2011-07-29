@@ -70,11 +70,9 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     
     NSAssert([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
     
-    NXOAuth2Request *request = [NXOAuth2Request requestOnResource:aResource withMethod:theMethod usingParameters:someParameters];
+    NXOAuth2Request *request = [[NXOAuth2Request alloc] initWithResource:aResource method:theMethod parameters:someParameters];
     request.account = anAccount.oauthAccount;
-    request.responseHandler = aResponseHandler;
-    request.sendProgressHandler = aProgressHandler;
-    [request performRequest];
+    [request performRequestWithSendingProgressHandler:aProgressHandler responseHandler:aResponseHandler];
     return request;
 }
 
@@ -183,30 +181,10 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     self.oauthRequest.parameters = parameters;
 }
 
-- (SCRequestResponseHandler)responseHandler;
-{
-    return self.oauthRequest.responseHandler;
-}
-
-- (void)setResponseHandler:(SCRequestResponseHandler)responseHandler;
-{
-    self.oauthRequest.responseHandler = responseHandler;
-}
-
-- (SCRequestSendingProgressHandler)sendingProgressHandler;
-{
-    return self.oauthRequest.sendProgressHandler;
-}
-
-- (void)setSendingProgressHandler:(SCRequestSendingProgressHandler)sendProgressHandler;
-{
-    self.oauthRequest.sendProgressHandler = sendProgressHandler;
-}
-
 
 #pragma mark Signed NSURLRequest
 
-- (NSURLRequest *)signedRequest;
+- (NSURLRequest *)signedURLRequest;
 {
     return [self.oauthRequest signedURLRequest];
 }
@@ -214,9 +192,10 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
 
 #pragma mark Perform Request
 
-- (void)performRequest;
+- (void)performRequestWithSendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
+                                 responseHandler:(SCRequestResponseHandler)responseHandler;
 {
-    [self.oauthRequest performRequest];
+    [self.oauthRequest performRequestWithSendingProgressHandler:progressHandler responseHandler:responseHandler];
 }
 
 - (void)cancel;
