@@ -741,17 +741,45 @@ const NSArray *allServices = nil;
 - (void)addConnectionController:(SCAddConnectionViewController *)controller didFinishWithService:(NSString *)service success:(BOOL)success;
 {
     if (success) {
-        NSMutableArray *newUnconnectedServices = [NSMutableArray array];
-        [self.unconnectedServices enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-            if (![[obj objectForKey:@"service"] isEqualToString:service]) {
-                [newUnconnectedServices addObject:obj];
-            }
-        }];
-        self.unconnectedServices = newUnconnectedServices;
-        [tableView reloadData];
-    }
-    if (self.navigationController.topViewController == controller) {
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        // Update the sharing connections of this user and set the new connection to "on".
+        // Dismiss the connection view controller after the connections where updated.
+        
+        [SCRequest performMethod:SCRequestMethodGET
+                      onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
+                 usingParameters:nil
+                     withAccount:account
+          sendingProgressHandler:nil
+                 responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                     if (data) {
+                         NSError *jsonError = nil;
+                         NSArray *result = [data objectFromJSONData];
+                         if (result) {
+                             [self setAvailableConnections:result];
+                         } else {
+                             NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
+                         }
+                     } else {
+                         NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
+                     }
+                     
+                     NSIndexSet *idxs = [availableConnections indexesOfObjectsPassingTest:^(id obj, NSUInteger i, BOOL *stop){
+                         if ([[obj objectForKey:@"service"] isEqual:service]) {
+                             *stop = YES;
+                             return YES;
+                         } else {
+                             return NO;
+                         }
+                     }];
+                     
+                     NSMutableArray *newSharingConnections = [self.sharingConnections mutableCopy];
+                     [newSharingConnections addObject:[availableConnections objectAtIndex:[idxs firstIndex]]];
+                     self.sharingConnections = newSharingConnections;
+                     
+                     if (self.navigationController.topViewController == controller) {
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }
+                 }];
     }
 }
 
@@ -878,6 +906,31 @@ const NSArray *allServices = nil;
         [parameters setObject:self.fileURL forKey:@"track[asset_data]"];
     } else {
         [parameters setObject:self.fileData forKey:@"track[asset_data]"];
+    }
+    
+    if (self.isPrivate) {
+        if (self.sharingMailAddresses.count > 0) {
+            [parameters setObject:self.sharingMailAddresses forKey:@"track[shared_to][emails][][address]"];
+        }
+    } else {
+        if (self.sharingConnections.count > 0) {
+            NSMutableArray *idArray = [NSMutableArray arrayWithCapacity:self.sharingConnections.count];
+            for (NSDictionary *sharingConnection in sharingConnections) {
+                if ([[sharingConnection objectForKey:@"service"] isEqualToString:@"foursquare"] && !self.foursquareID) {
+                    //Ignore Foursquare sharing when there is no venue ID set.
+                } else {
+                    [idArray addObject:[NSString stringWithFormat:@"%@", [sharingConnection objectForKey:@"id"]]];
+                }
+            }
+            [parameters setObject:idArray forKey:@"track[post_to][][id]"];
+        } else {
+            [parameters setObject:@"" forKey:@"track[post_to][]"];
+        }
+    }
+    
+    if (self.coverImage) {
+        NSData *coverData = UIImageJPEGRepresentation(self.coverImage, 0.8);
+        [parameters setObject:coverData forKey:@"track[artwork_data]"];
     }
     
     [SCRequest performMethod:SCRequestMethodPOST
