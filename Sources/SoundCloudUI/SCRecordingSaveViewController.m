@@ -928,6 +928,17 @@ const NSArray *allServices = nil;
         }
     }
     
+    NSMutableArray *tags = [NSMutableArray array];
+    [tags addObject:@"soundcloud:source=iphone-record"];
+    if (self.location) {
+        [tags addObject:[NSString stringWithFormat:@"geo:lat=%f", self.location.coordinate.latitude]];
+        [tags addObject:[NSString stringWithFormat:@"geo:lon=%f", self.location.coordinate.longitude]];
+    }
+    if (self.foursquareID) {
+        [tags addObject:[NSString stringWithFormat:@"foursquare:venue=%@", self.foursquareID]];
+    }
+    [parameters setObject:[tags componentsJoinedByString:@" "] forKey:@"track[tag_list]"];
+    
     if (self.coverImage) {
         NSData *coverData = UIImageJPEGRepresentation(self.coverImage, 0.8);
         [parameters setObject:coverData forKey:@"track[artwork_data]"];
