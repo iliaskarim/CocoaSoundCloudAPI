@@ -138,15 +138,15 @@
     [titleBarView addSubview:titleImageView];
     [titleImageView release];
     
-	titleBarButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	titleBarButton.frame = closeRect;
-	titleBarButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-	titleBarButton.showsTouchWhenHighlighted = YES;
-	[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
-	UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
-	[titleBarButton setImage:closeImage forState:UIControlStateNormal];
-	titleBarButton.imageView.contentMode = UIViewContentModeCenter;
-	[titleBarView addSubview:titleBarButton];
+//	titleBarButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+//	titleBarButton.frame = closeRect;
+//	titleBarButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+//	titleBarButton.showsTouchWhenHighlighted = YES;
+//	[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+//	UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
+//	[titleBarButton setImage:closeImage forState:UIControlStateNormal];
+//	titleBarButton.imageView.contentMode = UIViewContentModeCenter;
+//	[titleBarView addSubview:titleBarButton];
 	
 	activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 	activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
@@ -163,7 +163,7 @@
     webView.delegate = self;
     [webView loadRequest:[NSURLRequest requestWithURL:URLToOpen]];
     [self.view addSubview:webView];
-    	
+    
     [self updateInterface];
 }
 
@@ -261,7 +261,7 @@
 - (IBAction)close;
 {
     // Use either the authentication delegate if present
-    // or the shared sound cloud singleton (SCSoundCLoud).
+    // or the shared sound cloud singleton (SCSoundCloud).
     
     if (authentication) {
         [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];

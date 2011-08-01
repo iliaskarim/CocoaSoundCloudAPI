@@ -19,7 +19,9 @@
 #import "SCConstants.h"
 #import "SCAddConnectionViewController.h"
 #import "SCAccount.h"
+#import "SCSoundCloud.h"
 #import "SCRequest.h"
+#import "SCLoginViewController.h"
 
 #import "SCBundle.h"
 #import "SCSCRecordingSaveViewControllerTitleView.h"
@@ -43,20 +45,25 @@
 @property (nonatomic, retain) NSArray *unconnectedServices;
 @property (nonatomic, retain) NSArray *sharingConnections;
 @property (nonatomic, retain) NSArray *sharingMailAddresses;
+
+@property (nonatomic, retain) NSURL *fileURL;
+@property (nonatomic, retain) NSData *fileData;
+@property (nonatomic, assign) BOOL isPrivate;
+@property (nonatomic, retain) UIImage *coverImage;
+@property (nonatomic, retain) NSString *title;
+
 @property (nonatomic, retain) CLLocation *location;
 @property (nonatomic, copy) NSString *locationTitle;
 @property (nonatomic, copy) NSString *foursquareID;
-@property (nonatomic, retain) NSURL *fileURL;
-@property (nonatomic, retain) NSData *fileData;
-@property (nonatomic, retain) SCAccount *account;
-@property (nonatomic, retain) UIImage *coverImage;
-@property (nonatomic, assign) BOOL isPrivate;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
+
+@property (nonatomic, readwrite, retain) SCAccount *account;
+
 @property (nonatomic, retain) SCFoursquarePlacePickerController *foursquareController;
 
 @property (nonatomic, assign) SCRecordingSaveViewControllerHeaderView *headerView;
 @property (nonatomic, assign) SCRecordingUploadProgressView *uploadProgressView;
+
+@property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 
 #pragma mark UI
 - (void)updateInterface;
@@ -73,6 +80,10 @@
 - (IBAction)upload;
 - (IBAction)cancel;
 - (IBAction)logout;
+
+#pragma mark Notification Handling
+- (void)accountDidChange:(NSNotification *)aNotification;
+- (void)didFailToRequestAccess:(NSNotification *)aNotification;
 @end
 
 
@@ -116,19 +127,19 @@ const NSArray *allServices = nil;
 @synthesize unconnectedServices;
 @synthesize sharingConnections;
 @synthesize sharingMailAddresses;
-@synthesize locationTitle;
-@synthesize location;
-@synthesize foursquareID;
 @synthesize fileURL;
 @synthesize fileData;
-@synthesize account;
-@synthesize coverImage;
 @synthesize isPrivate;
+@synthesize coverImage;
 @synthesize title;
-@synthesize completionHandler;
+@synthesize location;
+@synthesize locationTitle;
+@synthesize foursquareID;
+@synthesize account;
 @synthesize foursquareController;
 @synthesize headerView;
 @synthesize uploadProgressView;
+@synthesize completionHandler;
 
 
 #pragma mark Lifecycle
@@ -156,30 +167,42 @@ const NSArray *allServices = nil;
         self.locationTitle = nil;
         self.foursquareID = nil;
         
-        self.account = nil;
+        
         
         self.coverImage = nil;
         self.title = nil;
         
         self.completionHandler = nil;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(accountDidChange:)
+                                                     name:SCSoundCloudAccountDidChangeNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didFailToRequestAccess:)
+                                                     name:SCSoundCloudDidFailToRequestAccessNotification
+                                                   object:nil];
     }
     return self;
 }
 
 - (void)dealloc;
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [availableConnections release];
     [unconnectedServices release];
     [sharingConnections release];
     [sharingMailAddresses release];
-    [location release];
-    [locationTitle release];
-    [foursquareID release];
     [account release];
     [coverImage release];
     [title release];
-    [completionHandler release];
+    [location release];
+    [locationTitle release];
+    [foursquareID release];
     [foursquareController release];
+    [completionHandler release];
     
     [super dealloc];
 }
@@ -206,55 +229,61 @@ const NSArray *allServices = nil;
 }
 
 - (void)setAccount:(SCAccount *)anAccount;
-{
+{   
+    if (anAccount == nil) {
+        [SCSoundCloud requestAccess];
+    }
+    
     if (account != anAccount) {
         [account release];
         [anAccount retain];
         account = anAccount;
-        
-        [SCRequest performMethod:SCRequestMethodGET
-                      onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
-                 usingParameters:nil
-                     withAccount:account
-          sendingProgressHandler:nil
-                 responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                     if (data) {
-                         NSError *jsonError = nil;
-                         NSArray *result = [data objectFromJSONData];
-                         if (result) {
-                             [self setAvailableConnections:result];
+ 
+        if (self.account) {
+            [SCRequest performMethod:SCRequestMethodGET
+                          onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
+                     usingParameters:nil
+                         withAccount:self.account
+              sendingProgressHandler:nil
+                     responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                         if (data) {
+                             NSError *jsonError = nil;
+                             NSArray *result = [data objectFromJSONData];
+                             if (result) {
+                                 [self setAvailableConnections:result];
+                             } else {
+                                 NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
+                             }
                          } else {
-                             NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
+                             NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
                          }
-                     } else {
-                         NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
-                     }
-                 }];
-        
-        [SCRequest performMethod:SCRequestMethodGET
-                      onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me.json"]
-                 usingParameters:nil
-                     withAccount:account
-          sendingProgressHandler:nil
-                 responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                     if (data) {
-                         NSError *jsonError = nil;
-                         id result = [data objectFromJSONData];
-                         if (result) {
-                             NSLog(@"Me: %@", result);
-                             
-                             NSURL *avatarURL = [NSURL URLWithString:[result objectForKey:@"avatar_url"]];
-                             NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
-                             [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
-                             [self.headerView setUserName:[result objectForKey:@"username"]];
-                             
+                     }];
+            
+            [SCRequest performMethod:SCRequestMethodGET
+                          onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me.json"]
+                     usingParameters:nil
+                         withAccount:self.account
+              sendingProgressHandler:nil
+                     responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                         if (data) {
+                             NSError *jsonError = nil;
+                             id result = [data objectFromJSONData];
+                             if (result) {
+                                 NSLog(@"Me: %@", result);
+                                 
+                                 NSURL *avatarURL = [NSURL URLWithString:[result objectForKey:@"avatar_url"]];
+                                 NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
+                                 [self.headerView setAvatarImage:[UIImage imageWithData:avatarData]];
+                                 [self.headerView setUserName:[result objectForKey:@"username"]];
+                                 
+                             } else {
+                                 NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
+                             }
                          } else {
-                             NSLog(@"%s json error: %@", __FUNCTION__, [jsonError localizedDescription]);
+                             NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
                          }
-                     } else {
-                         NSLog(@"%s error: %@", __FUNCTION__, [error localizedDescription]);
-                     }
-                 }];
+                     }];
+        }
     }
 }
 
@@ -381,12 +410,7 @@ const NSArray *allServices = nil;
     newTableViewFrame.size.height -= newTableViewFrame.origin.y;
     tableView.frame = newTableViewFrame;
     
-    NSLog(@"table view frame: %@", NSStringFromCGRect(tableView.frame));
-    
     tableView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
-    
-
-    
     
     [self updateInterface];
 }
@@ -401,6 +425,12 @@ const NSArray *allServices = nil;
     
     self.headerView.whatTextField.text = self.title;
     self.headerView.whereTextField.text = self.locationTitle;
+}
+
+- (void)viewDidAppear:(BOOL)animated;
+{
+    [super viewDidAppear:animated];
+    self.account = [SCSoundCloud account];
 }
 
 - (void)viewWillDisappear:(BOOL)animated;
@@ -671,7 +701,6 @@ const NSArray *allServices = nil;
     return YES;
 }
 
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;
 {
     if (textField == self.headerView.whereTextField) {
@@ -882,7 +911,6 @@ const NSArray *allServices = nil;
 
 - (IBAction)upload;
 {
-    // TODO: Upload file
     NSLog(@"Uploading ...");
     
     tableView.hidden = YES;
@@ -994,6 +1022,22 @@ const NSArray *allServices = nil;
 - (IBAction)logout;
 {
     NSLog(@"Logging out ...");
+    [SCSoundCloud removeAccess];
+    self.account = nil;
+}
+
+#pragma mark Notification Handling
+
+- (void)accountDidChange:(NSNotification *)aNotification;
+{
+//    NSLog(@"%s", __FUNCTION__);
+    self.account = [SCSoundCloud account];
+}
+
+- (void)didFailToRequestAccess:(NSNotification *)aNotification;
+{
+    NSLog(@"%s: %@", __FUNCTION__, aNotification);
+    [self cancel];
 }
 
 @end

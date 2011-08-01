@@ -23,7 +23,8 @@
 #pragma mark Notifications
 
 extern NSString * const SCSoundCloudAccountsDidChangeNotification;
-extern NSString * const SCSoundCloudDidFailToRequestAccess;
+extern NSString * const SCSoundCloudAccountDidChangeNotification;
+extern NSString * const SCSoundCloudDidFailToRequestAccessNotification;
 
 
 #pragma mark Handler
@@ -43,14 +44,18 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 
 #pragma mark Accessors
 
++ (SCAccount *)account;
+
 + (NSArray *)accounts;
-+ (SCAccount *)accountWithIdentifier:(NSString *)identifier;
++ (SCAccount *)accountWithIdentifier:(NSString *)identifier __attribute__((deprecated));
 
 
 #pragma mark Manage Accounts
 
 + (void)requestAccess;
-+ (void)removeAccount:(SCAccount *)account;
++ (void)removeAccess;
+
++ (void)removeAccount:(SCAccount *)account __attribute__((deprecated));
 
 
 #pragma mark Configuration

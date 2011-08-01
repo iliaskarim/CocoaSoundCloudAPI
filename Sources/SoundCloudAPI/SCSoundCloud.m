@@ -42,7 +42,7 @@
 #pragma mark Notifications
 
 NSString * const SCSoundCloudAccountsDidChangeNotification = @"SCSoundCloudAccountsDidChangeNotification";
-
+NSString * const SCSoundCloudAccountDidChangeNotification = @"SCSoundCloudAccountDidChangeNotification";
 NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloudDidFailToRequestAccessNotification";
 
 #pragma mark -
@@ -50,6 +50,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 
 @interface SCSoundCloud ()
 @property (nonatomic, assign) id accountStoreAccountsDidChangeObserver;
+@property (nonatomic, assign) id accountStoreDidFailToRequestAccessObserver;
 @property (nonatomic, assign) id accountDidFailToGetAccessTokenObserver;
 @end
 
@@ -68,8 +69,20 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
                                                                                                       object:nil
                                                                                                        queue:nil
                                                                                                   usingBlock:^(NSNotification *notification){
-                                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudAccountsDidChangeNotification object:self];
+                                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudAccountsDidChangeNotification 
+                                                                                                                                                          object:self];
+                                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudAccountDidChangeNotification
+                                                                                                                                                          object:self];
                                                                                                   }];
+        
+        self.accountStoreDidFailToRequestAccessObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
+                                                                                                            object:nil
+                                                                                                             queue:nil
+                                                                                                        usingBlock:^(NSNotification *notification){
+                                                                                                            [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudDidFailToRequestAccessNotification
+                                                                                                                                                                object:self
+                                                                                                                                                              userInfo:notification.userInfo];
+                                                                                                        }];
         
         self.accountDidFailToGetAccessTokenObserver = [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountDidFailToGetAccessTokenNotification
                                                                                                         object:nil
@@ -85,6 +98,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self.accountStoreAccountsDidChangeObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.accountStoreDidFailToRequestAccessObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.accountDidFailToGetAccessTokenObserver];
     [super dealloc];
 }
@@ -92,7 +106,18 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 #pragma mark Accessors
 
 @synthesize accountStoreAccountsDidChangeObserver;
+@synthesize accountStoreDidFailToRequestAccessObserver;
 @synthesize accountDidFailToGetAccessTokenObserver;
+
++ (SCAccount *)account;
+{
+    NSArray *oauthAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAccountType];
+    if ([oauthAccounts count] > 0) {
+        return [[[SCAccount alloc] initWithOAuthAccount:[oauthAccounts objectAtIndex:0]] autorelease];
+    } else {
+        return nil;
+    }
+}
 
 + (NSArray *)accounts;
 {
@@ -119,6 +144,11 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 + (void)requestAccess;
 {
     [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType];
+}
+
++ (void)removeAccess;
+{
+    [[NXOAuth2AccountStore sharedStore] removeAccount:[self.account oauthAccount]];
 }
 
 + (void)removeAccount:(SCAccount *)account;

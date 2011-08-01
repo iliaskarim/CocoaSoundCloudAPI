@@ -53,14 +53,14 @@
 - (void)viewDidAppear:(BOOL)animated;
 {   
     // Enable upload
-    SCAccount *account = appDelegate.scAccount;
-    if (account) {
+//    SCAccount *account = appDelegate.scAccount;
+//    if (account) {
         self.postButton.enabled = YES;
         self.trackNameField.enabled = YES;
-    }
+//    }
     
-    [self updateUserInfo];
-    [self updateTrackNumber];
+//    [self updateUserInfo];
+//    [self updateTrackNumber];
 }
 
 - (void)updateUserInfo;
@@ -128,14 +128,15 @@
 
 -(IBAction)sendRequest:(id)sender;
 {
-    SCAccount *account = appDelegate.scAccount;
-    if (!account) return;
+//    SCAccount *account = appDelegate.scAccount;
+//    if (!account) return;
     
     
     NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"1375_sleep_90_bpm_nylon2" ofType:@"wav"];
     NSURL *dataURL = [NSURL fileURLWithPath:dataPath];
     
-    SCShareViewController *shareView = [SCShareViewController shareViewControllerWithFileURL:dataURL completionHandler:^(BOOL canceled, NSDictionary *trackInfo){
+    SCShareViewController *shareView = [SCShareViewController shareViewControllerWithFileURL:dataURL
+                                                                           completionHandler:^(BOOL canceled, NSDictionary *trackInfo){
         if (canceled) {
             NSLog(@"Sharing sound with Soundcloud canceled.");
         } else {
@@ -145,7 +146,6 @@
         [self dismissModalViewControllerAnimated:YES];
     }];
     [shareView setTitle:@"Foo Bar!"];
-    [shareView setAccount:account];
     [self presentModalViewController:shareView animated:YES];
 }
 

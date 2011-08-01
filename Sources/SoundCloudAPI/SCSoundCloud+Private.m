@@ -50,12 +50,20 @@
                                                                                            UIWindow *window = nil;
                                                                                            if (windows.count > 0) window = [windows objectAtIndex:0];
                                                                                            if ([window respondsToSelector:@selector(rootViewController)]) {
-                                                                                               UIViewController *rootViewController = [window rootViewController];
+
+                                                                                               UIViewController *topMostViewController = [window rootViewController];
+                                                                                               
+                                                                                               while (topMostViewController.modalViewController) {
+                                                                                                   topMostViewController = topMostViewController.modalViewController;
+                                                                                               }
                                                                                                
                                                                                                SCLoginViewController *loginViewController = [[SCLoginViewController alloc] initWithURL:preparedURL
-                                                                                                                                                                        dismissHandler:^{[rootViewController dismissModalViewControllerAnimated:YES];}];
-                                                                                               [rootViewController presentModalViewController:loginViewController animated:YES];
-
+                                                                                                                                                                        dismissHandler:^{
+                                                                                                                                                                            [topMostViewController dismissModalViewControllerAnimated:YES];
+                                                                                                                                                                        }];
+                                                                                               
+                                                                                               [topMostViewController presentModalViewController:loginViewController animated:YES];
+                                    
                                                                                            } else {
                                                                                                NSAssert(NO, @"If you're not on iOS4 you need to implement -soundCloudAPIDisplayViewController: or show your own authentication controller in -soundCloudAPIPreparedAuthorizationURL:");
                                                                                            }

@@ -40,7 +40,6 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
 - (void)setFileURL:(NSURL *)aFileURL;
 - (void)setFileData:(NSData *)someFileData;
 
-- (void)setAccount:(SCAccount *)anAccount;
 - (void)setPrivate:(BOOL)isPrivate;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setTitle:(NSString *)aTitle;

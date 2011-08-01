@@ -46,18 +46,19 @@
 
 - (SCAccount *)scAccount;
 {
-    @synchronized (scAccount) {
-        if (scAccount == nil) {
-            NSArray *accounts = [SCSoundCloud accounts];
-            if ([accounts count] == 0) {
-                NSLog(@"Requesting access to SoundCloud.");
-                [SCSoundCloud requestAccess];
-            } else {
-                scAccount = [[accounts objectAtIndex:0] retain];
-            }
-        }
-        return scAccount;
-    }
+    return nil;
+//    @synchronized (scAccount) {
+//        if (scAccount == nil) {
+//            NSArray *accounts = [SCSoundCloud accounts];
+//            if ([accounts count] == 0) {
+//                NSLog(@"Requesting access to SoundCloud.");
+//                [SCSoundCloud requestAccess];
+//            } else {
+//                scAccount = [[accounts objectAtIndex:0] retain];
+//            }
+//        }
+//        return scAccount;
+//    }
 }
 
 
@@ -75,24 +76,24 @@
     
     // ---8<------8<------8<------8<------8<------8<------8<----
     
-    void (^accountSetter)(NSNotification*) = ^(NSNotification *notification) {
-        NSArray *accounts = [SCSoundCloud accounts];
-        if (accounts.count < 1) {
-            [SCSoundCloud requestAccess];
-        } else {
-            SCAccount *newAccount = [accounts objectAtIndex:0];
-            if (![newAccount isEqual:self.scAccount]) {
-                self.scAccount = newAccount;
-            }
-        }
-    };    
-    
-    accountsChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:SCSoundCloudAccountsDidChangeNotification
-                                                                               object:nil
-                                                                                queue:nil
-                                                                           usingBlock:accountSetter];
-    
-    accountSetter(nil);
+//    void (^accountSetter)(NSNotification*) = ^(NSNotification *notification) {
+//        NSArray *accounts = [SCSoundCloud accounts];
+//        if (accounts.count < 1) {
+//            [SCSoundCloud requestAccess];
+//        } else {
+//            SCAccount *newAccount = [accounts objectAtIndex:0];
+//            if (![newAccount isEqual:self.scAccount]) {
+//                self.scAccount = newAccount;
+//            }
+//        }
+//    };    
+//    
+//    accountsChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:SCSoundCloudAccountsDidChangeNotification
+//                                                                               object:nil
+//                                                                                queue:nil
+//                                                                           usingBlock:accountSetter];
+//    
+//    accountSetter(nil);
     
     NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];	
 	BOOL didHandleURL = NO;
