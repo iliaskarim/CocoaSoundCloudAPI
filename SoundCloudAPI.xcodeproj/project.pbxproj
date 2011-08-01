@@ -96,6 +96,8 @@
 		F6525B7E13D5B34A00ACAE8F /* SCSoundCloud+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */; };
 		F6525B7F13D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
+		F658144713E2EBB000708EF5 /* SCRecordingUploadProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = F658144513E2EBAF00708EF5 /* SCRecordingUploadProgressView.h */; };
+		F658144813E2EBB000708EF5 /* SCRecordingUploadProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F658144613E2EBAF00708EF5 /* SCRecordingUploadProgressView.m */; };
 		F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6622B6613D84A2B0057ADD0 /* Cocoa.framework */; };
 		F665F1A913E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */; };
 		F665F1AA13E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */; };
@@ -251,6 +253,8 @@
 		F6410A1C13D887C300561D0B /* UIView_GPKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIView_GPKit.m; path = ../SoundCloudUI/UIView_GPKit.m; sourceTree = "<group>"; };
 		F6525B7B13D5B34A00ACAE8F /* SCSoundCloud+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCSoundCloud+Private.h"; sourceTree = "<group>"; };
 		F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloud+Private.m"; sourceTree = "<group>"; };
+		F658144513E2EBAF00708EF5 /* SCRecordingUploadProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCRecordingUploadProgressView.h; path = Sources/SoundCloudUI/SCRecordingUploadProgressView.h; sourceTree = SOURCE_ROOT; };
+		F658144613E2EBAF00708EF5 /* SCRecordingUploadProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCRecordingUploadProgressView.m; path = Sources/SoundCloudUI/SCRecordingUploadProgressView.m; sourceTree = SOURCE_ROOT; };
 		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSCRecordingSaveViewControllerTitleView.h; path = Sources/SoundCloudUI/SCSCRecordingSaveViewControllerTitleView.h; sourceTree = SOURCE_ROOT; };
 		F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSCRecordingSaveViewControllerTitleView.m; path = Sources/SoundCloudUI/SCSCRecordingSaveViewControllerTitleView.m; sourceTree = SOURCE_ROOT; };
@@ -480,6 +484,8 @@
 				F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */,
 				F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */,
 				F6900EDC13E1B3CB00B4720B /* SCCoverImageButton.m */,
+				F658144513E2EBAF00708EF5 /* SCRecordingUploadProgressView.h */,
+				F658144613E2EBAF00708EF5 /* SCRecordingUploadProgressView.m */,
 				F6CA0FCE13DEED7300F421DD /* JSON */,
 				F6E60D3F13DD9F3100A85727 /* Share Connections */,
 				F6E60D3E13DD9F2300A85727 /* Mail Picker */,
@@ -713,6 +719,7 @@
 				F6900ED513E19A2D00B4720B /* SCHorizontalSeparatorView.h in Headers */,
 				F6900ED913E19FB700B4720B /* SCUnderlinedButton.h in Headers */,
 				F6900EDD13E1B3CB00B4720B /* SCCoverImageButton.h in Headers */,
+				F658144713E2EBB000708EF5 /* SCRecordingUploadProgressView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -892,6 +899,7 @@
 				F6900ED613E19A2D00B4720B /* SCHorizontalSeparatorView.m in Sources */,
 				F6900EDA13E19FB700B4720B /* SCUnderlinedButton.m in Sources */,
 				F6900EDE13E1B3CB00B4720B /* SCCoverImageButton.m in Sources */,
+				F658144813E2EBB000708EF5 /* SCRecordingUploadProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

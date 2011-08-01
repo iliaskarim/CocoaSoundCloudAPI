@@ -24,6 +24,7 @@
 #import "SCBundle.h"
 #import "SCSCRecordingSaveViewControllerTitleView.h"
 #import "SCRecordingSaveViewControllerHeaderView.h"
+#import "SCRecordingUploadProgressView.h"
 
 #import "SCRecordingSaveViewController.h"
 
@@ -55,6 +56,7 @@
 @property (nonatomic, retain) SCFoursquarePlacePickerController *foursquareController;
 
 @property (nonatomic, assign) SCRecordingSaveViewControllerHeaderView *headerView;
+@property (nonatomic, assign) SCRecordingUploadProgressView *uploadProgressView;
 
 #pragma mark UI
 - (void)updateInterface;
@@ -126,6 +128,7 @@ const NSArray *allServices = nil;
 @synthesize completionHandler;
 @synthesize foursquareController;
 @synthesize headerView;
+@synthesize uploadProgressView;
 
 
 #pragma mark Lifecycle
@@ -321,9 +324,33 @@ const NSArray *allServices = nil;
 {
     [super viewDidLoad];
     
+    // Toolbar
+    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
+    self.navigationController.toolbarHidden = NO;
+    
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
+    
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self
+                                                             action:@selector(cancel)] autorelease]];
+    
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
+    
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"upload_and_share", @"Upload & Share")
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self
+                                                             action:@selector(upload)] autorelease]];
+    
+    [self setToolbarItems:toolbarItems];
+    
+    // Background
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    
     // Banner
     [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
     
+    // Table View
     self.headerView = [[[SCRecordingSaveViewControllerHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 0)] autorelease];
     
     self.headerView.whatTextField.delegate = self;
@@ -358,19 +385,8 @@ const NSArray *allServices = nil;
     
     tableView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
     
-    NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
+
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", @"Cancel")
-                                                              style:UIBarButtonItemStyleBordered
-                                                             target:self
-                                                             action:@selector(cancel)] autorelease]];
-    
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"upload_and_share", @"Upload & Share")
-                                                              style:UIBarButtonItemStyleBordered
-                                                             target:self
-                                                             action:@selector(upload)] autorelease]];
-    toolbar.items = toolbarItems;
     
     [self updateInterface];
 }
@@ -841,6 +857,20 @@ const NSArray *allServices = nil;
     // TODO: Upload file
     NSLog(@"Uploading ...");
     
+    tableView.hidden = YES;
+    [self.navigationController setToolbarHidden:YES animated:YES];
+
+    if (self.uploadProgressView) {
+        [self.uploadProgressView removeFromSuperview];
+    }
+    
+    self.uploadProgressView = [[SCRecordingUploadProgressView alloc] initWithFrame:CGRectMake(26, 58, CGRectGetWidth(self.view.bounds) - 52, CGRectGetHeight(self.view.bounds) - 26 - 58)];
+    [self.view addSubview:self.uploadProgressView];
+    
+    [self.uploadProgressView setTitle:self.title];
+    [self.uploadProgressView setLocationTitle:self.locationTitle];
+    [self.uploadProgressView setCoverImage:self.coverImage];
+    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     [parameters setObject:self.title forKey:@"track[title]"];
     [parameters setObject:(self.isPrivate) ? @"private" : @"public" forKey:@"track[sharing]"];
@@ -854,28 +884,45 @@ const NSArray *allServices = nil;
                   onResource:[NSURL URLWithString:@"https://api.soundcloud.com/tracks.json"]
              usingParameters:parameters
                  withAccount:self.account
-      sendingProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal){NSLog(@"...%llu of %llu bytes send", bytesSend, bytesTotal);}
+      sendingProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal){self.uploadProgressView.progressView.progress = (float)bytesSend / bytesTotal;}
              responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
-                 
                  if (data) {
                      NSError *jsonError = nil;
                      id result = [data objectFromJSONData]; //[NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
                      if (result) {
-                         self.completionHandler(NO, result);
+                         
+                         [self.uploadProgressView setSuccess:YES];
+                         
+                         double delayInSeconds = 2.0;
+                         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                             self.completionHandler(NO, result);
+                         });
                      } else {
                          NSLog(@"Upload failed with json error: %@", [jsonError localizedDescription]);
-                         // TODO: Present error
+                         
+                         [self.uploadProgressView setSuccess:NO];
+                         [self.navigationController setToolbarHidden:NO animated:YES];
+                         UIBarButtonItem *button = [self.toolbarItems lastObject];
+                         button.title = NSLocalizedString(@"retry_upload", @"Retry upload");
                      }
                  } else {
                      NSLog(@"Upload failed with error: %@", [error localizedDescription]);
-                     // TODO: Present error
+                     
+                     [self.uploadProgressView setSuccess:NO];
+                     [self.navigationController setToolbarHidden:NO animated:YES];
+                     UIBarButtonItem *button = [self.toolbarItems lastObject];
+                     button.title = NSLocalizedString(@"retry_upload", @"Retry upload");
                  }
              }];
+    
+    [self.uploadProgressView.cancelButton addTarget:self
+                                             action:@selector(cancel)
+                                   forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (IBAction)cancel;
 {
-    // TODO: Cancel
     NSLog(@"canceling ...");
     self.completionHandler(YES, nil);
 }
