@@ -28,6 +28,8 @@
 #import "SCSoundCloud+Private.h"
 #import "SCConstants.h"
 
+NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControllerCancelNotification";
+
 @interface SCLoginTitleBar: UIView {
 }
 @end
@@ -40,18 +42,14 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithURL:(NSURL *)anURL dismissHandler:(SCLoginViewControllerDismissHandler)aDismissHandler;
+- (id)initWithURL:(NSURL *)anURL;
 {
-    self = [self initWithURL:anURL authentication:nil];
-    if (self) {
-        dismissHandler = [aDismissHandler copy];
-    }
-    return self;
+    return [self initWithURL:anURL authentication:nil];
 }
 
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)anAuthentication;
 {
-    if (!anURL) return nil;
+//    if (!anURL) return nil;
     
     self = [super init];
     if (self) {
@@ -84,7 +82,6 @@
     [activityIndicator release];
     [URL release];
     [webView release];
-    [dismissHandler release];
     [super dealloc];
 }
 
@@ -105,6 +102,24 @@
 - (void)viewDidLoad;
 {
     [super viewDidLoad];
+    
+    
+    // Navigation Bar
+    self.navigationController.navigationBarHidden = YES;
+    
+    // Toolbar
+    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
+    self.navigationController.toolbarHidden = NO;
+    
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:1];
+    
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", @"Cancel")
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self
+                                                             action:@selector(cancel)] autorelease]];
+    
+    [self setToolbarItems:toolbarItems];
+    
     
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     
@@ -154,14 +169,16 @@
 	activityIndicator.hidesWhenStopped = YES;
 	[self.view addSubview:activityIndicator];
     
-    NSURL *URLToOpen = [NSURL URLWithString:[[URL absoluteString] stringByAppendingString:@"&display_bar=false"]];
-    
     webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     webView.backgroundColor = nil;
     webView.opaque = NO;
     webView.delegate = self;
-    [webView loadRequest:[NSURLRequest requestWithURL:URLToOpen]];
+
+    if (URL) {
+        NSURL *URLToOpen = [NSURL URLWithString:[[URL absoluteString] stringByAppendingString:@"&display_bar=false"]];
+        [webView loadRequest:[NSURLRequest requestWithURL:URLToOpen]];
+    }
     [self.view addSubview:webView];
     
     [self updateInterface];
@@ -216,8 +233,6 @@
     if (![request.URL isEqual:URL]) {
 		BOOL hasBeenHandled = NO;
         
-        
-        
         NSURL *callbackURL = nil;
         if (authentication) {
             callbackURL = authentication.configuration.redirectURL;
@@ -233,7 +248,6 @@
                 hasBeenHandled = [SCSoundCloud handleRedirectURL:request.URL];
             }
             
-
             if (hasBeenHandled) {
                 [self close];
             }
@@ -258,15 +272,17 @@
 
 #pragma mark Private
 
+- (IBAction)cancel;
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCLoginViewControllerCancelNotification object:self];
+}
+
 - (IBAction)close;
 {
-    // Use either the authentication delegate if present
-    // or the shared sound cloud singleton (SCSoundCloud).
-    
     if (authentication) {
         [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
     } else {
-        dismissHandler();
+        [self.parentViewController dismissModalViewControllerAnimated:YES];
     }
 }
 

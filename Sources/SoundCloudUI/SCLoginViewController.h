@@ -23,7 +23,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void(^SCLoginViewControllerDismissHandler)(void);
+#pragma mark Notifications
+
+extern NSString * const SCLoginViewControllerCancelNotification;
+
 
 @class SCSoundCloudAPIAuthentication;
 
@@ -37,12 +40,10 @@ typedef void(^SCLoginViewControllerDismissHandler)(void);
 	
 	UIButton *titleBarButton;
 	BOOL showReloadButton;
-    
-    SCLoginViewControllerDismissHandler dismissHandler;
 }
 
+- (id)initWithURL:(NSURL *)anURL;
 - (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;
-- (id)initWithURL:(NSURL *)anURL dismissHandler:(SCLoginViewControllerDismissHandler)aDismissHandler;
 
 /*
  * Replaces the close ('X') button in the top bar with a reload button
@@ -52,6 +53,7 @@ typedef void(^SCLoginViewControllerDismissHandler)(void);
 
 - (void)updateInterface;
 
+- (IBAction)cancel;
 - (IBAction)close;
 - (IBAction)reload;
 

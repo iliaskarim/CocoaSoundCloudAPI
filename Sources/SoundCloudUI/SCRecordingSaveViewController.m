@@ -167,8 +167,6 @@ const NSArray *allServices = nil;
         self.locationTitle = nil;
         self.foursquareID = nil;
         
-        
-        
         self.coverImage = nil;
         self.title = nil;
         
@@ -182,6 +180,11 @@ const NSArray *allServices = nil;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didFailToRequestAccess:)
                                                      name:SCSoundCloudDidFailToRequestAccessNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(cancel)
+                                                     name:SCLoginViewControllerCancelNotification
                                                    object:nil];
     }
     return self;
@@ -230,10 +233,6 @@ const NSArray *allServices = nil;
 
 - (void)setAccount:(SCAccount *)anAccount;
 {   
-    if (anAccount == nil) {
-        [SCSoundCloud requestAccess];
-    }
-    
     if (account != anAccount) {
         [account release];
         [anAccount retain];
@@ -333,6 +332,7 @@ const NSArray *allServices = nil;
     [tableView reloadData];
 }
 
+
 #pragma mark Foursquare
 
 - (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
@@ -411,7 +411,6 @@ const NSArray *allServices = nil;
     tableView.frame = newTableViewFrame;
     
     tableView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
-    
     [self updateInterface];
 }
 
@@ -419,18 +418,21 @@ const NSArray *allServices = nil;
 {
     [super viewWillAppear:animated];
     
+    self.account = [SCSoundCloud account];
+    
     self.navigationController.navigationBarHidden = YES;
     
     [tableView reloadData];
-    
-    self.headerView.whatTextField.text = self.title;
-    self.headerView.whereTextField.text = self.locationTitle;
+    [self updateInterface];
 }
 
 - (void)viewDidAppear:(BOOL)animated;
 {
     [super viewDidAppear:animated];
-    self.account = [SCSoundCloud account];
+    
+    if (!self.account) {
+        [self logout];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated;
@@ -1024,6 +1026,10 @@ const NSArray *allServices = nil;
     NSLog(@"Logging out ...");
     [SCSoundCloud removeAccess];
     self.account = nil;
+    [SCSoundCloud requestAccessWithPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
+        SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:preparedURL authentication:nil] autorelease];
+        [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:loginViewController] autorelease] animated:YES];
+    }];
 }
 
 #pragma mark Notification Handling

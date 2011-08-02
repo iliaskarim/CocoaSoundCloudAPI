@@ -16,8 +16,6 @@
 typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSDictionary *trackInfo);
 
 @class SCSwitch;
-@class SCAccount;
-
 
 @interface SCRecordingSaveViewController : UIViewController <UITableViewDelegate,
                                                              UITableViewDataSource,

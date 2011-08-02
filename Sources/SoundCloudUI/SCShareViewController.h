@@ -23,7 +23,6 @@
 typedef void(^SCSharingViewControllerComletionHandler)(BOOL canceled, NSDictionary *trackInfo);
 
 @class CLLocation;
-//@class SCAccount;
 
 @interface SCShareViewController : UINavigationController
 
@@ -34,7 +33,6 @@ typedef void(^SCSharingViewControllerComletionHandler)(BOOL canceled, NSDictiona
 
 #pragma mark Accessors
 
-//- (void)setAccount:(SCAccount *)anAccount;
 - (void)setPrivate:(BOOL)isPrivate;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setTitle:(NSString *)aTitle;

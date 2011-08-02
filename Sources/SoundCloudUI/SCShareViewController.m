@@ -70,11 +70,6 @@
 
 #pragma mark Accessors
 
-//- (void)setAccount:(SCAccount *)anAccount;
-//{
-//    [self.recordSaveController setAccount:anAccount];
-//}
-
 - (void)setPrivate:(BOOL)isPrivate;
 {
     [self.recordSaveController setPrivate:isPrivate];
