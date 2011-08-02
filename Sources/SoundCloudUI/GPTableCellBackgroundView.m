@@ -27,6 +27,7 @@
 - (void)dealloc;
 {
 	[borderColor release];
+    [backgroundColor release];
 	[super dealloc];
 }
 
@@ -34,6 +35,17 @@
 #pragma mark Accessors
 
 @synthesize borderColor, position;
+
+- (void)setBackgroundColor:(UIColor *)aBackgroundColor;
+{
+    if (backgroundColor != aBackgroundColor) {
+        [backgroundColor release];
+        [aBackgroundColor retain];
+        backgroundColor = aBackgroundColor;
+        [super setBackgroundColor:[UIColor clearColor]];
+    }
+}
+
 
 #pragma mark UIView
 
@@ -90,7 +102,7 @@
     
 
     CGContextAddPath(context, path);
-    CGContextSetFillColorWithColor(context, [self.backgroundColor CGColor]);
+    CGContextSetFillColorWithColor(context, [backgroundColor CGColor]);
     CGContextFillPath(context);
     
     CGContextAddPath(context, path);

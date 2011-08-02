@@ -373,9 +373,6 @@ const NSArray *allServices = nil;
     
     [self setToolbarItems:toolbarItems];
     
-    // Background
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
-    
     // Banner
     [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
     
@@ -410,7 +407,11 @@ const NSArray *allServices = nil;
     newTableViewFrame.size.height -= newTableViewFrame.origin.y;
     tableView.frame = newTableViewFrame;
     
-    tableView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    // Background
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    tableView.backgroundColor = [UIColor clearColor];
+    tableView.opaque = NO;
+    
     [self updateInterface];
 }
 
@@ -478,14 +479,15 @@ const NSArray *allServices = nil;
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
             GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
-            backgroundView.backgroundColor = aTableView.backgroundColor;
-            backgroundView.borderColor = [UIColor colorWithWhite:0.27 alpha:1.0];
+            backgroundView.opaque = NO;
+            backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+            backgroundView.borderColor = [UIColor blackColor];
             cell.backgroundView = backgroundView;
-            cell.textLabel.backgroundColor = aTableView.backgroundColor;
+            cell.textLabel.backgroundColor = [UIColor clearColor];
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
             cell.textLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
             cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-            cell.detailTextLabel.backgroundColor = aTableView.backgroundColor;
+            cell.detailTextLabel.backgroundColor = [UIColor clearColor];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -508,11 +510,13 @@ const NSArray *allServices = nil;
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.opaque = NO;
                 GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
-                backgroundView.backgroundColor = aTableView.backgroundColor;
-                backgroundView.borderColor = [UIColor colorWithWhite:0.27 alpha:1.0];
+                backgroundView.opaque = NO;
+                backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+                backgroundView.borderColor = [UIColor blackColor];
                 cell.backgroundView = backgroundView;
-                cell.textLabel.backgroundColor = aTableView.backgroundColor;
+                cell.textLabel.backgroundColor = [UIColor clearColor];
                 cell.textLabel.font = [UIFont systemFontOfSize:16.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
             }
@@ -550,16 +554,17 @@ const NSArray *allServices = nil;
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
-                backgroundView.backgroundColor = aTableView.backgroundColor;
-                backgroundView.borderColor = [UIColor colorWithWhite:0.27 alpha:1.0];
+                backgroundView.opaque = NO;
+                backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+                backgroundView.borderColor = [UIColor blackColor];
                 cell.backgroundView = backgroundView;
-                cell.textLabel.backgroundColor = aTableView.backgroundColor;
+                cell.textLabel.backgroundColor = [UIColor clearColor];
                 cell.textLabel.font = [UIFont systemFontOfSize:16.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
                 cell.accessoryView = [[UIImageView alloc] initWithImage:[SCBundle imageFromPNGWithName:@"DisclosureIndicator"]];
                 cell.detailTextLabel.text = NSLocalizedString(@"configure", @"Configure");
                 cell.detailTextLabel.textColor = [UIColor whiteColor];
-                cell.detailTextLabel.backgroundColor = aTableView.backgroundColor;
+                cell.detailTextLabel.backgroundColor = [UIColor clearColor];
             }
             
             NSDictionary *service = [unconnectedServices objectAtIndex:indexPath.row - availableConnections.count];
@@ -580,10 +585,10 @@ const NSArray *allServices = nil;
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section;
 {
     UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)] autorelease];
-    sectionHeaderView.backgroundColor = aTableView.backgroundColor;
+    sectionHeaderView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    label.backgroundColor = aTableView.backgroundColor;
+    label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
     label.font = [UIFont systemFontOfSize:15.0];
     label.text = [self tableView:aTableView titleForHeaderInSection:section];
@@ -616,10 +621,10 @@ const NSArray *allServices = nil;
         return nil;
     } else {
         UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)] autorelease];
-        footerView.backgroundColor = aTableView.backgroundColor;
+        footerView.backgroundColor = [UIColor clearColor];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, 10.0, 0.0)];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        label.backgroundColor = aTableView.backgroundColor;
+        label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
         label.font = [UIFont systemFontOfSize:13.0];
         label.text = [self tableView:aTableView titleForFooterInSection:section];

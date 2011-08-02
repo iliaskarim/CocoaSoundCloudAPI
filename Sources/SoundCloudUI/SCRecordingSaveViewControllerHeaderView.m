@@ -72,11 +72,8 @@
 
 - (void)commonAwake;
 {
-    CGRect bounds = self.bounds;
-    bounds.size.height = 200;
-    self.bounds = bounds;
-    
-    self.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+
+    self.backgroundColor = [UIColor clearColor]; 
     
     // Horizontal Lines
     self.firstHR = [[[SCHorizontalLineView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -86,8 +83,6 @@
     
     // Avatar Image
     self.avatarImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-//    self.avatarImageView.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
-//    self.avatarImageView.center = CGPointMake(20, 20);
     [self addSubview:self.avatarImageView];
 
     // User Name
@@ -262,7 +257,7 @@
     
     self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + SPACING, CGRectGetWidth(self.bounds), 3);
     
-    self.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetMaxY(self.secondHR.frame) + SPACING);
+    self.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetMaxY(self.secondHR.frame));
     
     [self setNeedsDisplay];
 }
