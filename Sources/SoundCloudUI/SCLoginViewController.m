@@ -248,9 +248,9 @@ NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControll
                 hasBeenHandled = [SCSoundCloud handleRedirectURL:request.URL];
             }
             
-            if (hasBeenHandled) {
-                [self close];
-            }
+//            if (hasBeenHandled) {
+//                [self close];
+//            }
             return NO;
         }
 	}

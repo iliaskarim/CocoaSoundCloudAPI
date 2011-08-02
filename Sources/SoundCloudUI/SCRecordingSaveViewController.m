@@ -1038,6 +1038,9 @@ const NSArray *allServices = nil;
 {
 //    NSLog(@"%s", __FUNCTION__);
     self.account = [SCSoundCloud account];
+    if (self.account && self.modalViewController){
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
