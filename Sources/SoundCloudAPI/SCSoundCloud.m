@@ -69,8 +69,6 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
                                                                                                       object:nil
                                                                                                        queue:nil
                                                                                                   usingBlock:^(NSNotification *notification){
-                                                                                                      [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudAccountsDidChangeNotification 
-                                                                                                                                                          object:self];
                                                                                                       [[NSNotificationCenter defaultCenter] postNotificationName:SCSoundCloudAccountDidChangeNotification
                                                                                                                                                           object:self];
                                                                                                   }];
@@ -110,7 +108,7 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
 @synthesize accountDidFailToGetAccessTokenObserver;
 
 + (SCAccount *)account;
-{
+{    
     NSArray *oauthAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAccountType];
     if ([oauthAccounts count] > 0) {
         return [[[SCAccount alloc] initWithOAuthAccount:[oauthAccounts objectAtIndex:0]] autorelease];
@@ -119,42 +117,23 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
     }
 }
 
-+ (NSArray *)accounts;
-{
-    NSMutableArray *result = [NSMutableArray array];
-    NSArray *oauthAccounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAccountType];
-    for (NXOAuth2Account *oauthAccount in oauthAccounts) {
-        SCAccount *account = [[SCAccount alloc] initWithOAuthAccount:oauthAccount];
-        [result addObject:account];
-        [account release];
-    }
-    return result;
-}
-
-+ (SCAccount *)accountWithIdentifier:(NSString *)identifier;
-{
-    NXOAuth2Account *oauthAccount = [[NXOAuth2AccountStore sharedStore] accountWithIdentifier:identifier];
-    SCAccount *account = [[SCAccount alloc] initWithOAuthAccount:oauthAccount];
-    return [account autorelease];
-}
-
 
 #pragma mark Manage Accounts
 
-+ (void)requestAccess;
++ (void)requestAccessWithPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)aPreparedAuthorizationURLHandler;
 {
-    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType];
+    [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:kSCAccountType
+                                   withPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)aPreparedAuthorizationURLHandler];
 }
 
 + (void)removeAccess;
 {
-    [[NXOAuth2AccountStore sharedStore] removeAccount:[self.account oauthAccount]];
+    NSArray *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:kSCAccountType];
+    for (NXOAuth2Account *account in accounts) {
+        [[NXOAuth2AccountStore sharedStore] removeAccount:account];        
+    }
 }
 
-+ (void)removeAccount:(SCAccount *)account;
-{
-    [[NXOAuth2AccountStore sharedStore] removeAccount:account.oauthAccount];
-}
 
 #pragma mark Configuration
 
@@ -173,19 +152,6 @@ NSString * const SCSoundCloudDidFailToRequestAccessNotification = @"SCSoundCloud
     [config setObject:[NSURL URLWithString:kSCSoundCloudAPIURL] forKey:kSCConfigurationAPIURL];
     
     [[NXOAuth2AccountStore sharedStore] setConfiguration:config forAccountType:kSCAccountType];
-}
-
-
-#pragma mark Prepared Authorization URL Handler
-
-+ (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
-{
-    [[NXOAuth2AccountStore sharedStore] setPreparedAuthorizationURLHandlerForAccountType:kSCAccountType block:handler];
-}
-
-+ (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
-{
-    return [[NXOAuth2AccountStore sharedStore] preparedAuthorizationURLHandlerForAccountType:kSCAccountType];
 }
 
 

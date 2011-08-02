@@ -60,9 +60,6 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
 @property (nonatomic, readwrite, retain) NSURL *resource;
 @property (nonatomic, readwrite, retain) NSDictionary *parameters;
 
-@property (nonatomic, copy) SCRequestResponseHandler responseHandler;
-@property (nonatomic, copy) SCRequestSendingProgressHandler sendProgressHandler;
-
 
 #pragma mark Signed NSURLRequest
 
@@ -70,7 +67,8 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
 
 #pragma mark Perform Request
 
-- (void)performRequest;
+- (void)performRequestWithSendingProgressHandler:(SCRequestSendingProgressHandler)aSendingProgressHandler
+                                 responseHandler:(SCRequestResponseHandler)aResponseHandler;
 
 #pragma Cancel Request
 
