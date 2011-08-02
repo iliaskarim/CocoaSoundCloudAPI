@@ -21,26 +21,17 @@
 }
 
 - (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-    
+{    
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 1.0);
+    
+    CGRect top, bottom;
+    CGRectDivide(self.bounds, &top, &bottom, CGRectGetHeight(self.bounds) / 2, CGRectMinYEdge);
     
     [[UIColor blackColor] set];
-    
-    CGPoint blackLine[] = {
-        CGPointMake(0, 1),
-        CGPointMake(self.bounds.size.width, 1)
-    };
-    CGContextStrokeLineSegments(context, blackLine, 2);
+    CGContextFillRect(context, top);
     
     [[UIColor colorWithWhite:1 alpha:0.05] set];
-    CGPoint shadowLine[] = {
-        CGPointMake(0, 2),
-        CGPointMake(self.bounds.size.width, 2)
-    };
-    CGContextStrokeLineSegments(context, shadowLine, 2);
+    CGContextFillRect(context, bottom);
 }
 
 @end

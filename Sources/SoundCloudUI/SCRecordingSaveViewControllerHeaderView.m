@@ -10,7 +10,6 @@
 #import "UIImage_GPKit.h"
 
 #import "SCHorizontalLineView.h"
-#import "SCHorizontalSeparatorView.h"
 #import "SCUnderlinedButton.h"
 #import "SCCoverImageButton.h"
 #import "SCSwitch.h"
@@ -23,7 +22,7 @@
 #define TEXTBOX_TOP 9.0 + 55.0
 #define TEXTBOX_HEIGHT 84.0
 
-#define SPACING 10.0
+#define SPACING 9.0
 
 #define COVER_IMAGE_CENTER_X 50 
 #define COVER_IMAGE_CENTER_Y 95
@@ -40,7 +39,7 @@
 @property (nonatomic, readwrite, assign) UIImageView *avatarImageView;
 @property (nonatomic, readwrite, assign) UILabel *userNameLabel;
 @property (nonatomic, readwrite, assign) UIButton *logoutButton;
-@property (nonatomic, readwrite, assign) SCHorizontalSeparatorView *logoutSeparator;
+@property (nonatomic, readwrite, assign) UIView *logoutSeparator;
 @property (nonatomic, readwrite, assign) UIButton *coverImageButton;
 @property (nonatomic, readwrite, assign) UITextField *whatTextField;
 @property (nonatomic, readwrite, assign) UITextField *whereTextField;
@@ -72,7 +71,6 @@
 
 - (void)commonAwake;
 {
-
     self.backgroundColor = [UIColor clearColor]; 
     
     // Horizontal Lines
@@ -93,7 +91,8 @@
     [self addSubview:self.userNameLabel];
 
     // Separator
-    self.logoutSeparator = [[SCHorizontalSeparatorView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.logoutSeparator =  [[[UIView alloc] init] autorelease];
+    self.logoutSeparator.backgroundColor = [UIColor blackColor];
     [self addSubview:self.logoutSeparator];
     
     // Logout Button
@@ -197,7 +196,7 @@
 
 - (CGRect)textRect;
 {
-    CGRect textRect = CGRectInset(self.coverImageButton.frame, 1, 1);
+    CGRect textRect = self.coverImageButton.frame;
     
     textRect.origin.x = CGRectGetMaxX(textRect) + SPACING;
     textRect.size.width = CGRectGetWidth(self.bounds) - SPACING - textRect.origin.x;
@@ -230,7 +229,7 @@
     
     self.logoutSeparator.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + SPACING,
                                             CGRectGetMidY(self.userNameLabel.frame) - fontSize.height / 2,
-                                            1,
+                                            1.0 / [[UIScreen mainScreen] scale],
                                             fontSize.height);
     
     CGRect logoutButtonFrame;
@@ -238,9 +237,10 @@
     logoutButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.logoutSeparator.frame) + SPACING, SPACING);
     self.logoutButton.frame = logoutButtonFrame;
     
-    self.firstHR.frame = CGRectMake(0, CGRectGetMaxY(self.avatarImageView.frame) + SPACING, CGRectGetWidth(self.bounds), 3);
+    self.firstHR.frame = CGRectMake(0, CGRectGetMaxY(self.avatarImageView.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0 / [[UIScreen mainScreen] scale]);
     
     self.coverImageButton.frame = CGRectMake(SPACING, CGRectGetMaxY(self.firstHR.frame) + SPACING, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
+    NSLog(@"cover image frame: %@ (%@)", NSStringFromCGRect(self.coverImageButton.frame),  NSStringFromCGRect([self convertRect:self.coverImageButton.frame toView:self.window]));
     
     CGRect whatTextFieldFrame;
     CGRect whereTextFieldFrame;
@@ -255,7 +255,7 @@
     
     self.privateSwitch.frame = CGRectMake(SPACING, CGRectGetMaxY(self.coverImageButton.frame) + SPACING, CGRectGetWidth(self.bounds) - 2 * SPACING, 30);
     
-    self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + SPACING, CGRectGetWidth(self.bounds), 3);
+    self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0 / [[UIScreen mainScreen] scale]);
     
     self.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetMaxY(self.secondHR.frame));
     
@@ -275,10 +275,10 @@
     
     CGRect textRect = self.textRect;
     
-    GP_CGContextAddRoundedRect(context, textRect, 7.0);
+    GP_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
     CGContextFillPath(context);
     
-    GP_CGContextAddRoundedRect(context, textRect, 7.0);
+    GP_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
     CGContextMoveToPoint(context, CGRectGetMinX(textRect), CGRectGetMidY(textRect)+0.5);
     CGContextAddLineToPoint(context, CGRectGetMaxX(textRect), CGRectGetMidY(textRect)+0.5);
     CGContextStrokePath(context);

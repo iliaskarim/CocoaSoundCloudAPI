@@ -121,8 +121,6 @@
 		F66BAD2E13D97FAB00996800 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BAD2D13D97FAB00996800 /* CoreLocation.framework */; };
 		F6900ED013E18FB900B4720B /* SCHorizontalLineView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900ECE13E18FB900B4720B /* SCHorizontalLineView.h */; };
 		F6900ED113E18FB900B4720B /* SCHorizontalLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900ECF13E18FB900B4720B /* SCHorizontalLineView.m */; };
-		F6900ED513E19A2D00B4720B /* SCHorizontalSeparatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900ED313E19A2D00B4720B /* SCHorizontalSeparatorView.h */; };
-		F6900ED613E19A2D00B4720B /* SCHorizontalSeparatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900ED413E19A2D00B4720B /* SCHorizontalSeparatorView.m */; };
 		F6900ED913E19FB700B4720B /* SCUnderlinedButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900ED713E19FB700B4720B /* SCUnderlinedButton.h */; };
 		F6900EDA13E19FB700B4720B /* SCUnderlinedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */; };
 		F6900EDD13E1B3CB00B4720B /* SCCoverImageButton.h in Headers */ = {isa = PBXBuildFile; fileRef = F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */; };
@@ -278,8 +276,6 @@
 		F66BAD2D13D97FAB00996800 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		F6900ECE13E18FB900B4720B /* SCHorizontalLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCHorizontalLineView.h; path = Sources/SoundCloudUI/SCHorizontalLineView.h; sourceTree = SOURCE_ROOT; };
 		F6900ECF13E18FB900B4720B /* SCHorizontalLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCHorizontalLineView.m; path = Sources/SoundCloudUI/SCHorizontalLineView.m; sourceTree = SOURCE_ROOT; };
-		F6900ED313E19A2D00B4720B /* SCHorizontalSeparatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCHorizontalSeparatorView.h; path = Sources/SoundCloudUI/SCHorizontalSeparatorView.h; sourceTree = SOURCE_ROOT; };
-		F6900ED413E19A2D00B4720B /* SCHorizontalSeparatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCHorizontalSeparatorView.m; path = Sources/SoundCloudUI/SCHorizontalSeparatorView.m; sourceTree = SOURCE_ROOT; };
 		F6900ED713E19FB700B4720B /* SCUnderlinedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCUnderlinedButton.h; path = Sources/SoundCloudUI/SCUnderlinedButton.h; sourceTree = SOURCE_ROOT; };
 		F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCUnderlinedButton.m; path = Sources/SoundCloudUI/SCUnderlinedButton.m; sourceTree = SOURCE_ROOT; };
 		F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCCoverImageButton.h; path = Sources/SoundCloudUI/SCCoverImageButton.h; sourceTree = SOURCE_ROOT; };
@@ -478,8 +474,6 @@
 				F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */,
 				F6900ECE13E18FB900B4720B /* SCHorizontalLineView.h */,
 				F6900ECF13E18FB900B4720B /* SCHorizontalLineView.m */,
-				F6900ED313E19A2D00B4720B /* SCHorizontalSeparatorView.h */,
-				F6900ED413E19A2D00B4720B /* SCHorizontalSeparatorView.m */,
 				F6900ED713E19FB700B4720B /* SCUnderlinedButton.h */,
 				F6900ED813E19FB700B4720B /* SCUnderlinedButton.m */,
 				F6900EDB13E1B3CA00B4720B /* SCCoverImageButton.h */,
@@ -716,7 +710,6 @@
 				F60627F813E066D3004A7E4E /* SCBundle.h in Headers */,
 				F665F1A913E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.h in Headers */,
 				F6900ED013E18FB900B4720B /* SCHorizontalLineView.h in Headers */,
-				F6900ED513E19A2D00B4720B /* SCHorizontalSeparatorView.h in Headers */,
 				F6900ED913E19FB700B4720B /* SCUnderlinedButton.h in Headers */,
 				F6900EDD13E1B3CB00B4720B /* SCCoverImageButton.h in Headers */,
 				F658144713E2EBB000708EF5 /* SCRecordingUploadProgressView.h in Headers */,
@@ -896,7 +889,6 @@
 				F60627F913E066D3004A7E4E /* SCBundle.m in Sources */,
 				F665F1AA13E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.m in Sources */,
 				F6900ED113E18FB900B4720B /* SCHorizontalLineView.m in Sources */,
-				F6900ED613E19A2D00B4720B /* SCHorizontalSeparatorView.m in Sources */,
 				F6900EDA13E19FB700B4720B /* SCUnderlinedButton.m in Sources */,
 				F6900EDE13E1B3CB00B4720B /* SCCoverImageButton.m in Sources */,
 				F658144813E2EBB000708EF5 /* SCRecordingUploadProgressView.m in Sources */,

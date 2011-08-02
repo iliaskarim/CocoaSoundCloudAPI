@@ -34,9 +34,9 @@
     [[UIColor colorWithWhite:0 alpha:0.2] setFill];
     
     CGContextSetLineWidth(context, 1.0);
-    GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 1, 1), 7.0);
+    GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);
     CGContextStrokePath(context);
-    GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 1, 1), 7.0);
+    GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);
     CGContextFillPath(context);
 }
 
