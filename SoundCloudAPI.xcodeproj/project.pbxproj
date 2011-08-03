@@ -127,8 +127,6 @@
 		F6900EDE13E1B3CB00B4720B /* SCCoverImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F6900EDC13E1B3CB00B4720B /* SCCoverImageButton.m */; };
 		F6A9853213D98C9B000AC828 /* SCNameAndEmailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A9853013D98C9B000AC828 /* SCNameAndEmailCell.h */; };
 		F6A9853313D98C9B000AC828 /* SCNameAndEmailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A9853113D98C9B000AC828 /* SCNameAndEmailCell.m */; };
-		F6A9853713D98CB3000AC828 /* SCCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A9853513D98CB3000AC828 /* SCCell.h */; };
-		F6A9853813D98CB3000AC828 /* SCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A9853613D98CB3000AC828 /* SCCell.m */; };
 		F6A9853E13D98D23000AC828 /* SCAppIsRunningOnIPad.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A9853D13D98D23000AC828 /* SCAppIsRunningOnIPad.m */; };
 		F6A9854013D98D34000AC828 /* SCAppIsRunningOnIPad.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A9853F13D98D34000AC828 /* SCAppIsRunningOnIPad.h */; };
 		F6A9854413D9A23A000AC828 /* SCAddConnectionViewControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F6A9854113D9A239000AC828 /* SCAddConnectionViewControllerDelegate.h */; };
@@ -282,8 +280,6 @@
 		F6900EDC13E1B3CB00B4720B /* SCCoverImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCCoverImageButton.m; path = Sources/SoundCloudUI/SCCoverImageButton.m; sourceTree = SOURCE_ROOT; };
 		F6A9853013D98C9B000AC828 /* SCNameAndEmailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCNameAndEmailCell.h; path = ../SoundCloudUI/SCNameAndEmailCell.h; sourceTree = "<group>"; };
 		F6A9853113D98C9B000AC828 /* SCNameAndEmailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCNameAndEmailCell.m; path = ../SoundCloudUI/SCNameAndEmailCell.m; sourceTree = "<group>"; };
-		F6A9853513D98CB3000AC828 /* SCCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCCell.h; path = ../SoundCloudUI/SCCell.h; sourceTree = "<group>"; };
-		F6A9853613D98CB3000AC828 /* SCCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCCell.m; path = ../SoundCloudUI/SCCell.m; sourceTree = "<group>"; };
 		F6A9853D13D98D23000AC828 /* SCAppIsRunningOnIPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCAppIsRunningOnIPad.m; path = ../SoundCloudUI/SCAppIsRunningOnIPad.m; sourceTree = "<group>"; };
 		F6A9853F13D98D34000AC828 /* SCAppIsRunningOnIPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAppIsRunningOnIPad.h; path = ../SoundCloudUI/SCAppIsRunningOnIPad.h; sourceTree = "<group>"; };
 		F6A9854113D9A239000AC828 /* SCAddConnectionViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAddConnectionViewControllerDelegate.h; path = ../SoundCloudUI/SCAddConnectionViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -525,8 +521,6 @@
 			children = (
 				F6E60D3A13DD9F0900A85727 /* SCSwitch.h */,
 				F6E60D3B13DD9F0900A85727 /* SCSwitch.m */,
-				F6A9853513D98CB3000AC828 /* SCCell.h */,
-				F6A9853613D98CB3000AC828 /* SCCell.m */,
 				F6A9853013D98C9B000AC828 /* SCNameAndEmailCell.h */,
 				F6A9853113D98C9B000AC828 /* SCNameAndEmailCell.m */,
 				F66BAD0A13D9739400996800 /* SCURLStringValueTransformer.h */,
@@ -696,7 +690,6 @@
 				F623D36613D98C2500379D3C /* SCSharingMailPickerController.h in Headers */,
 				F623D36B13D98C4E00379D3C /* GPCellLoader.h in Headers */,
 				F6A9853213D98C9B000AC828 /* SCNameAndEmailCell.h in Headers */,
-				F6A9853713D98CB3000AC828 /* SCCell.h in Headers */,
 				F6A9854013D98D34000AC828 /* SCAppIsRunningOnIPad.h in Headers */,
 				F6A9854413D9A23A000AC828 /* SCAddConnectionViewControllerDelegate.h in Headers */,
 				F6A9854513D9A23A000AC828 /* SCAddConnectionViewController.h in Headers */,
@@ -877,7 +870,6 @@
 				F623D36713D98C2500379D3C /* SCSharingMailPickerController.m in Sources */,
 				F623D36C13D98C4E00379D3C /* GPCellLoader.m in Sources */,
 				F6A9853313D98C9B000AC828 /* SCNameAndEmailCell.m in Sources */,
-				F6A9853813D98CB3000AC828 /* SCCell.m in Sources */,
 				F6A9853E13D98D23000AC828 /* SCAppIsRunningOnIPad.m in Sources */,
 				F6A9854613D9A23A000AC828 /* SCAddConnectionViewController.m in Sources */,
 				F6E60D3313DD653100A85727 /* SCShareViewController.m in Sources */,

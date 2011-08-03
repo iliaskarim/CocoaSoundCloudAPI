@@ -161,7 +161,7 @@
 																			CGRectGetMinX(inputRect),
 																			CGRectGetWidth(inputRect),
 																			56)] autorelease];
-	inputBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"mailInputBackground.png"]];
+	inputBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"mailInputBackground"]];
 	inputBackgroundView.opaque = NO;
 	[inputView addSubview:inputBackgroundView];
 	
@@ -410,15 +410,20 @@
 {
 	return autocompleteData.count;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return 44.0;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
 	NSString *reuseIdentifier = @"NameAndEmailCell";
 	SCNameAndEmailCell *cell = (SCNameAndEmailCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 	if (!cell) {
-		GPCellLoader *cellLoader = [[GPCellLoader alloc] initWithNibNamed:@"NameAndEmailCell"];
-		cell = (SCNameAndEmailCell *)cellLoader.cell;
-		[cellLoader release];
+        cell = [[[SCNameAndEmailCell alloc] init] autorelease];
+//		GPCellLoader *cellLoader = [[GPCellLoader alloc] initWithNibNamed:@"NameAndEmailCell"];
+//		cell = (SCNameAndEmailCell *)cellLoader.cell;
+//		[cellLoader release];
 	}
 	NSDictionary *personData = [autocompleteData objectAtIndex:indexPath.row];
 	cell.name = [personData objectForKey:@"name"];
