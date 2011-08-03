@@ -51,6 +51,7 @@
 @property (nonatomic, assign) BOOL isPrivate;
 @property (nonatomic, retain) UIImage *coverImage;
 @property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSDate *trackCreationDate;
 
 @property (nonatomic, retain) CLLocation *location;
 @property (nonatomic, copy) NSString *locationTitle;
@@ -84,6 +85,11 @@
 #pragma mark Notification Handling
 - (void)accountDidChange:(NSNotification *)aNotification;
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
+
+#pragma mark Helpers
+- (NSString *)generatedTitle;
+- (NSString *)generatedSharingNote;
+- (NSString *)dateString;
 @end
 
 
@@ -104,19 +110,19 @@ const NSArray *allServices = nil;
 															 nil]];
     allServices = [[NSArray alloc] initWithObjects:
                    [NSDictionary dictionaryWithObjectsAndKeys:
-                    NSLocalizedString(@"service_twitter", @"Twitter"), @"displayName",
+                    SCLocalizedString(@"service_twitter", @"Twitter"), @"displayName",
                     @"twitter", @"service",
                     nil],
                    [NSDictionary dictionaryWithObjectsAndKeys:
-                    NSLocalizedString(@"service_facebook", @"Facebook"), @"displayName",
+                    SCLocalizedString(@"service_facebook", @"Facebook"), @"displayName",
                     @"facebook_profile", @"service",
                     nil],
                    [NSDictionary dictionaryWithObjectsAndKeys:
-                    NSLocalizedString(@"service_tumblr", @"Tumblr"), @"displayName",
+                    SCLocalizedString(@"service_tumblr", @"Tumblr"), @"displayName",
                     @"tumblr", @"service",
                     nil],
                    [NSDictionary dictionaryWithObjectsAndKeys:
-                    NSLocalizedString(@"service_foursquare", @"Foursquare"), @"displayName",
+                    SCLocalizedString(@"service_foursquare", @"Foursquare"), @"displayName",
                     @"foursquare", @"service",
                     nil],
                    nil];
@@ -132,6 +138,7 @@ const NSArray *allServices = nil;
 @synthesize isPrivate;
 @synthesize coverImage;
 @synthesize title;
+@synthesize trackCreationDate;
 @synthesize location;
 @synthesize locationTitle;
 @synthesize foursquareID;
@@ -149,7 +156,7 @@ const NSArray *allServices = nil;
     if ((self = [super initWithNibName:@"RecordingSave" bundle:nil])) {
         
         self.hidesBottomBarWhenPushed = YES;
-        self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"navigation_back", @"Back")
+        self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"navigation_back", @"Back")
                                                                                   style:UIBarButtonItemStyleBordered
                                                                                  target:nil
                                                                                  action:nil] autorelease];
@@ -169,6 +176,8 @@ const NSArray *allServices = nil;
         
         self.coverImage = nil;
         self.title = nil;
+        
+        self.trackCreationDate = [NSDate date];
         
         self.completionHandler = nil;
         
@@ -201,6 +210,7 @@ const NSArray *allServices = nil;
     [account release];
     [coverImage release];
     [title release];
+    [trackCreationDate release];
     [location release];
     [locationTitle release];
     [foursquareID release];
@@ -310,6 +320,10 @@ const NSArray *allServices = nil;
     }
 }
 
+- (void)setCreationDate:(NSURL *)aCreationDate;
+{
+}
+
 - (void)setAvailableConnections:(NSArray *)value;
 {
     [value retain]; [availableConnections release]; availableConnections = value;
@@ -359,14 +373,14 @@ const NSArray *allServices = nil;
     
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", @"Cancel")
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
                                                               style:UIBarButtonItemStyleBordered
                                                              target:self
                                                              action:@selector(cancel)] autorelease]];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"upload_and_share", @"Upload & Share")
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
                                                               style:UIBarButtonItemStyleBordered
                                                              target:self
                                                              action:@selector(upload)] autorelease]];
@@ -493,9 +507,9 @@ const NSArray *allServices = nil;
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
         }
                 
-        cell.textLabel.text = NSLocalizedString(@"sc_upload_with_access", @"With access");
+        cell.textLabel.text = SCLocalizedString(@"sc_upload_with_access", @"With access");
         if (self.sharingMailAddresses.count == 0) {
-            cell.detailTextLabel.text = NSLocalizedString(@"sc_upload_only_you", @"Only you");
+            cell.detailTextLabel.text = SCLocalizedString(@"sc_upload_only_you", @"Only you");
         } else {
             cell.detailTextLabel.text = [self.sharingMailAddresses componentsJoinedByString:@", "];
         }
@@ -562,7 +576,7 @@ const NSArray *allServices = nil;
                 cell.textLabel.font = [UIFont systemFontOfSize:16.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
                 cell.accessoryView = [[UIImageView alloc] initWithImage:[SCBundle imageFromPNGWithName:@"DisclosureIndicator"]];
-                cell.detailTextLabel.text = NSLocalizedString(@"configure", @"Configure");
+                cell.detailTextLabel.text = SCLocalizedString(@"configure", @"Configure");
                 cell.detailTextLabel.textColor = [UIColor whiteColor];
                 cell.detailTextLabel.backgroundColor = [UIColor clearColor];
             }
@@ -579,7 +593,7 @@ const NSArray *allServices = nil;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 {
-    return NSLocalizedString(@"sc_upload_sharing_options", @"Sharing Options");
+    return SCLocalizedString(@"sc_upload_sharing_options", @"Sharing Options");
 }
 
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section;
@@ -610,7 +624,7 @@ const NSArray *allServices = nil;
         if (availableConnections.count == 0) {
             return nil; // @"To add sharing options, go to your settings on SoundCloud.com and select 'Connections'";
         } else {
-            return NSLocalizedString(@"connection_list_footer", @"To change your default sharing options, go to your settings on SoundCloud and select 'Connections'");
+            return SCLocalizedString(@"connection_list_footer", @"To change your default sharing options, go to your settings on SoundCloud and select 'Connections'");
         }
     }
 }
@@ -647,7 +661,7 @@ const NSArray *allServices = nil;
             SCSharingMailPickerController  *controller = [[SCSharingMailPickerController alloc] initWithDelegate:self];
 			UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
 			navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
-			controller.title = NSLocalizedString(@"sc_upload_with_access", @"With Access");
+			controller.title = SCLocalizedString(@"sc_upload_with_access", @"With Access");
 			controller.result = self.sharingMailAddresses;
             [self presentModalViewController:navController animated:YES];
 			[controller release];
@@ -659,7 +673,7 @@ const NSArray *allServices = nil;
         if (indexPath.row >= availableConnections.count) {
             NSDictionary *service = [unconnectedServices objectAtIndex:indexPath.row - availableConnections.count];
             SCAddConnectionViewController *controller = [[SCAddConnectionViewController alloc] initWithService:[service objectForKey:@"service"] account:account delegate:self];
-            controller.title = [NSString stringWithFormat:NSLocalizedString(@"sc_upload_connect_to", @"Connect %@"), [service objectForKey:@"displayName"]];
+            controller.title = [NSString stringWithFormat:SCLocalizedString(@"sc_upload_connect_to", @"Connect %@"), [service objectForKey:@"displayName"]];
             
             [self.navigationController pushViewController:controller animated:YES];
             [controller release];
@@ -864,13 +878,13 @@ const NSArray *allServices = nil;
 
 - (IBAction)selectImage;
 {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"recording_image", @"Cover Image")
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:SCLocalizedString(@"recording_image", @"Cover Image")
                                                        delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"cancel", @"Cancel")
-                                         destructiveButtonTitle:self.coverImage ? NSLocalizedString(@"artwork_reset", @"Reset") : nil
+                                              cancelButtonTitle:SCLocalizedString(@"cancel", @"Cancel")
+                                         destructiveButtonTitle:self.coverImage ? SCLocalizedString(@"artwork_reset", @"Reset") : nil
                                               otherButtonTitles:
-                            ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) ? NSLocalizedString(@"use_existing_image", @"Photo Library") : nil,
-                            ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) ? NSLocalizedString(@"take_new_picture", @"Camera") : nil,
+                            ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) ? SCLocalizedString(@"use_existing_image", @"Photo Library") : nil,
+                            ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) ? SCLocalizedString(@"take_new_picture", @"Camera") : nil,
                             nil];
     [sheet showInView:self.view];
     [sheet release];
@@ -920,6 +934,8 @@ const NSArray *allServices = nil;
 {
     NSLog(@"Uploading ...");
     
+    
+    // setup progress view
     tableView.hidden = YES;
     [self.navigationController setToolbarHidden:YES animated:YES];
 
@@ -930,19 +946,32 @@ const NSArray *allServices = nil;
     self.uploadProgressView = [[SCRecordingUploadProgressView alloc] initWithFrame:CGRectMake(26, 58, CGRectGetWidth(self.view.bounds) - 52, CGRectGetHeight(self.view.bounds) - 26 - 58)];
     [self.view addSubview:self.uploadProgressView];
     
-    [self.uploadProgressView setTitle:self.title];
-    [self.uploadProgressView setLocationTitle:self.locationTitle];
+    [self.uploadProgressView setTitle:[self generatedTitle]];
     [self.uploadProgressView setCoverImage:self.coverImage];
     
+    [self.uploadProgressView.cancelButton addTarget:self
+                                             action:@selector(cancel)
+                                   forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    // set up request
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:self.title forKey:@"track[title]"];
-    [parameters setObject:(self.isPrivate) ? @"private" : @"public" forKey:@"track[sharing]"];
+    
+    // track
     if (self.fileURL) {
         [parameters setObject:self.fileURL forKey:@"track[asset_data]"];
     } else {
         [parameters setObject:self.fileData forKey:@"track[asset_data]"];
     }
     
+    // metadata
+    [parameters setObject:[self generatedTitle] forKey:@"track[title]"];
+    [parameters setObject:(self.isPrivate) ? @"private" : @"public" forKey: @"track[sharing]"];
+    [parameters setObject:[self generatedSharingNote] forKey:@"track[sharing_note]"];
+	[parameters setObject:@"recording" forKey:@"track[track_type]"];
+	[parameters setObject:@"1" forKey:@"track[downloadable]"];
+
+    // sharing
     if (self.isPrivate) {
         if (self.sharingMailAddresses.count > 0) {
             [parameters setObject:self.sharingMailAddresses forKey:@"track[shared_to][emails][][address]"];
@@ -963,6 +992,13 @@ const NSArray *allServices = nil;
         }
     }
     
+    // artwork
+    if (self.coverImage) {
+        NSData *coverData = UIImageJPEGRepresentation(self.coverImage, 0.8);
+        [parameters setObject:coverData forKey:@"track[artwork_data]"];
+    }
+    
+    // tags (location)
     NSMutableArray *tags = [NSMutableArray array];
     [tags addObject:@"soundcloud:source=iphone-record"];
     if (self.location) {
@@ -974,11 +1010,8 @@ const NSArray *allServices = nil;
     }
     [parameters setObject:[tags componentsJoinedByString:@" "] forKey:@"track[tag_list]"];
     
-    if (self.coverImage) {
-        NSData *coverData = UIImageJPEGRepresentation(self.coverImage, 0.8);
-        [parameters setObject:coverData forKey:@"track[artwork_data]"];
-    }
     
+    // perform request
     [SCRequest performMethod:SCRequestMethodPOST
                   onResource:[NSURL URLWithString:@"https://api.soundcloud.com/tracks.json"]
              usingParameters:parameters
@@ -1003,7 +1036,7 @@ const NSArray *allServices = nil;
                          [self.uploadProgressView setSuccess:NO];
                          [self.navigationController setToolbarHidden:NO animated:YES];
                          UIBarButtonItem *button = [self.toolbarItems lastObject];
-                         button.title = NSLocalizedString(@"retry_upload", @"Retry upload");
+                         button.title = SCLocalizedString(@"retry_upload", @"Retry upload");
                      }
                  } else {
                      NSLog(@"Upload failed with error: %@", [error localizedDescription]);
@@ -1011,13 +1044,9 @@ const NSArray *allServices = nil;
                      [self.uploadProgressView setSuccess:NO];
                      [self.navigationController setToolbarHidden:NO animated:YES];
                      UIBarButtonItem *button = [self.toolbarItems lastObject];
-                     button.title = NSLocalizedString(@"retry_upload", @"Retry upload");
+                     button.title = SCLocalizedString(@"retry_upload", @"Retry upload");
                  }
              }];
-    
-    [self.uploadProgressView.cancelButton addTarget:self
-                                             action:@selector(cancel)
-                                   forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (IBAction)cancel;
@@ -1052,6 +1081,93 @@ const NSArray *allServices = nil;
 {
     NSLog(@"%s: %@", __FUNCTION__, aNotification);
     [self cancel];
+}
+
+#pragma mark Helpers
+
+
+- (NSString *)generatedTitle;
+{
+    if (self.title.length > 0) {
+        if (self.locationTitle.length > 0) {
+            return [NSString stringWithFormat:SCLocalizedString(@"recording_title_at_location_name", @"%@ at %@"), self.title, self.locationTitle];
+        } else {
+            return self.title;
+        }
+    } else {
+        if (self.locationTitle.length > 0) {
+            return [NSString stringWithFormat:SCLocalizedString(@"recording_at_location", @"Sounds at %@"), self.locationTitle];
+        } else {
+            return [NSString stringWithFormat:SCLocalizedString(@"recording_from_data", @"Sounds from %@"), [self dateString]];
+        }
+    }
+}
+
+- (NSString *)generatedSharingNote;
+{
+    NSString *note = nil;
+    
+    if (self.title.length > 0) {
+        if (self.locationTitle.length > 0) {
+            note = [NSString stringWithFormat:SCLocalizedString(@"recording_title_at_location_name", @"%@ at %@"), self.title, self.locationTitle];
+        } else {
+            note = self.title;
+        }
+    } else {
+        if (self.locationTitle.length > 0) {
+            note = [NSString stringWithFormat:SCLocalizedString(@"recording_at_location", @"Sounds at %@"), self.locationTitle];
+        } else {
+            note = [NSString stringWithFormat:SCLocalizedString(@"recording_from_data", @"Sounds from %@"), [self dateString]];
+        }
+    }
+    
+    return note;
+}
+
+- (NSString *)dateString;
+{
+    NSString *weekday = nil;
+    NSString *time = nil;
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorian components:(NSWeekdayCalendarUnit | NSHourCalendarUnit) fromDate:self.trackCreationDate];
+    [gregorian release];
+    
+    switch ([components weekday]) {
+        case 1:
+            weekday = SCLocalizedString(@"recording_weekday_sunday", @"Sunday");
+            break;
+        case 2:
+            weekday = SCLocalizedString(@"recording_weekday_monday", @"Monday");
+            break;
+        case 3:
+            weekday = SCLocalizedString(@"weekday_tuesday", @"Tuesday");
+            break;
+        case 4:
+            weekday = SCLocalizedString(@"weekday_wednesday", @"Wednesday");
+            break;
+        case 5:
+            weekday = SCLocalizedString(@"weekday_thursday", @"Thursday");
+            break;
+        case 6:
+            weekday = SCLocalizedString(@"weekday_friday", @"Friday");
+            break;
+        case 7:
+            weekday = SCLocalizedString(@"weekday_saturday", @"Saturday");
+            break;
+    }
+    
+    if ([components hour] <= 12) {
+        time = SCLocalizedString(@"timeframe_morning", @"morning");
+    } else if ([components hour] <= 17) {
+        time = SCLocalizedString(@"timeframe_afternoon", @"afternoon");
+    } else if ([components hour] <= 21) {
+        time = SCLocalizedString(@"timeframe_evening", @"evening");
+    } else {
+        time = SCLocalizedString(@"timeframe_night", @"night");
+    }
+    
+    return [NSString stringWithFormat:@"%@ %@", weekday, time];
 }
 
 @end

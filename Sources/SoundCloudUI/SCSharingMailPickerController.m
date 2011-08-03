@@ -9,6 +9,7 @@
 
 #import "GPCellLoader.h"
 #import "SCNameAndEmailCell.h"
+#import "SCBundle.h"
 
 //#import "SCAppDelegate.h"
 
@@ -62,7 +63,7 @@
 - (id)initWithDelegate:(id<SCSharingMailPickerControllerDelegate>)aDelegate;
 {
 	if ((self = [super initWithNibName:nil bundle:nil])) {
-		self.title = NSLocalizedString(@"shared_to_email_adresses", @"Email Addresses");
+		self.title = SCLocalizedString(@"shared_to_email_adresses", @"Email Addresses");
 		delegate = aDelegate;
 		autocompleteOperationQueue = [[NSOperationQueue alloc] init];
 		autocompleteData = [[NSMutableArray alloc] init];

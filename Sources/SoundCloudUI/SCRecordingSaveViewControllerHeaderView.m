@@ -50,6 +50,7 @@
 
 @end
 
+
 @implementation SCRecordingSaveViewControllerHeaderView
 
 #pragma mark Lifecycle
@@ -144,8 +145,8 @@
     
     // Privacy Switch
     self.privateSwitch = [[[SCSwitch alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    self.privateSwitch.onText = NSLocalizedString(@"sc_upload_public", @"Public");
-    self.privateSwitch.offText = NSLocalizedString(@"sc_upload_private", @"Private");
+    self.privateSwitch.onText = SCLocalizedString(@"sc_upload_public", @"Public");
+    self.privateSwitch.offText = SCLocalizedString(@"sc_upload_private", @"Private");
     [self addSubview:self.privateSwitch];
     
     [self setUserName:@"..."];

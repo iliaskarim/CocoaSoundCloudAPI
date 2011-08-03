@@ -13,7 +13,6 @@
 @property (nonatomic, readonly, assign) UIButton *cancelButton;
 
 - (void)setTitle:(NSString *)aTitle;
-- (void)setLocationTitle:(NSString *)aLocationTitle;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setSuccess:(BOOL)success;
 

@@ -27,6 +27,7 @@
 #import "SCSoundCloud.h"
 #import "SCSoundCloud+Private.h"
 #import "SCConstants.h"
+#import "SCBundle.h"
 
 NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControllerCancelNotification";
 
@@ -113,7 +114,7 @@ NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControll
     
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:1];
     
-    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", @"Cancel")
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
                                                               style:UIBarButtonItemStyleBordered
                                                              target:self
                                                              action:@selector(cancel)] autorelease]];

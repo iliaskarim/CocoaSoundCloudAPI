@@ -27,7 +27,6 @@ typedef enum SCRecordingUploadProgressViewState {
 
 @property (nonatomic, readwrite, assign) UIImageView *coverImageView;
 @property (nonatomic, readwrite, assign) UILabel *titleLabel;
-@property (nonatomic, readwrite, assign) UILabel *locationTitleLable;
 @property (nonatomic, readwrite, assign) UIView *line;
 @property (nonatomic, readwrite, assign) UILabel *progressLabel;
 @property (nonatomic, readwrite, assign) UIProgressView *progressView;
@@ -60,16 +59,11 @@ typedef enum SCRecordingUploadProgressViewState {
     [self addSubview:self.coverImageView];
     
     self.titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-//    self.titleLabel.numberOfLines = 2;
-//    self.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    self.titleLabel.numberOfLines = 2;
+    self.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     self.titleLabel.text = nil;
     self.titleLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     [self addSubview:self.titleLabel];
-    
-    self.locationTitleLable = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    self.locationTitleLable.text = nil;
-    self.locationTitleLable.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
-    [self addSubview:self.locationTitleLable];
     
     self.line = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.line.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
@@ -95,7 +89,6 @@ typedef enum SCRecordingUploadProgressViewState {
 
 @synthesize coverImageView;
 @synthesize titleLabel;
-@synthesize locationTitleLable;
 @synthesize line;
 @synthesize progressLabel;
 @synthesize progressView;
@@ -107,16 +100,6 @@ typedef enum SCRecordingUploadProgressViewState {
 - (void)setTitle:(NSString *)aTitle;
 {
     self.titleLabel.text = aTitle;
-    [self setNeedsLayout];
-}
-
-- (void)setLocationTitle:(NSString *)aLocationTitle;
-{
-    if (aLocationTitle) {
-        self.locationTitleLable.text = [NSString stringWithFormat:@"at %@", aLocationTitle];
-    } else {
-        self.locationTitleLable.text = nil;
-    }
     [self setNeedsLayout];
 }
 
@@ -172,30 +155,17 @@ typedef enum SCRecordingUploadProgressViewState {
         self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.coverImageView.frame) + SPACING,
                                            SPACING,
                                            CGRectGetWidth(self.bounds) - 2 * SPACING - CGRectGetMaxX(self.coverImageView.frame),
-                                           COVER_IMAGE_SIZE / 2.0);
-        
-        self.locationTitleLable.frame = CGRectMake(CGRectGetMaxX(self.coverImageView.frame) + SPACING,
-                                                   SPACING + COVER_IMAGE_SIZE / 2.0,
-                                                   CGRectGetWidth(self.bounds) - 2 * SPACING - CGRectGetMaxX(self.coverImageView.frame),
-                                                   COVER_IMAGE_SIZE / 2.0);
+                                           COVER_IMAGE_SIZE);
+
     } else {
         self.titleLabel.frame = CGRectMake(SPACING,
                                            SPACING,
                                            CGRectGetWidth(self.bounds) - 2 * SPACING,
-                                           COVER_IMAGE_SIZE / 2.0);
-        
-        self.locationTitleLable.frame = CGRectMake(SPACING,
-                                                   SPACING + COVER_IMAGE_SIZE / 2.0,
-                                                   CGRectGetWidth(self.bounds) - 2 * SPACING,
-                                                   COVER_IMAGE_SIZE / 2.0);
+                                           COVER_IMAGE_SIZE);
     }
     
-    if (self.locationTitleLable.text || self.coverImageView.image){
-        self.line.frame = CGRectMake(SPACING, CGRectGetMaxY(self.locationTitleLable.frame) + SPACING, CGRectGetWidth(self.bounds) - 2 * SPACING, 1);
-    } else {
-        self.line.frame = CGRectMake(SPACING, CGRectGetMaxY(self.titleLabel.frame) + SPACING, CGRectGetWidth(self.bounds) - 2 * SPACING, 1);
-    }
     
+    self.line.frame = CGRectMake(SPACING, CGRectGetMaxY(self.titleLabel.frame) + SPACING, CGRectGetWidth(self.bounds) - 2 * SPACING, 1);
     
     switch (self.state) {
         case SCRecordingUploadProgressViewStateSuccess:
