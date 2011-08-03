@@ -282,7 +282,7 @@ const NSArray *allServices = nil;
                              NSError *jsonError = nil;
                              id result = [data objectFromJSONData];
                              if (result) {
-                                 NSLog(@"Me: %@", result);
+//                                 NSLog(@"Me: %@", result);
                                  
                                  NSURL *avatarURL = [NSURL URLWithString:[result objectForKey:@"avatar_url"]];
                                  NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
@@ -539,7 +539,8 @@ const NSArray *allServices = nil;
     } else {
         
         if (indexPath.row < self.availableConnections.count) {
-            UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"connection"];
+            UITableViewCell *cell = nil;  // WORKAROUND: Reusing cells causes a problem with the boarder
+                                          //[aTableView dequeueReusableCellWithIdentifier:@"connection"];
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -582,7 +583,8 @@ const NSArray *allServices = nil;
             
             return cell;
         } else {
-            UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"newConnection"];
+            UITableViewCell *cell = nil; // WORKAROUND: Reusing cells causes a problem with the boarder
+                                         // [aTableView dequeueReusableCellWithIdentifier:@"newConnection"];
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
