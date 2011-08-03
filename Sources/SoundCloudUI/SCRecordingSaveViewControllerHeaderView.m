@@ -140,7 +140,7 @@
     self.disclosureButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     [self.disclosureButton setImage:[SCBundle imageFromPNGWithName:@"DisclosureIndicator"] forState:UIControlStateNormal];
     [self.disclosureButton sizeToFit];
-    [self.disclosureButton setShowsTouchWhenHighlighted:YES];
+    [self.disclosureButton setShowsTouchWhenHighlighted:NO];
     [self addSubview:self.disclosureButton];
     
     // Privacy Switch

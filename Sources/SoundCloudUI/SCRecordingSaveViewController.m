@@ -362,6 +362,18 @@ const NSArray *allServices = nil;
     self.foursquareController.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                                                 target:self
                                                                                                                 action:@selector(closePlacePicker)] autorelease];
+    
+    if (self.foursquareController) {
+        self.headerView.disclosureButton.hidden = NO;
+        [self.headerView.disclosureButton addTarget:self
+                                             action:@selector(openPlacePicker)
+                                   forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        self.headerView.disclosureButton.hidden = YES;
+        [self.headerView.disclosureButton removeTarget:self
+                                                action:@selector(openPlacePicker)
+                                      forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 
@@ -408,9 +420,7 @@ const NSArray *allServices = nil;
                                       action:@selector(privacyChanged:)
                             forControlEvents:UIControlEventValueChanged];
     
-    [self.headerView.disclosureButton addTarget:self
-                                         action:@selector(openPlacePicker)
-                               forControlEvents:UIControlEventTouchUpInside];
+    self.headerView.disclosureButton.hidden = YES;
     
     [self.headerView.logoutButton addTarget:self
                                      action:@selector(relogin)
@@ -752,7 +762,7 @@ const NSArray *allServices = nil;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;
 {
-    if (textField == self.headerView.whereTextField) {
+    if (self.foursquareController && textField == self.headerView.whereTextField) {
         [self.headerView.whatTextField resignFirstResponder]; //So we don't get the keyboard when coming back
         [self openPlacePicker];
         return NO;
