@@ -241,7 +241,6 @@
     self.firstHR.frame = CGRectMake(0, CGRectGetMaxY(self.avatarImageView.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0 / [[UIScreen mainScreen] scale]);
     
     self.coverImageButton.frame = CGRectMake(SPACING, CGRectGetMaxY(self.firstHR.frame) + SPACING, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
-    NSLog(@"cover image frame: %@ (%@)", NSStringFromCGRect(self.coverImageButton.frame),  NSStringFromCGRect([self convertRect:self.coverImageButton.frame toView:self.window]));
     
     CGRect whatTextFieldFrame;
     CGRect whereTextFieldFrame;

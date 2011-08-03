@@ -160,7 +160,7 @@ const NSArray *allServices = nil;
         
         self.view.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
         
-        self.hidesBottomBarWhenPushed = YES;
+        self.hidesBottomBarWhenPushed = NO;
         self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"navigation_back", @"Back")
                                                                                   style:UIBarButtonItemStyleBordered
                                                                                  target:nil
@@ -168,22 +168,22 @@ const NSArray *allServices = nil;
         
         [self.navigationController setToolbarHidden:YES];
 
-        self.availableConnections = [NSArray array];
-        self.unconnectedServices = [NSArray array];
-        self.sharingConnections = [NSArray array];
-        self.sharingMailAddresses = [NSArray array];
+        unconnectedServices = [[NSArray alloc] init];
+        availableConnections = [[NSArray alloc] init];
+        sharingConnections = [[NSArray alloc] init];
+        sharingMailAddresses = [[NSArray alloc] init];
         
-        self.isPrivate = [[NSUserDefaults standardUserDefaults] boolForKey:SCDefaultsKeyRecordingIsPrivate];
-        self.location = nil;
-        self.locationTitle = nil;
-        self.foursquareID = nil;
+        isPrivate = [[NSUserDefaults standardUserDefaults] boolForKey:SCDefaultsKeyRecordingIsPrivate];
+        location = nil;
+        locationTitle = nil;
+        foursquareID = nil;
         
-        self.coverImage = nil;
-        self.title = nil;
+        coverImage = nil;
+        title = nil;
         
-        self.trackCreationDate = [NSDate date];
+        trackCreationDate = [[NSDate date] retain];
         
-        self.completionHandler = nil;
+        completionHandler = nil;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(accountDidChange:)
@@ -371,10 +371,6 @@ const NSArray *allServices = nil;
 {
     [super viewDidLoad];
     
-    // Toolbar
-    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
-    self.navigationController.toolbarHidden = NO;
-    
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
@@ -417,7 +413,7 @@ const NSArray *allServices = nil;
                                forControlEvents:UIControlEventTouchUpInside];
     
     [self.headerView.logoutButton addTarget:self
-                                     action:@selector(logout)
+                                     action:@selector(relogin)
                            forControlEvents:UIControlEventTouchUpInside];
     
     CGRect tableViewFrame = self.view.bounds;
@@ -442,6 +438,9 @@ const NSArray *allServices = nil;
     
     self.account = [SCSoundCloud account];
     
+    // Toolbar & NavigationBar
+    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
+    self.navigationController.toolbarHidden = NO;
     self.navigationController.navigationBarHidden = YES;
     
     [tableView reloadData];
@@ -526,7 +525,8 @@ const NSArray *allServices = nil;
         return cell;
         
     } else {
-        if (indexPath.row < availableConnections.count) {
+        
+        if (indexPath.row < self.availableConnections.count) {
             UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"connection"];
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
@@ -543,7 +543,7 @@ const NSArray *allServices = nil;
             }
             
             
-            NSDictionary *connection = [availableConnections objectAtIndex:indexPath.row];
+            NSDictionary *connection = [self.availableConnections objectAtIndex:indexPath.row];
             
             cell.textLabel.text = [connection objectForKey:@"display_name"];
             
@@ -588,7 +588,7 @@ const NSArray *allServices = nil;
                 cell.detailTextLabel.backgroundColor = [UIColor clearColor];
             }
             
-            NSDictionary *service = [unconnectedServices objectAtIndex:indexPath.row - availableConnections.count];
+            NSDictionary *service = [self.unconnectedServices objectAtIndex:indexPath.row - self.availableConnections.count];
             cell.textLabel.text = [service objectForKey:@"displayName"];
             cell.imageView.image = [SCBundle imageFromPNGWithName:[NSString stringWithFormat:@"service_%@", [service objectForKey:@"service"]]];
             
@@ -600,27 +600,46 @@ const NSArray *allServices = nil;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 {
-    return SCLocalizedString(@"sc_upload_sharing_options", @"Sharing Options");
+    if (self.isPrivate) {
+        // TODO: Insert correct text describing the private options
+        return SCLocalizedString(@"sc_upload_sharing_options_private", @"Your track will be private after the upload. You want to send it to other members?");
+    } else {
+        return SCLocalizedString(@"sc_upload_sharing_options_public", @"Your track will be available for the public after the upload. You want to push it to other services afterwards?");
+    }
 }
 
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section;
 {
-    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)] autorelease];
+    NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
+    
+    CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
+                       constrainedToSize:CGSizeMake(320.0 - 10, CGFLOAT_MAX)
+                           lineBreakMode:UILineBreakModeWordWrap];
+    
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, textSize.height)] autorelease];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.numberOfLines = 0;
     label.font = [UIFont systemFontOfSize:15.0];
-    label.text = [self tableView:aTableView titleForHeaderInSection:section];
+    label.text = text;
     [sectionHeaderView addSubview:label];
     [label release];
     return sectionHeaderView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
+- (CGFloat)tableView:(UITableView *)aTableView heightForHeaderInSection:(NSInteger)section;
 {
-    return 28.0;
+    NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
+    
+    CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
+                       constrainedToSize:CGSizeMake(320.0 - 10, CGFLOAT_MAX)
+                           lineBreakMode:UILineBreakModeWordWrap];
+    
+    return textSize.height + 8;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section;

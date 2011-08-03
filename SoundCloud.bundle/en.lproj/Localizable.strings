@@ -254,6 +254,10 @@
 
 "sc_upload_sharing_options" = "Sharing Options";
 
+"sc_upload_sharing_options_public" = "Your track will be available for the public after the upload. You want to push it to other services afterwards?";
+
+"sc_upload_sharing_options_private" = "Your track will be private after the upload. You want to send it to other members?";
+
 "sc_upload_with_access" = "With Access";
 
 "search" = "Search";
