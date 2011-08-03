@@ -63,6 +63,7 @@
 
 @property (nonatomic, assign) SCRecordingSaveViewControllerHeaderView *headerView;
 @property (nonatomic, assign) SCRecordingUploadProgressView *uploadProgressView;
+@property (nonatomic, assign) UITableView *tableView;
 
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 
@@ -80,7 +81,7 @@
 - (IBAction)resetImage;
 - (IBAction)upload;
 - (IBAction)cancel;
-- (IBAction)logout;
+- (IBAction)relogin;
 
 #pragma mark Notification Handling
 - (void)accountDidChange:(NSNotification *)aNotification;
@@ -147,13 +148,17 @@ const NSArray *allServices = nil;
 @synthesize headerView;
 @synthesize uploadProgressView;
 @synthesize completionHandler;
+@synthesize tableView;
 
 
 #pragma mark Lifecycle
 
 - (id)init;
 {
-    if ((self = [super initWithNibName:@"RecordingSave" bundle:nil])) {
+    self = [super init];
+    if (self) {
+        
+        self.view.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
         
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"navigation_back", @"Back")
@@ -163,7 +168,6 @@ const NSArray *allServices = nil;
         
         [self.navigationController setToolbarHidden:YES];
 
-        
         self.availableConnections = [NSArray array];
         self.unconnectedServices = [NSArray array];
         self.sharingConnections = [NSArray array];
@@ -343,7 +347,7 @@ const NSArray *allServices = nil;
     
     self.unconnectedServices = newUnconnectedServices;
     [newUnconnectedServices release];
-    [tableView reloadData];
+    [self.tableView reloadData];
 }
 
 
@@ -390,6 +394,10 @@ const NSArray *allServices = nil;
     // Banner
     [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
     
+    
+    // Background
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    
     // Table View
     self.headerView = [[[SCRecordingSaveViewControllerHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 0)] autorelease];
     
@@ -412,20 +420,19 @@ const NSArray *allServices = nil;
                                      action:@selector(logout)
                            forControlEvents:UIControlEventTouchUpInside];
     
-    tableView.tableHeaderView = self.headerView;
+    CGRect tableViewFrame = self.view.bounds;
+    tableViewFrame.origin.y += 28.0;
+    tableViewFrame.size.height -= tableViewFrame.origin.y;
+    self.tableView = [[[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStyleGrouped] autorelease];
+    self.tableView.tableHeaderView = self.headerView;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.opaque = NO;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
+    [self.view addSubview:self.tableView];
     
-    
-    CGRect newTableViewFrame = tableView.frame;
-    newTableViewFrame.origin.y += 28.0;
-    newTableViewFrame.size.height -= newTableViewFrame.origin.y;
-    tableView.frame = newTableViewFrame;
-    
-    // Background
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
-    tableView.backgroundColor = [UIColor clearColor];
-    tableView.opaque = NO;
-    
+
     [self updateInterface];
 }
 
@@ -446,7 +453,7 @@ const NSArray *allServices = nil;
     [super viewDidAppear:animated];
     
     if (!self.account) {
-        [self logout];
+        [self relogin];
     }
 }
 
@@ -688,7 +695,7 @@ const NSArray *allServices = nil;
 - (void)sharingMailPickerController:(SCSharingMailPickerController *)controller didFinishWithResult:(NSArray *)emailAdresses;
 {
     self.sharingMailAddresses = emailAdresses;
-    [tableView reloadData];
+    [self.tableView reloadData];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -872,7 +879,7 @@ const NSArray *allServices = nil;
     if (sender == self.headerView.privateSwitch) {
 		isPrivate = !self.headerView.privateSwitch.on;
         [[NSUserDefaults standardUserDefaults] setBool:!self.headerView.privateSwitch.on forKey:SCDefaultsKeyRecordingIsPrivate];
-        [tableView reloadData];
+        [self.tableView reloadData];
     }
 }
 
@@ -936,7 +943,7 @@ const NSArray *allServices = nil;
     
     
     // setup progress view
-    tableView.hidden = YES;
+    self.tableView.hidden = YES;
     [self.navigationController setToolbarHidden:YES animated:YES];
 
     if (self.uploadProgressView) {
@@ -1055,7 +1062,7 @@ const NSArray *allServices = nil;
     self.completionHandler(YES, nil);
 }
 
-- (IBAction)logout;
+- (IBAction)relogin;
 {
     NSLog(@"Logging out ...");
     [SCSoundCloud removeAccess];

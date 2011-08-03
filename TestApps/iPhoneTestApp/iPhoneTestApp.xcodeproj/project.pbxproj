@@ -24,7 +24,6 @@
 		D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */ = {isa = PBXBuildFile; fileRef = D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */; };
 		F62697D213E16DFB006BB646 /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F62697D113E16DFB006BB646 /* SoundCloud.bundle */; };
 		F6410A2013D8884E00561D0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6410A1F13D8884E00561D0B /* QuartzCore.framework */; };
-		F66BACF013D96E5400996800 /* RecordingSave.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66BACEF13D96E5400996800 /* RecordingSave.xib */; };
 		F66BAD3013D97FD100996800 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BAD2F13D97FD100996800 /* CoreLocation.framework */; };
 		F6A9853B13D98CD6000AC828 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6A9853913D98CD6000AC828 /* AddressBook.framework */; };
 		F6A9853C13D98CD6000AC828 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6A9853A13D98CD6000AC828 /* AddressBookUI.framework */; };
@@ -98,7 +97,6 @@
 		D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 1375_sleep_90_bpm_nylon2.wav; sourceTree = "<group>"; };
 		F62697D113E16DFB006BB646 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../../SoundCloud.bundle; sourceTree = "<group>"; };
 		F6410A1F13D8884E00561D0B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		F66BACEF13D96E5400996800 /* RecordingSave.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordingSave.xib; sourceTree = "<group>"; };
 		F66BAD2F13D97FD100996800 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F6A9853913D98CD6000AC828 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F6A9853A13D98CD6000AC828 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -174,7 +172,6 @@
 				D35526390F4D7C650074030D /* LICENSE */,
 				D355263A0F4D7C650074030D /* NOTICE */,
 				D375FD850F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav */,
-				F66BACEF13D96E5400996800 /* RecordingSave.xib */,
 				2899E5210DE3E06400AC0155 /* iPhoneTestAppViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -326,7 +323,6 @@
 				D375FD860F3B0A4D00954DE4 /* 1375_sleep_90_bpm_nylon2.wav in Resources */,
 				D355263B0F4D7C650074030D /* LICENSE in Resources */,
 				D355263C0F4D7C650074030D /* NOTICE in Resources */,
-				F66BACF013D96E5400996800 /* RecordingSave.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
