@@ -36,7 +36,7 @@
 + (SCShareViewController *)shareViewControllerWithFileURL:(NSURL *)aFileURL
                                         completionHandler:(SCSharingViewControllerComletionHandler)aCompletionHandler;
 {
-    SCRecordingSaveViewController *recView = [[SCRecordingSaveViewController new] autorelease];
+    SCRecordingSaveViewController *recView = [[[SCRecordingSaveViewController alloc] init] autorelease];
     if (!recView) return nil;
     
     [recView setFileURL:aFileURL];
@@ -53,7 +53,7 @@
 + (SCShareViewController *)shareViewControllerWithFileData:(NSData *)someData
                                          completionHandler:(SCSharingViewControllerComletionHandler)aCompletionHandler;
 {
-    SCRecordingSaveViewController *recView = [[SCRecordingSaveViewController new] autorelease];
+    SCRecordingSaveViewController *recView = [[[SCRecordingSaveViewController alloc] init] autorelease];
     if (!recView) return nil;
     
     [recView setFileData:someData];

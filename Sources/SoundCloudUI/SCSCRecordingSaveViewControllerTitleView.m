@@ -20,7 +20,7 @@
         
         self.backgroundColor = [UIColor blackColor];
         
-        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
+        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
         
         CGRect logoRect;
         CGRect connectRect;
@@ -72,9 +72,6 @@
     
     CGContextSetFillColor(context, (CGFloat[]){0.0,0.0,0.0,1.0});
     CGContextFillRect(context, topLineRect);
-    
-//    CGContextSetFillColor(context, (CGFloat[]){0.52,0.53,0.54,1.0});
-//    CGContextFillRect(context, bottomLineRect);
 }
 
 @end

@@ -91,17 +91,6 @@
 
         delegate = aDelegate;
         service = [aService retain];
-        
-//        api = [appDelegate.api copyWithAPIDelegate:self];
-//        [api performMethod:@"POST"
-//                onResource:@"connections"
-//            withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                              service, @"service",
-//                                                              @"x-soundcloud://connection", @"redirect_uri",
-//                                                              @"touch", @"display",
-//                                                              nil]
-//                   context:nil
-//                  userInfo:nil];
     }
     return self;
 }
@@ -175,14 +164,12 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated;
 {
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 

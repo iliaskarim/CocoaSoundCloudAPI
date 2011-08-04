@@ -32,10 +32,6 @@
 
 
 #define COVER_WIDTH 600.0
-#define TEXTBOX_LEFT 102.0
-#define TEXTBOX_RIGHT 9.0
-#define TEXTBOX_TOP 9.0
-#define TEXTBOX_HEIGHT 84.0
 
 
 @interface SCRecordingSaveViewController ()
@@ -67,6 +63,8 @@
 
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 
+@property (nonatomic, assign) UIToolbar *toolBar;
+
 #pragma mark UI
 - (void)updateInterface;
 
@@ -86,6 +84,11 @@
 #pragma mark Notification Handling
 - (void)accountDidChange:(NSNotification *)aNotification;
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
+
+
+#pragma mark Tool Bar Animation
+- (void)hideToolBar;
+- (void)showToolBar;
 
 #pragma mark Helpers
 - (NSString *)generatedTitle;
@@ -149,6 +152,7 @@ const NSArray *allServices = nil;
 @synthesize uploadProgressView;
 @synthesize completionHandler;
 @synthesize tableView;
+@synthesize toolBar;
 
 
 #pragma mark Lifecycle
@@ -157,17 +161,6 @@ const NSArray *allServices = nil;
 {
     self = [super init];
     if (self) {
-        
-        self.view.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
-        
-        self.hidesBottomBarWhenPushed = NO;
-        self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"navigation_back", @"Back")
-                                                                                  style:UIBarButtonItemStyleBordered
-                                                                                 target:nil
-                                                                                 action:nil] autorelease];
-        
-        [self.navigationController setToolbarHidden:YES];
-
         unconnectedServices = [[NSArray alloc] init];
         availableConnections = [[NSArray alloc] init];
         sharingConnections = [[NSArray alloc] init];
@@ -384,6 +377,34 @@ const NSArray *allServices = nil;
 {
     [super viewDidLoad];
     
+    self.view.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
+
+    
+    // Background
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+
+    
+    // Navigation Bar
+    self.navigationController.navigationBarHidden = YES;
+    
+    
+    // Banner
+    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
+    
+    
+    // Toolbar
+    self.toolBar = [[[UIToolbar alloc] init] autorelease];
+    self.toolBar.barStyle = UIBarStyleBlack;
+    self.toolBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                     UIViewAutoresizingFlexibleTopMargin);
+    [self.toolBar sizeToFit];
+    [self.toolBar setFrame:CGRectMake(0.0,
+                                      self.view.frame.size.height - self.toolBar.frame.size.height, 
+                                      self.toolBar.frame.size.width,
+                                      self.toolBar.frame.size.height)];
+    [self.view addSubview:self.toolBar];
+    
+    
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:3];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
@@ -394,20 +415,35 @@ const NSArray *allServices = nil;
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease]];
     
     [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
-                                                              style:UIBarButtonItemStyleBordered
+                                                            style:UIBarButtonItemStyleBordered
                                                              target:self
                                                              action:@selector(upload)] autorelease]];
     
-    [self setToolbarItems:toolbarItems];
+    [self.toolBar setItems:toolbarItems];
     
-    // Banner
-    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
-    
-    
-    // Background
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
     
     // Table View
+    
+    CGRect tableViewFrame = self.view.bounds;
+    tableViewFrame.origin.y += 28.0;        // Banner
+    tableViewFrame.size.height -= 28.0;     // Banner
+    tableViewFrame.size.height -= CGRectGetHeight(self.toolBar.frame); // Toolbar
+    
+    self.tableView = [[[UITableView alloc] initWithFrame:tableViewFrame
+                                                   style:UITableViewStyleGrouped] autorelease];
+    
+    self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
+                                       UIViewAutoresizingFlexibleWidth);
+    
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.opaque = NO;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    [self.view addSubview:self.tableView];
+    
+    
+    // Header
     self.headerView = [[[SCRecordingSaveViewControllerHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 0)] autorelease];
     
     self.headerView.whatTextField.delegate = self;
@@ -427,21 +463,10 @@ const NSArray *allServices = nil;
                                      action:@selector(relogin)
                            forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect tableViewFrame = self.view.bounds;
-    tableViewFrame.origin.y += 28.0;
-    tableViewFrame.size.height -= tableViewFrame.origin.y;
-    tableViewFrame.size.height -= toolbar.frame.size.height;
-    self.tableView = [[[UITableView alloc] initWithFrame:tableViewFrame style:UITableViewStyleGrouped] autorelease];
-    self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
     self.tableView.tableHeaderView = self.headerView;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.opaque = NO;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
-    [self.view addSubview:self.tableView];
-    
 
+    
+    
     [self updateInterface];
 }
 
@@ -450,11 +475,6 @@ const NSArray *allServices = nil;
     [super viewWillAppear:animated];
     
     self.account = [SCSoundCloud account];
-    
-    // Toolbar & NavigationBar
-    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
-    self.navigationController.toolbarHidden = NO;
-    self.navigationController.navigationBarHidden = YES;
     
     [tableView reloadData];
     [self updateInterface];
@@ -975,6 +995,7 @@ const NSArray *allServices = nil;
 {
     NSLog(@"Uploading ...");
     
+    [self hideToolBar];
     
     // setup progress view
     self.tableView.hidden = YES;
@@ -1075,16 +1096,16 @@ const NSArray *allServices = nil;
                          NSLog(@"Upload failed with json error: %@", [jsonError localizedDescription]);
                          
                          [self.uploadProgressView setSuccess:NO];
-                         [self.navigationController setToolbarHidden:NO animated:YES];
-                         UIBarButtonItem *button = [self.toolbarItems lastObject];
+                         UIBarButtonItem *button = [self.toolBar.items lastObject];
+                         [self showToolBar];
                          button.title = SCLocalizedString(@"retry_upload", @"Retry upload");
                      }
                  } else {
                      NSLog(@"Upload failed with error: %@", [error localizedDescription]);
                      
                      [self.uploadProgressView setSuccess:NO];
-                     [self.navigationController setToolbarHidden:NO animated:YES];
-                     UIBarButtonItem *button = [self.toolbarItems lastObject];
+                     UIBarButtonItem *button = [self.toolBar.items lastObject];
+                     [self showToolBar];
                      button.title = SCLocalizedString(@"retry_upload", @"Retry upload");
                  }
              }];
@@ -1107,6 +1128,7 @@ const NSArray *allServices = nil;
     }];
 }
 
+
 #pragma mark Notification Handling
 
 - (void)accountDidChange:(NSNotification *)aNotification;
@@ -1122,6 +1144,27 @@ const NSArray *allServices = nil;
 {
     NSLog(@"%s: %@", __FUNCTION__, aNotification);
     [self cancel];
+}
+
+
+
+#pragma mark Tool Bar Animation
+- (void)hideToolBar;
+{
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         CGPoint center = self.toolBar.center;
+                         self.toolBar.center = CGPointMake(center.x, center.y + CGRectGetHeight(self.toolBar.frame));
+                     }];
+}
+
+- (void)showToolBar;
+{
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         CGPoint center = self.toolBar.center;
+                         self.toolBar.center = CGPointMake(center.x, center.y - CGRectGetHeight(self.toolBar.frame));
+                     }];
 }
 
 #pragma mark Helpers
