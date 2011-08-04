@@ -41,7 +41,7 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
 - (void)setPrivate:(BOOL)isPrivate;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setTitle:(NSString *)aTitle;
-- (void)setCreationDate:(NSURL *)aCreationDate;
+- (void)setCreationDate:(NSDate *)aCreationDate;
 - (void)setCompletionHandler:(SCRecordingSaveViewControllerCompletionHandler)aCompletionHandler;
 
 #pragma mark Foursquare

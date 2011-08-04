@@ -36,6 +36,7 @@ typedef void(^SCSharingViewControllerComletionHandler)(BOOL canceled, NSDictiona
 - (void)setPrivate:(BOOL)isPrivate;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setTitle:(NSString *)aTitle;
+- (void)setCreationDate:(NSDate *)aDate;
 
 #pragma mark Foursquare
 

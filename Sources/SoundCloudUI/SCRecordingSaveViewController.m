@@ -324,8 +324,9 @@ const NSArray *allServices = nil;
     }
 }
 
-- (void)setCreationDate:(NSURL *)aCreationDate;
+- (void)setCreationDate:(NSDate *)aCreationDate;
 {
+    self.trackCreationDate = aCreationDate;
 }
 
 - (void)setAvailableConnections:(NSArray *)value;

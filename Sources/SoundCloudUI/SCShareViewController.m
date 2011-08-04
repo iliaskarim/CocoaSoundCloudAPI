@@ -85,6 +85,11 @@
     [self.recordSaveController setTitle:aTitle];
 }
 
+- (void)setCreationDate:(NSDate *)aDate;
+{
+    [self.recordSaveController setCreationDate:aDate];
+}
+
 - (SCRecordingSaveViewController *)recordSaveController;
 {
     return (SCRecordingSaveViewController *)self.topViewController;
