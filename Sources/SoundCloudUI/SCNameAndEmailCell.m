@@ -6,6 +6,8 @@
 //  Copyright 2009 nxtbgthng. All rights reserved.
 //
 
+#import "UIColor+SoundCloud.h"
+
 #import "SCNameAndEmailCell.h"
 
 @interface SCNameAndEmailCell ()
@@ -33,14 +35,14 @@
         
         self.emailLabel = [[[UILabel alloc] init] autorelease];
         self.emailLabel.opaque = NO;
-        self.emailLabel.textColor = [UIColor colorWithWhite:0.459 alpha:1.000];
+        self.emailLabel.textColor = [UIColor listSubtitleColor];
         self.emailLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:self.emailLabel];
         
         self.mailTypeLabel = [[[UILabel alloc] init] autorelease];
         self.mailTypeLabel.opaque = NO;
         self.mailTypeLabel.font = [UIFont boldSystemFontOfSize:15.0];
-        self.mailTypeLabel.textColor = [UIColor colorWithWhite:0.459 alpha:1.000];
+        self.mailTypeLabel.textColor = [UIColor listSubtitleColor];
         self.mailTypeLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:self.mailTypeLabel];
     }

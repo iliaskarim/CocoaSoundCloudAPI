@@ -49,9 +49,3 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
 - (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 
 @end
-
-
-#pragma mark -
-
-@interface SCRecordingSaveViewControllerTextField : UITextField {}
-@end

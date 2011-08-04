@@ -11,8 +11,6 @@
 #import "SCNameAndEmailCell.h"
 #import "SCBundle.h"
 
-//#import "SCAppDelegate.h"
-
 #import "SCSharingMailPickerController.h"
 
 

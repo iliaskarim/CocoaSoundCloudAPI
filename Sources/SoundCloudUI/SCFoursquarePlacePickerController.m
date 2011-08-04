@@ -7,11 +7,13 @@
 //
 
 #import "NSData+SCKit.h"
+#import "UIColor+SoundCloud.h"
 
 #import "GPURLConnection.h"
 #import "GPWebAPI.h"
 
 #import "SCConstants.h"
+#import "SCBundle.h"
 
 #import "SCFoursquarePlacePickerController.h"
 
@@ -31,7 +33,7 @@
 {
     if ((self = [super init])) {
         
-        self.title = @"Where?";
+        self.title = SCLocalizedString(@"place_picker_title", @"Where?");
         
         delegate = aDelegate;
         
@@ -51,7 +53,7 @@
         }
         [locationManager startUpdatingLocation];
         
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Reset"
+        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"place_picker_reset", @"Reset")
                                                                                    style:UIBarButtonItemStyleBordered
                                                                                   target:self
                                                                                   action:@selector(finishWithReset)] autorelease];
@@ -95,7 +97,7 @@
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0.0, 0.0, 300, 26.0)];
     textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    textField.placeholder = @"Add Your Place";
+    textField.placeholder = SCLocalizedString(@"place_picker_placeholder", @"Add Your Place");
     textField.returnKeyType = UIReturnKeyDone;
     textField.keyboardAppearance = UIKeyboardAppearanceAlert;
     textField.borderStyle = UITextBorderStyleRoundedRect;
@@ -157,7 +159,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 {
-    return @"Nearby";
+    return SCLocalizedString(@"place_picker_nearby", @"Nearby");
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;

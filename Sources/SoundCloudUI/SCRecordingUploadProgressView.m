@@ -66,12 +66,12 @@ typedef enum SCRecordingUploadProgressViewState {
     [self addSubview:self.titleLabel];
     
     self.line = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-    self.line.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
+    self.line.backgroundColor = [UIColor colorWithWhite:0.949 alpha:1.0];
     [self addSubview:self.line];
     
     self.progressLabel = [[[UILabel alloc] init] autorelease];
     self.progressLabel.font = [UIFont systemFontOfSize:[UIFont smallSystemFontSize]];
-    self.progressLabel.text = @"Uploading ...";
+    self.progressLabel.text = SCLocalizedString(@"record_save_uploading", @"Uploading ...");
     [self addSubview:self.progressLabel];
     
     self.progressView = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault] autorelease];
@@ -127,11 +127,11 @@ typedef enum SCRecordingUploadProgressViewState {
     self.successLabel = [[[UILabel alloc] init] autorelease];
     if (success) {
         self.successImageView = [[[UIImageView alloc] initWithImage:[SCBundle imageFromPNGWithName:@"success"]] autorelease];
-        self.successLabel.text = @"Yay, that worked!";
+        self.successLabel.text = SCLocalizedString(@"record_save_upload_success", @"Yay, that worked!");
         
     } else {
         self.successImageView = [[[UIImageView alloc] initWithImage:[SCBundle imageFromPNGWithName:@"fail"]] autorelease];
-        self.successLabel.text = @"Ok, that went wrong.";
+        self.successLabel.text = SCLocalizedString(@"record_save_upload_fail", @"Ok, that went wrong.");
     }
     [self.successImageView sizeToFit];
     [self addSubview:self.successImageView];
@@ -152,20 +152,36 @@ typedef enum SCRecordingUploadProgressViewState {
     if (self.coverImageView.image) {
         self.coverImageView.frame = CGRectMake(SPACING, SPACING, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
         
+        CGSize maxSize = CGSizeMake(CGRectGetWidth(self.bounds) - 2 * SPACING - CGRectGetMaxX(self.coverImageView.frame),
+                                    COVER_IMAGE_SIZE);
+        CGSize textSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font
+                                           constrainedToSize:maxSize
+                                               lineBreakMode:self.titleLabel.lineBreakMode];
+        
         self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.coverImageView.frame) + SPACING,
                                            SPACING,
-                                           CGRectGetWidth(self.bounds) - 2 * SPACING - CGRectGetMaxX(self.coverImageView.frame),
-                                           COVER_IMAGE_SIZE);
+                                           textSize.width,
+                                           textSize.height);
 
     } else {
+        CGSize maxSize = CGSizeMake(CGRectGetWidth(self.bounds) - 2 * SPACING,
+                                    COVER_IMAGE_SIZE);
+        CGSize textSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font
+                                           constrainedToSize:maxSize
+                                               lineBreakMode:self.titleLabel.lineBreakMode];
+        
         self.titleLabel.frame = CGRectMake(SPACING,
                                            SPACING,
-                                           CGRectGetWidth(self.bounds) - 2 * SPACING,
-                                           COVER_IMAGE_SIZE);
+                                           textSize.width,
+                                           textSize.height);
     }
     
     
-    self.line.frame = CGRectMake(SPACING, CGRectGetMaxY(self.titleLabel.frame) + SPACING, CGRectGetWidth(self.bounds) - 2 * SPACING, 1);
+    self.line.frame = CGRectMake(SPACING,
+                                 MAX(CGRectGetMaxY(self.titleLabel.frame),
+                                     CGRectGetMaxY(self.coverImageView.frame)) + SPACING,
+                                 CGRectGetWidth(self.bounds) - 2 * SPACING,
+                                 1);
     
     switch (self.state) {
         case SCRecordingUploadProgressViewStateSuccess:

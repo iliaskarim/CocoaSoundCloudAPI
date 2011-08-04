@@ -28,6 +28,8 @@
 #import "SCRecordingSaveViewControllerHeaderView.h"
 #import "SCRecordingUploadProgressView.h"
 
+#import "UIColor+SoundCloud.h"
+
 #import "SCRecordingSaveViewController.h"
 
 
@@ -457,7 +459,17 @@ const NSArray *allServices = nil;
                                       action:@selector(privacyChanged:)
                             forControlEvents:UIControlEventValueChanged];
     
-    self.headerView.disclosureButton.hidden = YES;
+    if (self.foursquareController) {
+        self.headerView.disclosureButton.hidden = NO;
+        [self.headerView.disclosureButton addTarget:self
+                                             action:@selector(openPlacePicker)
+                                   forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        self.headerView.disclosureButton.hidden = YES;
+        [self.headerView.disclosureButton removeTarget:self
+                                                action:@selector(openPlacePicker)
+                                      forControlEvents:UIControlEventTouchUpInside];
+    }
     
     [self.headerView.logoutButton addTarget:self
                                      action:@selector(relogin)
@@ -533,12 +545,12 @@ const NSArray *allServices = nil;
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
             GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
             backgroundView.opaque = NO;
-            backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+            backgroundView.backgroundColor = [UIColor transparentBlack];
             backgroundView.borderColor = [UIColor blackColor];
             cell.backgroundView = backgroundView;
             cell.textLabel.backgroundColor = [UIColor clearColor];
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+            cell.textLabel.textColor = [UIColor listSubtitleColor];
             cell.textLabel.highlightedTextColor = [UIColor whiteColor];
             cell.detailTextLabel.backgroundColor = [UIColor clearColor];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
@@ -568,7 +580,7 @@ const NSArray *allServices = nil;
                 cell.opaque = NO;
                 GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
                 backgroundView.opaque = NO;
-                backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+                backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
                 cell.backgroundView = backgroundView;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
@@ -611,7 +623,7 @@ const NSArray *allServices = nil;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
                 backgroundView.opaque = NO;
-                backgroundView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+                backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
                 cell.backgroundView = backgroundView;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
@@ -656,7 +668,7 @@ const NSArray *allServices = nil;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+    label.textColor = [UIColor listSubtitleColor];
     label.lineBreakMode = UILineBreakModeWordWrap;
     label.numberOfLines = 0;
     label.font = [UIFont systemFontOfSize:15.0];
@@ -700,7 +712,7 @@ const NSArray *allServices = nil;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, 10.0, 0.0)];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         label.backgroundColor = [UIColor clearColor];
-        label.textColor = [UIColor colorWithWhite:0.6 alpha:1.0];
+        label.textColor = [UIColor listSubtitleColor];
         label.font = [UIFont systemFontOfSize:13.0];
         label.text = [self tableView:aTableView titleForFooterInSection:section];
         label.numberOfLines = 2;
@@ -1252,20 +1264,6 @@ const NSArray *allServices = nil;
     }
     
     return [NSString stringWithFormat:@"%@ %@", weekday, time];
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SCRecordingSaveViewControllerTextField
-
-- (void)drawPlaceholderInRect:(CGRect)rect;
-{
-    [[UIColor colorWithWhite:0.6 alpha:1.0] setFill];
-    [self.placeholder drawInRect:rect withFont:self.font];
 }
 
 @end

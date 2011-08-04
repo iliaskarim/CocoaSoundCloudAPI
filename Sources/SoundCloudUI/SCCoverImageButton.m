@@ -7,6 +7,7 @@
 //
 
 #import "QuartzCore_GPKit.h"
+#import "UIColor+SoundCloud.h"
 
 #import "SCCoverImageButton.h"
 
@@ -31,7 +32,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     [[UIColor blackColor] setStroke];
-    [[UIColor colorWithWhite:0 alpha:0.2] setFill];
+    [[UIColor transparentBlack] setFill];
     
     CGContextSetLineWidth(context, 1.0);
     GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);

@@ -29,6 +29,7 @@
 #import "SCConstants.h"
 #import "SCBundle.h"
 
+
 NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControllerCancelNotification";
 
 @interface SCLoginTitleBar: UIView {
@@ -65,8 +66,8 @@ NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControll
         URL = [anURL retain];
         resourceBundle = [[NSBundle alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"SoundCloud" ofType:@"bundle"]];
         NSAssert(resourceBundle, @"Please move the SoundCloud.bundle into the Resource Directory of your Application!");
-        self.title = @"SoundCloud";
-        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close"
+        self.title = SCLocalizedString(@"login_title", @"SoundCloud");
+        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"login_close", @"Close")
                                                                                   style:UIBarButtonItemStyleBordered
                                                                                  target:self
                                                                                  action:@selector(close)] autorelease];
@@ -122,7 +123,8 @@ NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControll
     [self setToolbarItems:toolbarItems];
     
     
-    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+//    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
     
     titleBarView = [[SCLoginTitleBar alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)];
     titleBarView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);

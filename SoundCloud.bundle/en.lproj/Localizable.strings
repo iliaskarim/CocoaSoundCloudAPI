@@ -421,3 +421,29 @@
 "your_tracks" = "Your tracks";
 
 "your_tracks_count_known" = "Your tracks (%d)";
+
+"record_save_logout" = "Log out";
+
+"record_save_add_cover_artwork" = "Add\nimage";
+
+"record_save_where" = "Where";
+
+"record_save_what" = "What";
+
+"place_picker_reset" = "Reset";
+
+"place_picker_title" = "Where?";
+
+"place_picker_placeholder" = "Add Your Place";
+
+"place_picker_nearby" = "Nearby";
+
+"record_save_upload_success" = "Yay, that worked!";
+
+"record_save_upload_fail" = "Ok, that went wrong.";
+
+"record_save_uploading" = "Uploading ...";
+
+"connection_error_ok" = "OK";
+
+"connection_faild" = "Connection failed";

@@ -8,12 +8,14 @@
 
 #import "QuartzCore_GPKit.h"
 #import "UIImage_GPKit.h"
+#import "UIColor+SoundCloud.h"
 
 #import "SCHorizontalLineView.h"
 #import "SCUnderlinedButton.h"
 #import "SCCoverImageButton.h"
 #import "SCSwitch.h"
 #import "SCBundle.h"
+#import "SCTextField.h"
 
 #import "SCRecordingSaveViewControllerHeaderView.h"
 
@@ -100,7 +102,7 @@
     self.logoutButton = [[[SCUnderlinedButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.logoutButton.backgroundColor = [UIColor clearColor];
     self.logoutButton.titleLabel.textColor = [UIColor whiteColor];
-    [self.logoutButton setTitle:@"Log out" forState:UIControlStateNormal];
+    [self.logoutButton setTitle:SCLocalizedString(@"record_save_logout", @"Log out") forState:UIControlStateNormal];
     [self.logoutButton setShowsTouchWhenHighlighted:YES];
     [self.logoutButton sizeToFit];
     [self addSubview:self.logoutButton];
@@ -115,23 +117,23 @@
     [self addSubview:self.coverImageButton];
     
     // What
-    self.whatTextField = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    self.whatTextField = [[[SCTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.whatTextField.opaque = NO;
     self.whatTextField.textAlignment = UITextAlignmentLeft;
     self.whatTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.whatTextField.textColor = [UIColor whiteColor];
-    self.whatTextField.placeholder = @"What";
+    self.whatTextField.placeholder = SCLocalizedString(@"record_save_what", @"What");
     self.whatTextField.returnKeyType = UIReturnKeyDone;
     self.whatTextField.delegate = self;
     [self addSubview:self.whatTextField];
     
     // Where
-    self.whereTextField = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+    self.whereTextField = [[[SCTextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.whereTextField.opaque = NO;
     self.whereTextField.textAlignment = UITextAlignmentLeft;
     self.whereTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.whereTextField.textColor = [UIColor whiteColor];
-    self.whereTextField.placeholder = @"Where";
+    self.whereTextField.placeholder = SCLocalizedString(@"record_save_where", @"Where");
     self.whereTextField.returnKeyType = UIReturnKeyDone;
     self.whereTextField.delegate = self;
     [self addSubview:self.whereTextField];
@@ -149,7 +151,8 @@
     self.privateSwitch.offText = SCLocalizedString(@"sc_upload_private", @"Private");
     [self addSubview:self.privateSwitch];
     
-    [self setUserName:@"..."];
+    [self setUserName:nil];
+    [self setAvatarImage:nil];
     [self setCoverImage:nil];
 }
 
@@ -175,7 +178,11 @@
 
 - (void)setAvatarImage:(UIImage *)anImage;
 {
-    self.avatarImageView.image = [anImage imageByResizingTo:self.avatarImageView.bounds.size forRetinaDisplay:YES];
+    if (anImage) {
+        self.avatarImageView.image = [anImage imageByResizingTo:self.avatarImageView.bounds.size forRetinaDisplay:YES];
+    } else {
+        self.avatarImageView.image = [[SCBundle imageFromPNGWithName:@"default-avatar"] imageByResizingTo:self.avatarImageView.bounds.size forRetinaDisplay:YES];
+    }
 }
 
 - (void)setUserName:(NSString *)aUserName;
@@ -189,7 +196,7 @@
     if (aCoverImage) {
         [self.coverImageButton setTitle:nil forState:UIControlStateNormal];
     } else {
-        [self.coverImageButton setTitle:@"Add\nimage" forState:UIControlStateNormal];
+        [self.coverImageButton setTitle:SCLocalizedString(@"record_save_add_cover_artwork", @"Add\nimage") forState:UIControlStateNormal];
     }
     
     [self.coverImageButton setImage:[aCoverImage imageByResizingTo:self.coverImageButton.bounds.size forRetinaDisplay:YES] forState:UIControlStateNormal];
@@ -226,12 +233,20 @@
     labelRect.origin = CGPointMake(CGRectGetMaxX(self.avatarImageView.frame) + SPACING, SPACING);
     self.userNameLabel.frame = labelRect;
     
-    CGSize fontSize = [self.userNameLabel.text sizeWithFont:self.userNameLabel.font];
+    CGFloat fontSize = 18;
     
-    self.logoutSeparator.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + SPACING,
-                                            CGRectGetMidY(self.userNameLabel.frame) - fontSize.height / 2,
-                                            1.0 / [[UIScreen mainScreen] scale],
-                                            fontSize.height);
+    if (self.userNameLabel.text) {
+        self.logoutSeparator.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + SPACING,
+                                                CGRectGetMidY(self.userNameLabel.frame) - fontSize / 2,
+                                                1.0 / [[UIScreen mainScreen] scale],
+                                                fontSize);
+    } else {
+
+        self.logoutSeparator.frame = CGRectMake(CGRectGetMaxX(self.avatarImageView.frame) + SPACING,
+                                                CGRectGetMidY(self.avatarImageView.frame) - fontSize / 2,
+                                                1.0 / [[UIScreen mainScreen] scale],
+                                                fontSize);
+    }
     
     CGRect logoutButtonFrame;
     logoutButtonFrame.size = [self.logoutButton.titleLabel.text sizeWithFont:self.logoutButton.titleLabel.font];
@@ -271,7 +286,7 @@
     
     CGContextSetLineWidth(context, 1.0);
     [[UIColor blackColor] setStroke];
-    [[UIColor colorWithWhite:0 alpha:0.2] setFill];
+    [[UIColor transparentBlack] setFill];
     
     CGRect textRect = self.textRect;
     

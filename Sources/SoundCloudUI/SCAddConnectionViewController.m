@@ -67,10 +67,10 @@
                          
                      } else {
                          
-                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection failed"
+                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"connection_faild", @"Connection failed")
                                                                          message:[error localizedDescription]
                                                                         delegate:nil
-                                                               cancelButtonTitle:@"OK"
+                                                               cancelButtonTitle:SCLocalizedString(@"connection_error_ok", @"OK")
                                                                otherButtonTitles:nil];
                          [alert show];
                          [alert release];
@@ -143,6 +143,8 @@
     [super viewDidLoad];
     
     webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+//    webView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    webView.opaque = NO;
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     webView.scalesPageToFit = YES;
     webView.delegate = self;
@@ -221,10 +223,10 @@
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection failed"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"add_connection_failed", @"Connection failed")
                                                     message:[error localizedDescription]
                                                    delegate:nil
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:SCLocalizedString(@"add_connection_ok", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
     [alert release];
