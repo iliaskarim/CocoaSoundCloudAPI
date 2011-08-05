@@ -25,11 +25,11 @@
         CGRect logoRect;
         CGRect connectRect;
         CGRect closeRect;
-        CGRectDivide(self.bounds, &logoRect, &connectRect, 45.0, CGRectMinXEdge);
+        CGRectDivide(self.bounds, &logoRect, &connectRect, 40.0, CGRectMinXEdge);
         CGRectDivide(connectRect, &closeRect, &connectRect, connectRect.size.height, CGRectMaxXEdge);
         
         logoRect.origin.x += 6.0;
-        logoRect.origin.y += 4.0;
+        logoRect.origin.y += 8.0;
         connectRect.origin.y += 9.0;
         
         UIImageView *cloudImageView = [[UIImageView alloc] initWithFrame:logoRect];
@@ -41,7 +41,7 @@
         [cloudImageView release];
         
         UIImageView *titleImageView = [[UIImageView alloc] initWithFrame:connectRect];
-        UIImage *titleImage = [SCBundle imageFromPNGWithName:@"cwsc"];
+        UIImage *titleImage = [SCBundle imageFromPNGWithName:@"sharetosc"];
         titleImageView.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
         titleImageView.image = titleImage;
         [titleImageView sizeToFit];

@@ -19,7 +19,7 @@
 		label = [[UILabel alloc] initWithFrame:self.bounds];
 		label.backgroundColor = [UIColor clearColor];
 		label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-		label.font = [UIFont systemFontOfSize:16];
+		label.font = [UIFont systemFontOfSize:15];
 		label.textColor = [UIColor whiteColor];
 		label.shadowColor = [UIColor colorWithWhite:0.2 alpha:0.3];
 		label.shadowOffset = CGSizeMake(0, -1);

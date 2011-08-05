@@ -24,7 +24,7 @@
 #define TEXTBOX_TOP 9.0 + 55.0
 #define TEXTBOX_HEIGHT 84.0
 
-#define SPACING 9.0
+#define SPACING 10.0
 
 #define COVER_IMAGE_CENTER_X 50 
 #define COVER_IMAGE_CENTER_Y 95
@@ -91,6 +91,7 @@
     self.userNameLabel.opaque = NO;
     self.userNameLabel.backgroundColor = [UIColor clearColor];
     self.userNameLabel.textColor = [UIColor whiteColor];
+    self.userNameLabel.font = [UIFont systemFontOfSize:15.0];
     [self addSubview:self.userNameLabel];
 
     // Separator
@@ -102,6 +103,7 @@
     self.logoutButton = [[[SCUnderlinedButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.logoutButton.backgroundColor = [UIColor clearColor];
     self.logoutButton.titleLabel.textColor = [UIColor whiteColor];
+    self.logoutButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
     [self.logoutButton setTitle:SCLocalizedString(@"record_save_logout", @"Log out") forState:UIControlStateNormal];
     [self.logoutButton setShowsTouchWhenHighlighted:YES];
     [self.logoutButton sizeToFit];
@@ -122,6 +124,7 @@
     self.whatTextField.textAlignment = UITextAlignmentLeft;
     self.whatTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.whatTextField.textColor = [UIColor whiteColor];
+    self.whatTextField.font = [UIFont systemFontOfSize:15.0];
     self.whatTextField.placeholder = SCLocalizedString(@"record_save_what", @"What");
     self.whatTextField.returnKeyType = UIReturnKeyDone;
     self.whatTextField.delegate = self;
@@ -133,6 +136,7 @@
     self.whereTextField.textAlignment = UITextAlignmentLeft;
     self.whereTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.whereTextField.textColor = [UIColor whiteColor];
+    self.whereTextField.font = [UIFont systemFontOfSize:15.0];
     self.whereTextField.placeholder = SCLocalizedString(@"record_save_where", @"Where");
     self.whereTextField.returnKeyType = UIReturnKeyDone;
     self.whereTextField.delegate = self;
@@ -206,8 +210,8 @@
 {
     CGRect textRect = self.coverImageButton.frame;
     
-    textRect.origin.x = CGRectGetMaxX(textRect) + SPACING;
-    textRect.size.width = CGRectGetWidth(self.bounds) - SPACING - textRect.origin.x;
+    textRect.origin.x = CGRectGetMaxX(textRect) + 11;
+    textRect.size.width = CGRectGetWidth(self.bounds) - 9.0 - textRect.origin.x;
     
     return textRect;
 }
@@ -233,18 +237,18 @@
     labelRect.origin = CGPointMake(CGRectGetMaxX(self.avatarImageView.frame) + SPACING, SPACING);
     self.userNameLabel.frame = labelRect;
     
-    CGFloat fontSize = 18;
+    CGFloat fontSize = 16;
     
     if (self.userNameLabel.text) {
         self.logoutSeparator.frame = CGRectMake(CGRectGetMaxX(self.userNameLabel.frame) + SPACING,
                                                 CGRectGetMidY(self.userNameLabel.frame) - fontSize / 2,
-                                                1.0 / [[UIScreen mainScreen] scale],
+                                                1.0,
                                                 fontSize);
     } else {
 
         self.logoutSeparator.frame = CGRectMake(CGRectGetMaxX(self.avatarImageView.frame) + SPACING,
                                                 CGRectGetMidY(self.avatarImageView.frame) - fontSize / 2,
-                                                1.0 / [[UIScreen mainScreen] scale],
+                                                1.0,
                                                 fontSize);
     }
     
@@ -253,9 +257,9 @@
     logoutButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.logoutSeparator.frame) + SPACING, SPACING);
     self.logoutButton.frame = logoutButtonFrame;
     
-    self.firstHR.frame = CGRectMake(0, CGRectGetMaxY(self.avatarImageView.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0 / [[UIScreen mainScreen] scale]);
+    self.firstHR.frame = CGRectMake(0, CGRectGetMaxY(self.avatarImageView.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0);
     
-    self.coverImageButton.frame = CGRectMake(SPACING, CGRectGetMaxY(self.firstHR.frame) + SPACING, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
+    self.coverImageButton.frame = CGRectMake(9.0, CGRectGetMaxY(self.firstHR.frame) + 13, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
     
     CGRect whatTextFieldFrame;
     CGRect whereTextFieldFrame;
@@ -268,9 +272,9 @@
     
     self.disclosureButton.center = CGPointMake(CGRectGetMaxX(self.whereTextField.frame) + SPACING, CGRectGetMidY(self.whereTextField.frame));
     
-    self.privateSwitch.frame = CGRectMake(SPACING, CGRectGetMaxY(self.coverImageButton.frame) + SPACING, CGRectGetWidth(self.bounds) - 2 * SPACING, 30);
+    self.privateSwitch.frame = CGRectMake(9.0, CGRectGetMaxY(self.coverImageButton.frame) + 15.0, CGRectGetWidth(self.bounds) - 2 * 9.0, 30);
     
-    self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0 / [[UIScreen mainScreen] scale]);
+    self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + 15.0, CGRectGetWidth(self.bounds), 2.0);
     
     self.bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetMaxY(self.secondHR.frame));
     

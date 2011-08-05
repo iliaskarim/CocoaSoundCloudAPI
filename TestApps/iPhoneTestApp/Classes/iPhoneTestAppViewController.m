@@ -73,7 +73,6 @@
         
         [self dismissModalViewControllerAnimated:YES];
     }];
-    [shareView setTitle:@"Foo Bar!"];
     [self presentModalViewController:shareView animated:YES];
 }
 

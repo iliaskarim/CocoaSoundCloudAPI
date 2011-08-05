@@ -549,11 +549,11 @@ const NSArray *allServices = nil;
             backgroundView.borderColor = [UIColor blackColor];
             cell.backgroundView = backgroundView;
             cell.textLabel.backgroundColor = [UIColor clearColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+            cell.textLabel.font = [UIFont systemFontOfSize:15.0];
             cell.textLabel.textColor = [UIColor listSubtitleColor];
             cell.textLabel.highlightedTextColor = [UIColor whiteColor];
             cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:16.0];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
         }
@@ -584,7 +584,7 @@ const NSArray *allServices = nil;
                 backgroundView.borderColor = [UIColor blackColor];
                 cell.backgroundView = backgroundView;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
-                cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+                cell.textLabel.font = [UIFont systemFontOfSize:15.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
             }
             
@@ -627,7 +627,7 @@ const NSArray *allServices = nil;
                 backgroundView.borderColor = [UIColor blackColor];
                 cell.backgroundView = backgroundView;
                 cell.textLabel.backgroundColor = [UIColor clearColor];
-                cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+                cell.textLabel.font = [UIFont systemFontOfSize:15.0];
                 cell.textLabel.textColor = [UIColor whiteColor];
                 cell.accessoryView = [[UIImageView alloc] initWithImage:[SCBundle imageFromPNGWithName:@"DisclosureIndicator"]];
                 cell.detailTextLabel.text = SCLocalizedString(@"configure", @"Configure");
@@ -649,7 +649,7 @@ const NSArray *allServices = nil;
 {
     if (self.isPrivate) {
         // TODO: Insert correct text describing the private options
-        return SCLocalizedString(@"sc_upload_sharing_options_private", @"Your track will be private after the upload. You want to send it to other members?");
+        return SCLocalizedString(@"sc_upload_sharing_options_private", @"Your track will be private after the upload. You want to share it with others?");
     } else {
         return SCLocalizedString(@"sc_upload_sharing_options_public", @"Your track will be available for the public after the upload. You want to push it to other services afterwards?");
     }
@@ -663,7 +663,7 @@ const NSArray *allServices = nil;
                        constrainedToSize:CGSizeMake(320.0 - 10, CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, textSize.height)] autorelease];
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, textSize.height + 2 * 10.0)] autorelease];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -686,7 +686,7 @@ const NSArray *allServices = nil;
                        constrainedToSize:CGSizeMake(320.0 - 10, CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
-    return textSize.height + 8;
+    return textSize.height + 2 * 10.0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section;

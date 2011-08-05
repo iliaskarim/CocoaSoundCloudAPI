@@ -123,8 +123,8 @@ NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControll
     [self setToolbarItems:toolbarItems];
     
     
-//    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
     
     titleBarView = [[SCLoginTitleBar alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)];
     titleBarView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
@@ -133,11 +133,11 @@ NSString * const SCLoginViewControllerCancelNotification = @"SCLoginViewControll
     CGRect logoRect;
     CGRect connectRect;
     CGRect closeRect;
-    CGRectDivide(titleBarView.bounds, &logoRect, &connectRect, 45.0, CGRectMinXEdge);
+    CGRectDivide(titleBarView.bounds, &logoRect, &connectRect, 40.0, CGRectMinXEdge);
     CGRectDivide(connectRect, &closeRect, &connectRect, connectRect.size.height, CGRectMaxXEdge);
     
     logoRect.origin.x += 6.0;
-    logoRect.origin.y += 4.0;
+    logoRect.origin.y += 8.0;
     connectRect.origin.y += 9.0;
     
     UIImageView *cloudImageView = [[UIImageView alloc] initWithFrame:logoRect];
