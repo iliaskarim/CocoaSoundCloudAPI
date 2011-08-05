@@ -101,12 +101,6 @@
 		F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6622B6613D84A2B0057ADD0 /* Cocoa.framework */; };
 		F665F1A913E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.h in Headers */ = {isa = PBXBuildFile; fileRef = F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */; };
 		F665F1AA13E1636000AC2118 /* SCSCRecordingSaveViewControllerTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */; };
-		F66BAD1013D9739600996800 /* SCURLStringValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD0A13D9739400996800 /* SCURLStringValueTransformer.h */; };
-		F66BAD1113D9739600996800 /* SCURLStringValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BAD0B13D9739400996800 /* SCURLStringValueTransformer.m */; };
-		F66BAD1213D9739600996800 /* SCNumberToStringValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD0C13D9739400996800 /* SCNumberToStringValueTransformer.h */; };
-		F66BAD1313D9739600996800 /* SCNumberToStringValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BAD0D13D9739500996800 /* SCNumberToStringValueTransformer.m */; };
-		F66BAD1413D9739600996800 /* SCAPITimestampValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD0E13D9739500996800 /* SCAPITimestampValueTransformer.h */; };
-		F66BAD1513D9739600996800 /* SCAPITimestampValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BAD0F13D9739600996800 /* SCAPITimestampValueTransformer.m */; };
 		F66BAD1A13D97B7700996800 /* SCFoursquarePlacePickerControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD1713D97B7700996800 /* SCFoursquarePlacePickerControllerDelegate.h */; };
 		F66BAD1B13D97B7700996800 /* SCFoursquarePlacePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = F66BAD1813D97B7700996800 /* SCFoursquarePlacePickerController.h */; };
 		F66BAD1C13D97B7700996800 /* SCFoursquarePlacePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BAD1913D97B7700996800 /* SCFoursquarePlacePickerController.m */; };
@@ -260,12 +254,6 @@
 		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F665F1A713E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSCRecordingSaveViewControllerTitleView.h; path = Sources/SoundCloudUI/SCSCRecordingSaveViewControllerTitleView.h; sourceTree = SOURCE_ROOT; };
 		F665F1A813E1635F00AC2118 /* SCSCRecordingSaveViewControllerTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSCRecordingSaveViewControllerTitleView.m; path = Sources/SoundCloudUI/SCSCRecordingSaveViewControllerTitleView.m; sourceTree = SOURCE_ROOT; };
-		F66BAD0A13D9739400996800 /* SCURLStringValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCURLStringValueTransformer.h; path = ../SoundCloudUI/SCURLStringValueTransformer.h; sourceTree = "<group>"; };
-		F66BAD0B13D9739400996800 /* SCURLStringValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCURLStringValueTransformer.m; path = ../SoundCloudUI/SCURLStringValueTransformer.m; sourceTree = "<group>"; };
-		F66BAD0C13D9739400996800 /* SCNumberToStringValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCNumberToStringValueTransformer.h; path = ../SoundCloudUI/SCNumberToStringValueTransformer.h; sourceTree = "<group>"; };
-		F66BAD0D13D9739500996800 /* SCNumberToStringValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCNumberToStringValueTransformer.m; path = ../SoundCloudUI/SCNumberToStringValueTransformer.m; sourceTree = "<group>"; };
-		F66BAD0E13D9739500996800 /* SCAPITimestampValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAPITimestampValueTransformer.h; path = ../SoundCloudUI/SCAPITimestampValueTransformer.h; sourceTree = "<group>"; };
-		F66BAD0F13D9739600996800 /* SCAPITimestampValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCAPITimestampValueTransformer.m; path = ../SoundCloudUI/SCAPITimestampValueTransformer.m; sourceTree = "<group>"; };
 		F66BAD1713D97B7700996800 /* SCFoursquarePlacePickerControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCFoursquarePlacePickerControllerDelegate.h; path = ../SoundCloudUI/SCFoursquarePlacePickerControllerDelegate.h; sourceTree = "<group>"; };
 		F66BAD1813D97B7700996800 /* SCFoursquarePlacePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCFoursquarePlacePickerController.h; path = ../SoundCloudUI/SCFoursquarePlacePickerController.h; sourceTree = "<group>"; };
 		F66BAD1913D97B7700996800 /* SCFoursquarePlacePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFoursquarePlacePickerController.m; path = ../SoundCloudUI/SCFoursquarePlacePickerController.m; sourceTree = "<group>"; };
@@ -539,12 +527,6 @@
 				F6E60D3B13DD9F0900A85727 /* SCSwitch.m */,
 				F6A9853013D98C9B000AC828 /* SCNameAndEmailCell.h */,
 				F6A9853113D98C9B000AC828 /* SCNameAndEmailCell.m */,
-				F66BAD0A13D9739400996800 /* SCURLStringValueTransformer.h */,
-				F66BAD0B13D9739400996800 /* SCURLStringValueTransformer.m */,
-				F66BAD0C13D9739400996800 /* SCNumberToStringValueTransformer.h */,
-				F66BAD0D13D9739500996800 /* SCNumberToStringValueTransformer.m */,
-				F66BAD0E13D9739500996800 /* SCAPITimestampValueTransformer.h */,
-				F66BAD0F13D9739600996800 /* SCAPITimestampValueTransformer.m */,
 				F66BAD2113D97BD700996800 /* NSData+SCKit.h */,
 				F66BAD2213D97BD700996800 /* NSData+SCKit.m */,
 				F66BAD2513D97BFD00996800 /* NSString+SCKit.h */,
@@ -696,9 +678,6 @@
 				F6410A1513D8860D00561D0B /* GPSwitchLabel.h in Headers */,
 				F6410A1913D887AE00561D0B /* GPNetworkActivityController.h in Headers */,
 				F6410A1D13D887C300561D0B /* UIView_GPKit.h in Headers */,
-				F66BAD1013D9739600996800 /* SCURLStringValueTransformer.h in Headers */,
-				F66BAD1213D9739600996800 /* SCNumberToStringValueTransformer.h in Headers */,
-				F66BAD1413D9739600996800 /* SCAPITimestampValueTransformer.h in Headers */,
 				F66BAD1A13D97B7700996800 /* SCFoursquarePlacePickerControllerDelegate.h in Headers */,
 				F66BAD1B13D97B7700996800 /* SCFoursquarePlacePickerController.h in Headers */,
 				F66BAD1F13D97BB300996800 /* GPWebAPI.h in Headers */,
@@ -880,9 +859,6 @@
 				F6410A1613D8860D00561D0B /* GPSwitchLabel.m in Sources */,
 				F6410A1A13D887AE00561D0B /* GPNetworkActivityController.m in Sources */,
 				F6410A1E13D887C300561D0B /* UIView_GPKit.m in Sources */,
-				F66BAD1113D9739600996800 /* SCURLStringValueTransformer.m in Sources */,
-				F66BAD1313D9739600996800 /* SCNumberToStringValueTransformer.m in Sources */,
-				F66BAD1513D9739600996800 /* SCAPITimestampValueTransformer.m in Sources */,
 				F66BAD1C13D97B7700996800 /* SCFoursquarePlacePickerController.m in Sources */,
 				F66BAD2013D97BB300996800 /* GPWebAPI.m in Sources */,
 				F66BAD2413D97BD800996800 /* NSData+SCKit.m in Sources */,
