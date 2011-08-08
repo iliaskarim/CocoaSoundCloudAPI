@@ -48,9 +48,6 @@
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         locationManager.distanceFilter = 30.0;
         locationManager.delegate = self;
-        if ([locationManager respondsToSelector:@selector(purpose)]) {
-//            locationManager.purpose = @"Purpose Test";
-        }
         [locationManager startUpdatingLocation];
         
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"place_picker_reset", @"Reset")
@@ -121,6 +118,7 @@
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [locationManager startUpdatingLocation];
 }
 
@@ -130,6 +128,12 @@
     if (locationManager && locationManager.location) {
         [self locationManager:locationManager didUpdateToLocation:locationManager.location fromLocation:nil];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated;
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;

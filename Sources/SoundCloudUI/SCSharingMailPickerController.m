@@ -274,6 +274,16 @@
 	[self.navigationController presentModalViewController:controller animated:YES];	
 }
 
+#pragma mark ViewController
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
+{
+    return YES;
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        return YES;
+    }
+    return NO;
+}
 
 #pragma mark UITextFieldDelegate
 

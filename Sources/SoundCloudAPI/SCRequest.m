@@ -64,7 +64,7 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
             break;
     }
     
-    NSAssert([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
+    NSAssert1([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
     
     NXOAuth2Request *request = [[NXOAuth2Request alloc] initWithResource:aResource method:theMethod parameters:someParameters];
     request.account = anAccount.oauthAccount;
@@ -115,7 +115,7 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     } else if ([aMethod caseInsensitiveCompare:@"DELETE"]) {
         return SCRequestMethodDELETE;
     } else {
-        NSAssert([aMethod caseInsensitiveCompare:@"GET"], @"SCRequest only supports 'GET', 'PUT', 'POST' and 'DELETE' as request method. Underlying NXOAuth2Accound uses the request method 'l%'.", aMethod);
+        NSAssert1([aMethod caseInsensitiveCompare:@"GET"], @"SCRequest only supports 'GET', 'PUT', 'POST' and 'DELETE' as request method. Underlying NXOAuth2Accound uses the request method 'l%'.", aMethod);
         return SCRequestMethodGET;
     }
 }

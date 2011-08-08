@@ -43,10 +43,7 @@
     [recView setCompletionHandler:aCompletionHandler];
     
     SCShareViewController *shareViewController = [[SCShareViewController alloc] initWithRootViewController:recView];
-    if (shareViewController) {
-        shareViewController.navigationBarHidden = YES;
-        shareViewController.navigationBar.barStyle = UIBarStyleBlack;
-    }
+    [shareViewController setModalPresentationStyle:UIModalPresentationFormSheet];
     return [shareViewController autorelease];
 }
 
@@ -60,10 +57,7 @@
     [recView setCompletionHandler:aCompletionHandler];
     
     SCShareViewController *shareViewController = [[SCShareViewController alloc] initWithRootViewController:recView];
-    if (shareViewController) {
-        shareViewController.navigationBarHidden = YES;
-        shareViewController.navigationBar.barStyle = UIBarStyleBlack;
-    }
+    [shareViewController setModalPresentationStyle:UIModalPresentationFormSheet];
     return [shareViewController autorelease];
 }
 

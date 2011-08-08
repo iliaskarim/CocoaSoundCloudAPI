@@ -17,6 +17,8 @@
 #import "SCBundle.h"
 #import "SCTextField.h"
 
+#import "SCAppIsRunningOnIPad.h"
+
 #import "SCRecordingSaveViewControllerHeaderView.h"
 
 #define TEXTBOX_LEFT 102.0
@@ -49,6 +51,10 @@
 @property (nonatomic, readwrite, assign) SCSwitch *privateSwitch;
 
 @property (nonatomic, readonly) CGRect textRect;
+
+#pragma mark Helper
+
+- (float)margin;
 
 @end
 
@@ -211,7 +217,7 @@
     CGRect textRect = self.coverImageButton.frame;
     
     textRect.origin.x = CGRectGetMaxX(textRect) + 11;
-    textRect.size.width = CGRectGetWidth(self.bounds) - 9.0 - textRect.origin.x;
+    textRect.size.width = CGRectGetWidth(self.bounds) - [self margin] - textRect.origin.x;
     
     return textRect;
 }
@@ -225,7 +231,8 @@
     self.avatarImageView.frame = CGRectMake(SPACING, SPACING, 20, 20);
     
     CGFloat maxUserLabelWidth = CGRectGetWidth(self.bounds)
-    - 5 * SPACING
+    - 2 * [self margin]
+    - 3 * SPACING
     - CGRectGetWidth(self.avatarImageView.bounds)
     - CGRectGetWidth(self.logoutSeparator.bounds)
     - CGRectGetWidth(self.logoutButton.bounds);
@@ -259,7 +266,7 @@
     
     self.firstHR.frame = CGRectMake(0, CGRectGetMaxY(self.avatarImageView.frame) + SPACING, CGRectGetWidth(self.bounds), 2.0);
     
-    self.coverImageButton.frame = CGRectMake(9.0, CGRectGetMaxY(self.firstHR.frame) + 13, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
+    self.coverImageButton.frame = CGRectMake([self margin], CGRectGetMaxY(self.firstHR.frame) + 13, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
     
     CGRect whatTextFieldFrame;
     CGRect whereTextFieldFrame;
@@ -272,7 +279,7 @@
     
     self.disclosureButton.center = CGPointMake(CGRectGetMaxX(self.whereTextField.frame) + SPACING, CGRectGetMidY(self.whereTextField.frame));
     
-    self.privateSwitch.frame = CGRectMake(9.0, CGRectGetMaxY(self.coverImageButton.frame) + 15.0, CGRectGetWidth(self.bounds) - 2 * 9.0, 30);
+    self.privateSwitch.frame = CGRectMake([self margin], CGRectGetMaxY(self.coverImageButton.frame) + 15.0, CGRectGetWidth(self.bounds) - 2 * [self margin], 30);
     
     self.secondHR.frame = CGRectMake(0, CGRectGetMaxY(self.privateSwitch.frame) + 15.0, CGRectGetWidth(self.bounds), 2.0);
     
@@ -301,6 +308,18 @@
     CGContextMoveToPoint(context, CGRectGetMinX(textRect), CGRectGetMidY(textRect)+0.5);
     CGContextAddLineToPoint(context, CGRectGetMaxX(textRect), CGRectGetMidY(textRect)+0.5);
     CGContextStrokePath(context);
+}
+
+
+#pragma mark Helper
+
+- (float)margin;
+{
+    if (SCAppIsRunningOnIPad()) {
+        return 30.0;
+    } else {
+        return 9.0;
+    }
 }
 
 @end
