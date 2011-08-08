@@ -277,7 +277,6 @@ const NSArray *allServices = nil;
                              NSError *jsonError = nil;
                              id result = [data objectFromJSONData];
                              if (result) {
-//                                 NSLog(@"Me: %@", result);
                                  
                                  NSURL *avatarURL = [NSURL URLWithString:[result objectForKey:@"avatar_url"]];
                                  NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
@@ -378,32 +377,23 @@ const NSArray *allServices = nil;
 - (void)viewDidLoad;
 {
     [super viewDidLoad];
-    
+        
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
 
     
     // Background
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
-
+    UIImage *bg = [SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
+    
     
     // Navigation Bar
     self.navigationController.navigationBarHidden = YES;
-    
-    
-    // Banner
-    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)] autorelease]];
-    
     
     // Toolbar
     self.toolBar = [[[UIToolbar alloc] init] autorelease];
     self.toolBar.barStyle = UIBarStyleBlack;
     self.toolBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
                                      UIViewAutoresizingFlexibleTopMargin);
-    [self.toolBar sizeToFit];
-    [self.toolBar setFrame:CGRectMake(0.0,
-                                      self.view.frame.size.height - self.toolBar.frame.size.height, 
-                                      self.toolBar.frame.size.width,
-                                      self.toolBar.frame.size.height)];
     [self.view addSubview:self.toolBar];
     
     
@@ -425,18 +415,13 @@ const NSArray *allServices = nil;
     
     
     // Table View
-    
-    CGRect tableViewFrame = self.view.bounds;
-    tableViewFrame.origin.y += 28.0;        // Banner
-    tableViewFrame.size.height -= 28.0;     // Banner
-    tableViewFrame.size.height -= CGRectGetHeight(self.toolBar.frame); // Toolbar
-    
-    self.tableView = [[[UITableView alloc] initWithFrame:tableViewFrame
+    self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)
                                                    style:UITableViewStyleGrouped] autorelease];
     
     self.tableView.autoresizingMask = (UIViewAutoresizingFlexibleHeight |
                                        UIViewAutoresizingFlexibleWidth);
     
+    self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.opaque = NO;
     self.tableView.delegate = self;
@@ -485,6 +470,21 @@ const NSArray *allServices = nil;
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
+    
+    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)] autorelease]];
+    
+    [self.toolBar sizeToFit];
+    [self.toolBar setFrame:CGRectMake(0.0,
+                                      self.view.frame.size.height - self.toolBar.frame.size.height, 
+                                      self.toolBar.frame.size.width,
+                                      self.toolBar.frame.size.height)];
+    
+    CGRect tableViewFrame = self.view.bounds;
+    tableViewFrame.origin.y += 28.0;        // Banner
+    tableViewFrame.size.height -= 28.0;     // Banner
+    tableViewFrame.size.height -= CGRectGetHeight(self.toolBar.frame); // Toolbar
+    
+    self.tableView.frame = tableViewFrame;
     
     self.account = [SCSoundCloud account];
     
@@ -543,7 +543,7 @@ const NSArray *allServices = nil;
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"mailShare"];
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
-            GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
+            GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
             backgroundView.opaque = NO;
             backgroundView.backgroundColor = [UIColor transparentBlack];
             backgroundView.borderColor = [UIColor blackColor];
@@ -578,7 +578,7 @@ const NSArray *allServices = nil;
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.opaque = NO;
-                GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
+                GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
                 backgroundView.opaque = NO;
                 backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
@@ -621,7 +621,7 @@ const NSArray *allServices = nil;
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)] autorelease];
+                GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
                 backgroundView.opaque = NO;
                 backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
@@ -660,10 +660,10 @@ const NSArray *allServices = nil;
     NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(320.0 - 10, CGFLOAT_MAX)
+                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 10, CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, textSize.height + 2 * 10.0)] autorelease];
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), textSize.height + 2 * 10.0)] autorelease];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -683,7 +683,7 @@ const NSArray *allServices = nil;
     NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(320.0 - 10, CGFLOAT_MAX)
+                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 10, CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
     return textSize.height + 2 * 10.0;
@@ -707,7 +707,7 @@ const NSArray *allServices = nil;
     if (isPrivate) {
         return nil;
     } else {
-        UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 20.0)] autorelease];
+        UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 20.0)] autorelease];
         footerView.backgroundColor = [UIColor clearColor];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, 10.0, 0.0)];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -736,6 +736,7 @@ const NSArray *allServices = nil;
 			navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
 			controller.title = SCLocalizedString(@"sc_upload_with_access", @"With Access");
 			controller.result = self.sharingMailAddresses;
+            navController.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentModalViewController:navController animated:YES];
 			[controller release];
 			[navController release];
@@ -748,6 +749,7 @@ const NSArray *allServices = nil;
             SCAddConnectionViewController *controller = [[SCAddConnectionViewController alloc] initWithService:[service objectForKey:@"service"] account:account delegate:self];
             controller.title = [NSString stringWithFormat:SCLocalizedString(@"sc_upload_connect_to", @"Connect %@"), [service objectForKey:@"displayName"]];
             
+            controller.modalPresentationStyle = UIModalPresentationFormSheet;
             [self.navigationController pushViewController:controller animated:YES];
             [controller release];
             [aTableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -969,6 +971,7 @@ const NSArray *allServices = nil;
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.allowsEditing = YES;
+    picker.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:picker animated:YES];
     [picker release];
 }
@@ -979,6 +982,7 @@ const NSArray *allServices = nil;
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:picker animated:YES];
     [picker release];
 }
@@ -988,6 +992,7 @@ const NSArray *allServices = nil;
     if (self.foursquareController) {
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.foursquareController];
         navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
+        navController.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentModalViewController:navController animated:YES];
         [navController release];
     }
@@ -1004,9 +1009,7 @@ const NSArray *allServices = nil;
 }
 
 - (IBAction)upload;
-{
-    NSLog(@"Uploading ...");
-    
+{    
     [self hideToolBar];
     
     // setup progress view
@@ -1125,13 +1128,11 @@ const NSArray *allServices = nil;
 
 - (IBAction)cancel;
 {
-    NSLog(@"canceling ...");
     self.completionHandler(YES, nil);
 }
 
 - (IBAction)relogin;
 {
-    NSLog(@"Logging out ...");
     [SCSoundCloud removeAccess];
     self.account = nil;
     [SCSoundCloud requestAccessWithPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
@@ -1145,7 +1146,6 @@ const NSArray *allServices = nil;
 
 - (void)accountDidChange:(NSNotification *)aNotification;
 {
-//    NSLog(@"%s", __FUNCTION__);
     self.account = [SCSoundCloud account];
     if (self.account && self.modalViewController){
         [self dismissModalViewControllerAnimated:YES];
@@ -1154,7 +1154,6 @@ const NSArray *allServices = nil;
 
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
 {
-    NSLog(@"%s: %@", __FUNCTION__, aNotification);
     [self cancel];
 }
 
