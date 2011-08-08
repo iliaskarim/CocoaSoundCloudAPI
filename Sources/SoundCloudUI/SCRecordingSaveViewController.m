@@ -108,6 +108,7 @@
 - (NSString *)generatedTitle;
 - (NSString *)generatedSharingNote;
 - (NSString *)dateString;
+- (float)cellMargin;
 @end
 
 
@@ -675,12 +676,12 @@ const NSArray *allServices = nil;
     NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 10, CGFLOAT_MAX)
+                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), textSize.height + 2 * 10.0)] autorelease];
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], textSize.height + 2 * 10.0)] autorelease];
     sectionHeaderView.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, [self cellMargin], 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor listSubtitleColor];
@@ -698,7 +699,7 @@ const NSArray *allServices = nil;
     NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 10, CGFLOAT_MAX)
+                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
     return textSize.height + 2 * 10.0;
@@ -724,7 +725,7 @@ const NSArray *allServices = nil;
     } else {
         UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 20.0)] autorelease];
         footerView.backgroundColor = [UIColor clearColor];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, 10.0, 0.0)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, [self cellMargin], 0.0)];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor listSubtitleColor];
@@ -1386,6 +1387,15 @@ const NSArray *allServices = nil;
     }
     
     return [NSString stringWithFormat:@"%@ %@", weekday, time];
+}
+
+- (float)cellMargin;
+{
+    if (SCAppIsRunningOnIPad()) {
+        return 30.0;
+    } else {
+        return 9.0;
+    }
 }
 
 @end
