@@ -10,6 +10,7 @@
 #import "GPCellLoader.h"
 #import "SCNameAndEmailCell.h"
 #import "SCBundle.h"
+#import "SCAppIsRunningOnIPad.h"
 
 #import "SCSharingMailPickerController.h"
 
@@ -20,7 +21,8 @@
 	id	_target;
 	SEL	_selector;
 }
-- (id)initWithTarget:(id)target selector:(SEL)selector;
+- (id)initWithTarget:(id)target
+            selector:(SEL)selector;
 @end
 
 
@@ -35,43 +37,84 @@
 	NSString		*_autocompleteString;
 }
 
-- (id)initWithTarget:(id)target selector:(SEL)selector addressbookData:(NSDictionary *)addressbookData autocompleteString:(NSString *)autocompleteString;
+- (id)initWithTarget:(id)target
+            selector:(SEL)selector
+     addressbookData:(NSDictionary *)addressbookData
+  autocompleteString:(NSString *)autocompleteString;
 
 @end
-
 
 #pragma mark -
 
 
 @interface SCSharingMailPickerController ()
-- (NSArray *)arrayOfEmailsInString:(NSString *)string unparsebleStrings:(NSArray **)unparsableRet;
-- (void)updateAutocompletionWithInputFieldValue:(NSString *)textFieldValue;
-- (void)setAutocompleteData:(NSArray *)_autocompleteData;
 
-- (void)updateResult;
+#pragma mark Accessors
+@property (nonatomic, assign) UITextField *emailsField;
+@property (nonatomic, assign) UIBarButtonItem *doneBarButton;
+@property (nonatomic, assign) UIButton *addFromAddresbookButton;
+@property (nonatomic, assign) UILabel *inputLabel;
+@property (nonatomic, assign) UIView *inputView;
+
+@property (nonatomic, retain) UITableViewController	*autocompleteTableViewController;
 
 @property (nonatomic, retain) NSDictionary *addressBookData;
+@property (nonatomic, retain) NSMutableArray *currentResult;
+@property (nonatomic, retain) NSMutableArray *autocompleteData;
+
+@property (nonatomic, retain) NSOperationQueue *autocompleteOperationQueue;
+@property (nonatomic, retain) NSOperationQueue *fetchAddressbookDataOperationQueue;
+
+@property (nonatomic, assign) id<SCSharingMailPickerControllerDelegate> delegate;
+
+#pragma mark Helper
+- (NSArray *)arrayOfEmailsInString:(NSString *)string unparsebleStrings:(NSArray **)unparsableRet;
+- (void)updateAutocompletionWithInputFieldValue:(NSString *)textFieldValue;
+- (void)setAutocompleteData:(NSMutableArray *)_autocompleteData;
+- (void)updateResult;
+
 @end
 
 
 @implementation SCSharingMailPickerController
 
+@synthesize addressBookData;
+@synthesize userInfo;
+@synthesize result;
+@synthesize currentResult;
+@synthesize emailsField;
+@synthesize doneBarButton;
+@synthesize addFromAddresbookButton;
+@synthesize inputLabel;
+@synthesize inputView;
+@synthesize autocompleteTableViewController;
+@synthesize autocompleteData;
+@synthesize autocompleteOperationQueue;
+@synthesize fetchAddressbookDataOperationQueue;
+@synthesize delegate;
+
 #pragma mark Lifecycle
 
 - (id)initWithDelegate:(id<SCSharingMailPickerControllerDelegate>)aDelegate;
 {
-	if ((self = [super initWithNibName:nil bundle:nil])) {
-		self.title = SCLocalizedString(@"shared_to_email_adresses", @"Email Addresses");
+    self = [super initWithNibName:nil bundle:nil];
+	if (self) {
 		delegate = aDelegate;
+        
 		autocompleteOperationQueue = [[NSOperationQueue alloc] init];
 		autocompleteData = [[NSMutableArray alloc] init];
+        currentResult = [[NSMutableArray alloc] init];
+        
 		autocompleteTableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
 		autocompleteTableViewController.tableView.delegate = self;
 		autocompleteTableViewController.tableView.dataSource = self;
-		result = [[NSMutableArray alloc] init];
+        
+        // Notifications
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 		
+        
+        // Operations
 		fetchAddressbookDataOperationQueue = [[NSOperationQueue alloc] init];
 		NSOperation *fetchAddressbookDataOperation = [[SCFetchAddressbookOperation alloc] initWithTarget:self selector:@selector(setAddressBookData:)];
 		[fetchAddressbookDataOperationQueue addOperation:fetchAddressbookDataOperation];
@@ -82,25 +125,22 @@
 
 - (void)dealloc;
 {
+    // Notifications
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-	[addressBookData release];
+	
+    // Releasing Owenership
+    [addressBookData release];
 	[autocompleteOperationQueue cancelAllOperations];
 	[autocompleteOperationQueue release];
 	[autocompleteData release];
-	[result release];
-	[inputView release];
-	[doneBarButton release];
-	[emailsField release];
+	[currentResult release];
 	[autocompleteTableViewController release];
-	[super dealloc];
+	
+    [super dealloc];
 }
 
 
 #pragma mark Accessors
-
-@synthesize addressBookData;
-@synthesize userInfo;
-@synthesize result;
 
 - (void)setAddressBookData:(NSDictionary *)value;
 {
@@ -111,23 +151,23 @@
 - (void)setAutocompleteData:(NSMutableArray *)_autocompleteData;
 {
 	[_autocompleteData retain]; [autocompleteData release]; autocompleteData = _autocompleteData;
-	[autocompleteTableViewController.tableView reloadData];
+	[self.autocompleteTableViewController.tableView reloadData];
 }
 
 - (NSArray *)result;
 {
 	[self updateResult];
-	return result;
+	return self.currentResult;
 }
 
 - (void)setResult:(NSArray *)value;
 {
-	if (emailsField) {
-		emailsField.text = [value componentsJoinedByString:@", "];
+	if (self.emailsField) {
+		self.emailsField.text = [value componentsJoinedByString:@", "];
 		[self updateResult];
 	} else {
-		[result removeAllObjects];
-		[result addObjectsFromArray:value];
+		[self.currentResult removeAllObjects];
+		[self.currentResult addObjectsFromArray:value];
 	}
 }
 
@@ -137,78 +177,99 @@
 - (void)viewDidLoad;
 {
 	[super viewDidLoad];
+    
+    self.title = SCLocalizedString(@"shared_to_email_adresses", @"Email Addresses");
+    
 	self.view.backgroundColor = [UIColor colorWithWhite:0.93 alpha:1.0];
-	
-	doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-																  target:self
-																  action:@selector(done:)];
-	doneBarButton.enabled = NO;
-	self.navigationItem.rightBarButtonItem = doneBarButton;
+    
+    // Navigation Bar
+    self.doneBarButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+																        target:self
+																        action:@selector(done:)] autorelease];
+	self.doneBarButton.enabled = YES;
+	self.navigationItem.rightBarButtonItem = self.doneBarButton;
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
 																						   target:self
 																						   action:@selector(cancel:)] autorelease];
+    
+    // Input View
+	self.inputView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+    self.inputView.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth);
+	self.inputView.opaque = NO;
+    self.inputView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"mailInputBackground"]];
+    
+    // Addresbook Button
+    self.addFromAddresbookButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+	[self.addFromAddresbookButton addTarget:self action:@selector(addFromAB:) forControlEvents:UIControlEventTouchUpInside];
+    self.addFromAddresbookButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
+    self.addFromAddresbookButton.backgroundColor = [UIColor clearColor];
+    
+    
+    // Input Label
+	self.inputLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
+	self.inputLabel.text = @"To:";
+	self.inputLabel.textColor = [UIColor darkGrayColor];
+    self.inputLabel.backgroundColor = [UIColor clearColor];
+
+	// Email Field
+	self.emailsField = [[UITextField alloc] initWithFrame:CGRectZero];
+	self.emailsField.delegate = self;
+	self.emailsField.autocorrectionType = UITextAutocorrectionTypeNo;
+	self.emailsField.keyboardType = UIKeyboardTypeEmailAddress;
+    self.emailsField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.emailsField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.emailsField.backgroundColor = [UIColor clearColor];
+	[self.emailsField sizeToFit];
+	self.emailsField.text = [self.currentResult componentsJoinedByString:@", "];
+
 	
-	CGRect inputRect = CGRectMake(CGRectGetMinX(self.view.bounds),
-								  CGRectGetMinY(self.view.bounds),
-								  CGRectGetWidth(self.view.bounds),
-								  44);
-	inputView = [[UIView alloc] initWithFrame:inputRect];
-	inputView.opaque = NO;
+	[self.inputView addSubview:inputLabel];
+    [self.inputView addSubview:emailsField];
+    [self.inputView addSubview:addFromAddresbookButton];
+	[self.view addSubview:self.inputView];
 	
-	UIView *inputBackgroundView = [[[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(inputRect),
-																			CGRectGetMinX(inputRect),
-																			CGRectGetWidth(inputRect),
-																			56)] autorelease];
-	inputBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"mailInputBackground"]];
-	inputBackgroundView.opaque = NO;
-	[inputView addSubview:inputBackgroundView];
-	
-	UILabel *inputLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	inputLabel.text = @"To:";
-	inputLabel.textColor = [UIColor darkGrayColor];
-	[inputLabel sizeToFit];
-	inputLabel.frame = CGRectMake(CGRectGetMinX(inputLabel.frame) + 4,
-								  CGRectGetMidY(inputRect) - CGRectGetMidY(inputLabel.frame),
-								  CGRectGetWidth(inputLabel.frame),
-								  CGRectGetHeight(inputLabel.frame));
-	
-	UIButton *addFromAddresbookButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-	[addFromAddresbookButton addTarget:self action:@selector(addFromAB:) forControlEvents:UIControlEventTouchUpInside];
-	addFromAddresbookButton.frame = CGRectMake(CGRectGetMaxX(inputRect) - CGRectGetWidth(addFromAddresbookButton.frame) - 4,
-											   CGRectGetMidY(inputRect) - CGRectGetMidY(addFromAddresbookButton.frame),
-											   CGRectGetWidth(addFromAddresbookButton.frame),
-											   CGRectGetHeight(addFromAddresbookButton.frame));
-	
-	emailsField = [[UITextField alloc] initWithFrame:CGRectZero];
-	emailsField.delegate = self;
-	emailsField.autocorrectionType = UITextAutocorrectionTypeNo;
-	emailsField.keyboardType = UIKeyboardTypeEmailAddress;
-	[emailsField sizeToFit];
-	emailsField.text = [result componentsJoinedByString:@", "];
-	emailsField.frame = CGRectMake(CGRectGetMaxX(inputLabel.frame) + 4,
-								   CGRectGetMidY(inputRect) - CGRectGetMidY(emailsField.frame),
-								   CGRectGetMinX(addFromAddresbookButton.frame) - CGRectGetMaxX(inputLabel.frame) - 8,
-								   CGRectGetHeight(emailsField.frame));
-	
-	
-	[inputView addSubview:addFromAddresbookButton];
-	[inputView addSubview:inputLabel];
-	[inputView addSubview:emailsField];
-	[self.view addSubview:inputView];
-	
-	autocompleteTableViewController.view.frame = CGRectMake(CGRectGetMinX(self.view.bounds),
-															CGRectGetMaxY(inputRect),
-															CGRectGetWidth(self.view.bounds),
-															CGRectGetHeight(self.view.bounds) - CGRectGetHeight(inputRect));
-	autocompleteTableViewController.view.backgroundColor = [UIColor colorWithWhite:0.93 alpha:1.0];
+
+    self.autocompleteTableViewController.view.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth);
+	self.autocompleteTableViewController.view.backgroundColor = [UIColor colorWithWhite:0.93 alpha:1.0];
 	[self.view addSubview:autocompleteTableViewController.view];
 }
 
 - (void)viewDidUnload;
 {
 	[super viewDidUnload];
-	[doneBarButton release]; doneBarButton = nil;
-	[emailsField release]; emailsField = nil;
+	self.doneBarButton = nil;
+	self.emailsField = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated;
+{
+    [super viewWillAppear:animated];
+    
+    self.inputView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44);
+    
+    self.inputLabel.frame = CGRectZero;
+    [self.inputLabel sizeToFit];
+    self.inputLabel.frame = CGRectMake(4,
+    								  CGRectGetMidY(self.inputView.bounds) - CGRectGetMidY(self.inputLabel.frame),
+    								  CGRectGetWidth(self.inputLabel.frame),
+    								  CGRectGetHeight(self.inputLabel.frame));
+    
+    self.addFromAddresbookButton.frame = CGRectZero;
+    [self.addFromAddresbookButton sizeToFit];
+    self.addFromAddresbookButton.frame = CGRectMake(CGRectGetMaxX(self.inputView.frame) - CGRectGetWidth(self.addFromAddresbookButton.frame) - 4,
+    											   CGRectGetMidY(self.inputView.frame) - CGRectGetMidY(self.addFromAddresbookButton.frame),
+    											   CGRectGetWidth(self.addFromAddresbookButton.frame),
+    											   CGRectGetHeight(self.addFromAddresbookButton.frame));
+
+    self.emailsField.frame = CGRectMake(CGRectGetMaxX(self.inputLabel.frame) + 4, 0,
+                                        CGRectGetWidth(self.inputView.bounds) - 4 - CGRectGetWidth(self.inputLabel.frame) - 8 - CGRectGetWidth(self.addFromAddresbookButton.frame) - 4,
+                                        CGRectGetHeight(self.inputView.bounds));
+    
+    
+    self.autocompleteTableViewController.view.frame = CGRectMake(CGRectGetMinX(self.view.bounds),
+                                                                 CGRectGetMaxY(self.inputView.frame),
+                                                                 CGRectGetWidth(self.view.bounds),
+                                                                 CGRectGetHeight(self.view.bounds) - CGRectGetHeight(self.inputView.frame));
 }
 
 - (void)viewDidAppear:(BOOL)animated;
@@ -228,27 +289,35 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification;
 {
-    NSValue *keyboardFrameValue = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
-	
-    CGRect keyboardFrame;
-    [keyboardFrameValue getValue:&keyboardFrame];
-	
-	[UIView beginAnimations:@"tableViewFrame" context:nil];
-	autocompleteTableViewController.view.frame = CGRectMake(CGRectGetMinX(inputView.frame),
-															CGRectGetMaxY(inputView.frame),
-															CGRectGetWidth(inputView.frame),
-															CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(inputView.frame) - keyboardFrame.size.height);
-	[UIView commitAnimations];
+    if (!SCAppIsRunningOnIPad()) {
+        NSValue *keyboardFrameValue = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
+        
+        CGRect keyboardFrame;
+        [keyboardFrameValue getValue:&keyboardFrame];
+        
+        CGRect convertedKeyboardFrame = [self.view convertRect:keyboardFrame fromView:self.view.window];
+        
+        CGRect newTableViewFrame = CGRectMake(CGRectGetMinX(self.inputView.frame),
+                                              CGRectGetMaxY(self.inputView.frame),
+                                              CGRectGetWidth(self.inputView.frame),
+                                              CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.inputView.frame) - CGRectGetHeight(convertedKeyboardFrame));
+        
+        [UIView beginAnimations:@"tableViewFrame" context:nil];
+        self.autocompleteTableViewController.view.frame = newTableViewFrame;
+        [UIView commitAnimations];
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification;
 {
-	[UIView beginAnimations:@"tableViewFrame" context:nil];
-	autocompleteTableViewController.view.frame = CGRectMake(CGRectGetMinX(inputView.frame),
-															CGRectGetMaxY(inputView.frame),
-															CGRectGetWidth(inputView.frame),
-															CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(inputView.frame));
-	[UIView commitAnimations];
+    if (!SCAppIsRunningOnIPad()) {
+        [UIView beginAnimations:@"tableViewFrame" context:nil];
+        self.autocompleteTableViewController.view.frame = CGRectMake(CGRectGetMinX(inputView.frame),
+                                                                     CGRectGetMaxY(inputView.frame),
+                                                                     CGRectGetWidth(inputView.frame),
+                                                                     CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(inputView.frame));
+        [UIView commitAnimations];
+    }
 }
 
 
@@ -256,7 +325,8 @@
 
 - (IBAction)done:(id)sender;
 {
-	[delegate sharingMailPickerController:self didFinishWithResult:self.result];
+    [self updateResult];
+	[delegate sharingMailPickerController:self didFinishWithResult:self.currentResult];
 }
 
 - (IBAction)cancel:(id)sender;
@@ -270,7 +340,7 @@
 	controller.navigationBar.barStyle = UIBarStyleBlack;
 	[controller setPeoplePickerDelegate:self];
 	[controller setDisplayedProperties:[NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]]];
-	
+	controller.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self.navigationController presentModalViewController:controller animated:YES];	
 }
 
@@ -330,9 +400,7 @@
 		NSArray *unparsable = nil;
 		NSMutableArray *emails = [[[self arrayOfEmailsInString:emailsField.text unparsebleStrings:&unparsable] mutableCopy] autorelease];
 		[emails addObject:emailToShareTo];
-		emailsField.text = [emails componentsJoinedByString:@", "];
-		
-		doneBarButton.enabled = emails.count > 0;
+		self.emailsField.text = [emails componentsJoinedByString:@", "];
 		
 		[self dismissModalViewControllerAnimated:YES];
 		return NO;
@@ -346,21 +414,20 @@
 
 - (void)updateResult;
 {
-	if (!emailsField) return;
+	if (!self.emailsField)
+        return;
 	
 	NSArray *unparsable = nil;
-	[result removeAllObjects];
-	NSArray *emails = [self arrayOfEmailsInString:emailsField.text unparsebleStrings:&unparsable];
+	[self.currentResult removeAllObjects];
+	NSArray *emails = [self arrayOfEmailsInString:self.emailsField.text unparsebleStrings:&unparsable];
 	for (NSString *email in emails) {
-		if (![result containsObject:email])
-			[result addObject:email];
+		if (![self.currentResult containsObject:email])
+			[self.currentResult addObject:email];
 	}
 	
 	if (unparsable) {
 		NSLog(@"unparsable mail adresses: %@", [unparsable componentsJoinedByString:@", "]);
 	}
-	
-	doneBarButton.enabled = result.count > 0;
 }
 
 - (NSArray *)arrayOfEmailsInString:(NSString *)string unparsebleStrings:(NSArray **)unparsableRet;
@@ -396,7 +463,7 @@
 - (void)updateAutocompletionWithInputFieldValue:(NSString *)textFieldValue;
 {
 	if (!textFieldValue)
-		textFieldValue = emailsField.text;
+		textFieldValue = self.emailsField.text;
 	assert([NSThread isMainThread]);
 	NSArray *unparsable = nil;
 	NSArray *emails = [self arrayOfEmailsInString:textFieldValue unparsebleStrings:&unparsable];
@@ -408,7 +475,6 @@
 																		   autocompleteString:[unparsable componentsJoinedByString:@" "]];
 	[autocompleteOperationQueue addOperation:autocompleteOperation];
 	[autocompleteOperation release];
-	doneBarButton.enabled = emails.count > 0;
 }
 
 
@@ -429,9 +495,6 @@
 	SCNameAndEmailCell *cell = (SCNameAndEmailCell *)[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
 	if (!cell) {
         cell = [[[SCNameAndEmailCell alloc] init] autorelease];
-//		GPCellLoader *cellLoader = [[GPCellLoader alloc] initWithNibNamed:@"NameAndEmailCell"];
-//		cell = (SCNameAndEmailCell *)cellLoader.cell;
-//		[cellLoader release];
 	}
 	NSDictionary *personData = [autocompleteData objectAtIndex:indexPath.row];
 	cell.name = [personData objectForKey:@"name"];
@@ -446,15 +509,13 @@
 	NSDictionary *personData = [autocompleteData objectAtIndex:indexPath.row];
 	
 	NSArray *unparsable = nil;
-	NSMutableArray *emails = [[[self arrayOfEmailsInString:emailsField.text unparsebleStrings:&unparsable] mutableCopy] autorelease];
+	NSMutableArray *emails = [[[self arrayOfEmailsInString:self.emailsField.text unparsebleStrings:&unparsable] mutableCopy] autorelease];
 	[emails addObject:[personData objectForKey:@"email"]];
 	
-	emailsField.text = [NSString stringWithFormat:@"%@, ", [emails componentsJoinedByString:@", "]];
+	self.emailsField.text = [NSString stringWithFormat:@"%@, ", [emails componentsJoinedByString:@", "]];
 	
 	[autocompleteData removeAllObjects];
-	[autocompleteTableViewController.tableView reloadData];
-	
-	doneBarButton.enabled = emails.count > 0;
+	[self.autocompleteTableViewController.tableView reloadData];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES]; 
 }

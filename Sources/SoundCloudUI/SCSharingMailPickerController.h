@@ -10,39 +10,22 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-
 @protocol SCSharingMailPickerControllerDelegate;
 
+@interface SCSharingMailPickerController : UIViewController <UITextFieldDelegate, ABPeoplePickerNavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@interface SCSharingMailPickerController : UIViewController <UITextFieldDelegate, ABPeoplePickerNavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
-	UITextField				*emailsField;
-	UITableViewController	*autocompleteTableViewController;
-	
-	UIBarButtonItem			*doneBarButton;
-	
-	UIView			*inputView;
-	
-	NSMutableArray	*result;
-	
-	NSMutableArray	*autocompleteData;
-	
-	NSOperationQueue	*autocompleteOperationQueue;
-	
-	NSDictionary		*addressBookData;
-	NSOperationQueue	*fetchAddressbookDataOperationQueue;	
-	
-	id<SCSharingMailPickerControllerDelegate> delegate;
-	
-	id userInfo;
-}
+#pragma mark Lifecycle
 
 - (id)initWithDelegate:(id<SCSharingMailPickerControllerDelegate>)delegate;
+
+#pragma mark Accessors
 
 @property (nonatomic, retain) id userInfo;
 @property (nonatomic, retain) NSArray *result;
 
 @end
 
+#pragma mark Delegate Protocol
 
 @protocol SCSharingMailPickerControllerDelegate <NSObject>
 - (void)sharingMailPickerController:(SCSharingMailPickerController *)controller didFinishWithResult:(NSArray *)emailAdresses;
