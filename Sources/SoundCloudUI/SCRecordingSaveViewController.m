@@ -504,7 +504,10 @@ const NSArray *allServices = nil;
     [tableView reloadData];
     [self updateInterface];
     
-//    [self showLoginView:NO];
+    if (!self.account) {
+        [self showLoginView:NO];
+        [self relogin];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated;
@@ -1194,9 +1197,9 @@ const NSArray *allServices = nil;
 {
     [SCSoundCloud removeAccess];
     self.account = nil;
+    [self showLoginView:YES];
     [SCSoundCloud requestAccessWithPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
-        SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:preparedURL authentication:nil] autorelease];
-        [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:loginViewController] autorelease] animated:YES];
+        [self.loginView loadURL:preparedURL];
     }];
 }
 
@@ -1206,8 +1209,8 @@ const NSArray *allServices = nil;
 - (void)accountDidChange:(NSNotification *)aNotification;
 {
     self.account = [SCSoundCloud account];
-    if (self.account && self.modalViewController){
-        [self dismissModalViewControllerAnimated:YES];
+    if (self.account){
+        [self hideLoginView:YES];
     }
 }
 
@@ -1240,11 +1243,6 @@ const NSArray *allServices = nil;
 
 #pragma mark Login View
 
-- (IBAction)testLoginDone;
-{
-    [self hideLoginView:YES];
-}
-
 - (void)showLoginView:(BOOL)animated;
 {
     if (self.loginView)
@@ -1256,8 +1254,7 @@ const NSArray *allServices = nil;
                                        CGRectGetHeight(self.view.bounds) - 28.0 - CGRectGetHeight(self.toolBar.frame));
     
     self.loginView = [[[SCLoginView alloc] initWithFrame:loginViewFrame] autorelease];
-    self.loginView.autoresizingMask = (UIViewAutoresizingFlexibleHeight);
-    [self.loginView.login addTarget:self action:@selector(testLoginDone) forControlEvents:UIControlEventTouchUpInside];
+    self.loginView.delegate = self;
     [self.view insertSubview:self.loginView belowSubview:self.toolBar];
     
     
@@ -1301,6 +1298,14 @@ const NSArray *allServices = nil;
     }
 }
 
+- (void)loginView:(SCLoginView *)aLoginView didFailWithError:(NSError *)anError;
+{
+    NSLog(@"Login did fail with error: %@", anError);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[anError localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+    [alert autorelease];
+    [self cancel];
+}
 
 #pragma mark Helpers
 

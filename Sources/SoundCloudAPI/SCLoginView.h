@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#pragma mark -
+
 @interface SCLoginView : UIView
-@property (nonatomic, readonly) UIButton *login;
+@property (nonatomic, assign) id delegate;
+- (void)loadURL:(NSURL *)aURL;
+@end
+
+@protocol SCLoginViewProtocol <NSObject>
+- (void)loginView:(SCLoginView *)aLoginView didFailWithError:(NSError *)anError;
 @end
