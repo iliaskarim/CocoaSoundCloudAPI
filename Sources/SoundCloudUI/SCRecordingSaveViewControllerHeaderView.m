@@ -228,7 +228,7 @@
 {
     [super layoutSubviews];
     
-    self.avatarImageView.frame = CGRectMake(SPACING, SPACING, 20, 20);
+    self.avatarImageView.frame = CGRectMake([self margin] + 3, SPACING, 20, 20);
     
     CGFloat maxUserLabelWidth = CGRectGetWidth(self.bounds)
     - 2 * [self margin]

@@ -526,15 +526,6 @@ const NSArray *allServices = nil;
     self.locationTitle = self.headerView.whereTextField.text;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
-{
-    return YES;
-    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-        return YES;
-    }
-    return NO;
-}
-
 - (void)updateInterface;
 {
     self.headerView.whatTextField.text = self.title;
@@ -562,7 +553,6 @@ const NSArray *allServices = nil;
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
             GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
-            NSLog(@"%s backgroundView %@", __FUNCTION__, backgroundView);
             backgroundView.opaque = NO;
             backgroundView.backgroundColor = [UIColor transparentBlack];
             backgroundView.borderColor = [UIColor blackColor];
@@ -1083,7 +1073,7 @@ const NSArray *allServices = nil;
     }
     
     self.uploadProgressView = [[SCRecordingUploadProgressView alloc] initWithFrame:CGRectMake(26, 58, CGRectGetWidth(self.view.bounds) - 52, CGRectGetHeight(self.view.bounds) - 26 - 58)];
-    [self.view addSubview:self.uploadProgressView];
+    [self.view insertSubview:self.uploadProgressView belowSubview:self.toolBar];
     
     [self.uploadProgressView setTitle:[self generatedTitle]];
     [self.uploadProgressView setCoverImage:self.coverImage];

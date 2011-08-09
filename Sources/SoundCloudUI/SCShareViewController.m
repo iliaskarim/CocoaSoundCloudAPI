@@ -98,4 +98,16 @@
                                         clientSecret:aClientSecret];
 }
 
+#pragma View Controller
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
+{
+    return YES;
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        return YES;
+    }
+    return NO;
+}
+
+
 @end
