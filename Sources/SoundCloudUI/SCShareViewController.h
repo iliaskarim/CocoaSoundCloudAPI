@@ -22,8 +22,6 @@
 
 typedef void(^SCSharingViewControllerComletionHandler)(BOOL canceled, NSDictionary *trackInfo);
 
-@class CLLocation;
-
 @interface SCShareViewController : UINavigationController
 
 #pragma mark Class methods

@@ -203,11 +203,6 @@ const NSArray *allServices = nil;
                                                  selector:@selector(didFailToRequestAccess:)
                                                      name:SCSoundCloudDidFailToRequestAccessNotification
                                                    object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(cancel)
-                                                     name:SCLoginViewControllerCancelNotification
-                                                   object:nil];
     }
     return self;
 }

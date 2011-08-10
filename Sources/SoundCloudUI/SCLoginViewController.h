@@ -18,45 +18,10 @@
  * 
  */
 
-#if TARGET_OS_IPHONE
-
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#pragma mark Notifications
+typedef void(^SCLoginViewControllerComletionHandler)(BOOL canceled, NSError *error);
 
-extern NSString * const SCLoginViewControllerCancelNotification;
-
-
-@class SCSoundCloudAPIAuthentication;
-
-@interface SCLoginViewController : UIViewController <UIWebViewDelegate> {
-    SCSoundCloudAPIAuthentication *authentication;
-    NSURL *URL;
-    UIWebView *webView;
-    UIActivityIndicatorView *activityIndicator;
-    UIView *titleBarView;
-    NSBundle *resourceBundle;
-	
-	UIButton *titleBarButton;
-	BOOL showReloadButton;
-}
-
-- (id)initWithURL:(NSURL *)anURL;
-- (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)authentication;
-
-/*
- * Replaces the close ('X') button in the top bar with a reload button
- * Default - NO
- */
-@property (nonatomic,assign) BOOL showReloadButton;
-
-- (void)updateInterface;
-
-- (IBAction)cancel;
-- (IBAction)close;
-- (IBAction)reload;
-
+@interface SCLoginViewController : UIViewController <UIWebViewDelegate>
++ (SCLoginViewController *)loginViewControllerWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerComletionHandler)aCompletionHandler;
 @end
-
-#endif
