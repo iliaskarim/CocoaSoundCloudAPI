@@ -102,11 +102,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 {
-    return YES;
-    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-        return YES;
-    }
-    return NO;
+    return [self.parentViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 
 
