@@ -1148,10 +1148,11 @@ const NSArray *allServices = nil;
                          
                          [self.uploadProgressView setSuccess:YES];
                          
-                         double delayInSeconds = 2.0;
+                         double delayInSeconds = 1.0;
                          dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                          dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                              self.completionHandler(NO, result);
+                             [self.parentViewController dismissModalViewControllerAnimated:YES];
                          });
                      } else {
                          NSLog(@"Upload failed with json error: %@", [jsonError localizedDescription]);
