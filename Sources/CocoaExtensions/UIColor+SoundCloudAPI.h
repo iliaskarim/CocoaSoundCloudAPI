@@ -1,5 +1,5 @@
 //
-//  UIColor+SoundCloud.h
+//  UIColor+SoundCloudAPI.h
 //  SoundCloud
 //
 //  Created by Thomas Kollbach on 21.07.11.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (SoundCloud)
+@interface UIColor (SoundCloudAPI)
 
 + (UIColor *)transparentBlack;
 + (UIColor *)almostBlackColor;
@@ -17,7 +17,5 @@
 
 + (UIColor *)soundCloudOrangeWithAlpha:(CGFloat)alpha;
 + (UIColor *)soundCloudOrange;
-
-
 
 @end

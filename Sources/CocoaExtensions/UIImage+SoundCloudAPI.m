@@ -1,15 +1,15 @@
 //
-//  UIImage_GPKit.m
+//  UIImage+SoundCloudAPI.m
 //  YouAreHere
 //
 //  Created by Gernot Poetsch on 12.03.08.
 //  Copyright 2008 Gernot Poetsch. All rights reserved.
 //
 
-#import "UIImage_GPKit.h"
+#import "UIImage+SoundCloudAPI.h"
 
 
-@implementation UIImage (GPKit)
+@implementation UIImage (SoundCloudAPI)
 
 + (UIImage *)imageNamed:(NSString *)name leftCapWidth:(NSInteger)leftCapWidth topCapHeight:(NSInteger)topCapHeight;
 {
@@ -62,6 +62,5 @@
 	UIGraphicsEndImageContext();
 	return scaledImage;
 }
-
 
 @end

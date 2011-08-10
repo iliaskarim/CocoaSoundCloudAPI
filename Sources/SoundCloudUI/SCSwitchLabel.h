@@ -1,6 +1,6 @@
 //
-//  GPSwitchLabel.h
-//  GPSwitch
+//  SCSwitchLabel.h
+//  SCSwitch
 //
 //  Created by Ullrich Schäfer on 22.11.10.
 //  Copyright 2010 nxtbgthng. All rights reserved.
@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface GPSwitchLabel : UIView
+@interface SCSwitchLabel : UIView
 {
 	UILabel *label;
 	UIImage	*background;

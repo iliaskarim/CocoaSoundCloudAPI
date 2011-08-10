@@ -6,8 +6,8 @@
 //  Copyright 2011 nxtbgthng. All rights reserved.
 //
 
-#import "QuartzCore_GPKit.h"
-#import "UIImage_GPKit.h"
+#import "QuartzCore+SoundCloudAPI.h"
+#import "UIImage+SoundCloudAPI.h"
 
 #import "SCBundle.h"
 
@@ -54,6 +54,7 @@ typedef enum SCRecordingUploadProgressViewState {
 - (void)commonAwake;
 {
     self.backgroundColor = [UIColor whiteColor];
+//    self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     self.coverImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     [self addSubview:self.coverImageView];
@@ -149,6 +150,10 @@ typedef enum SCRecordingUploadProgressViewState {
 
 - (void)layoutSubviews;
 {
+    [super layoutSubviews];
+ 
+//    NSLog(@"%s self.bounds: %@", __FUNCTION__, NSStringFromCGRect(self.bounds));
+    
     if (self.coverImageView.image) {
         self.coverImageView.frame = CGRectMake(SPACING, SPACING, COVER_IMAGE_SIZE, COVER_IMAGE_SIZE);
         

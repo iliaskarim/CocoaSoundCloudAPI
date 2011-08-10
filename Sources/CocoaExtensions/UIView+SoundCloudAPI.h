@@ -1,5 +1,5 @@
 //
-//  UIView_GPKit.h
+//  UIView+SoundCloudAPI.h
 //
 //  Created by Ullrich Schäfer on 28.04.09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 
-@interface UIView (GPKit)
+@interface UIView (SoundCloudAPI)
+
 - (void)resignFirstResponderOfAllSubviews;
 - (UIView *)firstResponderFromSubviews;
 
 - (UIScrollView *)enclosingScrollView;
+
 @end

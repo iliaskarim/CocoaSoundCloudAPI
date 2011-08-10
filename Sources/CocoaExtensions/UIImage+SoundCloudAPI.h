@@ -1,5 +1,5 @@
 //
-//  UIImage_GPKit.h
+//  UIImage+SoundCloudAPI.h
 //  YouAreHere
 //
 //  Created by Gernot Poetsch on 12.03.08.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface UIImage (GPKit)
+@interface UIImage (SoundCloudAPI)
 
 + (UIImage *)imageNamed:(NSString *)name leftCapWidth:(NSInteger)leftCapWidth topCapHeight:(NSInteger)topCapHeight;
 

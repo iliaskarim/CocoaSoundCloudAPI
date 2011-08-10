@@ -6,10 +6,9 @@
 //  Copyright 2010 nxtbgthng. All rights reserved.
 //
 
-#import "NSData+SCKit.h"
+#import "NSData+SoundCloudAPI.h"
 
-#import "NSString_GPKit.h"
-#import "GPNetworkActivityController.h"
+#import "NSString+SoundCloudAPI.h"
 
 //#import "SCAppDelegate.h"
 #import "SCSoundCloudAPI.h"
@@ -124,16 +123,9 @@
 
 - (void)setLoading:(BOOL)value;
 {
-    if (loading == value) return;
-    
+    if (loading == value)
+        return;
     loading = value;
-    
-    if (loading) {
-        [[GPNetworkActivityController sharedActivityController] increaseNumberOfActiveTransmissions];
-    } else {
-        [[GPNetworkActivityController sharedActivityController] decreaseNumberOfActiveTransmissions];
-    }
-
 }
 
 #pragma mark Views

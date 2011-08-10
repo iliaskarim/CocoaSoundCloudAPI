@@ -6,8 +6,8 @@
 //  Copyright 2011 nxtbgthng. All rights reserved.
 //
 
-#import "QuartzCore_GPKit.h"
-#import "UIColor+SoundCloud.h"
+#import "QuartzCore+SoundCloudAPI.h"
+#import "UIColor+SoundCloudAPI.h"
 
 #import "SCCoverImageButton.h"
 
@@ -35,9 +35,9 @@
     [[UIColor transparentBlack] setFill];
     
     CGContextSetLineWidth(context, 1.0);
-    GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);
+    SC_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);
     CGContextStrokePath(context);
-    GP_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);
+    SC_CGContextAddRoundedRect(context, CGRectInset(self.bounds, 0.5, 0.5), 7.0);
     CGContextFillPath(context);
 }
 

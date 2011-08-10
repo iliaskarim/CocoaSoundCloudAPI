@@ -6,9 +6,9 @@
 //  Copyright 2011 nxtbgthng. All rights reserved.
 //
 
-#import "QuartzCore_GPKit.h"
-#import "UIImage_GPKit.h"
-#import "UIColor+SoundCloud.h"
+#import "QuartzCore+SoundCloudAPI.h"
+#import "UIImage+SoundCloudAPI.h"
+#import "UIColor+SoundCloudAPI.h"
 
 #import "SCHorizontalLineView.h"
 #import "SCUnderlinedButton.h"
@@ -301,10 +301,10 @@
     
     CGRect textRect = self.textRect;
     
-    GP_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
+    SC_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
     CGContextFillPath(context);
     
-    GP_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
+    SC_CGContextAddRoundedRect(context, CGRectInset(textRect, 0.5, 0.5), 7.0);
     CGContextMoveToPoint(context, CGRectGetMinX(textRect), CGRectGetMidY(textRect)+0.5);
     CGContextAddLineToPoint(context, CGRectGetMaxX(textRect), CGRectGetMidY(textRect)+0.5);
     CGContextStrokePath(context);

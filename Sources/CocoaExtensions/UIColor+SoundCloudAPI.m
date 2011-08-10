@@ -1,14 +1,19 @@
 //
-//  UIColor+SoundCloud.m
+//  UIColor+SoundCloudAPI.m
 //  SoundCloud
 //
 //  Created by Thomas Kollbach on 21.07.11.
 //  Copyright 2011 nxtbgthng. All rights reserved.
 //
 
-#import "UIColor+SoundCloud.h"
+#import "UIColor+SoundCloudAPI.h"
 
-@implementation UIColor (SoundCloud)
+@implementation UIColor (SoundCloudAPI)
+
++ (UIColor *)transparentBlack;
+{
+    return [UIColor colorWithWhite:0 alpha:0.2];
+}
 
 + (UIColor *)almostBlackColor;
 {

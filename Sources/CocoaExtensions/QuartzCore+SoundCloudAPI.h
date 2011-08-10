@@ -1,5 +1,5 @@
 /*
- *  QuartzCore_GPKit.h
+ *  QuartzCore+SoundCloudAPI.h
  *  Soundcloud
  *
  *  Created by Gernot Poetsch on 23.11.10.
@@ -9,11 +9,11 @@
 
 #include <QuartzCore/QuartzCore.h>
 
-extern void GP_CGContextAddRoundedRect(CGContextRef context,
+extern void SC_CGContextAddRoundedRect(CGContextRef context,
                                        CGRect rect,
                                        CGFloat radius);
 
-extern void GP_CGPathAddRoundedRect(CGMutablePathRef path,
+extern void SC_CGPathAddRoundedRect(CGMutablePathRef path,
                                     const CGAffineTransform *m,
-                                       CGRect rect,
-                                       CGFloat radius);
+                                    CGRect rect,
+                                    CGFloat radius);

@@ -6,7 +6,7 @@
 //  Copyright 2009 nxtbgthng. All rights reserved.
 //
 
-#import "UIColor+SoundCloud.h"
+#import "UIColor+SoundCloudAPI.h"
 
 #import "SCNameAndEmailCell.h"
 

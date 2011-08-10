@@ -1,15 +1,15 @@
 //
-//  GPSwitchLabel.m
-//  GPSwitch
+//  SCSwitchLabel.m
+//  SCSwitch
 //
 //  Created by Ullrich Schäfer on 22.11.10.
 //  Copyright 2010 nxtbgthng. All rights reserved.
 //
 
-#import "GPSwitchLabel.h"
+#import "SCSwitchLabel.h"
 
 
-@implementation GPSwitchLabel
+@implementation SCSwitchLabel
 
 #pragma mark Lifecycle
 

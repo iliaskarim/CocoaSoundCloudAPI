@@ -8,11 +8,11 @@
 
 // http://stackoverflow.com/questions/400965/how-to-customize-the-background-border-colors-of-a-grouped-table-view
 
-#import "QuartzCore_GPKit.h"
+#import "QuartzCore+SoundCloudAPI.h"
 
-#import "GPTableCellBackgroundView.h"
+#import "SCTableCellBackgroundView.h"
 
-@implementation GPTableCellBackgroundView
+@implementation SCTableCellBackgroundView
 
 #pragma mark Lifecycle
 

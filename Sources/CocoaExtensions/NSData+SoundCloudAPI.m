@@ -1,17 +1,17 @@
 //
-//  NSData+SCKit.m
+//  NSData+SoundCloudAPI.m
 //  SCKit
 //
 //  Created by Ullrich Schäfer on 16.03.11.
 //  Copyright 2011 nxtbgthng. All rights reserved.
 //
 
-#import "NSString+SCKit.h"
+#import "NSString+SoundCloudAPI.h"
 
-#import "NSData+SCKit.h"
+#import "NSData+SoundCloudAPI.h"
 
 
-@implementation NSData (SCKit)
+@implementation NSData (SoundCloudAPI)
 
 - (id)JSONObject;
 {

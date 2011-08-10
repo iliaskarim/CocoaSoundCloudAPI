@@ -17,7 +17,7 @@ typedef enum  {
 } GPTableCellBackgroundViewPosition;
 
 
-@interface GPTableCellBackgroundView : UIView {
+@interface SCTableCellBackgroundView : UIView {
 	UIColor *borderColor;
     UIColor *backgroundColor;
 	GPTableCellBackgroundViewPosition position;

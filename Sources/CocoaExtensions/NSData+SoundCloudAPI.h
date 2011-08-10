@@ -1,5 +1,5 @@
 //
-//  NSData+SCKit.h
+//  NSData+SoundCloudAPI.h
 //  SCKit
 //
 //  Created by Ullrich Schäfer on 16.03.11.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSData (SCKit)
+@interface NSData (SoundCloudAPI)
 
 - (id)JSONObject;
 - (NSString *)errorMessageFrom422Error;

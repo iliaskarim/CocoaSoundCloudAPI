@@ -86,6 +86,26 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     return [[self new] autorelease];
 }
 
+
+#pragma mark Lifecycle
+
+- (id)init;
+{
+    self = [super init];
+    if (self) {
+        oauthRequest = [[NXOAuth2Request alloc] init];
+    }
+    return self;
+}
+
+
+- (void)dealloc;
+{
+    [oauthRequest release];
+    [super dealloc];
+}
+
+
 #pragma mark Accessors
 
 @synthesize oauthRequest;

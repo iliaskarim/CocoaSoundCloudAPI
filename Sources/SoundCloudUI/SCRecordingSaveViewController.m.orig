@@ -6,10 +6,11 @@
 //  Copyright 2010 nxtbgthng. All rights reserved.
 //
 
-#import "QuartzCore+SoundCloudAPI.h"
-#import "UIImage+SoundCloudAPI.h"
+#import "QuartzCore_GPKit.h"
+#import "UIImage_GPKit.h"
 #import "SCSwitch.h"
-#import "SCTableCellBackgroundView.h"
+#import "GPTableCellBackgroundView.h"
+#import "GPURLConnection.h"
 
 #import "JSONKit.h"
 
@@ -26,11 +27,8 @@
 #import "SCSCRecordingSaveViewControllerTitleView.h"
 #import "SCRecordingSaveViewControllerHeaderView.h"
 #import "SCRecordingUploadProgressView.h"
-#import "SCLoginView.h"
 
-#import "SCAppIsRunningOnIPad.h"
-
-#import "UIColor+SoundCloudAPI.h"
+#import "UIColor+SoundCloud.h"
 
 #import "SCRecordingSaveViewController.h"
 
@@ -64,12 +62,10 @@
 @property (nonatomic, assign) SCRecordingSaveViewControllerHeaderView *headerView;
 @property (nonatomic, assign) SCRecordingUploadProgressView *uploadProgressView;
 @property (nonatomic, assign) UITableView *tableView;
-@property (nonatomic, assign) UIToolbar *toolBar;
-@property (nonatomic, assign) SCLoginView *loginView;
-
-@property (nonatomic, retain) UIPopoverController *popoverController;
 
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
+
+@property (nonatomic, assign) UIToolbar *toolBar;
 
 #pragma mark UI
 - (void)updateInterface;
@@ -87,7 +83,6 @@
 - (IBAction)cancel;
 - (IBAction)relogin;
 
-
 #pragma mark Notification Handling
 - (void)accountDidChange:(NSNotification *)aNotification;
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
@@ -97,17 +92,10 @@
 - (void)hideToolBar;
 - (void)showToolBar;
 
-
-#pragma mark Login View
-- (void)showLoginView:(BOOL)animated;
-- (void)hideLoginView:(BOOL)animated;
-
-
 #pragma mark Helpers
 - (NSString *)generatedTitle;
 - (NSString *)generatedSharingNote;
 - (NSString *)dateString;
-- (float)cellMargin;
 @end
 
 
@@ -167,8 +155,6 @@ const NSArray *allServices = nil;
 @synthesize completionHandler;
 @synthesize tableView;
 @synthesize toolBar;
-@synthesize loginView;
-@synthesize popoverController;
 
 
 #pragma mark Lifecycle
@@ -229,7 +215,6 @@ const NSArray *allServices = nil;
     [foursquareID release];
     [foursquareController release];
     [completionHandler release];
-    [popoverController release];
     
     [super dealloc];
 }
@@ -292,6 +277,7 @@ const NSArray *allServices = nil;
                              NSError *jsonError = nil;
                              id result = [data objectFromJSONData];
                              if (result) {
+//                                 NSLog(@"Me: %@", result);
                                  
                                  NSURL *avatarURL = [NSURL URLWithString:[result objectForKey:@"avatar_url"]];
                                  NSData *avatarData = [NSData dataWithContentsOfURL:avatarURL];
@@ -369,6 +355,10 @@ const NSArray *allServices = nil;
                                                                                     clientID:aClientID
                                                                                 clientSecret:aClientSecret] autorelease];
     
+    self.foursquareController.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                                target:self
+                                                                                                                action:@selector(closePlacePicker)] autorelease];
+    
     if (self.foursquareController) {
         self.headerView.disclosureButton.hidden = NO;
         [self.headerView.disclosureButton addTarget:self
@@ -388,7 +378,10 @@ const NSArray *allServices = nil;
 - (void)viewDidLoad;
 {
     [super viewDidLoad];
-        
+    
+    NSLog(@"%s frame: %@", __FUNCTION__, NSStringFromCGRect(self.view.frame));
+    NSLog(@"%s bounds: %@", __FUNCTION__, NSStringFromCGRect(self.view.bounds));
+    
     self.view.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
 
     
@@ -399,7 +392,10 @@ const NSArray *allServices = nil;
     
     // Navigation Bar
     self.navigationController.navigationBarHidden = YES;
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    
+    // Banner
+//    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 28.0)] autorelease]];
     
     
     // Toolbar
@@ -440,7 +436,7 @@ const NSArray *allServices = nil;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [self.view insertSubview:self.tableView belowSubview:self.toolBar];
+    [self.view addSubview:self.tableView];
     
     
     // Header
@@ -476,6 +472,7 @@ const NSArray *allServices = nil;
     self.tableView.tableHeaderView = self.headerView;
 
     
+    
     [self updateInterface];
 }
 
@@ -502,11 +499,6 @@ const NSArray *allServices = nil;
     
     [tableView reloadData];
     [self updateInterface];
-    
-    if (!self.account) {
-        [self showLoginView:NO];
-        [self relogin];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated;
@@ -523,6 +515,15 @@ const NSArray *allServices = nil;
     [super viewWillDisappear:animated];
     self.title = self.headerView.whatTextField.text;
     self.locationTitle = self.headerView.whereTextField.text;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
+{
+    return YES;
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)updateInterface;
@@ -551,7 +552,7 @@ const NSArray *allServices = nil;
         UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"mailShare"];
         if (!cell) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"mailShare"] autorelease];
-            SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+            GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
             backgroundView.opaque = NO;
             backgroundView.backgroundColor = [UIColor transparentBlack];
             backgroundView.borderColor = [UIColor blackColor];
@@ -573,7 +574,7 @@ const NSArray *allServices = nil;
             cell.detailTextLabel.text = [self.sharingMailAddresses componentsJoinedByString:@", "];
         }
 
-        [(SCTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
+        [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
         
         return cell;
         
@@ -586,7 +587,7 @@ const NSArray *allServices = nil;
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"connection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.opaque = NO;
-                SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+                GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
                 backgroundView.opaque = NO;
                 backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
@@ -620,7 +621,7 @@ const NSArray *allServices = nil;
             
             cell.imageView.image = [SCBundle imageFromPNGWithName:[NSString stringWithFormat:@"service_%@", [connection objectForKey:@"service"]]];
             
-            [(SCTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
+            [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             
             return cell;
         } else {
@@ -629,7 +630,7 @@ const NSArray *allServices = nil;
             if (!cell) {
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"newConnection"] autorelease];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
-                SCTableCellBackgroundView *backgroundView = [[[SCTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
+                GPTableCellBackgroundView *backgroundView = [[[GPTableCellBackgroundView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 44.0)] autorelease];
                 backgroundView.opaque = NO;
                 backgroundView.backgroundColor = [UIColor transparentBlack];
                 backgroundView.borderColor = [UIColor blackColor];
@@ -647,7 +648,7 @@ const NSArray *allServices = nil;
             cell.textLabel.text = [service objectForKey:@"displayName"];
             cell.imageView.image = [SCBundle imageFromPNGWithName:[NSString stringWithFormat:@"service_%@", [service objectForKey:@"service"]]];
             
-            [(SCTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
+            [(GPTableCellBackgroundView *)cell.backgroundView setPosition:[aTableView cellPositionForIndexPath:indexPath]];
             return cell;
         }
     }
@@ -668,12 +669,16 @@ const NSArray *allServices = nil;
     NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
+                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 10, CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], textSize.height + 2 * 10.0)] autorelease];
+<<<<<<< Updated upstream
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, textSize.height + 2 * 10.0)] autorelease];
+=======
+    UIView *sectionHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), textSize.height)] autorelease];
+>>>>>>> Stashed changes
     sectionHeaderView.backgroundColor = [UIColor clearColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, [self cellMargin], 0.0)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(sectionHeaderView.bounds, 10.0, 0.0)];
     label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor listSubtitleColor];
@@ -691,7 +696,7 @@ const NSArray *allServices = nil;
     NSString *text = [self tableView:aTableView titleForHeaderInSection:section];
     
     CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:15.0]
-                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 2 * [self cellMargin], CGFLOAT_MAX)
+                       constrainedToSize:CGSizeMake(CGRectGetWidth(self.tableView.bounds) - 10, CGFLOAT_MAX)
                            lineBreakMode:UILineBreakModeWordWrap];
     
     return textSize.height + 2 * 10.0;
@@ -717,7 +722,7 @@ const NSArray *allServices = nil;
     } else {
         UIView *footerView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.tableView.bounds), 20.0)] autorelease];
         footerView.backgroundColor = [UIColor clearColor];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, [self cellMargin], 0.0)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(footerView.bounds, 10.0, 0.0)];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor listSubtitleColor];
@@ -744,7 +749,6 @@ const NSArray *allServices = nil;
 			navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
 			controller.title = SCLocalizedString(@"sc_upload_with_access", @"With Access");
 			controller.result = self.sharingMailAddresses;
-            navController.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentModalViewController:navController animated:YES];
 			[controller release];
 			[navController release];
@@ -757,7 +761,6 @@ const NSArray *allServices = nil;
             SCAddConnectionViewController *controller = [[SCAddConnectionViewController alloc] initWithService:[service objectForKey:@"service"] account:account delegate:self];
             controller.title = [NSString stringWithFormat:SCLocalizedString(@"sc_upload_connect_to", @"Connect %@"), [service objectForKey:@"displayName"]];
             
-            controller.modalPresentationStyle = UIModalPresentationFormSheet;
             [self.navigationController pushViewController:controller animated:YES];
             [controller release];
             [aTableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -849,13 +852,7 @@ const NSArray *allServices = nil;
     }
     
     self.coverImage = actualImage;
-    
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
-    } else {
-        [self dismissModalViewControllerAnimated:YES];
-    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 
@@ -871,8 +868,7 @@ const NSArray *allServices = nil;
     self.location = aLocation;
     self.foursquareID = aFoursquareID;
     
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 
@@ -968,57 +964,20 @@ const NSArray *allServices = nil;
 
 - (IBAction)selectImage;
 {
-    if (SCAppIsRunningOnIPad() && [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) {
-        
-        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:picker] autorelease];
-        [self.popoverController presentPopoverFromRect:self.headerView.coverImageButton.frame
-                                                inView:self.view
-                              permittedArrowDirections:UIPopoverArrowDirectionAny
-                                              animated:YES];
-        
-        if (self.coverImage) {
-            UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"artwork_reset", @"Reset")
-                                                                            style:UIBarButtonItemStyleBordered
-                                                                           target:self
-                                                                           action:@selector(resetImage)];
-            picker.navigationBar.topItem.leftBarButtonItem = resetButton;
-            [resetButton release];
-        }
-        
-        if ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) {
-            UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(openCameraPicker)];
-            picker.navigationBar.topItem.rightBarButtonItem = cameraButton;
-            [cameraButton release];
-        }
-        
-        [picker release];
-        
-    } else {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:SCLocalizedString(@"recording_image", @"Cover Image")
-                                                           delegate:self
-                                                  cancelButtonTitle:SCLocalizedString(@"cancel", @"Cancel")
-                                             destructiveButtonTitle:self.coverImage ? SCLocalizedString(@"artwork_reset", @"Reset") : nil
-                                                  otherButtonTitles:
-                                ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) ? SCLocalizedString(@"use_existing_image", @"Photo Library") : nil,
-                                ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) ? SCLocalizedString(@"take_new_picture", @"Camera") : nil,
-                                nil];
-        [sheet showInView:self.view];
-        [sheet release];
-    }
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:SCLocalizedString(@"recording_image", @"Cover Image")
+                                                       delegate:self
+                                              cancelButtonTitle:SCLocalizedString(@"cancel", @"Cancel")
+                                         destructiveButtonTitle:self.coverImage ? SCLocalizedString(@"artwork_reset", @"Reset") : nil
+                                              otherButtonTitles:
+                            ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary].count > 0) ? SCLocalizedString(@"use_existing_image", @"Photo Library") : nil,
+                            ([UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera].count > 0) ? SCLocalizedString(@"take_new_picture", @"Camera") : nil,
+                            nil];
+    [sheet showInView:self.view];
+    [sheet release];
 }
 
 - (IBAction)openCameraPicker;
 {
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
-    }
-    
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -1040,27 +999,27 @@ const NSArray *allServices = nil;
 - (IBAction)openPlacePicker;
 {
     if (self.foursquareController) {
-        [self.navigationController pushViewController:self.foursquareController animated:YES];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.foursquareController];
+        navController.navigationBar.barStyle = self.navigationController.navigationBar.barStyle;
+        [self presentModalViewController:navController animated:YES];
+        [navController release];
     }
 }
 
 - (IBAction)closePlacePicker;
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)resetImage;
 {
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
-    }
     self.coverImage = nil;
 }
 
 - (IBAction)upload;
-{    
+{
+    NSLog(@"Uploading ...");
+    
     [self hideToolBar];
     
     // setup progress view
@@ -1072,7 +1031,7 @@ const NSArray *allServices = nil;
     }
     
     self.uploadProgressView = [[SCRecordingUploadProgressView alloc] initWithFrame:CGRectMake(26, 58, CGRectGetWidth(self.view.bounds) - 52, CGRectGetHeight(self.view.bounds) - 26 - 58)];
-    [self.view insertSubview:self.uploadProgressView belowSubview:self.toolBar];
+    [self.view addSubview:self.uploadProgressView];
     
     [self.uploadProgressView setTitle:[self generatedTitle]];
     [self.uploadProgressView setCoverImage:self.coverImage];
@@ -1179,16 +1138,18 @@ const NSArray *allServices = nil;
 
 - (IBAction)cancel;
 {
+    NSLog(@"canceling ...");
     self.completionHandler(YES, nil);
 }
 
 - (IBAction)relogin;
 {
+    NSLog(@"Logging out ...");
     [SCSoundCloud removeAccess];
     self.account = nil;
-    [self showLoginView:YES];
     [SCSoundCloud requestAccessWithPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
-        [self.loginView loadURL:preparedURL];
+        SCLoginViewController *loginViewController = [[[SCLoginViewController alloc] initWithURL:preparedURL authentication:nil] autorelease];
+        [self presentModalViewController:[[[UINavigationController alloc] initWithRootViewController:loginViewController] autorelease] animated:YES];
     }];
 }
 
@@ -1197,14 +1158,16 @@ const NSArray *allServices = nil;
 
 - (void)accountDidChange:(NSNotification *)aNotification;
 {
+//    NSLog(@"%s", __FUNCTION__);
     self.account = [SCSoundCloud account];
-    if (self.account){
-        [self hideLoginView:YES];
+    if (self.account && self.modalViewController){
+        [self dismissModalViewControllerAnimated:YES];
     }
 }
 
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
 {
+    NSLog(@"%s: %@", __FUNCTION__, aNotification);
     [self cancel];
 }
 
@@ -1227,73 +1190,6 @@ const NSArray *allServices = nil;
                          CGPoint center = self.toolBar.center;
                          self.toolBar.center = CGPointMake(center.x, center.y - CGRectGetHeight(self.toolBar.frame));
                      }];
-}
-
-
-#pragma mark Login View
-
-- (void)showLoginView:(BOOL)animated;
-{
-    if (self.loginView)
-        return;
-    
-    CGRect loginViewFrame = CGRectMake(0,
-                                       28.0,
-                                       CGRectGetWidth(self.view.bounds),
-                                       CGRectGetHeight(self.view.bounds) - 28.0 - CGRectGetHeight(self.toolBar.frame));
-    
-    self.loginView = [[[SCLoginView alloc] initWithFrame:loginViewFrame] autorelease];
-    self.loginView.delegate = self;
-    [self.view insertSubview:self.loginView belowSubview:self.toolBar];
-    
-    
-    NSMutableArray *toolBarItems = [NSMutableArray arrayWithArray:self.toolBar.items];
-    [toolBarItems removeLastObject];
-    [self.toolBar setItems:toolBarItems animated:animated];
-    
-    if (animated) {
-        self.loginView.center = CGPointMake(self.loginView.center.x, self.loginView.center.y + CGRectGetHeight(self.loginView.frame));
-        [UIView animateWithDuration:0.2
-                         animations:^{
-                             self.loginView.center = self.tableView.center;
-                         }];
-    }
-}
-
-- (void)hideLoginView:(BOOL)animated;
-{
-    if (!self.loginView)
-        return;
-    
-    NSMutableArray *toolBarItems = [NSMutableArray arrayWithArray:self.toolBar.items];
-    [toolBarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"upload_and_share", @"Upload & Share")
-                                                              style:UIBarButtonItemStyleBordered
-                                                             target:self
-                                                             action:@selector(upload)] autorelease]];
-    [self.toolBar setItems:toolBarItems animated:animated];
-    
-    if (!animated) {
-        [self.loginView removeFromSuperview];
-        self.loginView = nil;
-    } else {
-        [UIView animateWithDuration:0.2
-                         animations:^{
-                             self.loginView.center = CGPointMake(self.loginView.center.x, self.loginView.center.y + CGRectGetHeight(self.loginView.frame));
-                         }
-                         completion:^(BOOL finished){
-                             [self.loginView removeFromSuperview];
-                             self.loginView = nil;
-                         }];
-    }
-}
-
-- (void)loginView:(SCLoginView *)aLoginView didFailWithError:(NSError *)anError;
-{
-    NSLog(@"Login did fail with error: %@", anError);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[anError localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
-    [alert autorelease];
-    [self cancel];
 }
 
 #pragma mark Helpers
@@ -1381,15 +1277,6 @@ const NSArray *allServices = nil;
     }
     
     return [NSString stringWithFormat:@"%@ %@", weekday, time];
-}
-
-- (float)cellMargin;
-{
-    if (SCAppIsRunningOnIPad()) {
-        return 30.0;
-    } else {
-        return 9.0;
-    }
 }
 
 @end

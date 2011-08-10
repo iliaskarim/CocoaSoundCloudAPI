@@ -7,7 +7,6 @@
 //
 
 
-#import "GPCellLoader.h"
 #import "SCNameAndEmailCell.h"
 #import "SCBundle.h"
 #import "SCAppIsRunningOnIPad.h"
@@ -466,7 +465,7 @@
 		textFieldValue = self.emailsField.text;
 	assert([NSThread isMainThread]);
 	NSArray *unparsable = nil;
-	NSArray *emails = [self arrayOfEmailsInString:textFieldValue unparsebleStrings:&unparsable];
+	[self arrayOfEmailsInString:textFieldValue unparsebleStrings:&unparsable];
 	
 	[autocompleteOperationQueue cancelAllOperations];
 	NSOperation *autocompleteOperation = [[SCDoAutocompleteionOperation alloc] initWithTarget:self
