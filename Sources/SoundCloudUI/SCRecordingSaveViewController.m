@@ -1176,6 +1176,7 @@ const NSArray *allServices = nil;
 - (IBAction)cancel;
 {
     self.completionHandler(YES, nil);
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)relogin;
