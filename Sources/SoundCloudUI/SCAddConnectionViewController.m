@@ -22,6 +22,7 @@
 @interface SCAddConnectionViewController ()
 @property (nonatomic, retain) NSURL *authorizeURL;
 @property (nonatomic, assign) BOOL loading;
+@property (nonatomic, assign) UIActivityIndicatorView *activityIndicator;
 @end
 
 
@@ -109,11 +110,10 @@
 
 @synthesize authorizeURL;
 @synthesize loading;
+@synthesize activityIndicator;
 
 - (void)setAuthorizeURL:(NSURL *)value;
 {
-    //NSLog(@"Authorizing %@", value);
-    
     [value retain]; [authorizeURL release]; authorizeURL = value;
     
     if (webView) {
@@ -134,9 +134,19 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    
+    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    self.activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin |
+                                               UIViewAutoresizingFlexibleTopMargin |
+                                               UIViewAutoresizingFlexibleLeftMargin | 
+                                               UIViewAutoresizingFlexibleRightMargin);
+    self.activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicator];
+    
     webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-//    webView.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
     webView.opaque = NO;
+    webView.backgroundColor = [UIColor clearColor];
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     webView.scalesPageToFit = YES;
     webView.delegate = self;
@@ -158,6 +168,11 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated;
+{
+    self.activityIndicator.center = self.view.center;
 }
 
 - (void)viewWillDisappear:(BOOL)animated;
@@ -191,12 +206,12 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView;
 {
-    self.loading = YES;
+    [self.activityIndicator startAnimating];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 {
-    self.loading = NO;
+    [self.activityIndicator stopAnimating];
 }
 
 
