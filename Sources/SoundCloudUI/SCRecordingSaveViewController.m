@@ -38,7 +38,7 @@
 #define COVER_WIDTH 600.0
 
 
-@interface SCRecordingSaveViewController ()
+@interface SCRecordingSaveViewController () <UIPopoverControllerDelegate>
 
 #pragma mark Accessors
 @property (nonatomic, retain) NSArray *availableConnections;
@@ -67,7 +67,7 @@
 @property (nonatomic, assign) UIToolbar *toolBar;
 @property (nonatomic, assign) SCLoginView *loginView;
 
-@property (nonatomic, retain) UIPopoverController *popoverController;
+@property (nonatomic, retain) UIPopoverController *imagePickerPopoverController;
 
 @property (nonatomic, copy) SCRecordingSaveViewControllerCompletionHandler completionHandler;
 
@@ -91,6 +91,8 @@
 #pragma mark Notification Handling
 - (void)accountDidChange:(NSNotification *)aNotification;
 - (void)didFailToRequestAccess:(NSNotification *)aNotification;
+- (void)keyboardWillChangeVisibility:(NSNotification *)notification;
+- (void)keyboardDidChangeVisibility:(NSNotification *)notification;
 
 
 #pragma mark Tool Bar Animation
@@ -168,7 +170,7 @@ const NSArray *allServices = nil;
 @synthesize tableView;
 @synthesize toolBar;
 @synthesize loginView;
-@synthesize popoverController;
+@synthesize imagePickerPopoverController;
 
 
 #pragma mark Lifecycle
@@ -203,6 +205,26 @@ const NSArray *allServices = nil;
                                                  selector:@selector(didFailToRequestAccess:)
                                                      name:SCSoundCloudDidFailToRequestAccessNotification
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillChangeVisibility:)
+                                                     name:UIKeyboardWillShowNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardDidChangeVisibility:)
+                                                     name:UIKeyboardDidShowNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillChangeVisibility:)
+                                                     name:UIKeyboardWillHideNotification
+                                                   object:nil];
+    
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardDidChangeVisibility:)
+                                                     name:UIKeyboardDidHideNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -224,7 +246,7 @@ const NSArray *allServices = nil;
     [foursquareID release];
     [foursquareController release];
     [completionHandler release];
-    [popoverController release];
+    [imagePickerPopoverController release];
     
     [super dealloc];
 }
@@ -528,6 +550,25 @@ const NSArray *allServices = nil;
     [self.headerView setCoverImage:self.coverImage];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration;
+{
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController dismissPopoverAnimated:NO];
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
+                                                           inView:self.headerView.coverImageButton
+                                         permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                         animated:YES];
+    }
+}
+
 
 #pragma mark TableView
 
@@ -817,6 +858,15 @@ const NSArray *allServices = nil;
 }
 
 
+#pragma mark UIPopoverControllerDelegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)aPopoverController;
+{
+    if (aPopoverController == self.imagePickerPopoverController) {
+        self.imagePickerPopoverController = nil;
+    }
+}
+
 #pragma mark ActionSheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex;
@@ -859,9 +909,9 @@ const NSArray *allServices = nil;
     
     self.coverImage = actualImage;
     
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController dismissPopoverAnimated:YES];
+        self.imagePickerPopoverController = nil;
     } else {
         [self dismissModalViewControllerAnimated:YES];
     }
@@ -984,11 +1034,11 @@ const NSArray *allServices = nil;
         picker.allowsEditing = YES;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
-        self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:picker] autorelease];
-        self.popoverController.popoverContentSize = CGSizeMake(320, 320);
+        self.imagePickerPopoverController = [[[UIPopoverController alloc] initWithContentViewController:picker] autorelease];
+        self.imagePickerPopoverController.delegate = self;
         
-        [self.popoverController presentPopoverFromRect:self.headerView.coverImageButton.frame
-                                                inView:self.view
+        [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
+                                                inView:self.headerView.coverImageButton
                               permittedArrowDirections:UIPopoverArrowDirectionAny
                                               animated:YES];
         
@@ -1025,9 +1075,9 @@ const NSArray *allServices = nil;
 
 - (IBAction)openCameraPicker;
 {
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController dismissPopoverAnimated:YES];
+        self.imagePickerPopoverController = nil;
     }
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -1063,9 +1113,9 @@ const NSArray *allServices = nil;
 
 - (IBAction)resetImage;
 {
-    if (self.popoverController) {
-        [self.popoverController dismissPopoverAnimated:YES];
-        self.popoverController = nil;
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController dismissPopoverAnimated:YES];
+        self.imagePickerPopoverController = nil;
     }
     self.coverImage = nil;
 }
@@ -1221,6 +1271,22 @@ const NSArray *allServices = nil;
     [self cancel];
 }
 
+- (void)keyboardWillChangeVisibility:(NSNotification *)notification;
+{
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController dismissPopoverAnimated:NO];
+    }
+}
+
+- (void)keyboardDidChangeVisibility:(NSNotification *)notification;
+{
+    if (self.imagePickerPopoverController) {
+        [self.imagePickerPopoverController presentPopoverFromRect:self.headerView.coverImageButton.bounds
+                                                           inView:self.headerView.coverImageButton
+                                         permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                         animated:YES];
+    }
+}
 
 
 #pragma mark Tool Bar Animation
