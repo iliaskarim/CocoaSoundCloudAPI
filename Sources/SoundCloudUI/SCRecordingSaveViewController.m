@@ -840,7 +840,21 @@ const NSArray *allServices = nil;
 {
     UIImage *actualImage = image;
     if (!CGSizeEqualToSize(actualImage.size, CGSizeMake(COVER_WIDTH, COVER_WIDTH))) {
-        actualImage = [actualImage imageByResizingTo:CGSizeMake(COVER_WIDTH, COVER_WIDTH)];
+        
+        // Cropping
+        CGRect editRect = [[editingInfo objectForKey:UIImagePickerControllerCropRect] CGRectValue];
+        CGFloat width = MIN(CGRectGetWidth(editRect), CGRectGetHeight(editRect));
+        CGRect croppedRect = CGRectMake(CGRectGetMidX(editRect), CGRectGetMidY(editRect), 0, 0);
+        croppedRect = CGRectInset(croppedRect, width / -2.0, width / -2.0);
+        
+        UIImage *origImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
+        
+        CGImageRef croppedImageRef = CGImageCreateWithImageInRect(origImage.CGImage, croppedRect);
+        UIImage *croppedImage = [UIImage imageWithCGImage:croppedImageRef];
+        CGImageRelease(croppedImageRef);
+        
+        // Rezising
+        actualImage = [croppedImage imageByResizingTo:CGSizeMake(COVER_WIDTH, COVER_WIDTH)];
     }
     
     self.coverImage = actualImage;
@@ -971,6 +985,8 @@ const NSArray *allServices = nil;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
         self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:picker] autorelease];
+        self.popoverController.popoverContentSize = CGSizeMake(320, 320);
+        
         [self.popoverController presentPopoverFromRect:self.headerView.coverImageButton.frame
                                                 inView:self.view
                               permittedArrowDirections:UIPopoverArrowDirectionAny
