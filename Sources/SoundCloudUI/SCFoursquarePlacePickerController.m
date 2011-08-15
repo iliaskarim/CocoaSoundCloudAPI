@@ -198,9 +198,9 @@
                                @"20110622", @"v",
                                nil];
     
-    self.request = [SCRequest request];
-    self.request.requestMethod = SCRequestMethodGET;
-    self.request.resource = [NSURL URLWithString:@"https://api.foursquare.com/v2/venues/search"];
+    self.request = [[[SCRequest alloc] initWithMethod:SCRequestMethodGET
+                                             resource:[NSURL URLWithString:@"https://api.foursquare.com/v2/venues/search"]] autorelease];
+    
     self.request.parameters = arguments;
     
     [self.request performRequestWithSendingProgressHandler:nil

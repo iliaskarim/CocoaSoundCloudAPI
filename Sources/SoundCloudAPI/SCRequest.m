@@ -98,8 +98,27 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
 {
     self = [super init];
     if (self) {
-        self.requestMethod = aMethod;
-        self.resource = [aResource retain];
+        
+        NSString *theMethod;
+        switch (aMethod) {
+            case SCRequestMethodPOST:
+                theMethod = @"POST";
+                break;
+                
+            case SCRequestMethodPUT:
+                theMethod = @"PUT";
+                break;
+                
+            case SCRequestMethodDELETE:
+                theMethod = @"DELETE";
+                break;
+                
+            default:
+                theMethod = @"GET";
+                break;
+        }
+        
+        oauthRequest = [[NXOAuth2Request alloc] initWithResource:aResource method:theMethod parameters:nil];
     }
     return self;
 }
