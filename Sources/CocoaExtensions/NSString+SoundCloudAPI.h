@@ -23,6 +23,24 @@
 
 @interface NSString (SoundCloudAPI)
 
++ (NSString *)stringWithSeconds:(NSTimeInterval)seconds;
++ (NSString *)stringWithMilliseconds:(NSInteger)seconds;
++ (NSString *)stringWithInteger:(NSInteger)integer upperRange:(NSInteger)upperRange;
+
 + (NSString *)stringWithUUID;
+
+- (id)JSONObject;
+
+- (NSString *)stringByEscapingXMLEntities;
+- (NSString *)stringByUnescapingXMLEntities;
+
+- (NSString *)stringByAddingURLEncoding;
+- (NSString *)stringByRemovingURLEncoding;
+
+- (NSDictionary *)dictionaryFromQuery;
+
+- (NSString *)md5Value;
+
+- (NSArray *)componentsSeparatedByWhitespacePreservingQuotations;
 
 @end

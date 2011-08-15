@@ -7,21 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 
-#import "GPWebAPI.h"
+#import "SCRequest.h"
 #import "SCFoursquarePlacePickerControllerDelegate.h"
 
-@interface SCFoursquarePlacePickerController : UITableViewController <CLLocationManagerDelegate, GPWebAPIDelegate, UITextFieldDelegate> {
-    id<SCFoursquarePlacePickerControllerDelegate> delegate;
-    GPWebAPI *api;
-    NSArray *venues;
-    CLLocationManager *locationManager;
-    id venueRequestIdentifier;
-    NSString *clientID;
-    NSString *clientSecret;
-}
-
-- (id)initWithDelegate:(id<SCFoursquarePlacePickerControllerDelegate>)aDelegate clientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
-
+@interface SCFoursquarePlacePickerController : UITableViewController <UITextFieldDelegate>
+- (id)initWithDelegate:(id<SCFoursquarePlacePickerControllerDelegate>)aDelegate
+              clientID:(NSString *)aClientID
+          clientSecret:(NSString *)aClientSecret;
 @end

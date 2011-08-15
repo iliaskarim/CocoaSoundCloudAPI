@@ -68,12 +68,13 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
             break;
     }
     
-    NSAssert([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
+    NSAssert1([[aResource scheme] isEqualToString:@"https"], @"Resource '%@' is invalid because the scheme is not 'https'.", aResource);
     
     NXOAuth2Request *request = [[NXOAuth2Request alloc] initWithResource:aResource method:theMethod parameters:someParameters];
     request.account = anAccount.oauthAccount;
-    [request performRequestWithSendingProgressHandler:aProgressHandler responseHandler:aResponseHandler];
-    return request;
+    [request performRequestWithSendingProgressHandler:aProgressHandler
+                                      responseHandler:aResponseHandler];
+    return [request autorelease];
 }
 
 + (void)cancelRequest:(id)request;
@@ -133,7 +134,7 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
     } else if ([aMethod caseInsensitiveCompare:@"DELETE"]) {
         return SCRequestMethodDELETE;
     } else {
-        NSAssert([aMethod caseInsensitiveCompare:@"GET"], @"SCRequest only supports 'GET', 'PUT', 'POST' and 'DELETE' as request method. Underlying NXOAuth2Accound uses the request method 'l%'.", aMethod);
+        NSAssert1([aMethod caseInsensitiveCompare:@"GET"], @"SCRequest only supports 'GET', 'PUT', 'POST' and 'DELETE' as request method. Underlying NXOAuth2Accound uses the request method 'l%'.", aMethod);
         return SCRequestMethodGET;
     }
 }
@@ -192,10 +193,11 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
 
 #pragma mark Perform Request
 
-- (void)performRequestWithSendingProgressHandler:(SCRequestSendingProgressHandler)progressHandler
-                                 responseHandler:(SCRequestResponseHandler)responseHandler;
+- (void)performRequestWithSendingProgressHandler:(SCRequestSendingProgressHandler)aSendingProgressHandler
+                                 responseHandler:(SCRequestResponseHandler)aResponseHandler;
 {
-    [self.oauthRequest performRequestWithSendingProgressHandler:progressHandler responseHandler:responseHandler];
+    [self.oauthRequest performRequestWithSendingProgressHandler:aSendingProgressHandler
+                                                responseHandler:aResponseHandler];
 }
 
 - (void)cancel;

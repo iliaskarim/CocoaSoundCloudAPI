@@ -6,21 +6,23 @@
 //  Copyright 2010 nxtbgthng. All rights reserved.
 //
 
-#import "NSData+SCKit.h"
+#import "NSData+SoundCloudAPI.h"
 
-#import "NSString_GPKit.h"
-#import "GPNetworkActivityController.h"
+#import "NSString+SoundCloudAPI.h"
 
 //#import "SCAppDelegate.h"
 #import "SCSoundCloudAPI.h"
 #import "SCAccount.h"
 #import "SCRequest.h"
 
+#import "SCBundle.h"
+
 #import "SCAddConnectionViewController.h"
 
 @interface SCAddConnectionViewController ()
 @property (nonatomic, retain) NSURL *authorizeURL;
 @property (nonatomic, assign) BOOL loading;
+@property (nonatomic, assign) UIActivityIndicatorView *activityIndicator;
 @end
 
 
@@ -46,7 +48,7 @@
                                     @"touch", @"display",
                                     nil];
         
-        [SCRequest performMethod:SCRequestMethodGET
+        [SCRequest performMethod:SCRequestMethodPOST
                       onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
                  usingParameters:parameters
                      withAccount:anAccount
@@ -65,10 +67,10 @@
                          
                      } else {
                          
-                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection failed"
+                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"connection_faild", @"Connection failed")
                                                                          message:[error localizedDescription]
                                                                         delegate:nil
-                                                               cancelButtonTitle:@"OK"
+                                                               cancelButtonTitle:SCLocalizedString(@"connection_error_ok", @"OK")
                                                                otherButtonTitles:nil];
                          [alert show];
                          [alert release];
@@ -89,17 +91,6 @@
 
         delegate = aDelegate;
         service = [aService retain];
-        
-//        api = [appDelegate.api copyWithAPIDelegate:self];
-//        [api performMethod:@"POST"
-//                onResource:@"connections"
-//            withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                              service, @"service",
-//                                                              @"x-soundcloud://connection", @"redirect_uri",
-//                                                              @"touch", @"display",
-//                                                              nil]
-//                   context:nil
-//                  userInfo:nil];
     }
     return self;
 }
@@ -119,11 +110,10 @@
 
 @synthesize authorizeURL;
 @synthesize loading;
+@synthesize activityIndicator;
 
 - (void)setAuthorizeURL:(NSURL *)value;
 {
-    //NSLog(@"Authorizing %@", value);
-    
     [value retain]; [authorizeURL release]; authorizeURL = value;
     
     if (webView) {
@@ -133,16 +123,9 @@
 
 - (void)setLoading:(BOOL)value;
 {
-    if (loading == value) return;
-    
+    if (loading == value)
+        return;
     loading = value;
-    
-    if (loading) {
-        [[GPNetworkActivityController sharedActivityController] increaseNumberOfActiveTransmissions];
-    } else {
-        [[GPNetworkActivityController sharedActivityController] decreaseNumberOfActiveTransmissions];
-    }
-
 }
 
 #pragma mark Views
@@ -151,7 +134,19 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[SCBundle imageFromPNGWithName:@"darkTexturedBackgroundPattern"]];
+    
+    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    self.activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleBottomMargin |
+                                               UIViewAutoresizingFlexibleTopMargin |
+                                               UIViewAutoresizingFlexibleLeftMargin | 
+                                               UIViewAutoresizingFlexibleRightMargin);
+    self.activityIndicator.hidesWhenStopped = YES;
+    [self.view addSubview:self.activityIndicator];
+    
     webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    webView.opaque = NO;
+    webView.backgroundColor = [UIColor clearColor];
     webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     webView.scalesPageToFit = YES;
     webView.delegate = self;
@@ -167,6 +162,23 @@
     webView.delegate = nil;
     webView = nil;
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated;
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated;
+{
+    self.activityIndicator.center = self.view.center;
+}
+
+- (void)viewWillDisappear:(BOOL)animated;
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 
@@ -194,12 +206,12 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView;
 {
-    self.loading = YES;
+    [self.activityIndicator startAnimating];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 {
-    self.loading = NO;
+    [self.activityIndicator stopAnimating];
 }
 
 
@@ -218,10 +230,10 @@
 
 - (void)soundCloudAPI:(SCSoundCloudAPI *)soundCloudAPI didFailWithError:(NSError *)error context:(id)context userInfo:(id)userInfo;
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection failed"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:SCLocalizedString(@"add_connection_failed", @"Connection failed")
                                                     message:[error localizedDescription]
                                                    delegate:nil
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:SCLocalizedString(@"add_connection_ok", @"OK")
                                           otherButtonTitles:nil];
     [alert show];
     [alert release];

@@ -16,8 +16,6 @@
 typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSDictionary *trackInfo);
 
 @class SCSwitch;
-@class SCAccount;
-
 
 @interface SCRecordingSaveViewController : UIViewController <UITableViewDelegate,
                                                              UITableViewDataSource,
@@ -29,13 +27,10 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
                                                              SCFoursquarePlacePickerControllerDelegate,
                                                              SCAddConnectionViewControllerDelegate> {
     
-    // UI
-    IBOutlet UIButton *coverButton;
-    IBOutlet UITextField *titleField;
-    IBOutlet UITextField *locationField;
-    IBOutlet SCSwitch *privateSwitch;
     IBOutlet UITableView *tableView;
     IBOutlet UIToolbar *toolbar;
+                                
+    NSBundle *resourceBundle;
 }
 
 #pragma mark Accessors
@@ -43,30 +38,14 @@ typedef void(^SCRecordingSaveViewControllerCompletionHandler)(BOOL canceled, NSD
 - (void)setFileURL:(NSURL *)aFileURL;
 - (void)setFileData:(NSData *)someFileData;
 
-- (void)setAccount:(SCAccount *)anAccount;
 - (void)setPrivate:(BOOL)isPrivate;
 - (void)setCoverImage:(UIImage *)aCoverImage;
 - (void)setTitle:(NSString *)aTitle;
+- (void)setCreationDate:(NSDate *)aCreationDate;
 - (void)setCompletionHandler:(SCRecordingSaveViewControllerCompletionHandler)aCompletionHandler;
 
 #pragma mark Foursquare
 
 - (void)setFoursquareClientID:(NSString *)aClientID clientSecret:(NSString *)aClientSecret;
 
-#pragma mark Actions
-
-- (IBAction)privacyChanged:(id)sender;
-- (IBAction)selectImage;
-
-@end
-
-
-#pragma mark -
-
-//We need to expose those for IB
-
-@interface SCRecordingSaveViewControllerHeaderView : UIView {}
-@end
-
-@interface SCRecordingSaveViewControllerTextField : UITextField {}
 @end

@@ -1,0 +1,449 @@
+"access_share_track" = " Share track";
+
+"access_share_track_to" = "Do you want to share this track to %@";
+
+"access_share_with" = "Share with";
+
+"action_bar_comments" = "Comments";
+
+"action_bar_favorite" = "Make Favorite";
+
+"action_bar_share" = "Share";
+
+"action_bar_unfavorite" = "Remove Favorite";
+
+"action_bar_user" = "User Profile";
+
+"artwork_reset" = "Reset";
+
+"authentication_by_signing_in_I_agree_to_the" = "By hitting \"Done\" I agree to the Terms of Use of SoundCloud";
+
+"authentication_choose_a_password" = "Choose a password";
+
+"authentication_email_required_body" = "Please enter a valid e-mail address.";
+
+"authentication_email_required_title" = "E-Mail required";
+
+"authentication_find_friends_on_facebook" = "Find friends from Facebook";
+
+"authentication_I_forgot_my_password" = "I forgot my password";
+
+"authentication_log_in" = "Log In";
+
+"authentication_log_in_with_facebook" = "Log in with Facebook";
+
+"authentication_password_dont_match_body" = "The password and confirmation have to match.";
+
+"authentication_password_dont_match_title" = "Passwords don't match";
+
+"authentication_password_too_short_body" = "Your Password must have 4 or more characters.";
+
+"authentication_password_too_short_title" = "Password too short";
+
+"authentication_recover_password_failure" = "Oops!";
+
+"authentication_recover_password_failure_reason" = "There seems to be a connection problem. Please try again shortly.\n%@";
+
+"authentication_recover_password_success_body" = "You'll receive an email with instructions on how to reset your password shortly.";
+
+"authentication_recover_password_success_title" = "Go check your mail!";
+
+"authentication_recover_password_unkown_body" = "Sorry, we couldn't recognize this email address. Try typing it in again, or go to SoundCloud.com.";
+
+"authentication_recover_password_unkown_title" = "Hmm";
+
+"authentication_repeat_your_password" = "Repeat password";
+
+"authentication_repeat_your_password_label" = "Confirm";
+
+"authentication_sign_up" = "Sign Up";
+
+"authentication_support" = "Support";
+
+"authentication_terms_of_use" = "Terms of use";
+
+"authentication_your_email_address" = "Your e-mail address";
+
+"authentication_your_email_address_label" = "E-Mail";
+
+"authentication_your_password" = "Your password";
+
+"authentication_your_password_label" = "Password";
+
+"avatar_error_body" = "There seems to be a problem loading the avatar. Please try again shortly.";
+
+"avatar_error_title" = "Oops!";
+
+"cancel" = "Cancel";
+
+"certificate_invalid_body" = "We can't connect securely to SoundCloud right now. Please try again shortly.\n\nIf it happens again, please update the SoundCloud app in the App Store.";
+
+"certificate_invalid_title" = "Oops!";
+
+"comment_bubble_readon" = " Read on";
+
+"comment_by_line" = "<strong>%1$@</strong> said %2$@ ago";
+
+"comment_by_line_timed" = "<strong>%1$@</strong> at <span class='timestamp'>%2$@</span> said %3$@ ago";
+
+"configure" = "Configure";
+
+"connect_with_facebook" = "Connect with Facebook";
+
+"connection_list_error_body" = "There seems to be a connection problem. Please try again shortly.";
+
+"connection_list_error_title" = "Oops!";
+
+"connection_list_footer" = "To change your default sharing options, go to your settings on SoundCloud and select 'Connections'";
+
+"delete_track" = "Delete Track";
+
+"edit" = "Edit";
+
+"edit_track_title" = "Edit Track";
+
+"empty_favorites_text_body" = "Retry Upload";
+
+"empty_favorites_text_body" = "Find new sounds using Find Friends and Search.";
+
+"empty_favorites_text_title" = "You don't have any\nfavorites yet.";
+
+"empty_my_tracks_body" = "Record and share your favorite sound\nor leave a voice memo for yourself.";
+
+"empty_my_tracks_title" = "You don't have any tracks yet.";
+
+"facebook" = "Facebook";
+
+"facebook_default_share_message" = "Look what I just found on SoundCloud";
+
+"generic_error_body" = "There seems to be a connection problem. Please try again shortly.";
+
+"generic_error_body_with_description" = "There seems to be a connection problem. Please try again shortly.\n%@";
+
+"generic_error_title" = "Oops!";
+
+"incoming_filter_all" = "All";
+
+"incoming_filter_exclusive" = "Exclusive";
+
+"incoming_settings" = "What to display on your feed";
+
+"incoming_settings_everything" = "All incoming tracks";
+
+"incoming_settings_exclusive" = "Only exclusive tracks";
+
+"info_comments_hidden" = "Comments are hidden. Tap to show them.";
+
+"list_empty_body" = "You don't have any tracks in this list";
+
+"list_empty_title" = "No tracks";
+
+"list_header_fb_friends" = "Your Facebook Friends";
+
+"list_header_suggested_users" = "Suggested users";
+
+"listen" = "Listen";
+
+"log_in_title" = "Log In";
+
+"me_user_empty_followers" = "Why not start following people to create your own SoundCloud community?";
+
+"me_user_empty_followings" = "Have a look at the Friend Finder in the \"You\" tab.";
+
+"me_user_followers_one" = "You have 1 follower";
+
+"me_user_followers_other" = "You have %i followers";
+
+"me_user_followers_zero" = "You aren't followed by anybody";
+
+"me_user_followings_one" = "You are following 1 person";
+
+"me_user_followings_other" = "You are following %i people";
+
+"me_user_followings_zero" = "You aren't following anybody";
+
+"menu_friend_finder" = "Find Friends";
+
+"navigation_back" = "Back";
+
+"navigation_close" = "Close";
+
+"navigation_next" = "Next";
+
+"now_playing" = "Now playing";
+
+"ok" = "Ok";
+
+"other_user_empty_followers" = "%@ isn't being followed by anyone yet.";
+
+"other_user_empty_followings" = "%@  isn't following anyone yet.";
+
+"other_user_followers_one" = "Has 1 follower";
+
+"other_user_followers_other" = "Has %i followers";
+
+"other_user_followers_zero" = "Has no followers";
+
+"other_user_followings_one" = "Follows 1 person";
+
+"other_user_followings_other" = "Follows %i people";
+
+"other_user_followings_zero" = "Isn't following anybody";
+
+"player_info_label" = "Find Sounds to play via the search\nOr start following people and enjoy their sounds via your feed";
+
+"player_not_streamable" = "This track is not streamable";
+
+"player_too_hot" = "Sorry, this track is too hot for us!";
+
+"player_touch_bar" = "Tap to add your timed comment";
+
+"player_touch_bar_release" = "Release to enter a\ntimed comment at";
+
+"player_track_is_processing" = "This track is currently processing.";
+
+"pref_account_info" = "Account info";
+
+"pref_revoke_access" = "Log out";
+
+"pref_revoke_access_confirm" = "Do you really want to log out?";
+
+"pref_revoke_access_confirm_known" = "Do you really want to log out of the account %@?";
+
+"pull_to_refresh_pull_label" = "Pull down to refresh...";
+
+"pull_to_refresh_refreshing_label" = "Loading...";
+
+"pull_to_refresh_release_label" = "Release to refresh...";
+
+"record_another_sound" = "Record another sound";
+
+"record_instructions" = "Share Your Sound";
+
+"record_no_microphone" = "No Microphone found";
+
+"recording_at_location" = "Sounds at %@";
+
+"recording_from_data" = "Sounds from %@";
+
+"recording_image" = "Cover Image";
+
+"recording_title_at_location_name" = "%@ at %@";
+
+"recording_weekday_monday" = "Monday";
+
+"recording_weekday_sunday" = "Sunday";
+
+"recover_passwords_title" = "Recover password";
+
+"sc_search_no_suggestions" = "No Search Suggestions";
+
+"sc_search_recent" = "Recent Searches";
+
+"sc_search_tracks" = "Tracks";
+
+"sc_search_users" = "Users";
+
+"sc_upload_connect_to" = "Connect %@";
+
+"sc_upload_only_you" = "Only you";
+
+"sc_upload_private" = "Private";
+
+"sc_upload_public" = "Public";
+
+"sc_upload_sharing_options" = "Sharing Options";
+
+"sc_upload_sharing_options_public" = "Your track will be available for the public after the upload. You want to push it to other services afterwards?";
+
+"sc_upload_sharing_options_private" = "Your track will be private after the upload. You want to share it with others?";
+
+"sc_upload_with_access" = "With Access";
+
+"search" = "Search";
+
+"service_email" = "Email";
+
+"service_facebook" = "Facebook";
+
+"service_foursquare" = "Foursquare";
+
+"service_tumblr" = "Tumblr";
+
+"service_twitter" = "Twitter";
+
+"shared_to_email_adresses" = "Email Addresses";
+
+"shared_to_one" = "shared to 1 person";
+
+"shared_to_other" = "shared to %i person";
+
+"shared_to_short_one" = "1 person";
+
+"shared_to_short_other" = "%d people";
+
+"shared_to_short_zero" = "0 people";
+
+"shared_to_short_you" = "You";
+
+"shared_to_short_private" = "Private";
+
+"shared_to_zero" = "shared to 0 people";
+
+"sign_up_error_body" = "There was a problem when we tried to create your account. Please try a different email or password and try again.";
+
+"sign_up_error_body_with_description" = "There seems to be a problem. Please try again shortly or sign up at SoundCloud.com.\n%@ ";
+
+"sign_up_error_title" = "Oops!";
+
+"sign_up_scope_missing_body" = "Please try updating the app or sign up at SoundCloud.com.";
+
+"sign_up_scope_missing_title" = "Oops!\nWe couldn't sign you up";
+
+"suggested_users_follow_all_friends" = "Follow all your friends from Facebook";
+
+"suggested_users_msg" = "Welcome! Thanks for joining SoundCloud.\nFeel free to follow some of our\nSuggested Users to find new sounds.";
+
+"suggested_users_no_friends_msg" = "You're the first of your Facebook friends on SoundCloud.\nCheck out new sounds from our Suggested Users.";
+
+"tab_access" = "Give access";
+
+"tab_authenticate" = "Authenticate";
+
+"tab_favorites" = "Favorites";
+
+"tab_followers" = "Followers";
+
+"tab_followings" = "You follow";
+
+"tab_friend_finder" = "Find Friends";
+
+"tab_incoming" = "Stream";
+
+"tab_info" = "Info";
+
+"tab_news" = "News";
+
+"tab_record" = "Record";
+
+"tab_search" = "Search";
+
+"tab_sign_up" = "Sign Up";
+
+"tab_tracks" = "Tracks";
+
+"tab_user" = "User";
+
+"tab_you" = "You";
+
+"take_new_picture" = "Camera";
+
+"timeframe_afternoon" = "afternoon";
+
+"timeframe_evening" = "evening";
+
+"timeframe_morning" = "morning";
+
+"timeframe_night" = "night";
+
+"track_by" = "by";
+
+"track_detail_comments" = "Comments";
+
+"track_detail_comments_disabled" = "Comments are disabled by the owner";
+
+"track_detail_description" = "Track description";
+
+"track_detail_first_to_comment" = "Be the first to comment on this track.";
+
+"track_detail_no_comments" = "No comments yet";
+
+"track_detail_no_comments_left" = "No comments left";
+
+"track_detail_released_by" = "Released by";
+
+"track_info_license" = "%1$@ by %2$@ is licensed under a <a href='%3$@' class='cc %4$@'>Creative Commons License</a>";
+
+"twitter_default_share_message" = "Look what I just found on #SoundCloud: ";
+
+"upload_and_share" = "Upload & Share";
+
+"upload_status_failed" = "Failed";
+
+"upload_status_saved" = "Saved";
+
+"upload_status_stopped" = "Stopped";
+
+"upload_track" = "Upload";
+
+"use_existing_image" = "Photo Library";
+
+"user_from_city" = "from %@";
+
+"user_from_city_country" = "from %@, %@";
+
+"user_from_country" = "from %@";
+
+"user_info_loading" = "Loading";
+
+"user_profile_loading" = "Loading user info";
+
+"weekday_friday" = "Friday";
+
+"weekday_saturday" = "Saturday";
+
+"weekday_thursday" = "Thursday";
+
+"weekday_tuesday" = "Tuesday";
+
+"weekday_wednesday" = "Wednesday";
+
+"you_details_image" = "Your user image";
+
+"you_details_title" = "Your user details";
+
+"you_details_username" = "Username";
+
+"you_details_username_placeholder" = "Your username";
+
+"your_favorites" = "Your favorites";
+
+"your_favorites_count_known" = "Your favorites (%d)";
+
+"your_followers" = "People who follow you";
+
+"your_followers_count_known" = "People who follow you (%d)";
+
+"your_followings" = "People you follow";
+
+"your_followings_count_known" = "People you follow (%d)";
+
+"your_tracks" = "Your tracks";
+
+"your_tracks_count_known" = "Your tracks (%d)";
+
+"record_save_logout" = "Log out";
+
+"record_save_add_cover_artwork" = "Add\nimage";
+
+"record_save_where" = "Where";
+
+"record_save_what" = "What";
+
+"place_picker_reset" = "Reset";
+
+"place_picker_title" = "Where?";
+
+"place_picker_placeholder" = "Add Your Place";
+
+"place_picker_nearby" = "Nearby";
+
+"record_save_upload_success" = "Yay, that worked!";
+
+"record_save_upload_fail" = "Ok, that went wrong.";
+
+"record_save_uploading" = "Uploading ...";
+
+"connection_error_ok" = "OK";
+
+"connection_faild" = "Connection failed";

@@ -21,20 +21,12 @@
 #include "SCAPI.h"
 
 @interface iPhoneTestAppViewController : UIViewController {
-    IBOutlet UIProgressView *progresBar;
-    IBOutlet UITextField *trackNameField;
 	IBOutlet UIButton *postButton;
-    IBOutlet UILabel *trackNumberLabel;
-    IBOutlet UILabel *usernameLabel;
 	
 	id uploadConnectionId;
 }
-@property (nonatomic, retain) IBOutlet UIButton *postButton;
-@property (nonatomic, retain) IBOutlet UITextField *trackNameField;
-@property (nonatomic, readonly) IBOutlet IBOutlet UIProgressView *progresBar;
 
-@property (nonatomic, readonly) IBOutlet UILabel *usernameLabel;
-@property (nonatomic, readonly) IBOutlet UILabel *trackNumberLabel;
+@property (nonatomic, retain) IBOutlet UIButton *postButton;
 
 - (IBAction)sendRequest:(id)sender;
 

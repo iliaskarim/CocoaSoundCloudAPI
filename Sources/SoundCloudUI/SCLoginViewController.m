@@ -18,85 +18,86 @@
  * 
  */
 
-#if TARGET_OS_IPHONE
+#import "SCLoginView.h"
+#import "SCSCRecordingSaveViewControllerTitleView.h"
+#import "NXOAuth2AccountStore.h"
 
-#import "SCSoundCloudAPIAuthentication.h"
-#import "SCSoundCloudAPIConfiguration.h"
-
-#import "SCLoginViewController.h"
 #import "SCSoundCloud.h"
 #import "SCSoundCloud+Private.h"
 #import "SCConstants.h"
+#import "SCBundle.h"
 
-@interface SCLoginTitleBar: UIView {
-}
-@end
+#import "SCLoginViewController.h"
 
 
 #pragma mark -
 
+@interface SCLoginViewController ()
+- (id)initWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerComletionHandler)aCompletionHandler;
+
+#pragma mark Accessors
+@property (nonatomic, retain) NSURL *preparedURL;
+@property (nonatomic, assign) SCLoginView *loginView;
+@property (nonatomic, copy) SCLoginViewControllerComletionHandler completionHandler;
+
+#pragma mark Notifications
+- (void)accountDidChange:(NSNotification *)aNotification;
+- (void)failToRequestAccess:(NSNotification *)aNotification;
+
+#pragma mark Action
+- (void)cancel;
+@end
+
+
 @implementation SCLoginViewController
 
 
-#pragma mark Lifecycle
+#pragma mark Class Methods
 
-- (id)initWithURL:(NSURL *)anURL dismissHandler:(SCLoginViewControllerDismissHandler)aDismissHandler;
++ (id)loginViewControllerWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerComletionHandler)aCompletionHandler;
 {
-    self = [self initWithURL:anURL authentication:nil];
-    if (self) {
-        dismissHandler = [aDismissHandler copy];
-    }
-    return self;
+    
+    SCLoginViewController *loginViewController = [[[self alloc] initWithPreparedURL:anURL completionHandler:aCompletionHandler] autorelease];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    [navigationController setModalPresentationStyle:UIModalPresentationFormSheet];
+    
+    return navigationController;
 }
 
-- (id)initWithURL:(NSURL *)anURL authentication:(SCSoundCloudAPIAuthentication *)anAuthentication;
+#pragma mark Lifecycle
+
+@synthesize preparedURL;
+@synthesize loginView;
+@synthesize completionHandler;
+
+- (id)initWithPreparedURL:(NSURL *)anURL completionHandler:(SCLoginViewControllerComletionHandler)aCompletionHandler;
 {
-    if (!anURL) return nil;
-    
     self = [super init];
     if (self) {
+        preparedURL = [anURL retain];
+        completionHandler = [aCompletionHandler copy];
         
-		showReloadButton = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(accountDidChange:)
+                                                     name:SCSoundCloudAccountDidChangeNotification
+                                                   object:nil];
         
-        if ([self respondsToSelector:@selector(setModalPresentationStyle:)]){
-            [self setModalPresentationStyle:UIModalPresentationFormSheet];
-        }
-                
-        authentication = [anAuthentication retain];
-        URL = [anURL retain];
-        resourceBundle = [[NSBundle alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"SoundCloud" ofType:@"bundle"]];
-        NSAssert(resourceBundle, @"Please move the SoundCloud.bundle into the Resource Directory of your Application!");
-        self.title = @"SoundCloud";
-        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close"
-                                                                                  style:UIBarButtonItemStyleBordered
-                                                                                 target:self
-                                                                                 action:@selector(close)] autorelease];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(failToRequestAccess:)
+                                                     name:SCSoundCloudDidFailToRequestAccessNotification
+                                                   object:nil];
     }
     return self;
 }
 
 - (void)dealloc;
 {
-	[titleBarButton release];
-    [resourceBundle release];
-    [titleBarView release];
-    [authentication release];
-    [activityIndicator release];
-    [URL release];
-    [webView release];
-    [dismissHandler release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [preparedURL release];
+    [completionHandler release];
+    
     [super dealloc];
-}
-
-
-#pragma mark Accessors
-
-@synthesize showReloadButton;
-
-- (void)setShowReloadButton:(BOOL)value;
-{
-	showReloadButton = value;
-	[self updateInterface];
 }
 
 
@@ -106,208 +107,64 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    self.loginView = [[[SCLoginView alloc] initWithFrame:self.view.bounds] autorelease];
+    self.loginView.delegate = self;
+    [self.loginView loadURL:self.preparedURL];
+    [self.view addSubview:self.loginView];
     
-    titleBarView = [[SCLoginTitleBar alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 28.0)];
-    titleBarView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
-    [self.view addSubview:titleBarView];
+    // Navigation Bar
+    self.navigationController.navigationBarHidden = YES;
     
-    CGRect logoRect;
-    CGRect connectRect;
-    CGRect closeRect;
-    CGRectDivide(titleBarView.bounds, &logoRect, &connectRect, 45.0, CGRectMinXEdge);
-    CGRectDivide(connectRect, &closeRect, &connectRect, connectRect.size.height, CGRectMaxXEdge);
+    // Toolbar
+    self.navigationController.toolbar.barStyle = UIBarStyleBlack;
+    self.navigationController.toolbarHidden = NO;
     
-    logoRect.origin.x += 6.0;
-    logoRect.origin.y += 4.0;
-    connectRect.origin.y += 9.0;
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithCapacity:1];
     
-    UIImageView *cloudImageView = [[UIImageView alloc] initWithFrame:logoRect];
-    UIImage *cloudImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"cloud" ofType:@"png"]];
-    cloudImageView.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
-    cloudImageView.image = cloudImage;
-    [cloudImageView sizeToFit];
-    [titleBarView addSubview:cloudImageView];
-    [cloudImageView release];
-    
-    UIImageView *titleImageView = [[UIImageView alloc] initWithFrame:connectRect];
-    UIImage *titleImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"cwsc" ofType:@"png"]];
-    titleImageView.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin);
-    titleImageView.image = titleImage;
-    [titleImageView sizeToFit];
-    [titleBarView addSubview:titleImageView];
-    [titleImageView release];
-    
-	titleBarButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
-	titleBarButton.frame = closeRect;
-	titleBarButton.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin);
-	titleBarButton.showsTouchWhenHighlighted = YES;
-	[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
-	UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
-	[titleBarButton setImage:closeImage forState:UIControlStateNormal];
-	titleBarButton.imageView.contentMode = UIViewContentModeCenter;
-	[titleBarView addSubview:titleBarButton];
-	
-	activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-	activityIndicator.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
-	activityIndicator.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin |UIViewAutoresizingFlexibleBottomMargin);
-	activityIndicator.hidesWhenStopped = YES;
-	[self.view addSubview:activityIndicator];
-    
-    NSURL *URLToOpen = [NSURL URLWithString:[[URL absoluteString] stringByAppendingString:@"&display_bar=false"]];
-    
-    webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-    webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    webView.backgroundColor = nil;
-    webView.opaque = NO;
-    webView.delegate = self;
-    [webView loadRequest:[NSURLRequest requestWithURL:URLToOpen]];
-    [self.view addSubview:webView];
-    	
-    [self updateInterface];
+    [toolbarItems addObject:[[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"cancel", @"Cancel")
+                                                              style:UIBarButtonItemStyleBordered
+                                                             target:self
+                                                             action:@selector(cancel)] autorelease]];
+    [self setToolbarItems:toolbarItems];
 }
 
-- (void)viewDidUnload;
+- (void)viewWillAppear:(BOOL)animated;
 {
-    [titleBarView release]; titleBarView = nil;
-    [activityIndicator release]; activityIndicator = nil;
-    [webView release]; webView = nil;
+    [super viewWillAppear:animated];
+    [self.view addSubview:[[[SCSCRecordingSaveViewControllerTitleView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds), 28.0)] autorelease]];
+    self.loginView.frame = CGRectMake(0, 28.0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 28.0);
 }
 
-- (void)updateInterface;
-{    
-    CGRect contentRect;
-    
-    CGRect titleBarRect;
-    CGRectDivide(self.view.bounds, &titleBarRect, &contentRect, 27.0, CGRectMinYEdge);
-    titleBarView.frame = titleBarRect;
-    webView.frame = contentRect;
-    	
-	[titleBarButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
-	if (!showReloadButton) {
-		[titleBarButton addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
-		UIImage *closeImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"close" ofType:@"png"]];
-		[titleBarButton setImage:closeImage forState:UIControlStateNormal];
-	} else {
-		[titleBarButton addTarget:self action:@selector(reload) forControlEvents:UIControlEventTouchUpInside];
-		UIImage *reloadImage = [UIImage imageWithContentsOfFile:[resourceBundle pathForResource:@"reload" ofType:@"png"]];
-		[titleBarButton setImage:reloadImage forState:UIControlStateNormal];
-	}
-    
-}
-
-#pragma mark WebView Delegate
-
-- (void)webViewDidStartLoad:(UIWebView *)webView;
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 {
-    [activityIndicator startAnimating];
+    return [self.navigationController.parentViewController shouldAutorotateToInterfaceOrientation:toInterfaceOrientation];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView;
+#pragma mark Notifications
+
+- (void)accountDidChange:(NSNotification *)aNotification;
 {
-    [activityIndicator stopAnimating];
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)failToRequestAccess:(NSNotification *)aNotification;
 {
-    // Use either the authentication delegate if present
-    // or the shared sound cloud singleton (SCSoundCLoud).
-    
-    if (![request.URL isEqual:URL]) {
-		BOOL hasBeenHandled = NO;
-        
-        
-        
-        NSURL *callbackURL = nil;
-        if (authentication) {
-            callbackURL = authentication.configuration.redirectURL;
-        } else {
-            callbackURL = [[SCSoundCloud configuration] objectForKey:kSCConfigurationRedirectURL];
-        }
-        
-        if ([[request.URL absoluteString] hasPrefix:[callbackURL absoluteString]]) {
-            
-            if (authentication) {
-                hasBeenHandled = [authentication handleRedirectURL:request.URL];
-            } else {
-                hasBeenHandled = [SCSoundCloud handleRedirectURL:request.URL];
-            }
-            
-
-            if (hasBeenHandled) {
-                [self close];
-            }
-            return NO;
-        }
-	}
-    
-    NSURL *authURL = nil;
-    if (authentication) {
-        authURL = authentication.configuration.authURL;
-    } else {
-        authURL = [[SCSoundCloud configuration] objectForKey:kSCConfigurationAuthorizeURL];
+    if (self.completionHandler) {
+        NSError *error = [[aNotification userInfo] objectForKey:kNXOAuth2AccountStoreError];
+        self.completionHandler(NO, error);
     }
     
-    if (![[request.URL absoluteString] hasPrefix:[authURL absoluteString]]) {
-        [[UIApplication sharedApplication] openURL:request.URL];
-        return NO;
-    }
-	
-	return YES;
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
 }
+
 
 #pragma mark Private
 
-- (IBAction)close;
+- (IBAction)cancel;
 {
-    // Use either the authentication delegate if present
-    // or the shared sound cloud singleton (SCSoundCLoud).
-    
-    if (authentication) {
-        [authentication performSelector:@selector(dismissLoginViewController:) withObject:self];
-    } else {
-        dismissHandler();
-    }
+    self.completionHandler(YES, nil);
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)reload;
-{
-    [webView reload];
-}
 
 @end
-
-
-#pragma mark -
-
-@implementation SCLoginTitleBar
-
-- (void)drawRect:(CGRect)rect;
-{
-    CGRect topLineRect;
-    CGRect gradientRect;
-    CGRect bottomLineRect;
-    CGRectDivide(self.bounds, &topLineRect, &gradientRect, 0.0, CGRectMinYEdge);
-    CGRectDivide(gradientRect, &bottomLineRect, &gradientRect, 1.0, CGRectMaxYEdge);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace,
-                                                                 (CGFloat[]){1.0,0.40,0.0,1.0,  1.0,0.21,0.0,1.0},
-                                                                 (CGFloat[]){0.0, 1.0},
-                                                                 2);
-    CGContextDrawLinearGradient(context, gradient, gradientRect.origin, CGPointMake(gradientRect.origin.x, CGRectGetMaxY(gradientRect)), 0);
-    CGGradientRelease(gradient);
-    CGColorSpaceRelease(colorSpace);
-    
-    CGContextSetFillColor(context, (CGFloat[]){0.0,0.0,0.0,1.0});
-    CGContextFillRect(context, topLineRect);
-    
-    CGContextSetFillColor(context, (CGFloat[]){0.52,0.53,0.54,1.0});
-    CGContextFillRect(context, bottomLineRect);
-}
-
-@end
-
-#endif

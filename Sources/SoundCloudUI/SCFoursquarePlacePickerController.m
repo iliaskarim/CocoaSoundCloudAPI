@@ -6,22 +6,36 @@
 //  Copyright 2010 nxtbgthng. All rights reserved.
 //
 
-#import "NSData+SCKit.h"
+#import <CoreLocation/CoreLocation.h>
 
-#import "GPURLConnection.h"
-#import "GPWebAPI.h"
+#import "NSData+SoundCloudAPI.h"
+#import "UIColor+SoundCloudAPI.h"
 
 #import "SCConstants.h"
+#import "SCBundle.h"
 
 #import "SCFoursquarePlacePickerController.h"
 
-@interface SCFoursquarePlacePickerController ()
+@interface SCFoursquarePlacePickerController () <CLLocationManagerDelegate>
 @property (nonatomic, retain) NSArray *venues;
+@property (nonatomic, retain) SCRequest *request;
+@property (nonatomic, retain) NSString *clientID;
+@property (nonatomic, retain) NSString *clientSecret;
+@property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, assign) id<SCFoursquarePlacePickerControllerDelegate> delegate;
+
 - (IBAction)finishWithReset;
 @end
 
 
 @implementation SCFoursquarePlacePickerController
+
+@synthesize venues;
+@synthesize request;
+@synthesize clientID;
+@synthesize clientSecret;
+@synthesize locationManager;
+@synthesize delegate;
 
 #pragma mark Lifecycle
 
@@ -31,27 +45,20 @@
 {
     if ((self = [super init])) {
         
-        self.title = @"Where?";
+        self.title = SCLocalizedString(@"place_picker_title", @"Where?");
         
         delegate = aDelegate;
         
         clientID = [aClientID retain];
         clientSecret = [aClientSecret retain];
         
-        api = [[GPWebAPI alloc] initWithHost:@"api.foursquare.com" delegate:self];
-        api.scheme = @"https";
-        api.path = @"v2";
-        
         locationManager = [[CLLocationManager alloc] init];
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         locationManager.distanceFilter = 30.0;
         locationManager.delegate = self;
-        if ([locationManager respondsToSelector:@selector(purpose)]) {
-//            locationManager.purpose = @"Purpose Test";
-        }
         [locationManager startUpdatingLocation];
         
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Reset"
+        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:SCLocalizedString(@"place_picker_reset", @"Reset")
                                                                                    style:UIBarButtonItemStyleBordered
                                                                                   target:self
                                                                                   action:@selector(finishWithReset)] autorelease];
@@ -63,18 +70,15 @@
 {
     [locationManager stopUpdatingLocation];
     [locationManager release];
-    [api release];
     [venues release];
-    [venueRequestIdentifier release];
     [clientSecret release];
     [clientID release];
+    [request release];
     [super dealloc];
 }
 
 
 #pragma mark Accessors
-
-@synthesize venues;
 
 - (void)setVenues:(NSArray *)value;
 {
@@ -95,7 +99,7 @@
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0.0, 0.0, 300, 26.0)];
     textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    textField.placeholder = @"Add Your Place";
+    textField.placeholder = SCLocalizedString(@"place_picker_placeholder", @"Add Your Place");
     textField.returnKeyType = UIReturnKeyDone;
     textField.keyboardAppearance = UIKeyboardAppearanceAlert;
     textField.borderStyle = UITextBorderStyleRoundedRect;
@@ -119,15 +123,22 @@
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
-    [locationManager startUpdatingLocation];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.locationManager startUpdatingLocation];
 }
 
 - (void)viewDidAppear:(BOOL)animated;
 {
 	[super viewDidAppear:animated];
-    if (locationManager && locationManager.location) {
-        [self locationManager:locationManager didUpdateToLocation:locationManager.location fromLocation:nil];
+    if (self.locationManager && self.locationManager.location) {
+        [self locationManager:self.locationManager didUpdateToLocation:self.locationManager.location fromLocation:nil];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated;
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
@@ -157,16 +168,16 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 {
-    return @"Nearby";
+    return SCLocalizedString(@"place_picker_nearby", @"Nearby");
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     NSDictionary *venue = [self.venues objectAtIndex:indexPath.row];
-    [delegate foursquarePlacePicker:self
+    [self.delegate foursquarePlacePicker:self
                  didFinishWithTitle:[venue objectForKey:@"name"]
                        foursquareID:([venue objectForKey:@"id"]) ? [NSString stringWithFormat:@"%@", [venue objectForKey:@"id"]] : nil //it might be a number
-                           location:locationManager.location];
+                           location:self.locationManager.location];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -175,21 +186,36 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation;
 {
-    [api cancelRequest:venueRequestIdentifier];
-    [venueRequestIdentifier release];
-    
+    [self.request cancel];
+
     NSDictionary *arguments = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSString stringWithFormat:@"%f,%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude], @"ll",
                                [NSString stringWithFormat:@"%f", newLocation.horizontalAccuracy], @"llAcc",
                                [NSString stringWithFormat:@"%.0f", newLocation.altitude], @"alt",
                                @"50", @"limit", 
-                               clientID, @"client_id",
-                               clientSecret, @"client_secret",
+                               self.clientID, @"client_id",
+                               self.clientSecret, @"client_secret",
                                @"20110622", @"v",
                                nil];
     
-    venueRequestIdentifier = [[api getResource:@"venues/search"
-                                 withArguments:arguments] retain];
+    self.request = [SCRequest request];
+    self.request.requestMethod = SCRequestMethodGET;
+    self.request.resource = [NSURL URLWithString:@"https://api.foursquare.com/v2/venues/search"];
+    self.request.parameters = arguments;
+    
+    [self.request performRequestWithSendingProgressHandler:nil
+                                           responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                                               if (error) {
+                                                   NSLog(@"Location Request failed: %@", [error localizedDescription]);
+                                               } else {
+                                                   id results = [responseData JSONObject];
+                                                   
+                                                   if (![results isKindOfClass:[NSDictionary class]])
+                                                       return;
+                                                   
+                                                   self.venues = [[results objectForKey:@"response"] objectForKey:@"venues"];
+                                               }
+                                           }];
     
     NSTimeInterval age = -[newLocation.timestamp timeIntervalSinceNow];
     
@@ -204,28 +230,12 @@
 	NSLog(@"locationManager:didFailWithError: %@", error);
 }
 
-#pragma mark Api Delegate
-
-- (void)webApi:(GPWebAPI *)api didFinishWithData:(NSData *)data userInfo:(id)userInfo context:(id)context;
-{
-	id results = [data JSONObject];
-    
-    if (![results isKindOfClass:[NSDictionary class]]) return;
-    
-    self.venues = [[results objectForKey:@"response"] objectForKey:@"venues"];
-}
-
-- (void)webApi:(GPWebAPI *)aApi didFailWithError:(NSError *)error data:(NSData *)data userInfo:(id)userInfo context:(id)context;
-{
-    NSLog(@"Location Request for api %@ failed: %@", aApi, error);
-}
-
 
 #pragma mark TextField
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 {
-    [delegate foursquarePlacePicker:self
+    [self.delegate foursquarePlacePicker:self
                  didFinishWithTitle:textField.text
                        foursquareID:nil
                            location:nil];
@@ -242,7 +252,7 @@
 
 - (IBAction)finishWithReset;
 {
-    [delegate foursquarePlacePicker:self
+    [self.delegate foursquarePlacePicker:self
                  didFinishWithTitle:nil
                        foursquareID:nil
                            location:nil];

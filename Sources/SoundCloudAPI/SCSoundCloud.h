@@ -22,8 +22,8 @@
 
 #pragma mark Notifications
 
-extern NSString * const SCSoundCloudAccountsDidChangeNotification;
-extern NSString * const SCSoundCloudDidFailToRequestAccess;
+extern NSString * const SCSoundCloudAccountDidChangeNotification;
+extern NSString * const SCSoundCloudDidFailToRequestAccessNotification;
 
 
 #pragma mark Handler
@@ -38,19 +38,19 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 @interface SCSoundCloud : NSObject {
 @private
     id accountStoreAccountsDidChangeObserver;
+    id accountStoreDidFailToRequestAccessObserver;
     id accountDidFailToGetAccessTokenObserver;
 }
 
 #pragma mark Accessors
 
-+ (NSArray *)accounts;
-+ (SCAccount *)accountWithIdentifier:(NSString *)identifier;
++ (SCAccount *)account;
 
 
 #pragma mark Manage Accounts
 
-+ (void)requestAccess;
-+ (void)removeAccount:(SCAccount *)account;
++ (void)requestAccessWithPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)aPreparedAuthorizationURLHandler;
++ (void)removeAccess;
 
 
 #pragma mark Configuration
@@ -58,13 +58,6 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 + (void)setClientID:(NSString *)aClientID
              secret:(NSString *)aSecret
         redirectURL:(NSURL *)aRedirectURL;
-
-
-#pragma mark Prepared Authorization URL Handler
-
-+ (void)setPreparedAuthorizationURLHandler:(SCPreparedAuthorizationURLHandler)handler;
-+ (SCPreparedAuthorizationURLHandler)preparedAuthorizationURLHandler;
-
 
 #pragma mark OAuth2 Flow
 
