@@ -20,7 +20,6 @@
 
 #if TARGET_OS_IPHONE
 #import "NXOAuth2.h"
-#import "SCLoginViewController.h"
 #else
 #import <OAuth2Client/NXOAuth2.h>
 #import <Cocoa/Cocoa.h>

@@ -22,7 +22,3 @@
 #import "SCSoundCloud.h"
 #import "SCAccount.h"
 #import "SCRequest.h"
-
-#if TARGET_OS_IPHONE
-#import "SCUI.h"
-#endif

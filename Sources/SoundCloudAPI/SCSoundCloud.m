@@ -29,12 +29,6 @@
 #import "SCRequest.h"
 #import "SCConstants.h"
 
-#if TARGET_OS_IPHONE
-#import "SCLoginViewController.h"
-#else
-
-#endif
-
 #import "SCSoundCloud+Private.h"
 #import "SCSoundCloud.h"
 
