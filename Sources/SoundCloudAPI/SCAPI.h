@@ -18,12 +18,6 @@
  * 
  */
 
-#import "SCAPIErrors.h"
-#import "SCSoundCloudAPI.h"
-#import "SCSoundCloudAPIConfiguration.h"
-#import "SCSoundCloudAPIDelegate.h"
-#import "SCSoundCloudAPIAuthenticationDelegate.h"
-
 #import "SCConstants.h"
 #import "SCSoundCloud.h"
 #import "SCAccount.h"

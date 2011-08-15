@@ -10,8 +10,6 @@
 
 #import "NSString+SoundCloudAPI.h"
 
-//#import "SCAppDelegate.h"
-#import "SCSoundCloudAPI.h"
 #import "SCAccount.h"
 #import "SCRequest.h"
 
