@@ -113,6 +113,10 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
                 theMethod = @"DELETE";
                 break;
                 
+            case SCRequestMethodHEAD:
+                theMethod = @"HEAD";
+                break;
+                
             default:
                 theMethod = @"GET";
                 break;
@@ -152,6 +156,8 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
         return SCRequestMethodPUT;
     } else if ([aMethod caseInsensitiveCompare:@"DELETE"]) {
         return SCRequestMethodDELETE;
+    } else if ([aMethod caseInsensitiveCompare:@"HEAD"]) {
+        return SCRequestMethodHEAD;
     } else {
         NSAssert1([aMethod caseInsensitiveCompare:@"GET"], @"SCRequest only supports 'GET', 'PUT', 'POST' and 'DELETE' as request method. Underlying NXOAuth2Accound uses the request method 'l%'.", aMethod);
         return SCRequestMethodGET;
@@ -172,6 +178,10 @@ sendingProgressHandler:(SCRequestSendingProgressHandler)aProgressHandler
             
         case SCRequestMethodDELETE:
             theMethod = @"DELETE";
+            break;
+            
+        case SCRequestMethodHEAD:
+            theMethod = @"HEAD";
             break;
             
         default:
