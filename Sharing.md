@@ -25,9 +25,22 @@ Depending on the privacy settings of your upload, the task is a little bit diffe
 
 ## Getting the users connections
 
-For getting the user's connections, use the connections resource at [`/me/connections.json`](https://github.com/soundcloud/api/wiki/10.7-Resources%3A-connections). With the API Wrapper, it looks like this:
+For getting the user's connections, use the connections resource at [`https://api.soundcloud.com/me/connections.json`](https://github.com/soundcloud/api/wiki/10.7-Resources%3A-connections). With the API Wrapper, it looks like this:
 
-	[api performMethod:@"GET" onResource:@"me/connections.json" withParameters:nil context:nil userInfo:nil];
+    SCAccount *account = [SCSoundCloud account];
+    
+    [SCRequest performMethod:SCRequestMethodGET
+                  onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
+             usingParameters:nil
+                 withAccount:account
+      sendingProgressHandler:nil
+             responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                 if (error) {
+                    NSLog(@"Did fail to request connections with error: %@", [error localizedDescription]);
+                 } else {
+                     // Parse the response ...
+                 }
+             }];
 
 What this returns is a JSON array of connections which looks like this:
 
@@ -58,9 +71,36 @@ In case of *private* sharing, provide a way to specify an array of email adresse
 Upload the file
 ---------------
 
-One all the metadata is in place, the file can be uploaded. For this, we use the API wrapper again:
+Once all the metadata is in place, the file can be uploaded. For this, we use the API wrapper again:
 
-	[api performMethod:@"POST" onResource:@"tracks" withParameters:parameters context:nil userInfo:nil]
+    SCAccount *account = [SCSoundCloud account];
+    
+    NSDictionary *parameters = // ... see below
+    
+    [SCRequest performMethod:SCRequestMethodPOST
+                  onResource:[NSURL URLWithString:@"https://api.soundcloud.com/tracks.json"]
+             usingParameters:parameters
+                 withAccount:account
+      sendingProgressHandler:^(unsigned long long bytesSent, unsigned long long bytesTotal){
+                                self.uploadProgressView.progressView.progress = (float)bytesSent / bytesTotal;
+                             }
+             responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                                if (error) {
+                                    NSLog(@"Ooops, something went wrong! %@", [error localizedDescription]);
+                                } else {
+                                    if (![response isKindOfClass:[NSURLHTTPResponse class]]) {
+                                        NSLog(@"Expecting a NSURLHTTPResponse.");
+                                        return;
+                                    }
+                                    
+                                    NSURLHTTPResponse *httpResponse = (NSURLHTTPResponse *)response;
+                                    
+                                    if ([httpResponse statusCode] >= 200 && [httpResponse statusCode] < 300) {
+                                        // Ok, the upload succeed
+                                        // Parse the response if you want to have the info of the uploaded track.
+                                    }
+                                }
+                            }];
 
 You can get more info about this call and its parameters from the [API documentation for tracks](https://github.com/soundcloud/api/wiki/10.2-Resources%3A-tracks). One parameter is the *sharing note* (the text that get's displayed in a tweet, for example), so you should read it.
 
@@ -106,15 +146,27 @@ So what about users that have not yet connected their favorite services to Sound
 
 You just need to send a `POST` with the service type of the connection and you get back an URL:
 
-	 [api performMethod:@"POST"
-	         onResource:@"connections"
-	     withParameters:[NSDictionary dictionaryWithObjectsAndKeys:
-	                                                 service, @"service",
-	                                                 @"x-myapplicationsurlscheme://connection", @"redirect_uri",
-	                                                 @"touch", @"display", //optional, forces services to use the mobile auth page if available
-	                                                 nil]
-	            context:nil
-	           userInfo:nil];
+    SCAccount *account = [SCSoundCloud account];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 service, @"service",
+                                                 @"x-myapplicationsurlscheme://connection", @"redirect_uri",
+                                                 @"touch", @"display", //optional, forces services to use the mobile auth page if available
+                                                 nil];
+                                                 
+    [SCRequest performMethod:SCRequestMethodPOST
+                  onResource:[NSURL URLWithString:@"https://api.soundcloud.com/me/connections.json"]
+             usingParameters:nil
+                 withAccount:account
+      sendingProgressHandler:nil
+             responseHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                                if (error) {
+                                    NSLog(@"Did fail to request connections with error: %@", [error localizedDescription]);
+                                } else {
+                                    // Parse the response and open the URL in a web view
+                                }
+                            }];
+
 
 The services that are currently supported are:
 

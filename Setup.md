@@ -17,7 +17,7 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
 
 2. Add the Cocoa API Wrapper as a Git Subproject
 
-		git submodule add git://github.com/soundcloud/cocoa-api-wrapper.git SoundCloudAPI
+		git submodule add git://github.com/soundcloud/CocoaSoundCloudAPI.git SoundCloudAPI
 		
 3. Update the Subprojects (the API Wrapper includes the NXOAuth2Framework as a subproject)
 
@@ -31,17 +31,14 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
 
 3. Now the Target needs to know about the new libraries it should link against. So in the _Project_, select the _Target_, and in _Build Phases_ go to the _Link Binary with Libraries_ section. Add the following:
 
-	* `libSOundCloud.a` (or `SoundCloudAPI.framework` on Desktop)
+	* `libSoundCloud.a` (or `SoundCloudAPI.framework` on Desktop)
 	* `libOAuth2Client.a` (or `OAuth2Client.framework` on Desktop)
 	* `Security.framework`
-	* `AudioToolbox.framework` (if you want streaming)
 
 
 4. Next step is to make sure that the Linker finds everything it needs: So go to the Build settings of the project and add the following to *Other Linker Flags*
 
 		-all_load -ObjC
-
-5. We need a few graphics for the Login Screen: Please move the `SoundCloud.bundle` from the SoundCloudAPI directory to your Resources.
 
 Yay, done! Congrats! Everything is set up, and you can start using it. [Here's how](Usage.md).
 

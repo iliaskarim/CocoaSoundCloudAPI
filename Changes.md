@@ -41,3 +41,6 @@ The wrapper is still subject to change. Although we thing that v2.0beta3 should 
 * Renamed `-soundCloudAPIDidGetAccessToken:` to `-soundCloudAPIDidAuthenticate:` & added `-soundCloudAPIDidResetAuthentication:`
 * Introduced `SCSoundCloudAPIConnection` and added `connectionDelegate:` per request
 * Moved `SCSoundCloudAPIDelegate` into `SCSoundCloudAPIConnectionDelegate`
+
+### Changelog for version 3.0
+

@@ -2,9 +2,10 @@
 
 So you want to use SoundCloud in your iOS or OSX Desktop Application? Awesome. This little project will help you do it.
 
-The SoundCloud API Wrapper supports iOS from Version 3.0 and MacOS X from Leopard (10.5). It uses SoundClouds [OAuth2](http://oauth.net/2) API and henceforth includes the [NXOAuth2Client](http://github.com/nxtbgthng/OAuth2Client) project.
+If all you want to do is uploading a track to SoundCloud, you should have a look at [SoundCloudUI]() (iOS only). __The SoundCloudUI should always be your first choice.__
 
-There's three parts to this Guide:
+The SoundCloud API Wrapper supports iOS from Version 4.0 and MacOS X from Leopard (10.6). It uses SoundClouds [OAuth2](http://oauth.net/2) API and henceforth includes the [NXOAuth2Client](http://github.com/nxtbgthng/OAuth2Client) project.
+
 
 * How to [integrate the SoundCloud API Wrapper into your Project](https://github.com/soundcloud/cocoa-api-wrapper/blob/master/Setup.md).
 * How to [use the SoundCloud API Wrapper](https://github.com/soundcloud/cocoa-api-wrapper/blob/master/Usage.md).
