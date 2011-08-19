@@ -40,6 +40,7 @@
 		F6525B8013D5B34A00ACAE8F /* SCSoundCloud+Private.m in Sources */ = {isa = PBXBuildFile; fileRef = F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */; };
 		F6622B6713D84A2B0057ADD0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6622B6613D84A2B0057ADD0 /* Cocoa.framework */; };
 		F66BAD2E13D97FAB00996800 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F66BAD2D13D97FAB00996800 /* CoreLocation.framework */; };
+		F6E37EAD13FE8B7100D6DDC0 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E5ADA4122C192900C7021A /* libOAuth2Client.a */; };
 		F6E88D2513D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2613D41F8A008B9CD5 /* SCConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = F6E88D2313D41F8A008B9CD5 /* SCConstants.h */; };
 		F6E88D2713D41F8A008B9CD5 /* SCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = F6E88D2413D41F8A008B9CD5 /* SCConstants.m */; };
@@ -144,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6E37EAD13FE8B7100D6DDC0 /* libOAuth2Client.a in Frameworks */,
 				F615810C13FD142F0049FF2E /* libSoundCloudUI.a in Frameworks */,
 				F66BAD2E13D97FAB00996800 /* CoreLocation.framework in Frameworks */,
 				F64109B313D87F9F00561D0B /* CoreGraphics.framework in Frameworks */,
