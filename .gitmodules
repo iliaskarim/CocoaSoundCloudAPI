@@ -1,12 +1,9 @@
 [submodule "Outsourced/OAuth2Client"]
 	path = Outsourced/OAuth2Client
 	url = git://github.com/nxtbgthng/OAuth2Client.git
-[submodule "TestApps/Support/JSONKit"]
-	path = TestApps/Support/JSONKit
-	url = git://github.com/johnezang/JSONKit.git
 [submodule "Outsourced/JSONKit"]
 	path = Outsourced/JSONKit
 	url = https://github.com/johnezang/JSONKit.git
 [submodule "Outsourced/SoundCloudUI"]
 	path = Outsourced/SoundCloudUI
-	url = ssh://nxtbgsrvr.local/Users/tobias/Repository/SoundCloudUI.git
+	url = https://github.com/soundcloud/CocoaSoundCloudUI.git
