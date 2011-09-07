@@ -10,7 +10,7 @@ Afraid of doing the journey alone? Don't be, there's a lot of places where you c
 
 Please keep in mind that all of this is under heavy development, and things might change from time to time. Please update your frameworks often, and keep this space in mind.
 
-We document the [changes to the different versions](Changes.md). If you've used a previous version, please read it.
+We document the [changes to the different versions](https://github.com/soundcloud/CocoaSoundCloudAPI/blob/master/Changes.md). If you've used a previous version, please read it.
 
 This guide assumes a few things:
 
@@ -48,6 +48,7 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
     * `CoreLocation.framework`
     * `Security.framework`
     * `CoreGraphics.framework`
+    * `CoreText.framework`
 
 4. Next step is to make sure that the Linker finds everything it needs: So go to the Build settings of the project and add the following to *Other Linker Flags*
     
@@ -120,7 +121,7 @@ Optionally you can preset set the *title*, a *cover image*, a *creation date* an
 
 ### Using the API
 
-If you want to provide your own UI for sharing a track or you want to use the SoundCloud API for other purposes, have a look at the [General Usage]() or at [Sharing]().
+If you want to provide your own UI for sharing a track or you want to use the SoundCloud API for other purposes, have a look at the [General Usage](https://github.com/soundcloud/CocoaSoundCloudAPI/blob/master/GeneralUsage.md) or at [Sharing](https://github.com/soundcloud/CocoaSoundCloudAPI/blob/master/Sharing.md).
 
 ## Thats it!
 

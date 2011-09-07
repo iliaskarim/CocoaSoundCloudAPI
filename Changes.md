@@ -1,4 +1,4 @@
-# Changes to the Cocoa API Wrapper
+# Changes to CococaSoundCloudAPI
 
 ## Changes from version 1
 
@@ -44,3 +44,6 @@ The wrapper is still subject to change. Although we thing that v2.0beta3 should 
 
 ### Changelog for version 3.0
 
+This version is a complete redesign of the API of the project. Also the project now contains a UI to simplify sharing sounds to SoundCloud. Building a new app starting with this version is quite easy. Upgrading your app to this version needs major changes.
+
+Although we think that this version is quite stable, changes may be possible. 

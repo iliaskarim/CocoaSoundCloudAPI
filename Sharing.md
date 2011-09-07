@@ -1,6 +1,6 @@
 # SoundCloud Upload & Share Guide for iOS and OSX
 
-So you are familiar with the [SoundCloud API Wrapper](https://github.com/soundcloud/cocoa-api-wrapper) and want to use it to share the sounds you upload? And you want to use the [existing connections on SoundCloud](http://soundcloud.com/settings/connections) or make new ones? Awesome. Here's how to do it.
+So you are familiar with the [SoundCloud API](hhttps://github.com/soundcloud/CocoaSoundCloudAPI/blob/master/GeneralUsage.md) and want to use it to share the sounds you upload? And you want to use the [existing connections on SoundCloud](http://soundcloud.com/settings/connections) or make new ones? Awesome. Here's how to do it.
 
 In a nutshell, SoundCloud takes care of making the connections and authenticating to various social networks for you. Your app can just use those connections. There is no need to exchange and store tokens once you are authorized to SoundCloud.
 
