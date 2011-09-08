@@ -35,12 +35,7 @@ typedef void(^SCPreparedAuthorizationURLHandler)(NSURL *preparedURL);
 
 @class SCAccount;
 
-@interface SCSoundCloud : NSObject {
-@private
-    id accountStoreAccountsDidChangeObserver;
-    id accountStoreDidFailToRequestAccessObserver;
-    id accountDidFailToGetAccessTokenObserver;
-}
+@interface SCSoundCloud : NSObject
 
 #pragma mark Accessors
 
