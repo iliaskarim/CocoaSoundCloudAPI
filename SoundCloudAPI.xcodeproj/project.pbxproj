@@ -108,7 +108,7 @@
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libSoundCloudAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundCloudAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F60811E113D050180040EC66 /* SCSoundCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSoundCloud.h; sourceTree = "<group>"; };
-		F60811E213D050180040EC66 /* SCSoundCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSoundCloud.m; sourceTree = "<group>"; };
+		F60811E213D050180040EC66 /* SCSoundCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SCSoundCloud.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F60811E713D051420040EC66 /* SCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAccount.h; sourceTree = "<group>"; };
 		F60811E813D051420040EC66 /* SCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAccount.m; sourceTree = "<group>"; };
 		F60811ED13D051840040EC66 /* SCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRequest.h; sourceTree = "<group>"; };
@@ -122,8 +122,8 @@
 		F6525B7C13D5B34A00ACAE8F /* SCSoundCloud+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCSoundCloud+Private.m"; sourceTree = "<group>"; };
 		F6622B6613D84A2B0057ADD0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		F66BAD2D13D97FAB00996800 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
-		F6E88D2313D41F8A008B9CD5 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
-		F6E88D2413D41F8A008B9CD5 /* SCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCConstants.m; sourceTree = "<group>"; };
+		F6E88D2313D41F8A008B9CD5 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SCConstants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		F6E88D2413D41F8A008B9CD5 /* SCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SCConstants.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		F6E88D2A13D43A73008B9CD5 /* SCAccount+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCAccount+Private.h"; sourceTree = "<group>"; };
 		F6E88D3013D43B67008B9CD5 /* SCAccount+Private.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SCAccount+Private.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
