@@ -29,23 +29,31 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
 
 1. Go to your project directory.
 
-2. Add SoundCloudAPI as a Git Submodule
+2. Add the required GIT Submodules
 
-		git submodule add git://github.com/soundcloud/CocoaSoundCloudAPI.git SoundCloudAPI
-		
-3. Update the Submodules
+    // For the API
+    git submodule add git://github.com/nxtbgthng/OAuth2Client.git
+    git submodule add git://github.com/soundcloud/CocoaSoundCloudAPI.git
 
-		git submodule update --init --recursive
+    // For the UI (iOS only)
+    git submodule add git://github.com/nxtbgthng/JSONKit.git
+    git aubmodule add git://github.com/nxtbgthng/OHAttributedLabel.git
+    git submodule add git://github.com/soundcloud/CocoaSoundCloudUI.git
+
 
 ### In Xcode
 
-1. Drag the `SoundCloudAPI.xcodeproj` file below your project file. If it asks you to save this as a Workspace, say yes. For projects in the _root_ hierarchy of a workspace, Xcode ensures "implicit dependencies" between them. That's a good thing.
+1. Create a Workspace containing all those submodules added above.
 
-2. To be able to find the Headers, you still need to add `SoundCloudAPI/**` to the `Header Search Path` of the main project.
+2. To be able to find the Headers, you still need to add `../**` (or `./**` depending on your setup) to the `Header Search Path` of the main project.
 
 3. Now the Target needs to know about the new libraries it should link against. So in the _Project_, select the _Target_, and in _Build Phases_ go to the _Link Binary with Libraries_ section. Add the following:
 
-    * `libSoundCloudAPI.a` (or `SoundCloudAPI.framework` for a Desktop projects)
+    * `libSoundCloudAPI.a` (`SoundCloudAPI.framework` on Mac OS X)
+    * `libOAuth2Client.a` (`OAuth2Client.framework` on Mac OS X)
+    * `libJSONKit.a` (iOS only)
+    * `libOHAttributedLabel.a` (iOS only)
+    * `libSoundCloudUI.a` (iOS only)
     * `QuartzCore.framework`
     * `AddressBook.framework`
     * `AddressBookUI.framework`
@@ -55,10 +63,10 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
     * `CoreText.framework`
 
 4. Next step is to make sure that the Linker finds everything it needs: So go to the Build settings of the project and add the following to *Other Linker Flags*
-    
+
         -all_load -ObjC
 
-5. We need a few graphics: Please move the `SoundCloud.bundle` from the `SoundCloudAPI/Outsourced/SoundCloudUI/` directory to your Resources.
+5. On iOS we need a few graphics: Please move the `SoundCloud.bundle` from the `CocoaSoundCloudUI/` directory to your Resources.
 
 Yay, done! Congrats! Everything is set up, and you can start using it.
 
@@ -84,39 +92,39 @@ You will get your App's _Client ID_, it's _Client Secret_ from [the SoundCloud p
 
 ### Using the Share UI (iOS only)
 
-To share a track you just have to create a `SCShareViewController` with the URL to the file you want to share and present it on the current view controller. After a successful upload, the track info can be accessed in the completion handler. 
+To share a track you just have to create a `SCShareViewController` with the URL to the file you want to share and present it on the current view controller. After a successful upload, the track info can be accessed in the completion handler.
 
     - (void)upload;
     {
         NSURL *trackURL = // ... an URL to the audio file
-        
+
 		SCShareViewController *shareViewController;
         shareViewController = [SCShareViewController shareViewControllerWithFileURL:trackURL
                                                                   completionHandler:^(NSDictionary *trackInfo, NSError *error){
-                                            
+
                                             if (SC_CANCELED(error)) {
                                             	NSLog(@"Canceled!");
                                             } else if (error) {
                                             	NSLog(@"Ooops, something went wrong: %@", [error localizedDescription]);
                                             } else {
-                                            	// If you want to do something with the uploaded 
+                                            	// If you want to do something with the uploaded
                                             	// track this is the right place for that.
                                             	NSLog(@"Uploaded track: %@", trackInfo);
                                             }
         }];
-        
+
         // If your app is a registered foursquare app, you can set the client id and secret.
         // The user will then see a place picker where a location can be selected.
         // If you don't set them, the user sees a plain plain text filed for the place.
         [shareViewController setFoursquareClientID:@"<foursquare client id>"
                                       clientSecret:@"<foursquare client secret>"];
-        
+
         // We can preset the title ...
         [shareViewController setTitle:@"Funny sounds"];
-        
+
         // ... and other options like the private flag.
         [shareViewController setPrivate:NO];
-        
+
         // Now present the share view controller.
         [self presentModalViewController:shareViewController animated:YES];
     }
