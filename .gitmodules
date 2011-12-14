@@ -1,9 +1,0 @@
-[submodule "Outsourced/OAuth2Client"]
-	path = Outsourced/OAuth2Client
-	url = git://github.com/nxtbgthng/OAuth2Client.git
-[submodule "Outsourced/JSONKit"]
-	path = Outsourced/JSONKit
-	url = https://github.com/johnezang/JSONKit.git
-[submodule "Outsourced/SoundCloudUI"]
-	path = Outsourced/SoundCloudUI
-	url = https://github.com/soundcloud/CocoaSoundCloudUI.git
