@@ -31,14 +31,14 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
 
 2. Add the required GIT Submodules
 
-    // For the API
-    git submodule add git://github.com/nxtbgthng/OAuth2Client.git
-    git submodule add git://github.com/soundcloud/CocoaSoundCloudAPI.git
+        // For the API
+        git submodule add git://github.com/nxtbgthng/OAuth2Client.git
+        git submodule add git://github.com/soundcloud/CocoaSoundCloudAPI.git
 
-    // For the UI (iOS only)
-    git submodule add git://github.com/nxtbgthng/JSONKit.git
-    git aubmodule add git://github.com/nxtbgthng/OHAttributedLabel.git
-    git submodule add git://github.com/soundcloud/CocoaSoundCloudUI.git
+        // For the UI (iOS only)
+        git submodule add git://github.com/nxtbgthng/JSONKit.git
+        git aubmodule add git://github.com/nxtbgthng/OHAttributedLabel.git
+        git submodule add git://github.com/soundcloud/CocoaSoundCloudUI.git
 
 
 ### In Xcode
