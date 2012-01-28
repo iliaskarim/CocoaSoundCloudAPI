@@ -37,7 +37,7 @@ We're taking a fresh new iOS Project as an example. Integration into an existing
 
         // For the UI (iOS only)
         git submodule add git://github.com/nxtbgthng/JSONKit.git
-        git aubmodule add git://github.com/nxtbgthng/OHAttributedLabel.git
+        git submodule add git://github.com/nxtbgthng/OHAttributedLabel.git
         git submodule add git://github.com/soundcloud/CocoaSoundCloudUI.git
 
 
