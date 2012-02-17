@@ -35,6 +35,11 @@ NSString * const SCAccountDidFailToGetAccessToken = @"SCAccountDidFailToGetAcces
 
 @implementation SCAccount
 
+- (NXOAuth2Account *)oauthAccount
+{
+    return oauthAccount;
+}
+
 - (void)dealloc;
 {
     [oauthAccount release];
